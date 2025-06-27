@@ -1,0 +1,165 @@
+:root {
+  --bs-body-bg: #d9d9d9;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: ease-in-out;
+  margin-top: 60px;
+}
+
+.navbar {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 80px;
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  font-size: 15px;
+  justify-content: flex-end;
+  margin-left: auto;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding-top: 30px;
+  padding-right: 200px;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+  padding-bottom: 5px;
+  color: #828282;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  color: #3e7b31;
+  font-weight: bold;
+}
+
+.nav-link.active {
+  color: #3e7b31;
+  font-weight: bolder;
+}
+
+.line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #3e7b31;
+  border-radius: 2px;
+}
+
+.nav-link:hover .line {
+  width: 100%;
+  left: 0;
+  margin-bottom: -4px;
+}
+
+#gradbtn,
+#undergradbtn {
+  position: relative;
+  color: #828282;
+  font-size: 20px;
+  border: none;
+  background: none;
+  padding: 10px 0px;
+  cursor: pointer;
+  transition: font-weight 0.3s ease-in-out;
+  margin-bottom: -3px;
+}
+
+#gradbtn.active,
+#undergradbtn.active {
+  font-weight: bold;
+  font-size: 25px;
+  color: #3e7b31;
+}
+
+#gradbtn.active {
+  margin-right: 10px;
+}
+
+#undergradbtn.active {
+  margin-left: 10px;
+}
+
+#gradbtn.active::after,
+#undergradbtn.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 95%;
+  height: 4px;
+  background-color: #3e7b31;
+  border-radius: 2px;
+}
+
+#gradbtn.active::after {
+  left: 8px;
+}
+
+#undergradbtn.active::after {
+  left: 3px;
+}
+
+.card {
+  --bs-card-border-radius: 1rem;
+  transition: ease-in-out;
+}
+
+.card-img-top {
+  padding-top: 20px;
+  display: block;
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.custom-btn {
+  border-radius: 20px;
+  width: 80px;
+  background-color: #3e7b31;
+  color: #fff;
+}
+
+.custom-btn.btn:hover {
+  color: #3e7b31;
+}
+
+.text-container {
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  padding-bottom: 5px;
+  z-index: 2;
+}
+
+#but_container {
+  display: flex;
+  justify-content: center;
+  height: 100px;
+}
+
