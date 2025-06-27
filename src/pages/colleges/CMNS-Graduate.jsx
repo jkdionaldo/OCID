@@ -1,47 +1,48 @@
-"use client"
+"use client";
 
-import { Link } from "react-router-dom"
-import { useState } from "react"
-import { useGoogleLogin } from "@react-oauth/google"
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 import {
   X,
   Upload,
   FileText,
-  Leaf,
+  Calculator,
   ArrowLeft,
   ChevronRight,
   BookOpen,
+  GraduationCap,
   ExternalLink,
   Info,
   ClipboardList,
   Briefcase,
-} from "lucide-react"
-import { getViewUrl } from "../utils/googleDriveUtils"
+} from "lucide-react";
+import { getViewUrl } from "../../utils/googleDriveUtils";
 
-const COFESGraduate = () => {
-  // COFES-specific programs - keep the existing curriculum file links
+const CMNSGraduate = () => {
+  // CMNS-specific programs - keep the existing curriculum file links
   const programs = [
     {
       id: 1,
-      name: "Master in Science in Environmental Science and Management",
-      icon: Leaf,
-      color: "from-green-600 to-green-800",
+      name: "Master of Science in Mathematics",
+      icon: Calculator,
+      color: "from-teal-600 to-teal-800",
       curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1XO3dimuQDJBOpOzZ-NGErRTZrDh5D5U8/view?usp=sharing",
+        2023: "https://drive.google.com/file/d/1cn1dmsleFJ5dbsEqxwTYFPQ8VobgDcHL/view?usp=sharing",
       },
       syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1qilGYdnZCNc9iYbKmTfU6ovEYEzSdHCW",
+        2023: "https://drive.google.com/drive/folders/1tbEXz6DnSsQhBm9_ri1VQScmQzjeCfv4",
       },
       description:
-        "The MASTER IN SCIENCE IN ENVIRONMENTAL SCIENCE AND MANAGEMENT program is designed to prepare students for careers in environmental management, conservation, and sustainable resource utilization. The program integrates scientific principles with management strategies to address complex environmental challenges.",
+        "The MASTER OF SCIENCE IN MATHEMATICS program includes advanced study of mathematical theory, analysis, and applications. The program prepares graduates to address various challenges in modern mathematics, including developing new mathematical models, solving complex problems, and implementing computational methods for scientific and industrial applications.",
       programOutcomes: [
         {
           id: "MS01",
-          text: "Apply advanced knowledge of environmental science and management principles to solve complex environmental problems.",
+          text: "Apply advanced knowledge of mathematical theory, analysis, and applications to solve complex problems in various fields.",
         },
         {
           id: "MS02",
-          text: "Design and conduct original research in environmental science using appropriate methodologies, analytical techniques, and interpretation of results.",
+          text: "Design and conduct original research in mathematics using appropriate methodologies, analytical techniques, and interpretation of results.",
         },
         {
           id: "MS03",
@@ -49,15 +50,15 @@ const COFESGraduate = () => {
         },
         {
           id: "MS04",
-          text: "Function effectively as a member or leader in diverse teams to achieve common research and development goals in environmental management.",
+          text: "Function effectively as a member or leader in diverse teams to achieve common research and development goals.",
         },
         {
           id: "MS05",
-          text: "Recognize professional responsibilities and make informed judgments in environmental science and management based on ecological, social, ethical, and scientific principles.",
+          text: "Recognize professional responsibilities and make informed judgments in mathematical research and applications based on logical, social, ethical, and scientific principles.",
         },
         {
           id: "MS06",
-          text: "Engage in independent learning for continual professional development as an environmental scientist who serves the community and environment.",
+          text: "Engage in independent learning for continual professional development as a mathematician who serves the scientific community.",
         },
       ],
       accreditation: "CHED Recognized Program",
@@ -65,41 +66,86 @@ const COFESGraduate = () => {
         "Duration: 2 years (4 semesters)",
         "Total Units: 36 units",
         "Research Thesis: Required",
-        "Field Work: Required",
-        "Mode of Delivery: Face-to-face with field components",
+        "Mode of Delivery: Face-to-face with computational components",
       ],
       programEducationalObjectives: [
-        "Develop environmental scientists with advanced knowledge in ecological principles and management strategies",
-        "Prepare graduates to conduct original research in environmental science and management",
-        "Equip students with skills to address complex environmental challenges",
-        "Foster innovation in sustainable resource management and conservation",
-      ],
-      careers: [
-        "Environmental Scientist",
-        "Conservation Specialist",
-        "Environmental Consultant",
-        "Natural Resource Manager",
-        "Sustainability Coordinator",
-        "Environmental Policy Analyst",
+        "Develop mathematicians with advanced knowledge in mathematical theory and applications",
+        "Prepare graduates to conduct original research in mathematics",
+        "Equip students with skills to solve complex mathematical problems in various fields",
+        "Foster innovation in mathematical modeling and computational methods",
       ],
     },
-  ]
+    {
+      id: 2,
+      name: "Doctor of Philosophy in Mathematics (PhD Math)",
+      icon: GraduationCap,
+      color: "from-teal-700 to-teal-900",
+      curriculumFiles: {
+        2023: "https://drive.google.com/file/d/11glbB9QIOGL9WBYCSt4hV1S0e-fO7PBF/view?usp=sharing",
+      },
+      syllabusFiles: {
+        2023: "https://drive.google.com/drive/folders/1tbEXz6DnSsQhBm9_ri1VQScmQzjeCfv4",
+      },
+      description:
+        "The DOCTOR OF PHILOSOPHY IN MATHEMATICS program is designed for students who wish to pursue advanced research in mathematics. The program provides comprehensive training in mathematical theory, analysis, and applications, preparing graduates for careers in academia, research institutions, and specialized industries.",
+      programOutcomes: [
+        {
+          id: "PhD01",
+          text: "Demonstrate mastery of advanced mathematical concepts, theories, and methodologies to address complex mathematical problems.",
+        },
+        {
+          id: "PhD02",
+          text: "Conduct original and significant research that contributes to the advancement of mathematical knowledge and applications.",
+        },
+        {
+          id: "PhD03",
+          text: "Communicate complex mathematical ideas effectively to both specialized and general audiences through publications, presentations, and teaching.",
+        },
+        {
+          id: "PhD04",
+          text: "Collaborate effectively with researchers from diverse disciplines to address multidisciplinary problems requiring mathematical expertise.",
+        },
+        {
+          id: "PhD05",
+          text: "Evaluate the ethical implications of mathematical research and applications in various contexts.",
+        },
+        {
+          id: "PhD06",
+          text: "Develop and maintain a program of independent research and lifelong learning in mathematics and related fields.",
+        },
+      ],
+      accreditation: "CHED Recognized Program",
+      programSpecifications: [
+        "Duration: 3-5 years",
+        "Total Units: 60 units",
+        "Dissertation: Required",
+        "Comprehensive Examination: Required",
+        "Mode of Delivery: Face-to-face with research components",
+      ],
+      programEducationalObjectives: [
+        "Develop scholars who can contribute to the advancement of mathematical knowledge through original research",
+        "Prepare leaders in mathematical research and education",
+        "Equip graduates with skills to address complex mathematical problems in various disciplines",
+        "Foster innovation in mathematical theory and applications",
+      ],
+    },
+  ];
 
-  const [programsState, setProgramsState] = useState(programs)
-  const [showCurriculumUpload, setShowCurriculumUpload] = useState(false)
-  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false)
-  const [selectedProgram, setSelectedProgram] = useState(null)
-  const [selectedYear, setSelectedYear] = useState("2023")
-  const [showCurriculumViewer, setShowCurriculumViewer] = useState(false)
-  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false)
-  const [fileToUpload, setFileToUpload] = useState(null)
-  const [isUploading, setIsUploading] = useState(false)
-  const [folderStatus, setFolderStatus] = useState("")
-  const [showProgramDetails, setShowProgramDetails] = useState(false)
-  const [uploadType, setUploadType] = useState("curriculum") // "curriculum" or "syllabus"
-  const [syllabusFileToUpload, setSyllabusFileToUpload] = useState(null)
-  const [isSyllabusUploading, setIsSyllabusUploading] = useState(false)
-  const [syllabusStatus, setSyllabusStatus] = useState("")
+  const [programsState, setProgramsState] = useState(programs);
+  const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState(null);
+  const [selectedYear, setSelectedYear] = useState("2023");
+  const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
+  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [folderStatus, setFolderStatus] = useState("");
+  const [showProgramDetails, setShowProgramDetails] = useState(false);
+  const [uploadType, setUploadType] = useState("curriculum"); // "curriculum" or "syllabus"
+  const [syllabusFileToUpload, setSyllabusFileToUpload] = useState(null);
+  const [isSyllabusUploading, setIsSyllabusUploading] = useState(false);
+  const [syllabusStatus, setSyllabusStatus] = useState("");
 
   // Modify the login hook to handle both curriculum and syllabus file uploads
   const login = useGoogleLogin({
@@ -107,15 +153,15 @@ const COFESGraduate = () => {
       // Handle curriculum file upload
       if (fileToUpload && selectedProgram !== null && !showSyllabusUpload) {
         try {
-          setIsUploading(true)
-          setFolderStatus("Starting upload process...")
+          setIsUploading(true);
+          setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for COFES Graduate - PRESERVE EXISTING FOLDER ID
-          const targetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP"
+          // Hardcoded folder ID for CMNS Graduate - PRESERVE EXISTING FOLDER ID
+          const targetFolderId = "1HhlqFwiIJ3LDCLXGtbfdsFPD278jPFWa";
 
           // First verify we can access the folder
           try {
-            setFolderStatus("Verifying folder access...")
+            setFolderStatus("Verifying folder access...");
             const folderCheckResponse = await fetch(
               `https://www.googleapis.com/drive/v3/files/${targetFolderId}?fields=id,name,mimeType`,
               {
@@ -123,56 +169,63 @@ const COFESGraduate = () => {
                 headers: {
                   Authorization: `Bearer ${tokenResponse.access_token}`,
                 },
-              },
-            )
+              }
+            );
 
             if (!folderCheckResponse.ok) {
               throw new Error(
-                `Cannot access target folder: ${folderCheckResponse.status} ${folderCheckResponse.statusText}`,
-              )
+                `Cannot access target folder: ${folderCheckResponse.status} ${folderCheckResponse.statusText}`
+              );
             }
 
-            const folderData = await folderCheckResponse.json()
-            setFolderStatus(`Uploading to folder: ${folderData.name}`)
+            const folderData = await folderCheckResponse.json();
+            setFolderStatus(`Uploading to folder: ${folderData.name}`);
           } catch (folderError) {
-            console.error("Folder access error:", folderError)
-            setFolderStatus("Cannot access target folder. Uploading to root instead.")
+            console.error("Folder access error:", folderError);
+            setFolderStatus(
+              "Cannot access target folder. Uploading to root instead."
+            );
             // Continue with upload to root if folder is inaccessible
           }
 
           // Simple direct upload approach
-          setFolderStatus("Uploading file...")
+          setFolderStatus("Uploading file...");
 
           // Create file metadata
           const metadata = {
             name: fileToUpload.name,
             mimeType: fileToUpload.type,
-          }
+          };
 
           // Add the folder ID to parents if we have access
           if (targetFolderId) {
-            metadata.parents = [targetFolderId]
+            metadata.parents = [targetFolderId];
           }
 
           // Step 1: Create the file metadata
-          const metadataResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(metadata),
-          })
+          const metadataResponse = await fetch(
+            "https://www.googleapis.com/drive/v3/files",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(metadata),
+            }
+          );
 
           if (!metadataResponse.ok) {
-            const errorData = await metadataResponse.json().catch(() => ({}))
-            console.error("Metadata creation error:", errorData)
-            throw new Error(`Failed to create file metadata: ${metadataResponse.status} ${metadataResponse.statusText}`)
+            const errorData = await metadataResponse.json().catch(() => ({}));
+            console.error("Metadata creation error:", errorData);
+            throw new Error(
+              `Failed to create file metadata: ${metadataResponse.status} ${metadataResponse.statusText}`
+            );
           }
 
-          const fileData = await metadataResponse.json()
-          const fileId = fileData.id
-          setFolderStatus("File created, uploading content...")
+          const fileData = await metadataResponse.json();
+          const fileId = fileData.id;
+          setFolderStatus("File created, uploading content...");
 
           // Step 2: Upload the file content
           const contentResponse = await fetch(
@@ -184,35 +237,46 @@ const COFESGraduate = () => {
                 "Content-Type": fileToUpload.type,
               },
               body: fileToUpload,
-            },
-          )
+            }
+          );
 
           if (!contentResponse.ok) {
-            throw new Error(`Failed to upload file content: ${contentResponse.status} ${contentResponse.statusText}`)
+            throw new Error(
+              `Failed to upload file content: ${contentResponse.status} ${contentResponse.statusText}`
+            );
           }
 
-          setFolderStatus("Setting file permissions...")
+          setFolderStatus("Setting file permissions...");
 
           // Step 3: Set permissions to make the file accessible via link
           try {
-            const permissionResponse = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${tokenResponse.access_token}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                role: "reader",
-                type: "anyone",
-                allowFileDiscovery: false,
-              }),
-            })
+            const permissionResponse = await fetch(
+              `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${tokenResponse.access_token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  role: "reader",
+                  type: "anyone",
+                  allowFileDiscovery: false,
+                }),
+              }
+            );
 
             if (!permissionResponse.ok) {
-              console.warn("Permission setting warning:", await permissionResponse.text())
+              console.warn(
+                "Permission setting warning:",
+                await permissionResponse.text()
+              );
             }
           } catch (permError) {
-            console.warn("Error setting permissions, but continuing:", permError)
+            console.warn(
+              "Error setting permissions, but continuing:",
+              permError
+            );
           }
 
           // Step 4: Get the file's web view link
@@ -223,45 +287,50 @@ const COFESGraduate = () => {
               headers: {
                 Authorization: `Bearer ${tokenResponse.access_token}`,
               },
-            },
-          )
+            }
+          );
 
-          let fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`
+          let fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
 
           if (getFileResponse.ok) {
-            const fileDetails = await getFileResponse.json()
-            fileLink = fileDetails.webViewLink || fileLink
+            const fileDetails = await getFileResponse.json();
+            fileLink = fileDetails.webViewLink || fileLink;
           }
 
           // Update program state with the Google Drive link
-          const updatedPrograms = [...programsState]
-          updatedPrograms[selectedProgram].curriculumFiles[selectedYear] = fileLink
-          setProgramsState(updatedPrograms)
+          const updatedPrograms = [...programsState];
+          updatedPrograms[selectedProgram].curriculumFiles[selectedYear] =
+            fileLink;
+          setProgramsState(updatedPrograms);
 
-          setShowCurriculumUpload(false)
-          setFileToUpload(null)
-          setFolderStatus("")
-          alert("Curriculum file uploaded successfully to Google Drive!")
+          setShowCurriculumUpload(false);
+          setFileToUpload(null);
+          setFolderStatus("");
+          alert("Curriculum file uploaded successfully to Google Drive!");
         } catch (error) {
-          console.error("Upload error:", error)
-          alert(`Error uploading file: ${error.message}`)
-          setFolderStatus("")
+          console.error("Upload error:", error);
+          alert(`Error uploading file: ${error.message}`);
+          setFolderStatus("");
         } finally {
-          setIsUploading(false)
+          setIsUploading(false);
         }
       }
       // Handle syllabus file upload
-      else if (syllabusFileToUpload && selectedProgram !== null && showSyllabusUpload) {
+      else if (
+        syllabusFileToUpload &&
+        selectedProgram !== null &&
+        showSyllabusUpload
+      ) {
         try {
-          setIsSyllabusUploading(true)
-          setSyllabusStatus("Starting upload process...")
+          setIsSyllabusUploading(true);
+          setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for COFES Graduate Syllabus - PRESERVE EXISTING FOLDER ID
-          const syllabusTargetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP" // Using the same folder ID for now
+          // Hardcoded folder ID for CMNS Graduate Syllabus - PRESERVE EXISTING FOLDER ID
+          const syllabusTargetFolderId = "1HhlqFwiIJ3LDCLXGtbfdsFPD278jPFWa"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
-            setSyllabusStatus("Verifying folder access...")
+            setSyllabusStatus("Verifying folder access...");
             const folderCheckResponse = await fetch(
               `https://www.googleapis.com/drive/v3/files/${syllabusTargetFolderId}?fields=id,name,mimeType`,
               {
@@ -269,56 +338,63 @@ const COFESGraduate = () => {
                 headers: {
                   Authorization: `Bearer ${tokenResponse.access_token}`,
                 },
-              },
-            )
+              }
+            );
 
             if (!folderCheckResponse.ok) {
               throw new Error(
-                `Cannot access target folder: ${folderCheckResponse.status} ${folderCheckResponse.statusText}`,
-              )
+                `Cannot access target folder: ${folderCheckResponse.status} ${folderCheckResponse.statusText}`
+              );
             }
 
-            const folderData = await folderCheckResponse.json()
-            setSyllabusStatus(`Uploading to folder: ${folderData.name}`)
+            const folderData = await folderCheckResponse.json();
+            setSyllabusStatus(`Uploading to folder: ${folderData.name}`);
           } catch (folderError) {
-            console.error("Folder access error:", folderError)
-            setSyllabusStatus("Cannot access target folder. Uploading to root instead.")
+            console.error("Folder access error:", folderError);
+            setSyllabusStatus(
+              "Cannot access target folder. Uploading to root instead."
+            );
             // Continue with upload to root if folder is inaccessible
           }
 
           // Simple direct upload approach
-          setSyllabusStatus("Uploading syllabus file...")
+          setSyllabusStatus("Uploading syllabus file...");
 
           // Create file metadata
           const metadata = {
             name: syllabusFileToUpload.name,
             mimeType: syllabusFileToUpload.type,
-          }
+          };
 
           // Add the folder ID to parents if we have access
           if (syllabusTargetFolderId) {
-            metadata.parents = [syllabusTargetFolderId]
+            metadata.parents = [syllabusTargetFolderId];
           }
 
           // Step 1: Create the file metadata
-          const metadataResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(metadata),
-          })
+          const metadataResponse = await fetch(
+            "https://www.googleapis.com/drive/v3/files",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(metadata),
+            }
+          );
 
           if (!metadataResponse.ok) {
-            const errorData = await metadataResponse.json().catch(() => ({}))
-            console.error("Metadata creation error:", errorData)
-            throw new Error(`Failed to create file metadata: ${metadataResponse.status} ${metadataResponse.statusText}`)
+            const errorData = await metadataResponse.json().catch(() => ({}));
+            console.error("Metadata creation error:", errorData);
+            throw new Error(
+              `Failed to create file metadata: ${metadataResponse.status} ${metadataResponse.statusText}`
+            );
           }
 
-          const fileData = await metadataResponse.json()
-          const fileId = fileData.id
-          setSyllabusStatus("File created, uploading content...")
+          const fileData = await metadataResponse.json();
+          const fileId = fileData.id;
+          setSyllabusStatus("File created, uploading content...");
 
           // Step 2: Upload the file content
           const contentResponse = await fetch(
@@ -330,35 +406,46 @@ const COFESGraduate = () => {
                 "Content-Type": syllabusFileToUpload.type,
               },
               body: syllabusFileToUpload,
-            },
-          )
+            }
+          );
 
           if (!contentResponse.ok) {
-            throw new Error(`Failed to upload file content: ${contentResponse.status} ${contentResponse.statusText}`)
+            throw new Error(
+              `Failed to upload file content: ${contentResponse.status} ${contentResponse.statusText}`
+            );
           }
 
-          setSyllabusStatus("Setting file permissions...")
+          setSyllabusStatus("Setting file permissions...");
 
           // Step 3: Set permissions to make the file accessible via link
           try {
-            const permissionResponse = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${tokenResponse.access_token}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                role: "reader",
-                type: "anyone",
-                allowFileDiscovery: false,
-              }),
-            })
+            const permissionResponse = await fetch(
+              `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${tokenResponse.access_token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  role: "reader",
+                  type: "anyone",
+                  allowFileDiscovery: false,
+                }),
+              }
+            );
 
             if (!permissionResponse.ok) {
-              console.warn("Permission setting warning:", await permissionResponse.text())
+              console.warn(
+                "Permission setting warning:",
+                await permissionResponse.text()
+              );
             }
           } catch (permError) {
-            console.warn("Error setting permissions, but continuing:", permError)
+            console.warn(
+              "Error setting permissions, but continuing:",
+              permError
+            );
           }
 
           // Step 4: Get the file's web view link
@@ -369,186 +456,187 @@ const COFESGraduate = () => {
               headers: {
                 Authorization: `Bearer ${tokenResponse.access_token}`,
               },
-            },
-          )
+            }
+          );
 
-          let fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`
+          let fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
 
           if (getFileResponse.ok) {
-            const fileDetails = await getFileResponse.json()
-            fileLink = fileDetails.webViewLink || fileLink
+            const fileDetails = await getFileResponse.json();
+            fileLink = fileDetails.webViewLink || fileLink;
           }
 
           // Update program state with the Google Drive link
-          const updatedPrograms = [...programsState]
-          updatedPrograms[selectedProgram].syllabusFiles[selectedYear] = fileLink
-          setProgramsState(updatedPrograms)
+          const updatedPrograms = [...programsState];
+          updatedPrograms[selectedProgram].syllabusFiles[selectedYear] =
+            fileLink;
+          setProgramsState(updatedPrograms);
 
-          setShowSyllabusUpload(false)
-          setSyllabusFileToUpload(null)
-          setSyllabusStatus("")
-          alert("Syllabus file uploaded successfully to Google Drive!")
+          setShowSyllabusUpload(false);
+          setSyllabusFileToUpload(null);
+          setSyllabusStatus("");
+          alert("Syllabus file uploaded successfully to Google Drive!");
         } catch (error) {
-          console.error("Upload error:", error)
-          alert(`Error uploading syllabus file: ${error.message}`)
-          setSyllabusStatus("")
+          console.error("Upload error:", error);
+          alert(`Error uploading syllabus file: ${error.message}`);
+          setSyllabusStatus("");
         } finally {
-          setIsSyllabusUploading(false)
+          setIsSyllabusUploading(false);
         }
       }
     },
     onError: (error) => {
-      console.log("Google Login Failed:", error)
-      alert("Google login failed. Please try again.")
-      setIsUploading(false)
-      setFolderStatus("")
-      setIsSyllabusUploading(false)
-      setSyllabusStatus("")
+      console.log("Google Login Failed:", error);
+      alert("Google login failed. Please try again.");
+      setIsUploading(false);
+      setFolderStatus("");
+      setIsSyllabusUploading(false);
+      setSyllabusStatus("");
     },
     scope: "https://www.googleapis.com/auth/drive.file",
-  })
+  });
 
   // Handle file selection
   const handleFileSelect = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFileToUpload(e.target.files[0])
+      setFileToUpload(e.target.files[0]);
     }
-  }
+  };
 
   // Handle file upload
   const handleFileUpload = () => {
     if (!fileToUpload) {
-      alert("Please select a file first")
-      return
+      alert("Please select a file first");
+      return;
     }
 
     // Trigger Google login which will then upload the file
-    login()
-  }
+    login();
+  };
 
   // Handle syllabus file selection
   const handleSyllabusFileSelect = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setSyllabusFileToUpload(e.target.files[0])
+      setSyllabusFileToUpload(e.target.files[0]);
     }
-  }
+  };
 
   // Handle syllabus file upload
   const handleSyllabusUpload = () => {
     if (!syllabusFileToUpload) {
-      alert("Please select a file first")
-      return
+      alert("Please select a file first");
+      return;
     }
 
     // Trigger Google login which will then upload the file
-    login()
-  }
+    login();
+  };
 
   // Handle program click to show details
   const handleProgramClick = (programIndex) => {
-    setSelectedProgram(programIndex)
-    setShowProgramDetails(true)
-  }
+    setSelectedProgram(programIndex);
+    setShowProgramDetails(true);
+  };
 
   // Toggle dropdown visibility
   const toggleDropdown = (dropdown) => {
     if (activeDropdown === dropdown) {
-      setActiveDropdown(null)
+      setActiveDropdown(null);
     } else {
-      setActiveDropdown(dropdown)
+      setActiveDropdown(dropdown);
     }
-  }
+  };
 
-  const [activeDropdown, setActiveDropdown] = useState(null)
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   // Updated handleCurriculumYearSelect function to handle all years consistently
   const handleCurriculumYearSelect = (year) => {
-    const curriculumFile = programsState[selectedProgram].curriculumFiles[year]
+    const curriculumFile = programsState[selectedProgram].curriculumFiles[year];
 
     // Check if the curriculum file is a Google Drive link
     if (curriculumFile && curriculumFile.includes("drive.google.com")) {
       try {
         // Get the file ID from the Google Drive URL
-        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0]
+        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0];
 
         if (!fileId) {
-          throw new Error("Could not extract file ID from URL")
+          throw new Error("Could not extract file ID from URL");
         }
 
         // Use the format that requires authentication
-        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`
+        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
 
         // Open the link directly in a new tab
-        window.open(authRequiredUrl, "_blank")
+        window.open(authRequiredUrl, "_blank");
       } catch (error) {
         // If there's an error (like invalid URL format), show the curriculum viewer instead
-        console.error("Error opening Google Drive link:", error)
-        setSelectedYear(year)
-        setShowCurriculumViewer(true)
+        console.error("Error opening Google Drive link:", error);
+        setSelectedYear(year);
+        setShowCurriculumViewer(true);
       }
     } else {
       // For files that are not Google Drive links, show the curriculum viewer
-      setSelectedYear(year)
-      setShowCurriculumViewer(true)
+      setSelectedYear(year);
+      setShowCurriculumViewer(true);
     }
 
-    setActiveDropdown(null)
-  }
+    setActiveDropdown(null);
+  };
 
   // Function to extract folder ID from Google Drive URL
   const getFolderIdFromUrl = (url) => {
-    const match = url.match(/[-\w]{25,}/)
-    return match ? match[0] : null
-  }
+    const match = url.match(/[-\w]{25,}/);
+    return match ? match[0] : null;
+  };
 
   // Handle syllabus year selection
   const handleSyllabusYearSelect = (year) => {
-    const syllabusFile = programsState[selectedProgram].syllabusFiles[year]
+    const syllabusFile = programsState[selectedProgram].syllabusFiles[year];
 
     // Check if the syllabus file is a Google Drive link
     if (syllabusFile && syllabusFile.includes("drive.google.com")) {
       try {
         // For folder links, open directly in a new tab
         if (syllabusFile.includes("folders")) {
-          window.open(syllabusFile, "_blank")
+          window.open(syllabusFile, "_blank");
         } else {
           // For file links, extract ID and open
-          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0]
+          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0];
 
           if (!fileId) {
-            throw new Error("Could not extract file ID from URL")
+            throw new Error("Could not extract file ID from URL");
           }
 
           // Use the format that requires authentication
-          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`
+          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
 
           // Open the link directly in a new tab
-          window.open(authRequiredUrl, "_blank")
+          window.open(authRequiredUrl, "_blank");
         }
       } catch (error) {
         // If there's an error (like invalid URL format), show the syllabus viewer instead
-        console.error("Error opening Google Drive link:", error)
-        setSelectedYear(year)
-        setShowSyllabusViewer(true)
+        console.error("Error opening Google Drive link:", error);
+        setSelectedYear(year);
+        setShowSyllabusViewer(true);
       }
     } else {
       // For files that are not Google Drive links, show the syllabus viewer
-      setSelectedYear(year)
-      setShowSyllabusViewer(true)
+      setSelectedYear(year);
+      setShowSyllabusViewer(true);
     }
 
-    setActiveDropdown(null)
-  }
+    setActiveDropdown(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-green-800 to-green-900 text-white py-12 relative">
+      <div className="bg-gradient-to-r from-teal-800 to-teal-900 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
         <div className="container mx-auto px-6 relative">
           <Link
             to="/colleges"
-            className="absolute left-0 -top-6 inline-flex items-center text-green-800 hover:text-green-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
+            className="absolute left-0 -top-6 inline-flex items-center text-teal-800 hover:text-teal-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Colleges</span>
@@ -557,15 +645,23 @@ const COFESGraduate = () => {
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* COFES Logo */}
+            {/* CMNS Logo */}
             <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
-              <img src="/images/cofes-logo.png" alt="COFES Logo" className="w-full h-full object-contain" />
+              <img
+                src="/images/cmns-logo.png"
+                alt="CMNS Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">College of Forestry and Environmental Sciences</h1>
+            {/* Update the hero section title and description */}
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              College of Mathematics and Natural Sciences
+            </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to prepare you for advanced careers in forestry, environmental
-              management, and sustainable resource conservation.
+              Explore our graduate programs designed to advance your expertise
+              in mathematics and prepare you for careers in research, academia,
+              and specialized industries.
             </p>
           </div>
         </div>
@@ -573,7 +669,10 @@ const COFESGraduate = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-8">Graduate Programs</h2>
+        {/* Change the section heading from "Undergraduate Programs" to "Graduate Programs" */}
+        <h2 className="text-2xl font-bold text-gray-800 mb-8">
+          Graduate Programs
+        </h2>
 
         {/* Programs List */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -590,11 +689,15 @@ const COFESGraduate = () => {
                   >
                     <program.icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800">{program.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-800">
+                    {program.name}
+                  </h3>
                 </div>
-                <p className="text-gray-600 mb-4 line-clamp-2">{program.description}</p>
+                <p className="text-gray-600 mb-4 line-clamp-2">
+                  {program.description}
+                </p>
                 <div className="flex justify-end">
-                  <button className="text-green-600 hover:text-green-800 font-medium flex items-center text-sm">
+                  <button className="text-teal-600 hover:text-teal-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -608,16 +711,18 @@ const COFESGraduate = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-green-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-teal-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-green-700">{programsState[selectedProgram].name}</h3>
+                  <h3 className="text-2xl font-bold text-teal-700">
+                    {programsState[selectedProgram].name}
+                  </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -630,18 +735,22 @@ const COFESGraduate = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-teal-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
-                  <p className="text-gray-700 leading-relaxed mb-6">{programsState[selectedProgram].description}</p>
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    {programsState[selectedProgram].description}
+                  </p>
 
-                  <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex items-start">
-                    <Info className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-100 flex items-start">
+                    <Info className="h-5 w-5 text-teal-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
-                      This program is designed to prepare students for advanced careers in the field of{" "}
-                      {programsState[selectedProgram].name.split("in")[1]?.trim() || "Environmental Science"}. Students
-                      will gain both theoretical knowledge and practical skills through coursework, research, and
-                      field-based learning.
+                      This program is designed to prepare students for advanced
+                      careers in the field of{" "}
+                      {programsState[selectedProgram].name.split("(")[0].trim()}
+                      . Students will gain both theoretical knowledge and
+                      practical skills through coursework, research, and
+                      project-based learning.
                     </p>
                   </div>
                 </div>
@@ -649,35 +758,53 @@ const COFESGraduate = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-teal-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {programsState[selectedProgram].programSpecifications?.map((spec, index) => (
-                      <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
-                        <span className="w-2 h-2 bg-green-600 rounded-full mr-2 mt-1.5"></span>
-                        <span className="text-gray-700">{spec}</span>
-                      </div>
-                    ))}
+                    {programsState[selectedProgram].programSpecifications?.map(
+                      (spec, index) => (
+                        <div
+                          key={index}
+                          className="bg-gray-50 p-4 rounded-lg flex items-start"
+                        >
+                          <span className="w-2 h-2 bg-teal-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="text-gray-700">{spec}</span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
 
                 {/* Program Educational Objectives */}
-                {programsState[selectedProgram].programEducationalObjectives && (
+                {programsState[selectedProgram]
+                  .programEducationalObjectives && (
                   <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                      <BookOpen className="h-5 w-5 text-green-600 mr-2" />
+                      <GraduationCap className="h-5 w-5 text-teal-600 mr-2" />
                       PROGRAM EDUCATIONAL OBJECTIVES
                     </h2>
-                    <p className="text-gray-700 mb-4">The {programsState[selectedProgram].name} program aims to:</p>
+                    <p className="text-gray-700 mb-4">
+                      The {programsState[selectedProgram].name} program aims to:
+                    </p>
                     <div className="space-y-3">
-                      {programsState[selectedProgram].programEducationalObjectives?.map((objective, index) => (
-                        <div key={index} className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
-                          <p className="text-gray-700">
-                            <span className="font-semibold text-green-700">Objective {index + 1}:</span> {objective}
-                          </p>
-                        </div>
-                      ))}
+                      {programsState[
+                        selectedProgram
+                      ].programEducationalObjectives?.map(
+                        (objective, index) => (
+                          <div
+                            key={index}
+                            className="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500"
+                          >
+                            <p className="text-gray-700">
+                              <span className="font-semibold text-teal-700">
+                                Objective {index + 1}:
+                              </span>{" "}
+                              {objective}
+                            </p>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
                 )}
@@ -685,47 +812,65 @@ const COFESGraduate = () => {
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-teal-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
-                    Upon successful completion of the {programsState[selectedProgram].name} program, graduates will be
-                    able to:
+                    Upon successful completion of the{" "}
+                    {programsState[selectedProgram].name} program, graduates
+                    will be able to:
                   </p>
                   <div className="space-y-3">
-                    {programsState[selectedProgram].programOutcomes.map((outcome, index) => (
-                      <div key={index} className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
-                        <p className="text-gray-700">
-                          <span className="font-semibold text-green-700">{outcome.id}:</span> {outcome.text}
-                        </p>
-                      </div>
-                    ))}
+                    {programsState[selectedProgram].programOutcomes.map(
+                      (outcome, index) => (
+                        <div
+                          key={index}
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500"
+                        >
+                          <p className="text-gray-700">
+                            <span className="font-semibold text-teal-700">
+                              {outcome.id}:
+                            </span>{" "}
+                            {outcome.text}
+                          </p>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
 
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-green-600 mr-2" />
-                    CURRICULUM & SYLLABUS
+                    <BookOpen className="h-5 w-5 text-teal-600 mr-2" />
+                    CURRICULUM & SYLLABLES
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Curriculum Files */}
                     <div>
-                      <h3 className="text-lg font-medium text-gray-800 mb-3">Curriculum Files</h3>
+                      <h3 className="text-lg font-medium text-gray-800 mb-3">
+                        Curriculum Files
+                      </h3>
                       <div className="space-y-3 mb-4">
-                        {Object.entries(programsState[selectedProgram].curriculumFiles).map(([year, fileUrl]) => (
-                          <div key={year} className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        {Object.entries(
+                          programsState[selectedProgram].curriculumFiles
+                        ).map(([year, fileUrl]) => (
+                          <div
+                            key={year}
+                            className="bg-gray-50 p-3 rounded-lg border border-gray-200"
+                          >
                             <div className="flex justify-between items-center">
-                              <span className="font-medium text-gray-800">{year} Curriculum</span>
+                              <span className="font-medium text-gray-800">
+                                {year} Curriculum
+                              </span>
                               <button
                                 onClick={(e) => {
-                                  e.stopPropagation()
-                                  setSelectedYear(year)
-                                  setShowCurriculumViewer(true)
+                                  e.stopPropagation();
+                                  setSelectedYear(year);
+                                  setShowCurriculumViewer(true);
                                 }}
-                                className="text-green-600 hover:text-green-800 text-sm flex items-center"
+                                className="text-teal-600 hover:text-teal-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -736,11 +881,11 @@ const COFESGraduate = () => {
                       </div>
                       <button
                         onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedYear("2023")
-                          setShowCurriculumUpload(true)
+                          e.stopPropagation();
+                          setSelectedYear("2023");
+                          setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
@@ -749,26 +894,39 @@ const COFESGraduate = () => {
 
                     {/* Syllables */}
                     <div>
-                      <h3 className="text-lg font-medium text-gray-800 mb-3">Course Syllabus</h3>
+                      <h3 className="text-lg font-medium text-gray-800 mb-3">
+                        Course Syllabus
+                      </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Course syllabus provide detailed information about individual courses, including learning
-                        objectives, topics covered, assessment methods, and required readings.
+                        Course syllabus provide detailed information about
+                        individual courses, including learning objectives,
+                        topics covered, assessment methods, and required
+                        readings.
                       </p>
                       <div className="flex space-x-3">
                         <button
                           onClick={(e) => {
-                            e.stopPropagation()
+                            e.stopPropagation();
                             // Open the syllabus folder in a new tab
                             if (
                               programsState[selectedProgram].syllabusFiles &&
-                              programsState[selectedProgram].syllabusFiles["2023"]
+                              programsState[selectedProgram].syllabusFiles[
+                                "2023"
+                              ]
                             ) {
-                              window.open(programsState[selectedProgram].syllabusFiles["2023"], "_blank")
+                              window.open(
+                                programsState[selectedProgram].syllabusFiles[
+                                  "2023"
+                                ],
+                                "_blank"
+                              );
                             } else {
-                              alert("No syllabus files available for this program yet.")
+                              alert(
+                                "No syllabus files available for this program yet."
+                              );
                             }
                           }}
-                          className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
+                          className="px-3 py-1.5 bg-white border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 text-sm flex items-center"
                         >
                           <ExternalLink className="h-4 w-4 mr-1" />
                           View Syllabus
@@ -783,7 +941,7 @@ const COFESGraduate = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
               >
                 Close
               </button>
@@ -798,23 +956,33 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-green-700">Upload Syllabus File</h3>
+                <h3 className="text-xl font-bold text-teal-700">
+                  Upload Syllabus File
+                </h3>
                 <button
                   onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
+              <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
                 <p className="text-gray-700">
-                  Uploading syllabus for: <span className="font-semibold">{programsState[selectedProgram].name}</span>
+                  Uploading syllabus for:{" "}
+                  <span className="font-semibold">
+                    {programsState[selectedProgram].name}
+                  </span>
                 </p>
                 <p className="text-sm text-gray-600 mt-2">
-                  Please upload the syllabus file for this program. The file will be uploaded directly to Google Drive.
+                  Please upload the syllabus file for this program. The file
+                  will be uploaded directly to Google Drive.
                 </p>
-                {syllabusStatus && <p className="text-sm text-gray-600 mt-2 italic">Status: {syllabusStatus}</p>}
+                {syllabusStatus && (
+                  <p className="text-sm text-gray-600 mt-2 italic">
+                    Status: {syllabusStatus}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-5">
@@ -823,12 +991,14 @@ const COFESGraduate = () => {
                   <div className="flex flex-col items-center">
                     <Upload className="h-12 w-12 text-gray-400 mb-3" />
                     <p className="text-gray-700 font-medium mb-2">
-                      {syllabusFileToUpload ? syllabusFileToUpload.name : "Drag and drop your syllabus file here"}
+                      {syllabusFileToUpload
+                        ? syllabusFileToUpload.name
+                        : "Drag and drop your syllabus file here"}
                     </p>
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -840,7 +1010,9 @@ const COFESGraduate = () => {
                       accept="image/*,.pdf"
                       onChange={handleSyllabusFileSelect}
                     />
-                    <p className="mt-3 text-xs text-gray-500">Supported formats: JPG, PNG, PDF (max 10MB)</p>
+                    <p className="mt-3 text-xs text-gray-500">
+                      Supported formats: JPG, PNG, PDF (max 10MB)
+                    </p>
                   </div>
                 </div>
 
@@ -856,7 +1028,7 @@ const COFESGraduate = () => {
                   <button
                     type="button"
                     onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
                     disabled={!syllabusFileToUpload || isSyllabusUploading}
                   >
                     {isSyllabusUploading ? (
@@ -903,20 +1075,29 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-green-700">Upload Curriculum File</h3>
+                <h3 className="text-xl font-bold text-teal-700">
+                  Upload Curriculum File
+                </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
+              <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
                 <p className="text-gray-700">
-                  Uploading curriculum for: <span className="font-semibold">{programsState[selectedProgram].name}</span>
+                  Uploading curriculum for:{" "}
+                  <span className="font-semibold">
+                    {programsState[selectedProgram].name}
+                  </span>
                 </p>
-                {folderStatus && <p className="text-sm text-gray-600 mt-2 italic">Status: {folderStatus}</p>}
+                {folderStatus && (
+                  <p className="text-sm text-gray-600 mt-2 italic">
+                    Status: {folderStatus}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 mt-2">
                   Files will be uploaded directly to the Google Drive folder.
                 </p>
@@ -928,12 +1109,14 @@ const COFESGraduate = () => {
                   <div className="flex flex-col items-center">
                     <Upload className="h-12 w-12 text-gray-400 mb-3" />
                     <p className="text-gray-700 font-medium mb-2">
-                      {fileToUpload ? fileToUpload.name : "Drag and drop your curriculum file here"}
+                      {fileToUpload
+                        ? fileToUpload.name
+                        : "Drag and drop your curriculum file here"}
                     </p>
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -945,7 +1128,9 @@ const COFESGraduate = () => {
                       accept="image/*,.pdf"
                       onChange={handleFileSelect}
                     />
-                    <p className="mt-3 text-xs text-gray-500">Supported formats: JPG, PNG, PDF (max 10MB)</p>
+                    <p className="mt-3 text-xs text-gray-500">
+                      Supported formats: JPG, PNG, PDF (max 10MB)
+                    </p>
                   </div>
                 </div>
 
@@ -961,7 +1146,7 @@ const COFESGraduate = () => {
                   <button
                     type="button"
                     onClick={handleFileUpload}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
@@ -1008,7 +1193,9 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-green-700">Program Curriculum</h3>
+                <h3 className="text-xl font-bold text-teal-700">
+                  Program Curriculum
+                </h3>
                 <p className="text-sm text-gray-600">
                   {programsState[selectedProgram].name} - {selectedYear}
                 </p>
@@ -1016,8 +1203,8 @@ const COFESGraduate = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => {
-                    setShowCurriculumUpload(true)
-                    setShowCurriculumViewer(false)
+                    setShowCurriculumUpload(true);
+                    setShowCurriculumViewer(false);
                   }}
                   className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
                 >
@@ -1026,7 +1213,7 @@ const COFESGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1035,10 +1222,16 @@ const COFESGraduate = () => {
 
             <div className="flex-1 overflow-auto p-4 bg-gray-50">
               <div className="flex justify-center">
-                {programsState[selectedProgram].curriculumFiles[selectedYear]?.includes("drive.google.com") ? (
+                {programsState[selectedProgram].curriculumFiles[
+                  selectedYear
+                ]?.includes("drive.google.com") ? (
                   // If it's a Google Drive file
                   <iframe
-                    src={getViewUrl(programsState[selectedProgram].curriculumFiles[selectedYear])}
+                    src={getViewUrl(
+                      programsState[selectedProgram].curriculumFiles[
+                        selectedYear
+                      ]
+                    )}
                     className="w-full h-[600px] border-0 shadow-md rounded-md"
                     title={`${programsState[selectedProgram].name} Curriculum ${selectedYear}`}
                     allowFullScreen
@@ -1046,7 +1239,11 @@ const COFESGraduate = () => {
                 ) : (
                   // If it's a regular image or placeholder
                   <img
-                    src={programsState[selectedProgram].curriculumFiles[selectedYear] || "/placeholder.svg"}
+                    src={
+                      programsState[selectedProgram].curriculumFiles[
+                        selectedYear
+                      ] || "/placeholder.svg"
+                    }
                     alt={`${programsState[selectedProgram].name} Curriculum ${selectedYear}`}
                     className="max-w-full h-auto shadow-md rounded-md"
                   />
@@ -1056,13 +1253,17 @@ const COFESGraduate = () => {
 
             <div className="p-4 border-t bg-white">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500">Click the download button to save this curriculum file</div>
+                <div className="text-sm text-gray-500">
+                  Click the download button to save this curriculum file
+                </div>
                 <a
-                  href={programsState[selectedProgram].curriculumFiles[selectedYear]}
+                  href={
+                    programsState[selectedProgram].curriculumFiles[selectedYear]
+                  }
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1092,7 +1293,9 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-green-700">Program Syllables</h3>
+                <h3 className="text-xl font-bold text-teal-700">
+                  Program Syllables
+                </h3>
                 <p className="text-sm text-gray-600">
                   {programsState[selectedProgram].name} - {selectedYear}
                 </p>
@@ -1100,8 +1303,8 @@ const COFESGraduate = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => {
-                    setShowSyllabusUpload(true)
-                    setShowSyllabusViewer(false)
+                    setShowSyllabusUpload(true);
+                    setShowSyllabusViewer(false);
                   }}
                   className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
                 >
@@ -1110,7 +1313,7 @@ const COFESGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1119,20 +1322,29 @@ const COFESGraduate = () => {
 
             <div className="flex-1 overflow-auto p-4 bg-gray-50">
               <div className="flex justify-center">
-                {programsState[selectedProgram].syllabusFiles[selectedYear]?.includes("drive.google.com") ? (
+                {programsState[selectedProgram].syllabusFiles[
+                  selectedYear
+                ]?.includes("drive.google.com") ? (
                   // If it's a Google Drive link
-                  programsState[selectedProgram].syllabusFiles[selectedYear].includes("folders") ? (
+                  programsState[selectedProgram].syllabusFiles[
+                    selectedYear
+                  ].includes("folders") ? (
                     // For folder links
                     <div className="bg-white p-4 rounded-lg shadow-md">
                       <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open the folder in Google Drive.
+                        This is a folder link. Click the button below to open
+                        the folder in Google Drive.
                       </p>
                       <div className="flex justify-center">
                         <a
-                          href={programsState[selectedProgram].syllabusFiles[selectedYear]}
+                          href={
+                            programsState[selectedProgram].syllabusFiles[
+                              selectedYear
+                            ]
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1153,7 +1365,11 @@ const COFESGraduate = () => {
                   ) : (
                     // For file links
                     <iframe
-                      src={getViewUrl(programsState[selectedProgram].syllabusFiles[selectedYear])}
+                      src={getViewUrl(
+                        programsState[selectedProgram].syllabusFiles[
+                          selectedYear
+                        ]
+                      )}
                       className="w-full h-[600px] border-0 shadow-md rounded-md"
                       title={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
                       allowFullScreen
@@ -1162,7 +1378,11 @@ const COFESGraduate = () => {
                 ) : (
                   // If it's a regular image or placeholder
                   <img
-                    src={programsState[selectedProgram].syllabusFiles[selectedYear] || "/placeholder.svg"}
+                    src={
+                      programsState[selectedProgram].syllabusFiles[
+                        selectedYear
+                      ] || "/placeholder.svg"
+                    }
                     alt={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
                     className="max-w-full h-auto shadow-md rounded-md"
                   />
@@ -1172,13 +1392,17 @@ const COFESGraduate = () => {
 
             <div className="p-4 border-t bg-white">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500">Click the download button to save this syllables file</div>
+                <div className="text-sm text-gray-500">
+                  Click the download button to save this syllables file
+                </div>
                 <a
-                  href={programsState[selectedProgram].syllabusFiles[selectedYear]}
+                  href={
+                    programsState[selectedProgram].syllabusFiles[selectedYear]
+                  }
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1202,7 +1426,7 @@ const COFESGraduate = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default COFESGraduate
+export default CMNSGraduate;

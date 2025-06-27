@@ -1,10 +1,19 @@
-"use client"
+"use client";
 
-import { Link } from "react-router-dom"
-import { useState } from "react"
-import { useGoogleLogin } from "@react-oauth/google"
-import { ChevronDown, X, Upload, FileText, HeartHandshake, ArrowLeft, ChevronRight, BookOpen } from "lucide-react"
-import { getViewUrl } from "../utils/googleDriveUtils"
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import {
+  ChevronDown,
+  X,
+  Upload,
+  FileText,
+  HeartHandshake,
+  ArrowLeft,
+  ChevronRight,
+  BookOpen,
+} from "lucide-react";
+import { getViewUrl } from "../../utils/googleDriveUtils";
 
 const CHASSGraduate = () => {
   // Graduate programs for CHASS with updated icons
@@ -59,55 +68,58 @@ const CHASSGraduate = () => {
         "Mode of Delivery: Face-to-face with online components",
       ],
     },
-  ]
+  ];
 
-  const [programsState, setProgramsState] = useState(programs)
-  const [showCurriculumUpload, setShowCurriculumUpload] = useState(false)
-  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false)
-  const [selectedProgram, setSelectedProgram] = useState(null)
-  const [selectedYear, setSelectedYear] = useState("2023")
-  const [showCurriculumViewer, setShowCurriculumViewer] = useState(false)
-  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false)
-  const [fileToUpload, setFileToUpload] = useState(null)
-  const [isUploading, setIsUploading] = useState(false)
-  const [folderStatus, setFolderStatus] = useState("")
-  const [showProgramDetails, setShowProgramDetails] = useState(false)
-  const [uploadType, setUploadType] = useState("curriculum") // "curriculum" or "syllabus"
+  const [programsState, setProgramsState] = useState(programs);
+  const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState(null);
+  const [selectedYear, setSelectedYear] = useState("2023");
+  const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
+  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [folderStatus, setFolderStatus] = useState("");
+  const [showProgramDetails, setShowProgramDetails] = useState(false);
+  const [uploadType, setUploadType] = useState("curriculum"); // "curriculum" or "syllabus"
 
   // Modify the login hook to simplify the upload process and redirect to the folder after upload
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       if (fileToUpload && selectedProgram !== null) {
         try {
-          setIsUploading(true)
-          setFolderStatus("Uploading file...")
+          setIsUploading(true);
+          setFolderStatus("Uploading file...");
 
           // Hardcoded folder ID for CHASS Graduate
-          const targetFolderId = "1ptFtrsGxGpinVqV9IBBHSGsUxCp6tLK8"
+          const targetFolderId = "1ptFtrsGxGpinVqV9IBBHSGsUxCp6tLK8";
 
           // Simple direct upload to the folder
           const metadata = {
             name: fileToUpload.name,
             mimeType: fileToUpload.type,
             parents: [targetFolderId],
-          }
+          };
 
           // Create file with metadata
-          const metadataResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(metadata),
-          })
+          const metadataResponse = await fetch(
+            "https://www.googleapis.com/drive/v3/files",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(metadata),
+            }
+          );
 
           if (!metadataResponse.ok) {
-            throw new Error(`Upload failed: ${metadataResponse.status}`)
+            throw new Error(`Upload failed: ${metadataResponse.status}`);
           }
 
-          const fileData = await metadataResponse.json()
-          const fileId = fileData.id
+          const fileData = await metadataResponse.json();
+          const fileId = fileData.id;
 
           // Upload file content
           const contentResponse = await fetch(
@@ -119,166 +131,169 @@ const CHASSGraduate = () => {
                 "Content-Type": fileToUpload.type,
               },
               body: fileToUpload,
-            },
-          )
+            }
+          );
 
           if (!contentResponse.ok) {
-            throw new Error(`Failed to upload file content`)
+            throw new Error(`Failed to upload file content`);
           }
 
           // Set permissions
-          await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              role: "reader",
-              type: "anyone",
-              allowFileDiscovery: false,
-            }),
-          })
+          await fetch(
+            `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                role: "reader",
+                type: "anyone",
+                allowFileDiscovery: false,
+              }),
+            }
+          );
 
           // Reset UI state
-          setFileToUpload(null)
-          setShowCurriculumUpload(false)
-          setShowSyllabusUpload(false)
-          setFolderStatus("")
+          setFileToUpload(null);
+          setShowCurriculumUpload(false);
+          setShowSyllabusUpload(false);
+          setFolderStatus("");
 
           // Show success message
-          alert("File uploaded successfully!")
+          alert("File uploaded successfully!");
         } catch (error) {
-          console.error("Upload error:", error)
-          alert(`Error uploading file: ${error.message}`)
+          console.error("Upload error:", error);
+          alert(`Error uploading file: ${error.message}`);
         } finally {
-          setIsUploading(false)
-          setFolderStatus("")
+          setIsUploading(false);
+          setFolderStatus("");
         }
       }
     },
     onError: (error) => {
-      console.log("Google Login Failed:", error)
-      alert("Google login failed. Please try again.")
-      setIsUploading(false)
-      setFolderStatus("")
+      console.log("Google Login Failed:", error);
+      alert("Google login failed. Please try again.");
+      setIsUploading(false);
+      setFolderStatus("");
     },
     scope: "https://www.googleapis.com/auth/drive.file",
-  })
+  });
 
   // Handle file selection
   const handleFileSelect = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFileToUpload(e.target.files[0])
+      setFileToUpload(e.target.files[0]);
     }
-  }
+  };
 
   // Handle file upload
   const handleFileUpload = () => {
     if (!fileToUpload) {
-      alert("Please select a file first")
-      return
+      alert("Please select a file first");
+      return;
     }
 
     // Trigger Google login which will then upload the file
-    login()
-  }
+    login();
+  };
 
   // Handle program click to show details
   const handleProgramClick = (programIndex) => {
-    setSelectedProgram(programIndex)
-    setShowProgramDetails(true)
-  }
+    setSelectedProgram(programIndex);
+    setShowProgramDetails(true);
+  };
 
   // Toggle dropdown visibility
   const toggleDropdown = (dropdown) => {
     if (activeDropdown === dropdown) {
-      setActiveDropdown(null)
+      setActiveDropdown(null);
     } else {
-      setActiveDropdown(dropdown)
+      setActiveDropdown(dropdown);
     }
-  }
+  };
 
-  const [activeDropdown, setActiveDropdown] = useState(null)
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   // Updated handleCurriculumYearSelect function to handle all years consistently
   const handleCurriculumYearSelect = (year) => {
-    const curriculumFile = programsState[selectedProgram].curriculumFiles[year]
+    const curriculumFile = programsState[selectedProgram].curriculumFiles[year];
 
     // Check if the curriculum file is a Google Drive link
     if (curriculumFile && curriculumFile.includes("drive.google.com")) {
       try {
         // Get the file ID from the Google Drive URL
-        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0]
+        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0];
 
         if (!fileId) {
-          throw new Error("Could not extract file ID from URL")
+          throw new Error("Could not extract file ID from URL");
         }
 
         // Use the format that requires authentication
-        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`
+        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
 
         // Open the link directly in a new tab
-        window.open(authRequiredUrl, "_blank")
+        window.open(authRequiredUrl, "_blank");
       } catch (error) {
         // If there's an error (like invalid URL format), show the curriculum viewer instead
-        console.error("Error opening Google Drive link:", error)
-        setSelectedYear(year)
-        setShowCurriculumViewer(true)
+        console.error("Error opening Google Drive link:", error);
+        setSelectedYear(year);
+        setShowCurriculumViewer(true);
       }
     } else {
       // For files that are not Google Drive links, show the curriculum viewer
-      setSelectedYear(year)
-      setShowCurriculumViewer(true)
+      setSelectedYear(year);
+      setShowCurriculumViewer(true);
     }
 
-    setActiveDropdown(null)
-  }
+    setActiveDropdown(null);
+  };
 
   // Function to extract folder ID from Google Drive URL
   const getFolderIdFromUrl = (url) => {
-    const match = url.match(/[-\w]{25,}/)
-    return match ? match[0] : null
-  }
+    const match = url.match(/[-\w]{25,}/);
+    return match ? match[0] : null;
+  };
 
   // Handle syllabus year selection
   const handleSyllabusYearSelect = (year) => {
-    const syllabusFile = programsState[selectedProgram].syllabusFiles[year]
+    const syllabusFile = programsState[selectedProgram].syllabusFiles[year];
 
     // Check if the syllabus file is a Google Drive link
     if (syllabusFile && syllabusFile.includes("drive.google.com")) {
       try {
         // For folder links, open directly in a new tab
         if (syllabusFile.includes("folders")) {
-          window.open(syllabusFile, "_blank")
+          window.open(syllabusFile, "_blank");
         } else {
           // For file links, extract ID and open
-          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0]
+          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0];
 
           if (!fileId) {
-            throw new Error("Could not extract file ID from URL")
+            throw new Error("Could not extract file ID from URL");
           }
 
           // Use the format that requires authentication
-          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`
+          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
 
           // Open the link directly in a new tab
-          window.open(authRequiredUrl, "_blank")
+          window.open(authRequiredUrl, "_blank");
         }
       } catch (error) {
         // If there's an error (like invalid URL format), show the syllabus viewer instead
-        console.error("Error opening Google Drive link:", error)
-        setSelectedYear(year)
-        setShowSyllabusViewer(true)
+        console.error("Error opening Google Drive link:", error);
+        setSelectedYear(year);
+        setShowSyllabusViewer(true);
       }
     } else {
       // For files that are not Google Drive links, show the syllabus viewer
-      setSelectedYear(year)
-      setShowSyllabusViewer(true)
+      setSelectedYear(year);
+      setShowSyllabusViewer(true);
     }
 
-    setActiveDropdown(null)
-  }
+    setActiveDropdown(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -299,16 +314,21 @@ const CHASSGraduate = () => {
           <div className="flex flex-col items-center text-center relative">
             {/* CHASS Logo */}
             <div className="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full p-1 flex-shrink-0 mb-4 md:mb-6 shadow-lg">
-              <img src="/images/chass-logo.png" alt="CHASS Logo" className="w-full h-full object-contain" />
+              <img
+                src="/images/chass-logo.png"
+                alt="CHASS Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">
               College of Humanities, Arts and Social Sciences
             </h1>
             <p className="text-base md:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to advance your career in the fields of humanities, arts, and
-              social sciences, with specialized training in guidance and counseling to help individuals navigate life
-              challenges.
+              Explore our graduate programs designed to advance your career in
+              the fields of humanities, arts, and social sciences, with
+              specialized training in guidance and counseling to help
+              individuals navigate life challenges.
             </p>
           </div>
         </div>
@@ -316,7 +336,9 @@ const CHASSGraduate = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 md:mb-8">Graduate Programs</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 md:mb-8">
+          Graduate Programs
+        </h2>
 
         {/* Programs List */}
         <div className="space-y-4 md:space-y-8">
@@ -334,10 +356,14 @@ const CHASSGraduate = () => {
                     >
                       <program.icon className="h-6 w-6 md:h-7 md:w-7" />
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-800">{program.name}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-gray-800">
+                      {program.name}
+                    </h3>
                   </div>
                   <div className="flex items-center mt-2 sm:mt-0">
-                    <span className="text-xs md:text-sm text-gray-500 mr-1 md:mr-2">View Details</span>
+                    <span className="text-xs md:text-sm text-gray-500 mr-1 md:mr-2">
+                      View Details
+                    </span>
                     <ChevronRight className="h-4 w-4 md:h-5 md:w-5 text-purple-600" />
                   </div>
                 </div>
@@ -353,12 +379,16 @@ const CHASSGraduate = () => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-2 md:my-0">
             <div className="p-4 md:p-6 border-b bg-gradient-to-r from-purple-50 to-white">
               <div className="flex justify-between items-center">
-                <div className="w-8 hidden md:block">{/* Empty div for spacing */}</div>
+                <div className="w-8 hidden md:block">
+                  {/* Empty div for spacing */}
+                </div>
                 <div className="text-center flex-1">
                   <h3 className="text-xl md:text-2xl font-bold text-purple-700 break-words">
                     {programsState[selectedProgram].name}
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600">Program Details</p>
+                  <p className="text-xs md:text-sm text-gray-600">
+                    Program Details
+                  </p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
@@ -390,15 +420,17 @@ const CHASSGraduate = () => {
                     Program Specifications
                   </h4>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                    {programsState[selectedProgram].programSpecifications.map((spec, index) => (
-                      <li
-                        key={index}
-                        className="flex items-start bg-gray-50 p-2 md:p-3 rounded-lg text-sm md:text-base"
-                      >
-                        <span className="inline-block w-2 h-2 rounded-full bg-purple-600 mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span className="text-gray-700">{spec}</span>
-                      </li>
-                    ))}
+                    {programsState[selectedProgram].programSpecifications.map(
+                      (spec, index) => (
+                        <li
+                          key={index}
+                          className="flex items-start bg-gray-50 p-2 md:p-3 rounded-lg text-sm md:text-base"
+                        >
+                          <span className="inline-block w-2 h-2 rounded-full bg-purple-600 mt-1.5 mr-2 flex-shrink-0"></span>
+                          <span className="text-gray-700">{spec}</span>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
 
@@ -409,20 +441,26 @@ const CHASSGraduate = () => {
                     PROGRAM GRADUATE OUTCOMES
                   </h2>
                   <p className="text-sm md:text-base text-gray-700 mb-4 md:mb-6">
-                    The students of the {programsState[selectedProgram].name} program shall attain the following
-                    attributes and outcomes upon graduation:
+                    The students of the {programsState[selectedProgram].name}{" "}
+                    program shall attain the following attributes and outcomes
+                    upon graduation:
                   </p>
                   <div className="space-y-3 md:space-y-4">
-                    {programsState[selectedProgram].programOutcomes.map((outcome, index) => (
-                      <div
-                        key={index}
-                        className="bg-gray-50 p-3 md:p-4 rounded-lg border-l-4 border-purple-500 text-sm md:text-base"
-                      >
-                        <p className="text-gray-700">
-                          <span className="font-semibold text-purple-700">{outcome.id}</span> - {outcome.text}
-                        </p>
-                      </div>
-                    ))}
+                    {programsState[selectedProgram].programOutcomes.map(
+                      (outcome, index) => (
+                        <div
+                          key={index}
+                          className="bg-gray-50 p-3 md:p-4 rounded-lg border-l-4 border-purple-500 text-sm md:text-base"
+                        >
+                          <p className="text-gray-700">
+                            <span className="font-semibold text-purple-700">
+                              {outcome.id}
+                            </span>{" "}
+                            - {outcome.text}
+                          </p>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
 
@@ -449,15 +487,17 @@ const CHASSGraduate = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     {/* Curriculum Section */}
                     <div className="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200">
-                      <h5 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4">Curriculum</h5>
+                      <h5 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4">
+                        Curriculum
+                      </h5>
                       <div className="flex flex-wrap gap-2 md:gap-3 mb-3 md:mb-4">
                         {/* Upload Curriculum Button */}
                         <button
                           onClick={(e) => {
-                            e.stopPropagation()
-                            setSelectedYear("2023") // Default to current year
-                            setUploadType("curriculum")
-                            setShowCurriculumUpload(true)
+                            e.stopPropagation();
+                            setSelectedYear("2023"); // Default to current year
+                            setUploadType("curriculum");
+                            setShowCurriculumUpload(true);
                           }}
                           className="px-3 py-2 md:px-4 md:py-2.5 rounded-lg bg-white border border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 flex items-center gap-1 text-xs md:text-sm shadow-sm hover:shadow-md"
                         >
@@ -469,14 +509,18 @@ const CHASSGraduate = () => {
                         <div className="relative inline-block">
                           <button
                             onClick={(e) => {
-                              e.stopPropagation()
-                              toggleDropdown("view-curriculum")
+                              e.stopPropagation();
+                              toggleDropdown("view-curriculum");
                             }}
                             className="px-3 py-2 md:px-4 md:py-2.5 rounded-lg bg-white border border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 flex items-center gap-1 text-xs md:text-sm shadow-sm hover:shadow-md"
                           >
                             View Curriculum
                             <ChevronDown
-                              className={`h-3 w-3 md:h-4 md:w-4 transition-transform ${activeDropdown === "view-curriculum" ? "rotate-180" : ""}`}
+                              className={`h-3 w-3 md:h-4 md:w-4 transition-transform ${
+                                activeDropdown === "view-curriculum"
+                                  ? "rotate-180"
+                                  : ""
+                              }`}
                             />
                           </button>
 
@@ -488,8 +532,8 @@ const CHASSGraduate = () => {
                                     <button
                                       className="block w-full text-left px-3 py-2 md:px-4 md:py-2.5 text-xs md:text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200"
                                       onClick={(e) => {
-                                        e.stopPropagation()
-                                        handleCurriculumYearSelect(year)
+                                        e.stopPropagation();
+                                        handleCurriculumYearSelect(year);
                                       }}
                                     >
                                       {year}
@@ -505,20 +549,26 @@ const CHASSGraduate = () => {
 
                     {/* Syllables Section */}
                     <div className="bg-gray-50 p-4 md:p-5 rounded-xl border border-gray-200">
-                      <h5 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4">Syllables</h5>
+                      <h5 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4">
+                        Syllables
+                      </h5>
                       <div className="flex flex-wrap gap-2 md:gap-3 mb-3 md:mb-4">
                         {/* View Syllables Dropdown */}
                         <div className="relative inline-block">
                           <button
                             onClick={(e) => {
-                              e.stopPropagation()
-                              toggleDropdown("view-syllabus")
+                              e.stopPropagation();
+                              toggleDropdown("view-syllabus");
                             }}
                             className="px-3 py-2 md:px-4 md:py-2.5 rounded-lg bg-white border border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 flex items-center gap-1 text-xs md:text-sm shadow-sm hover:shadow-md"
                           >
                             View Syllables
                             <ChevronDown
-                              className={`h-3 w-3 md:h-4 md:w-4 transition-transform ${activeDropdown === "view-syllabus" ? "rotate-180" : ""}`}
+                              className={`h-3 w-3 md:h-4 md:w-4 transition-transform ${
+                                activeDropdown === "view-syllabus"
+                                  ? "rotate-180"
+                                  : ""
+                              }`}
                             />
                           </button>
 
@@ -530,8 +580,8 @@ const CHASSGraduate = () => {
                                     <button
                                       className="block w-full text-left px-3 py-2 md:px-4 md:py-2.5 text-xs md:text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200"
                                       onClick={(e) => {
-                                        e.stopPropagation()
-                                        handleSyllabusYearSelect(year)
+                                        e.stopPropagation();
+                                        handleSyllabusYearSelect(year);
                                       }}
                                     >
                                       {year}
@@ -547,7 +597,8 @@ const CHASSGraduate = () => {
                   </div>
 
                   <p className="text-xs md:text-sm text-gray-600 italic mt-3 md:mt-4">
-                    Select a year to view or upload curriculum and syllables files.
+                    Select a year to view or upload curriculum and syllables
+                    files.
                   </p>
                 </div>
               </div>
@@ -571,7 +622,9 @@ const CHASSGraduate = () => {
           <div className="bg-white rounded-xl w-full max-w-md shadow-2xl">
             <div className="p-4 md:p-6">
               <div className="flex justify-between items-center mb-4 md:mb-6">
-                <h3 className="text-lg md:text-xl font-bold text-purple-700">Upload Curriculum File</h3>
+                <h3 className="text-lg md:text-xl font-bold text-purple-700">
+                  Upload Curriculum File
+                </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
                   className="text-gray-400 hover:text-purple-700 transition-colors p-1 rounded-full hover:bg-gray-100"
@@ -582,9 +635,16 @@ const CHASSGraduate = () => {
 
               <div className="mb-4 md:mb-6 p-3 md:p-4 bg-purple-50 rounded-lg border border-purple-100">
                 <p className="text-sm md:text-base text-gray-700">
-                  Uploading curriculum for: <span className="font-semibold">{programsState[selectedProgram].name}</span>
+                  Uploading curriculum for:{" "}
+                  <span className="font-semibold">
+                    {programsState[selectedProgram].name}
+                  </span>
                 </p>
-                {folderStatus && <p className="text-xs md:text-sm text-gray-600 mt-2 italic">Status: {folderStatus}</p>}
+                {folderStatus && (
+                  <p className="text-xs md:text-sm text-gray-600 mt-2 italic">
+                    Status: {folderStatus}
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 mt-2">
                   Files will be uploaded directly to the Google Drive folder.
                 </p>
@@ -596,9 +656,13 @@ const CHASSGraduate = () => {
                   <div className="flex flex-col items-center">
                     <Upload className="h-10 w-10 md:h-12 md:w-12 text-gray-400 mb-2 md:mb-3" />
                     <p className="text-sm md:text-base text-gray-700 font-medium mb-2">
-                      {fileToUpload ? fileToUpload.name : "Drag and drop your curriculum file here"}
+                      {fileToUpload
+                        ? fileToUpload.name
+                        : "Drag and drop your curriculum file here"}
                     </p>
-                    <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">or</p>
+                    <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
+                      or
+                    </p>
                     <label
                       htmlFor="curriculumFile"
                       className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors cursor-pointer flex items-center text-xs md:text-sm"
@@ -613,7 +677,9 @@ const CHASSGraduate = () => {
                       accept="image/*,.pdf"
                       onChange={handleFileSelect}
                     />
-                    <p className="mt-2 md:mt-3 text-xs text-gray-500">Supported formats: JPG, PNG, PDF (max 10MB)</p>
+                    <p className="mt-2 md:mt-3 text-xs text-gray-500">
+                      Supported formats: JPG, PNG, PDF (max 10MB)
+                    </p>
                   </div>
                 </div>
 
@@ -676,7 +742,9 @@ const CHASSGraduate = () => {
           <div className="bg-white rounded-xl w-full max-w-md shadow-2xl">
             <div className="p-4 md:p-6">
               <div className="flex justify-between items-center mb-4 md:mb-6">
-                <h3 className="text-lg md:text-xl font-bold text-purple-700">Upload Syllables File</h3>
+                <h3 className="text-lg md:text-xl font-bold text-purple-700">
+                  Upload Syllables File
+                </h3>
                 <button
                   onClick={() => setShowSyllabusUpload(false)}
                   className="text-gray-400 hover:text-purple-700 transition-colors p-1 rounded-full hover:bg-gray-100"
@@ -687,9 +755,16 @@ const CHASSGraduate = () => {
 
               <div className="mb-4 md:mb-6 p-3 md:p-4 bg-purple-50 rounded-lg border border-purple-100">
                 <p className="text-sm md:text-base text-gray-700">
-                  Uploading syllables for: <span className="font-semibold">{programsState[selectedProgram].name}</span>
+                  Uploading syllables for:{" "}
+                  <span className="font-semibold">
+                    {programsState[selectedProgram].name}
+                  </span>
                 </p>
-                {folderStatus && <p className="text-xs md:text-sm text-gray-600 mt-2 italic">Status: {folderStatus}</p>}
+                {folderStatus && (
+                  <p className="text-xs md:text-sm text-gray-600 mt-2 italic">
+                    Status: {folderStatus}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-4 md:space-y-5">
@@ -698,9 +773,13 @@ const CHASSGraduate = () => {
                   <div className="flex flex-col items-center">
                     <BookOpen className="h-10 w-10 md:h-12 md:w-12 text-gray-400 mb-2 md:mb-3" />
                     <p className="text-sm md:text-base text-gray-700 font-medium mb-2">
-                      {fileToUpload ? fileToUpload.name : "Drag and drop your syllables file here"}
+                      {fileToUpload
+                        ? fileToUpload.name
+                        : "Drag and drop your syllables file here"}
                     </p>
-                    <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">or</p>
+                    <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
+                      or
+                    </p>
                     <label
                       htmlFor="syllabusFile"
                       className="px-3 py-1.5 md:px-4 md:py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors cursor-pointer flex items-center text-xs md:text-sm"
@@ -715,7 +794,9 @@ const CHASSGraduate = () => {
                       accept="image/*,.pdf"
                       onChange={handleFileSelect}
                     />
-                    <p className="mt-2 md:mt-3 text-xs text-gray-500">Supported formats: JPG, PNG, PDF (max 10MB)</p>
+                    <p className="mt-2 md:mt-3 text-xs text-gray-500">
+                      Supported formats: JPG, PNG, PDF (max 10MB)
+                    </p>
                   </div>
                 </div>
 
@@ -778,7 +859,9 @@ const CHASSGraduate = () => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-3 md:p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-base md:text-xl font-bold text-purple-700">Program Curriculum</h3>
+                <h3 className="text-base md:text-xl font-bold text-purple-700">
+                  Program Curriculum
+                </h3>
                 <p className="text-xs md:text-sm text-gray-600">
                   {programsState[selectedProgram].name} - {selectedYear}
                 </p>
@@ -786,8 +869,8 @@ const CHASSGraduate = () => {
               <div className="flex items-center gap-2 md:gap-3">
                 <button
                   onClick={() => {
-                    setShowCurriculumUpload(true)
-                    setShowCurriculumViewer(false)
+                    setShowCurriculumUpload(true);
+                    setShowCurriculumViewer(false);
                   }}
                   className="text-blue-600 hover:text-blue-800 text-xs md:text-sm flex items-center"
                 >
@@ -806,10 +889,16 @@ const CHASSGraduate = () => {
 
             <div className="flex-1 overflow-auto p-2 md:p-4 bg-gray-50">
               <div className="flex justify-center">
-                {programsState[selectedProgram].curriculumFiles[selectedYear]?.includes("drive.google.com") ? (
+                {programsState[selectedProgram].curriculumFiles[
+                  selectedYear
+                ]?.includes("drive.google.com") ? (
                   // If it's a Google Drive file
                   <iframe
-                    src={getViewUrl(programsState[selectedProgram].curriculumFiles[selectedYear])}
+                    src={getViewUrl(
+                      programsState[selectedProgram].curriculumFiles[
+                        selectedYear
+                      ]
+                    )}
                     className="w-full h-[300px] sm:h-[400px] md:h-[600px] border-0 shadow-md rounded-md"
                     title={`${programsState[selectedProgram].name} Curriculum ${selectedYear}`}
                     allowFullScreen
@@ -817,7 +906,11 @@ const CHASSGraduate = () => {
                 ) : (
                   // If it's a regular image or placeholder
                   <img
-                    src={programsState[selectedProgram].curriculumFiles[selectedYear] || "/placeholder.svg"}
+                    src={
+                      programsState[selectedProgram].curriculumFiles[
+                        selectedYear
+                      ] || "/placeholder.svg"
+                    }
                     alt={`${programsState[selectedProgram].name} Curriculum ${selectedYear}`}
                     className="max-w-full h-auto shadow-md rounded-md"
                   />
@@ -831,7 +924,9 @@ const CHASSGraduate = () => {
                   Click the download button to save this curriculum file
                 </div>
                 <a
-                  href={programsState[selectedProgram].curriculumFiles[selectedYear]}
+                  href={
+                    programsState[selectedProgram].curriculumFiles[selectedYear]
+                  }
                   download
                   target="_blank"
                   rel="noopener noreferrer"
@@ -865,7 +960,9 @@ const CHASSGraduate = () => {
           <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-3 md:p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-base md:text-xl font-bold text-purple-700">Program Syllables</h3>
+                <h3 className="text-base md:text-xl font-bold text-purple-700">
+                  Program Syllables
+                </h3>
                 <p className="text-xs md:text-sm text-gray-600">
                   {programsState[selectedProgram].name} - {selectedYear}
                 </p>
@@ -873,8 +970,8 @@ const CHASSGraduate = () => {
               <div className="flex items-center gap-2 md:gap-3">
                 <button
                   onClick={() => {
-                    setShowSyllabusUpload(true)
-                    setShowSyllabusViewer(false)
+                    setShowSyllabusUpload(true);
+                    setShowSyllabusViewer(false);
                   }}
                   className="text-blue-600 hover:text-blue-800 text-xs md:text-sm flex items-center"
                 >
@@ -893,17 +990,26 @@ const CHASSGraduate = () => {
 
             <div className="flex-1 overflow-auto p-2 md:p-4 bg-gray-50">
               <div className="flex justify-center">
-                {programsState[selectedProgram].syllabusFiles[selectedYear]?.includes("drive.google.com") ? (
+                {programsState[selectedProgram].syllabusFiles[
+                  selectedYear
+                ]?.includes("drive.google.com") ? (
                   // If it's a Google Drive link
-                  programsState[selectedProgram].syllabusFiles[selectedYear].includes("folders") ? (
+                  programsState[selectedProgram].syllabusFiles[
+                    selectedYear
+                  ].includes("folders") ? (
                     // For folder links
                     <div className="bg-white p-4 rounded-lg shadow-md">
                       <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open the folder in Google Drive.
+                        This is a folder link. Click the button below to open
+                        the folder in Google Drive.
                       </p>
                       <div className="flex justify-center">
                         <a
-                          href={programsState[selectedProgram].syllabusFiles[selectedYear]}
+                          href={
+                            programsState[selectedProgram].syllabusFiles[
+                              selectedYear
+                            ]
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center"
@@ -927,7 +1033,11 @@ const CHASSGraduate = () => {
                   ) : (
                     // For file links
                     <iframe
-                      src={getViewUrl(programsState[selectedProgram].syllabusFiles[selectedYear])}
+                      src={getViewUrl(
+                        programsState[selectedProgram].syllabusFiles[
+                          selectedYear
+                        ]
+                      )}
                       className="w-full h-[300px] sm:h-[400px] md:h-[600px] border-0 shadow-md rounded-md"
                       title={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
                       allowFullScreen
@@ -936,7 +1046,11 @@ const CHASSGraduate = () => {
                 ) : (
                   // If it's a regular image or placeholder
                   <img
-                    src={programsState[selectedProgram].syllabusFiles[selectedYear] || "/placeholder.svg"}
+                    src={
+                      programsState[selectedProgram].syllabusFiles[
+                        selectedYear
+                      ] || "/placeholder.svg"
+                    }
                     alt={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
                     className="max-w-full h-auto shadow-md rounded-md"
                   />
@@ -950,7 +1064,9 @@ const CHASSGraduate = () => {
                   Click the download button to save this syllables file
                 </div>
                 <a
-                  href={programsState[selectedProgram].syllabusFiles[selectedYear]}
+                  href={
+                    programsState[selectedProgram].syllabusFiles[selectedYear]
+                  }
                   download
                   target="_blank"
                   rel="noopener noreferrer"
@@ -978,7 +1094,7 @@ const CHASSGraduate = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CHASSGraduate
+export default CHASSGraduate;
