@@ -7,101 +7,166 @@ import {
   X,
   Upload,
   FileText,
-  Leaf,
+  Brain,
+  Users,
+  HeartHandshake,
+  BookText,
+  Scroll,
   ArrowLeft,
   ChevronRight,
-  BookOpen,
   ExternalLink,
   Info,
+  BookOpen,
+  GraduationCap,
   ClipboardList,
   Briefcase,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
-const COFESGraduate = () => {
-  // COFES-specific programs - keep the existing curriculum file links
+const CHASSUndergrad = () => {
+  // Undergraduate programs for CHASS with updated icons
   const programs = [
     {
       id: 1,
-      name: "Master in Science in Environmental Science and Management",
-      icon: Leaf,
-      color: "from-green-600 to-green-800",
+      name: "Bachelor of Science in Psychology (BS Psychology)",
+      icon: Brain,
+      color: "from-purple-500 to-purple-700",
       curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1XO3dimuQDJBOpOzZ-NGErRTZrDh5D5U8/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1qilGYdnZCNc9iYbKmTfU6ovEYEzSdHCW",
+        2023: "/placeholder.svg?height=800&width=600",
+        2022: "https://drive.google.com/file/d/1KvvNyQ4H3B0nEohCLQD_XenpoCYm4xXS/view?usp=sharing",
+        2020: "/placeholder.svg?height=800&width=600",
       },
       description:
-        "The MASTER IN SCIENCE IN ENVIRONMENTAL SCIENCE AND MANAGEMENT program is designed to prepare students for careers in environmental management, conservation, and sustainable resource utilization. The program integrates scientific principles with management strategies to address complex environmental challenges.",
-      programOutcomes: [
-        {
-          id: "MS01",
-          text: "Apply advanced knowledge of environmental science and management principles to solve complex environmental problems.",
-        },
-        {
-          id: "MS02",
-          text: "Design and conduct original research in environmental science using appropriate methodologies, analytical techniques, and interpretation of results.",
-        },
-        {
-          id: "MS03",
-          text: "Communicate effectively with the scientific community and with stakeholders through logical writing, presentations, and clear instructions.",
-        },
-        {
-          id: "MS04",
-          text: "Function effectively as a member or leader in diverse teams to achieve common research and development goals in environmental management.",
-        },
-        {
-          id: "MS05",
-          text: "Recognize professional responsibilities and make informed judgments in environmental science and management based on ecological, social, ethical, and scientific principles.",
-        },
-        {
-          id: "MS06",
-          text: "Engage in independent learning for continual professional development as an environmental scientist who serves the community and environment.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
+        "The BS Psychology program provides students with a strong foundation in psychological theories, research methods, and practical applications. Students develop critical thinking skills and gain insights into human behavior and mental processes.",
       programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Field Work: Required",
-        "Mode of Delivery: Face-to-face with field components",
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 130 units",
+        "Practicum: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with laboratory work",
       ],
       programEducationalObjectives: [
-        "Develop environmental scientists with advanced knowledge in ecological principles and management strategies",
-        "Prepare graduates to conduct original research in environmental science and management",
-        "Equip students with skills to address complex environmental challenges",
-        "Foster innovation in sustainable resource management and conservation",
+        "Produce graduates who can apply psychological principles to solve complex human behavior problems",
+        "Develop professionals who can conduct psychological research and assessment",
+        "Prepare students for advanced studies and research in specialized areas of psychology",
+        "Foster ethical practice and social responsibility in psychological work",
+      ],
+      programOutcomes: [
+        "Apply psychological theories and principles to understand human behavior",
+        "Design and conduct psychological research using appropriate methods",
+        "Analyze psychological data using scientific approaches",
+        "Communicate psychological concepts effectively to diverse audiences",
       ],
       careers: [
-        "Environmental Scientist",
-        "Conservation Specialist",
-        "Environmental Consultant",
-        "Natural Resource Manager",
-        "Sustainability Coordinator",
-        "Environmental Policy Analyst",
+        "Clinical Psychologist (with further education)",
+        "Human Resources Specialist",
+        "Research Assistant",
+        "Behavioral Analyst",
+        "Mental Health Counselor (with certification)",
       ],
+      syllabusFiles: {
+        2023: "https://example.com/psychology-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 2,
+      name: "Bachelor of Arts in Sociology (AB Sociology)",
+      icon: Users,
+      color: "from-purple-600 to-purple-800",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The AB Sociology program focuses on the study of social behavior, social institutions, and social change. Students learn to analyze social phenomena and develop solutions to social problems.",
+      programSpecifications: [
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 124 units",
+        "Thesis: Required",
+        "Community Immersion: Required",
+        "Mode of Delivery: Face-to-face with field work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can analyze social structures and processes",
+        "Develop professionals who can conduct social research and assessment",
+        "Prepare students for careers in community development and social services",
+        "Foster social responsibility and ethical practice in sociological work",
+      ],
+      programOutcomes: [
+        "Apply sociological theories to analyze social phenomena",
+        "Design and conduct social research using appropriate methods",
+        "Develop interventions for social problems based on evidence",
+        "Communicate sociological concepts effectively to diverse audiences",
+      ],
+      careers: [
+        "Social Researcher",
+        "Community Development Worker",
+        "Policy Analyst",
+        "Human Services Specialist",
+        "Public Relations Specialist",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/sociology-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 3,
+      name: "Bachelor of Science in Social Work (BS Social Work)",
+      icon: HeartHandshake,
+      color: "from-purple-600 to-purple-800",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The BS Social Work program prepares students for professional practice in social welfare and social development. Students learn to help individuals, families, and communities address social problems and improve their well-being.",
+      programSpecifications: [
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 136 units",
+        "Field Practice: Required",
+        "Board Exam Preparation: Included",
+        "Mode of Delivery: Face-to-face with field work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can apply social work principles in various settings",
+        "Develop professionals who can conduct social assessments and interventions",
+        "Prepare students for licensure and professional practice",
+        "Foster social justice advocacy and ethical practice in social work",
+      ],
+      programOutcomes: [
+        "Apply social work principles to help individuals, families, and communities",
+        "Conduct social assessments and develop intervention plans",
+        "Advocate for social justice and human rights",
+        "Engage in ethical practice and professional development",
+      ],
+      careers: [
+        "Licensed Social Worker (after passing board exam)",
+        "Case Manager",
+        "Community Organizer",
+        "Child Welfare Specialist",
+        "Healthcare Social Worker",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/socialwork-syllabus-2023", // Example URL
+      },
     },
   ];
 
   const [programsState, setProgramsState] = useState(programs);
   const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
-  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
-  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [folderStatus, setFolderStatus] = useState("");
-  const [showProgramDetails, setShowProgramDetails] = useState(false);
-  const [uploadType, setUploadType] = useState("curriculum"); // "curriculum" or "syllabus"
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [syllabusFileToUpload, setSyllabusFileToUpload] = useState(null);
   const [isSyllabusUploading, setIsSyllabusUploading] = useState(false);
   const [syllabusStatus, setSyllabusStatus] = useState("");
+  const [showProgramDetails, setShowProgramDetails] = useState(false);
 
-  // Modify the login hook to handle both curriculum and syllabus file uploads
+  // Google login hook for file upload
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       // Handle curriculum file upload
@@ -110,8 +175,9 @@ const COFESGraduate = () => {
           setIsUploading(true);
           setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for COFES Graduate - PRESERVE EXISTING FOLDER ID
-          const targetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP";
+          // Hardcoded folder ID for CHASS Undergrad
+          // This is the folder ID where all files will be uploaded directly
+          const targetFolderId = "16OJ_qZTc1RHUkt3WR4T_ip_VWhdPMjHE"; // Default folder ID
 
           // First verify we can access the folder
           try {
@@ -270,17 +336,13 @@ const COFESGraduate = () => {
         }
       }
       // Handle syllabus file upload
-      else if (
-        syllabusFileToUpload &&
-        selectedProgram !== null &&
-        showSyllabusUpload
-      ) {
+      else if (syllabusFileToUpload && showSyllabusUpload) {
         try {
           setIsSyllabusUploading(true);
           setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for COFES Graduate Syllabus - PRESERVE EXISTING FOLDER ID
-          const syllabusTargetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP"; // Using the same folder ID for now
+          // Hardcoded folder ID for CHASS Undergrad Syllabus
+          const syllabusTargetFolderId = "16OJ_qZTc1RHUkt3WR4T_ip_VWhdPMjHE"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
@@ -420,12 +482,6 @@ const COFESGraduate = () => {
             fileLink = fileDetails.webViewLink || fileLink;
           }
 
-          // Update program state with the Google Drive link
-          const updatedPrograms = [...programsState];
-          updatedPrograms[selectedProgram].syllabusFiles[selectedYear] =
-            fileLink;
-          setProgramsState(updatedPrograms);
-
           setShowSyllabusUpload(false);
           setSyllabusFileToUpload(null);
           setSyllabusStatus("");
@@ -457,8 +513,15 @@ const COFESGraduate = () => {
     }
   };
 
-  // Handle file upload
-  const handleFileUpload = () => {
+  // Handle syllabus file selection
+  const handleSyllabusFileSelect = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSyllabusFileToUpload(e.target.files[0]);
+    }
+  };
+
+  // Handle curriculum file upload
+  const handleCurriculumUpload = () => {
     if (!fileToUpload) {
       alert("Please select a file first");
       return;
@@ -466,13 +529,6 @@ const COFESGraduate = () => {
 
     // Trigger Google login which will then upload the file
     login();
-  };
-
-  // Handle syllabus file selection
-  const handleSyllabusFileSelect = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setSyllabusFileToUpload(e.target.files[0]);
-    }
   };
 
   // Handle syllabus file upload
@@ -492,105 +548,15 @@ const COFESGraduate = () => {
     setShowProgramDetails(true);
   };
 
-  // Toggle dropdown visibility
-  const toggleDropdown = (dropdown) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
-  };
-
-  const [activeDropdown, setActiveDropdown] = useState(null);
-
-  // Updated handleCurriculumYearSelect function to handle all years consistently
-  const handleCurriculumYearSelect = (year) => {
-    const curriculumFile = programsState[selectedProgram].curriculumFiles[year];
-
-    // Check if the curriculum file is a Google Drive link
-    if (curriculumFile && curriculumFile.includes("drive.google.com")) {
-      try {
-        // Get the file ID from the Google Drive URL
-        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0];
-
-        if (!fileId) {
-          throw new Error("Could not extract file ID from URL");
-        }
-
-        // Use the format that requires authentication
-        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-        // Open the link directly in a new tab
-        window.open(authRequiredUrl, "_blank");
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the curriculum viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowCurriculumViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the curriculum viewer
-      setSelectedYear(year);
-      setShowCurriculumViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
-  // Function to extract folder ID from Google Drive URL
-  const getFolderIdFromUrl = (url) => {
-    const match = url.match(/[-\w]{25,}/);
-    return match ? match[0] : null;
-  };
-
-  // Handle syllabus year selection
-  const handleSyllabusYearSelect = (year) => {
-    const syllabusFile = programsState[selectedProgram].syllabusFiles[year];
-
-    // Check if the syllabus file is a Google Drive link
-    if (syllabusFile && syllabusFile.includes("drive.google.com")) {
-      try {
-        // For folder links, open directly in a new tab
-        if (syllabusFile.includes("folders")) {
-          window.open(syllabusFile, "_blank");
-        } else {
-          // For file links, extract ID and open
-          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0];
-
-          if (!fileId) {
-            throw new Error("Could not extract file ID from URL");
-          }
-
-          // Use the format that requires authentication
-          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-          // Open the link directly in a new tab
-          window.open(authRequiredUrl, "_blank");
-        }
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the syllabus viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowSyllabusViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the syllabus viewer
-      setSelectedYear(year);
-      setShowSyllabusViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-green-800 to-green-900 text-white py-12 relative">
+      <div className="bg-gradient-to-r from-purple-700 to-purple-900 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
         <div className="container mx-auto px-6 relative">
           <Link
-            to="/colleges"
-            className="absolute left-0 -top-6 inline-flex items-center text-green-800 hover:text-green-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
+            to="/undergrad"
+            className="absolute left-0 -top-6 inline-flex items-center text-purple-800 hover:text-purple-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Colleges</span>
@@ -599,22 +565,22 @@ const COFESGraduate = () => {
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* COFES Logo */}
+            {/* CHASS Logo */}
             <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
               <img
-                src="/images/cofes-logo.png"
-                alt="COFES Logo"
+                src="/images/chass-logo.png"
+                alt="CHASS Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              College of Forestry and Environmental Sciences
+              College of Humanities, Arts and Social Sciences
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to prepare you for advanced
-              careers in forestry, environmental management, and sustainable
-              resource conservation.
+              Explore our undergraduate programs designed to prepare you for
+              success in the fields of humanities, arts, and social sciences,
+              developing critical thinking and cultural understanding.
             </p>
           </div>
         </div>
@@ -623,7 +589,7 @@ const COFESGraduate = () => {
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
         <h2 className="text-2xl font-bold text-gray-800 mb-8">
-          Graduate Programs
+          Undergraduate Programs
         </h2>
 
         {/* Programs List */}
@@ -649,7 +615,7 @@ const COFESGraduate = () => {
                   {program.description}
                 </p>
                 <div className="flex justify-end">
-                  <button className="text-green-600 hover:text-green-800 font-medium flex items-center text-sm">
+                  <button className="text-purple-600 hover:text-purple-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -663,18 +629,18 @@ const COFESGraduate = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-green-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-purple-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-green-700">
+                  <h3 className="text-2xl font-bold text-purple-700">
                     {programsState[selectedProgram].name}
                   </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-purple-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -687,24 +653,22 @@ const COFESGraduate = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-purple-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     {programsState[selectedProgram].description}
                   </p>
 
-                  <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex items-start">
-                    <Info className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-purple-50 p-4 rounded-lg border border-purple-100 flex items-start">
+                    <Info className="h-5 w-5 text-purple-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
-                      This program is designed to prepare students for advanced
-                      careers in the field of{" "}
-                      {programsState[selectedProgram].name
-                        .split("in")[1]
-                        ?.trim() || "Environmental Science"}
+                      This program is designed to prepare students for careers
+                      in the field of{" "}
+                      {programsState[selectedProgram].name.split("(")[0].trim()}
                       . Students will gain both theoretical knowledge and
-                      practical skills through coursework, research, and
-                      field-based learning.
+                      practical skills through coursework, laboratory sessions,
+                      and field experiences.
                     </p>
                   </div>
                 </div>
@@ -712,7 +676,7 @@ const COFESGraduate = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-purple-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -722,7 +686,7 @@ const COFESGraduate = () => {
                           key={index}
                           className="bg-gray-50 p-4 rounded-lg flex items-start"
                         >
-                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="w-2 h-2 bg-purple-600 rounded-full mr-2 mt-1.5"></span>
                           <span className="text-gray-700">{spec}</span>
                         </div>
                       )
@@ -731,42 +695,37 @@ const COFESGraduate = () => {
                 </div>
 
                 {/* Program Educational Objectives */}
-                {programsState[selectedProgram]
-                  .programEducationalObjectives && (
-                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                      <BookOpen className="h-5 w-5 text-green-600 mr-2" />
-                      PROGRAM EDUCATIONAL OBJECTIVES
-                    </h2>
-                    <p className="text-gray-700 mb-4">
-                      The {programsState[selectedProgram].name} program aims to:
-                    </p>
-                    <div className="space-y-3">
-                      {programsState[
-                        selectedProgram
-                      ].programEducationalObjectives?.map(
-                        (objective, index) => (
-                          <div
-                            key={index}
-                            className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
-                          >
-                            <p className="text-gray-700">
-                              <span className="font-semibold text-green-700">
-                                Objective {index + 1}:
-                              </span>{" "}
-                              {objective}
-                            </p>
-                          </div>
-                        )
-                      )}
-                    </div>
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <GraduationCap className="h-5 w-5 text-purple-600 mr-2" />
+                    PROGRAM EDUCATIONAL OBJECTIVES
+                  </h2>
+                  <p className="text-gray-700 mb-4">
+                    The {programsState[selectedProgram].name} program aims to:
+                  </p>
+                  <div className="space-y-3">
+                    {programsState[
+                      selectedProgram
+                    ].programEducationalObjectives?.map((objective, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-purple-500"
+                      >
+                        <p className="text-gray-700">
+                          <span className="font-semibold text-purple-700">
+                            Objective {index + 1}:
+                          </span>{" "}
+                          {objective}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                )}
+                </div>
 
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-purple-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -779,13 +738,13 @@ const COFESGraduate = () => {
                       (outcome, index) => (
                         <div
                           key={index}
-                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-purple-500"
                         >
                           <p className="text-gray-700">
-                            <span className="font-semibold text-green-700">
-                              {outcome.id}:
+                            <span className="font-semibold text-purple-700">
+                              Outcome {index + 1}:
                             </span>{" "}
-                            {outcome.text}
+                            {outcome}
                           </p>
                         </div>
                       )
@@ -796,7 +755,7 @@ const COFESGraduate = () => {
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-green-600 mr-2" />
+                    <BookOpen className="h-5 w-5 text-purple-600 mr-2" />
                     CURRICULUM & SYLLABUS
                   </h2>
 
@@ -819,12 +778,11 @@ const COFESGraduate = () => {
                                 {year} Curriculum
                               </span>
                               <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
+                                onClick={() => {
                                   setSelectedYear(year);
                                   setShowCurriculumViewer(true);
                                 }}
-                                className="text-green-600 hover:text-green-800 text-sm flex items-center"
+                                className="text-purple-600 hover:text-purple-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -834,19 +792,18 @@ const COFESGraduate = () => {
                         ))}
                       </div>
                       <button
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={() => {
                           setSelectedYear("2023");
                           setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
                       </button>
                     </div>
 
-                    {/* Syllables */}
+                    {/* Syllabus */}
                     <div>
                       <h3 className="text-lg font-medium text-gray-800 mb-3">
                         Course Syllabus
@@ -857,35 +814,30 @@ const COFESGraduate = () => {
                         topics covered, assessment methods, and required
                         readings.
                       </p>
-                      <div className="flex space-x-3">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // Open the syllabus folder in a new tab
-                            if (
-                              programsState[selectedProgram].syllabusFiles &&
+                      <button
+                        onClick={() => {
+                          // Open the syllabus folder in a new tab
+                          if (
+                            programsState[selectedProgram].syllabusFiles &&
+                            programsState[selectedProgram].syllabusFiles["2023"]
+                          ) {
+                            window.open(
                               programsState[selectedProgram].syllabusFiles[
                                 "2023"
-                              ]
-                            ) {
-                              window.open(
-                                programsState[selectedProgram].syllabusFiles[
-                                  "2023"
-                                ],
-                                "_blank"
-                              );
-                            } else {
-                              alert(
-                                "No syllabus files available for this program yet."
-                              );
-                            }
-                          }}
-                          className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
-                        >
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          View Syllabus
-                        </button>
-                      </div>
+                              ],
+                              "_blank"
+                            );
+                          } else {
+                            alert(
+                              "No syllabus files available for this program yet."
+                            );
+                          }
+                        }}
+                        className="px-3 py-1.5 bg-white border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 text-sm flex items-center"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        View Syllabus
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -895,129 +847,10 @@ const COFESGraduate = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
                 Close
               </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Upload Modal */}
-      {showSyllabusUpload && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-green-700">
-                  Upload Syllabus File
-                </h3>
-                <button
-                  onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
-                <p className="text-gray-700">
-                  Uploading syllabus for:{" "}
-                  <span className="font-semibold">
-                    {programsState[selectedProgram].name}
-                  </span>
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Please upload the syllabus file for this program. The file
-                  will be uploaded directly to Google Drive.
-                </p>
-                {syllabusStatus && (
-                  <p className="text-sm text-gray-600 mt-2 italic">
-                    Status: {syllabusStatus}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-5">
-                {/* Syllabus File Upload */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <div className="flex flex-col items-center">
-                    <Upload className="h-12 w-12 text-gray-400 mb-3" />
-                    <p className="text-gray-700 font-medium mb-2">
-                      {syllabusFileToUpload
-                        ? syllabusFileToUpload.name
-                        : "Drag and drop your syllabus file here"}
-                    </p>
-                    <p className="text-gray-500 text-sm mb-4">or</p>
-                    <label
-                      htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Browse Files
-                    </label>
-                    <input
-                      type="file"
-                      id="syllabusFile"
-                      className="hidden"
-                      accept="image/*,.pdf"
-                      onChange={handleSyllabusFileSelect}
-                    />
-                    <p className="mt-3 text-xs text-gray-500">
-                      Supported formats: JPG, PNG, PDF (max 10MB)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowSyllabusUpload(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 mr-3 hover:bg-gray-50 transition-all"
-                    disabled={isSyllabusUploading}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
-                    disabled={!syllabusFileToUpload || isSyllabusUploading}
-                  >
-                    {isSyllabusUploading ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload to Google Drive
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1029,32 +862,33 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-green-700">
+                <h3 className="text-xl font-bold text-purple-700">
                   Upload Curriculum File
                 </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-purple-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
+              <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-100">
                 <p className="text-gray-700">
                   Uploading curriculum for:{" "}
                   <span className="font-semibold">
                     {programsState[selectedProgram].name}
                   </span>
                 </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Please upload the curriculum file for this program. The file
+                  will be uploaded directly to Google Drive.
+                </p>
                 {folderStatus && (
                   <p className="text-sm text-gray-600 mt-2 italic">
                     Status: {folderStatus}
                   </p>
                 )}
-                <p className="text-xs text-gray-500 mt-2">
-                  Files will be uploaded directly to the Google Drive folder.
-                </p>
               </div>
 
               <div className="space-y-5">
@@ -1070,7 +904,7 @@ const COFESGraduate = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1099,8 +933,8 @@ const COFESGraduate = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={handleFileUpload}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                    onClick={handleCurriculumUpload}
+                    className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
@@ -1147,7 +981,7 @@ const COFESGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-green-700">
+                <h3 className="text-xl font-bold text-purple-700">
                   Program Curriculum
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1167,7 +1001,7 @@ const COFESGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-purple-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1217,146 +1051,7 @@ const COFESGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Viewer Modal */}
-      {showSyllabusViewer && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
-            <div className="p-6 flex justify-between items-center border-b">
-              <div>
-                <h3 className="text-xl font-bold text-green-700">
-                  Program Syllables
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {programsState[selectedProgram].name} - {selectedYear}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => {
-                    setShowSyllabusUpload(true);
-                    setShowSyllabusViewer(false);
-                  }}
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
-                >
-                  <Upload className="h-4 w-4 mr-1" />
-                  Upload New
-                </button>
-                <button
-                  onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-auto p-4 bg-gray-50">
-              <div className="flex justify-center">
-                {programsState[selectedProgram].syllabusFiles[
-                  selectedYear
-                ]?.includes("drive.google.com") ? (
-                  // If it's a Google Drive link
-                  programsState[selectedProgram].syllabusFiles[
-                    selectedYear
-                  ].includes("folders") ? (
-                    // For folder links
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                      <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open
-                        the folder in Google Drive.
-                      </p>
-                      <div className="flex justify-center">
-                        <a
-                          href={
-                            programsState[selectedProgram].syllabusFiles[
-                              selectedYear
-                            ]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 010 2h6a1 1 0 100-2H7z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Open Folder in Google Drive
-                        </a>
-                      </div>
-                    </div>
-                  ) : (
-                    // For file links
-                    <iframe
-                      src={getViewUrl(
-                        programsState[selectedProgram].syllabusFiles[
-                          selectedYear
-                        ]
-                      )}
-                      className="w-full h-[600px] border-0 shadow-md rounded-md"
-                      title={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
-                      allowFullScreen
-                    />
-                  )
-                ) : (
-                  // If it's a regular image or placeholder
-                  <img
-                    src={
-                      programsState[selectedProgram].syllabusFiles[
-                        selectedYear
-                      ] || "/placeholder.svg"
-                    }
-                    alt={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
-                    className="max-w-full h-auto shadow-md rounded-md"
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="p-4 border-t bg-white">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500">
-                  Click the download button to save this syllables file
-                </div>
-                <a
-                  href={
-                    programsState[selectedProgram].syllabusFiles[selectedYear]
-                  }
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1383,4 +1078,4 @@ const COFESGraduate = () => {
   );
 };
 
-export default COFESGraduate;
+export default CHASSUndergrad;

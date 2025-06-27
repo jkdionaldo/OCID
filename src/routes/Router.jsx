@@ -4,9 +4,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { graduateRoutes, undergradRoutes } from "./CollegeRoutes";
 
 // Import main pages
-import Home from "@/pages/Home";
-import Colleges from "@/pages/Colleges";
-import Undergrad from "@/pages/Undergrad";
+import Home from "@/pages/HomePage";
+import Colleges from "@/pages/CollegesPage";
+import Undergrad from "@/pages/UndergradPage";
 
 const Router = () => {
   return (

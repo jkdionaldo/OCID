@@ -7,353 +7,165 @@ import {
   X,
   Upload,
   FileText,
-  School,
-  BookOpen,
-  Languages,
-  Calculator,
-  FlaskConical,
+  TreePine,
+  Leaf,
+  Globe,
+  Sprout,
   ArrowLeft,
   ChevronRight,
+  ExternalLink,
   Info,
+  BookOpen,
   GraduationCap,
   ClipboardList,
   Briefcase,
-  ExternalLink,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
-const CEDUndergrad = () => {
-  // Undergraduate programs for CED with updated icons
+const COFESUndergrad = () => {
+  // Undergraduate programs for COFES with updated icons
   const programs = [
     {
       id: 1,
-      name: "Bachelor of Elementary Education (BEEd)",
-      icon: School,
-      color: "from-blue-600 to-blue-800",
+      name: "Bachelor of Science in Forestry (BSF)",
+      icon: TreePine,
+      color: "from-green-600 to-green-800",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2022: "https://drive.google.com/file/d/1KvvNyQ4H3B0nEohCLQD_XenpoCYm4xXS/view?usp=sharing",
         2014: "/placeholder.svg?height=800&width=600",
       },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
-      },
       description:
-        "The BACHELOR OF ELEMENTARY EDUCATION (BEEd) program prepares students to become effective elementary school teachers. The curriculum focuses on child development, teaching methodologies, and subject matter knowledge across all elementary education areas. Graduates are equipped to teach in elementary schools and contribute to the educational development of young learners.",
-      programOutcomes: [
-        {
-          id: "BEEd01",
-          text: "Demonstrate mastery of subject matter knowledge across all learning areas in elementary education.",
-        },
-        {
-          id: "BEEd02",
-          text: "Apply appropriate teaching methodologies and strategies for diverse elementary learners.",
-        },
-        {
-          id: "BEEd03",
-          text: "Design and implement developmentally appropriate learning experiences for elementary students.",
-        },
-        {
-          id: "BEEd04",
-          text: "Assess student learning using various assessment tools and techniques.",
-        },
-        {
-          id: "BEEd05",
-          text: "Engage in professional development and lifelong learning to enhance teaching practice.",
-        },
-        {
-          id: "BEEd06",
-          text: "Demonstrate ethical and professional behavior in educational settings.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
+        "The Bachelor of Science in Forestry program provides students with a strong foundation in forest science, management, and conservation. Students learn about forest ecology, silviculture, forest measurements, and sustainable forest management practices.",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
         "Total Units: 155 units",
         "Practicum: Required",
-        "Field Study: Required",
-        "Mode of Delivery: Face-to-face with laboratory work",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
       ],
       programEducationalObjectives: [
-        "Produce graduates who can apply educational principles to teach effectively in elementary schools",
-        "Develop professionals who can design and implement appropriate learning experiences for young learners",
-        "Prepare students for advanced studies and research in elementary education",
-        "Foster innovation and ethical practice in elementary education",
+        "Produce graduates who can apply forestry principles to solve complex environmental and resource management problems",
+        "Develop professionals who can lead sustainable forest management initiatives in both public and private sectors",
+        "Prepare students for advanced studies and research in specialized areas of forestry and environmental science",
+        "Foster environmental stewardship and ethical practice in natural resource management",
+      ],
+      programOutcomes: [
+        "Apply knowledge of forestry principles and practices to manage forest resources sustainably",
+        "Design and implement forest management plans that balance ecological, economic, and social considerations",
+        "Utilize modern tools and technologies for forest inventory, monitoring, and assessment",
+        "Communicate effectively with diverse stakeholders about forest management issues and solutions",
       ],
       careers: [
-        "Elementary School Teacher",
-        "Curriculum Developer",
-        "Educational Consultant",
-        "Academic Coordinator",
-        "Educational Materials Developer",
+        "Forest Manager",
+        "Conservation Specialist",
+        "Environmental Consultant",
+        "Forest Researcher",
+        "Park Ranger",
       ],
+      syllabusFiles: {
+        2023: "https://example.com/bsf-syllabus-2023", // Example URL
+      },
     },
     {
       id: 2,
-      name: "Bachelor of Secondary Education major in English (BSEd - English)",
-      icon: BookOpen,
-      color: "from-blue-500 to-blue-700",
+      name: "Bachelor of Science in Environmental Science (BSES)",
+      icon: Leaf,
+      color: "from-green-500 to-green-700",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
+        2014: "/placeholder.svg?height=800&width=600",
       },
       description:
-        "The BACHELOR OF SECONDARY EDUCATION MAJOR IN ENGLISH (BSEd - English) program prepares students to become effective English language teachers at the secondary level. The curriculum focuses on English language and literature, teaching methodologies, and educational theories. Graduates are equipped to teach English subjects in high schools and contribute to the language development of adolescent learners.",
-      programOutcomes: [
-        {
-          id: "BSEd-E01",
-          text: "Demonstrate mastery of English language and literature content knowledge.",
-        },
-        {
-          id: "BSEd-E02",
-          text: "Apply appropriate teaching methodologies for English language instruction.",
-        },
-        {
-          id: "BSEd-E03",
-          text: "Design and implement effective English language learning experiences.",
-        },
-        {
-          id: "BSEd-E04",
-          text: "Assess student learning in English language and literature using various assessment tools.",
-        },
-        {
-          id: "BSEd-E05",
-          text: "Engage in professional development to enhance English language teaching practice.",
-        },
-        {
-          id: "BSEd-E06",
-          text: "Demonstrate ethical and professional behavior in educational settings.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
+        "The Bachelor of Science in Environmental Science program provides students with a multidisciplinary understanding of environmental systems and challenges. Students learn about ecology, environmental chemistry, climate science, and environmental impact assessment.",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
         "Total Units: 155 units",
         "Practicum: Required",
-        "Field Study: Required",
-        "Mode of Delivery: Face-to-face with laboratory work",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
       ],
       programEducationalObjectives: [
-        "Produce graduates who can apply educational principles to teach English effectively",
-        "Develop professionals who can design and implement appropriate English language learning experiences",
-        "Prepare students for advanced studies and research in English education",
-        "Foster innovation and ethical practice in English language teaching",
+        "Produce graduates who can apply scientific principles to solve complex environmental problems",
+        "Develop professionals who can lead environmental monitoring and assessment initiatives",
+        "Prepare students for advanced studies and research in specialized areas of environmental science",
+        "Foster environmental stewardship and ethical practice in scientific research",
+      ],
+      programOutcomes: [
+        "Apply scientific principles to understand and analyze environmental systems and processes",
+        "Design and conduct environmental monitoring and assessment studies",
+        "Evaluate environmental impacts of human activities and propose mitigation strategies",
+        "Communicate environmental science concepts and findings to diverse audiences",
       ],
       careers: [
-        "Secondary School English Teacher",
-        "Language Curriculum Developer",
-        "English Language Trainer",
-        "Academic Coordinator",
-        "Educational Materials Developer",
+        "Environmental Scientist",
+        "Conservation Officer",
+        "Environmental Health Specialist",
+        "Sustainability Coordinator",
+        "Environmental Educator",
       ],
+      syllabusFiles: {
+        2023: "https://example.com/bses-syllabus-2023", // Example URL
+      },
     },
+
     {
       id: 3,
-      name: "Bachelor of Secondary Education major in Filipino (BSEd - Filipino)",
-      icon: Languages,
-      color: "from-blue-400 to-blue-600",
+      name: "Bachelor of Science in Agroforestry (BSAF)",
+      icon: Sprout,
+      color: "from-green-500 to-green-700",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
       },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
-      },
       description:
-        "The BACHELOR OF SECONDARY EDUCATION MAJOR IN FILIPINO (BSEd - Filipino) program prepares students to become effective Filipino language teachers at the secondary level. The curriculum focuses on Filipino language and literature, teaching methodologies, and educational theories. Graduates are equipped to teach Filipino subjects in high schools and contribute to the cultural and language development of adolescent learners.",
-      programOutcomes: [
-        {
-          id: "BSEd-F01",
-          text: "Demonstrate mastery of Filipino language and literature content knowledge.",
-        },
-        {
-          id: "BSEd-F02",
-          text: "Apply appropriate teaching methodologies for Filipino language instruction.",
-        },
-        {
-          id: "BSEd-F03",
-          text: "Design and implement effective Filipino language learning experiences.",
-        },
-        {
-          id: "BSEd-F04",
-          text: "Assess student learning in Filipino language and literature using various assessment tools.",
-        },
-        {
-          id: "BSEd-F05",
-          text: "Engage in professional development to enhance Filipino language teaching practice.",
-        },
-        {
-          id: "BSEd-F06",
-          text: "Demonstrate ethical and professional behavior in educational settings.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
+        "The Bachelor of Science in Agroforestry program integrates forestry and agricultural practices for sustainable land use. Students learn about tree-crop interactions, soil conservation, integrated farming systems, and community-based resource management.",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
-        "Total Units: 155 units",
+        "Total Units: 152 units",
         "Practicum: Required",
-        "Field Study: Required",
-        "Mode of Delivery: Face-to-face with laboratory work",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
       ],
       programEducationalObjectives: [
-        "Produce graduates who can apply educational principles to teach Filipino effectively",
-        "Develop professionals who can design and implement appropriate Filipino language learning experiences",
-        "Prepare students for advanced studies and research in Filipino education",
-        "Foster innovation and ethical practice in Filipino language teaching",
+        "Produce graduates who can design and implement sustainable agroforestry systems",
+        "Develop professionals who can lead rural development initiatives",
+        "Prepare students for careers in sustainable agriculture and community development",
+        "Foster environmental stewardship and ethical practice in land management",
       ],
-      careers: [
-        "Secondary School Filipino Teacher",
-        "Filipino Language Curriculum Developer",
-        "Filipino Language Trainer",
-        "Academic Coordinator",
-        "Educational Materials Developer",
-      ],
-    },
-    {
-      id: 4,
-      name: "Bachelor of Secondary Education major in Mathematics (BSEd - Mathematics)",
-      icon: Calculator,
-      color: "from-blue-500 to-blue-700",
-      curriculumFiles: {
-        2023: "/placeholder.svg?height=800&width=600",
-        2020: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
-      },
-      description:
-        "The BACHELOR OF SECONDARY EDUCATION MAJOR IN MATHEMATICS (BSEd - Mathematics) program prepares students to become effective mathematics teachers at the secondary level. The curriculum focuses on mathematics content knowledge, teaching methodologies, and educational theories. Graduates are equipped to teach mathematics subjects in high schools and contribute to the mathematical development of adolescent learners.",
       programOutcomes: [
-        {
-          id: "BSEd-M01",
-          text: "Demonstrate mastery of mathematics content knowledge.",
-        },
-        {
-          id: "BSEd-M02",
-          text: "Apply appropriate teaching methodologies for mathematics instruction.",
-        },
-        {
-          id: "BSEd-M03",
-          text: "Design and implement effective mathematics learning experiences.",
-        },
-        {
-          id: "BSEd-M04",
-          text: "Assess student learning in mathematics using various assessment tools.",
-        },
-        {
-          id: "BSEd-M05",
-          text: "Engage in professional development to enhance mathematics teaching practice.",
-        },
-        {
-          id: "BSEd-M06",
-          text: "Demonstrate ethical and professional behavior in educational settings.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 155 units",
-        "Practicum: Required",
-        "Field Study: Required",
-        "Mode of Delivery: Face-to-face with laboratory work",
-      ],
-      programEducationalObjectives: [
-        "Produce graduates who can apply educational principles to teach mathematics effectively",
-        "Develop professionals who can design and implement appropriate mathematics learning experiences",
-        "Prepare students for advanced studies and research in mathematics education",
-        "Foster innovation and ethical practice in mathematics teaching",
+        "Design and implement agroforestry systems that optimize productivity and sustainability",
+        "Apply principles of ecology and agriculture to manage integrated tree-crop systems",
+        "Evaluate the economic, social, and environmental benefits of agroforestry practices",
+        "Engage with rural communities to promote sustainable agroforestry practices",
       ],
       careers: [
-        "Secondary School Mathematics Teacher",
-        "Mathematics Curriculum Developer",
-        "Mathematics Trainer",
-        "Academic Coordinator",
-        "Educational Materials Developer",
+        "Agroforestry Specialist",
+        "Sustainable Agriculture Consultant",
+        "Rural Development Officer",
+        "Extension Worker",
+        "Farm Manager",
       ],
-    },
-    {
-      id: 5,
-      name: "Bachelor of Secondary Education major in Science (BSEd - Science)",
-      icon: FlaskConical,
-      color: "from-blue-600 to-blue-800",
-      curriculumFiles: {
-        2023: "/placeholder.svg?height=800&width=600",
-        2020: "/placeholder.svg?height=800&width=600",
-      },
       syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
+        2023: "https://example.com/bsaf-syllabus-2023", // Example URL
       },
-      description:
-        "The BACHELOR OF SECONDARY EDUCATION MAJOR IN SCIENCE (BSEd - Science) program prepares students to become effective science teachers at the secondary level. The curriculum focuses on science content knowledge across biology, chemistry, physics, and earth science, as well as teaching methodologies and educational theories. Graduates are equipped to teach science subjects in high schools and contribute to the scientific literacy of adolescent learners.",
-      programOutcomes: [
-        {
-          id: "BSEd-S01",
-          text: "Demonstrate mastery of science content knowledge across various scientific disciplines.",
-        },
-        {
-          id: "BSEd-S02",
-          text: "Apply appropriate teaching methodologies for science instruction.",
-        },
-        {
-          id: "BSEd-S03",
-          text: "Design and implement effective science learning experiences including laboratory activities.",
-        },
-        {
-          id: "BSEd-S04",
-          text: "Assess student learning in science using various assessment tools.",
-        },
-        {
-          id: "BSEd-S05",
-          text: "Engage in professional development to enhance science teaching practice.",
-        },
-        {
-          id: "BSEd-S06",
-          text: "Demonstrate ethical and professional behavior in educational settings.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 155 units",
-        "Practicum: Required",
-        "Field Study: Required",
-        "Laboratory Work: Required",
-        "Mode of Delivery: Face-to-face with laboratory work",
-      ],
-      programEducationalObjectives: [
-        "Produce graduates who can apply educational principles to teach science effectively",
-        "Develop professionals who can design and implement appropriate science learning experiences",
-        "Prepare students for advanced studies and research in science education",
-        "Foster innovation and ethical practice in science teaching",
-      ],
-      careers: [
-        "Secondary School Science Teacher",
-        "Science Curriculum Developer",
-        "Science Education Specialist",
-        "Laboratory Coordinator",
-        "Educational Materials Developer",
-      ],
     },
   ];
 
   const [programsState, setProgramsState] = useState(programs);
   const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
-  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
-  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [folderStatus, setFolderStatus] = useState("");
-  const [showProgramDetails, setShowProgramDetails] = useState(false);
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [syllabusFileToUpload, setSyllabusFileToUpload] = useState(null);
   const [isSyllabusUploading, setIsSyllabusUploading] = useState(false);
   const [syllabusStatus, setSyllabusStatus] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [showProgramDetails, setShowProgramDetails] = useState(false);
 
   // Google login hook for file upload
   const login = useGoogleLogin({
@@ -364,8 +176,9 @@ const CEDUndergrad = () => {
           setIsUploading(true);
           setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CED Undergrad
-          const targetFolderId = "1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k";
+          // Hardcoded folder ID for COFES Undergrad
+          // This is the folder ID where all files will be uploaded directly
+          const targetFolderId = "1Joyt_j7uLQaxQe5ykswEWpNYUx9SUcv1"; // Default folder ID
 
           // First verify we can access the folder
           try {
@@ -529,8 +342,8 @@ const CEDUndergrad = () => {
           setIsSyllabusUploading(true);
           setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CED Undergrad Syllabus
-          const syllabusTargetFolderId = "1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k"; // Using the same folder ID for now
+          // Hardcoded folder ID for COFES Undergrad Syllabus
+          const syllabusTargetFolderId = "14G9gyo8VeiaaotvPGjxKNBZn8SSDMgkB"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
@@ -736,135 +549,47 @@ const CEDUndergrad = () => {
     setShowProgramDetails(true);
   };
 
-  // Toggle dropdown visibility
-  const toggleDropdown = (dropdown) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
-  };
-
-  // Updated handleCurriculumYearSelect function to handle all years consistently
-  const handleCurriculumYearSelect = (year) => {
-    const curriculumFile = programsState[selectedProgram].curriculumFiles[year];
-
-    // Check if the curriculum file is a Google Drive link
-    if (curriculumFile && curriculumFile.includes("drive.google.com")) {
-      try {
-        // Get the file ID from the Google Drive URL
-        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0];
-
-        if (!fileId) {
-          throw new Error("Could not extract file ID from URL");
-        }
-
-        // Use the format that requires authentication
-        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-        // Open the link directly in a new tab
-        window.open(authRequiredUrl, "_blank");
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the curriculum viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowCurriculumViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the curriculum viewer
-      setSelectedYear(year);
-      setShowCurriculumViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
-  // Function to extract folder ID from Google Drive URL
-  const getFolderIdFromUrl = (url) => {
-    const match = url.match(/[-\w]{25,}/);
-    return match ? match[0] : null;
-  };
-
-  // Handle syllabus year selection
-  const handleSyllabusYearSelect = (year) => {
-    const syllabusFile = programsState[selectedProgram].syllabusFiles[year];
-
-    // Check if the syllabus file is a Google Drive link
-    if (syllabusFile && syllabusFile.includes("drive.google.com")) {
-      try {
-        // For folder links, open directly in a new tab
-        if (syllabusFile.includes("folders")) {
-          window.open(syllabusFile, "_blank");
-        } else {
-          // For file links, extract ID and open
-          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0];
-
-          if (!fileId) {
-            throw new Error("Could not extract file ID from URL");
-          }
-
-          // Use the format that requires authentication
-          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-          // Open the link directly in a new tab
-          window.open(authRequiredUrl, "_blank");
-        }
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the syllabus viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowSyllabusViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the syllabus viewer
-      setSelectedYear(year);
-      setShowSyllabusViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-8 md:py-12 relative">
+      <div className="bg-gradient-to-r from-green-700 to-green-900 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
-        <div className="container mx-auto px-4 md:px-6 relative">
+        <div className="container mx-auto px-6 relative">
           <Link
             to="/undergrad"
-            className="absolute left-0 -top-6 inline-flex items-center text-blue-800 hover:text-blue-900 bg-white hover:bg-white/90 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 shadow-md z-10 text-sm md:text-base"
+            className="absolute left-0 -top-6 inline-flex items-center text-green-800 hover:text-green-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
-            <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" />
+            <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Colleges</span>
           </Link>
         </div>
 
-        <div className="container mx-auto px-4 py-6 md:py-8">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* CED Logo */}
-            <div className="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full p-1 flex-shrink-0 mb-4 md:mb-6 shadow-lg">
+            {/* COFES Logo */}
+            <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
               <img
-                src="/images/ced-logo.png"
-                alt="CED Logo"
+                src="/images/cofes-logo.png"
+                alt="COFES Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">
-              College of Education
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              College of Forestry and Environmental Sciences
             </h1>
-            <p className="text-base md:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
               Explore our undergraduate programs designed to prepare you for
-              success in the field of education, shaping the minds of future
-              generations.
+              success in forestry, environmental management, and sustainable
+              resource conservation.
             </p>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 md:mb-8">
+      <div className="container mx-auto px-6 py-12">
+        <h2 className="text-2xl font-bold text-gray-800 mb-8">
           Undergraduate Programs
         </h2>
 
@@ -891,7 +616,7 @@ const CEDUndergrad = () => {
                   {program.description}
                 </p>
                 <div className="flex justify-end">
-                  <button className="text-blue-600 hover:text-blue-800 font-medium flex items-center text-sm">
+                  <button className="text-green-600 hover:text-green-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -905,18 +630,18 @@ const CEDUndergrad = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-green-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-blue-700">
+                  <h3 className="text-2xl font-bold text-green-700">
                     {programsState[selectedProgram].name}
                   </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -929,15 +654,15 @@ const CEDUndergrad = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-blue-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     {programsState[selectedProgram].description}
                   </p>
 
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 flex items-start">
-                    <Info className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex items-start">
+                    <Info className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
                       This program is designed to prepare students for careers
                       in the field of{" "}
@@ -952,7 +677,7 @@ const CEDUndergrad = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-blue-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -962,7 +687,7 @@ const CEDUndergrad = () => {
                           key={index}
                           className="bg-gray-50 p-4 rounded-lg flex items-start"
                         >
-                          <span className="w-2 h-2 bg-blue-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2 mt-1.5"></span>
                           <span className="text-gray-700">{spec}</span>
                         </div>
                       )
@@ -973,7 +698,7 @@ const CEDUndergrad = () => {
                 {/* Program Educational Objectives */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <GraduationCap className="h-5 w-5 text-blue-600 mr-2" />
+                    <GraduationCap className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM EDUCATIONAL OBJECTIVES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -985,10 +710,10 @@ const CEDUndergrad = () => {
                     ].programEducationalObjectives?.map((objective, index) => (
                       <div
                         key={index}
-                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500"
+                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                       >
                         <p className="text-gray-700">
-                          <span className="font-semibold text-blue-700">
+                          <span className="font-semibold text-green-700">
                             Objective {index + 1}:
                           </span>{" "}
                           {objective}
@@ -1001,7 +726,7 @@ const CEDUndergrad = () => {
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-blue-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -1014,13 +739,13 @@ const CEDUndergrad = () => {
                       (outcome, index) => (
                         <div
                           key={index}
-                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500"
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                         >
                           <p className="text-gray-700">
-                            <span className="font-semibold text-blue-700">
-                              {outcome.id}:
+                            <span className="font-semibold text-green-700">
+                              Outcome {index + 1}:
                             </span>{" "}
-                            {outcome.text}
+                            {outcome}
                           </p>
                         </div>
                       )
@@ -1031,7 +756,7 @@ const CEDUndergrad = () => {
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-blue-600 mr-2" />
+                    <BookOpen className="h-5 w-5 text-green-600 mr-2" />
                     CURRICULUM & SYLLABLES
                   </h2>
 
@@ -1058,7 +783,7 @@ const CEDUndergrad = () => {
                                   setSelectedYear(year);
                                   setShowCurriculumViewer(true);
                                 }}
-                                className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                                className="text-green-600 hover:text-green-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -1072,7 +797,7 @@ const CEDUndergrad = () => {
                           setSelectedYear("2023");
                           setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
@@ -1082,7 +807,7 @@ const CEDUndergrad = () => {
                     {/* Syllables */}
                     <div>
                       <h3 className="text-lg font-medium text-gray-800 mb-3">
-                        Course Syllabus
+                        Course Syllables
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
                         Course syllables provide detailed information about
@@ -1109,10 +834,10 @@ const CEDUndergrad = () => {
                             );
                           }
                         }}
-                        className="px-3 py-1.5 bg-white border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 text-sm flex items-center mr-2 inline-block"
+                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                       >
                         <ExternalLink className="h-4 w-4 mr-1" />
-                        View Syllabus
+                        View Syllables
                       </button>
                     </div>
                   </div>
@@ -1123,7 +848,7 @@ const CEDUndergrad = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 Close
               </button>
@@ -1138,18 +863,18 @@ const CEDUndergrad = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-blue-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Upload Curriculum File
                 </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-gray-700">
                   Uploading curriculum for:{" "}
                   <span className="font-semibold">
@@ -1180,7 +905,7 @@ const CEDUndergrad = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1210,129 +935,10 @@ const CEDUndergrad = () => {
                   <button
                     type="button"
                     onClick={handleCurriculumUpload}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload to Google Drive
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Upload Modal */}
-      {showSyllabusUpload && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-blue-700">
-                  Upload Syllables File
-                </h3>
-                <button
-                  onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
-                <p className="text-gray-700">
-                  Uploading syllables for:{" "}
-                  <span className="font-semibold">
-                    {programsState[selectedProgram].name}
-                  </span>
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Please upload the syllabus file for this program. The file
-                  will be uploaded directly to Google Drive.
-                </p>
-                {syllabusStatus && (
-                  <p className="text-sm text-gray-600 mt-2 italic">
-                    Status: {syllabusStatus}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-5">
-                {/* Syllabus File Upload */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <div className="flex flex-col items-center">
-                    <BookOpen className="h-12 w-12 text-gray-400 mb-3" />
-                    <p className="text-gray-700 font-medium mb-2">
-                      {syllabusFileToUpload
-                        ? syllabusFileToUpload.name
-                        : "Drag and drop your syllables file here"}
-                    </p>
-                    <p className="text-gray-500 text-sm mb-4">or</p>
-                    <label
-                      htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex items-center"
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Browse Files
-                    </label>
-                    <input
-                      type="file"
-                      id="syllabusFile"
-                      className="hidden"
-                      accept="image/*,.pdf"
-                      onChange={handleSyllabusFileSelect}
-                    />
-                    <p className="mt-3 text-xs text-gray-500">
-                      Supported formats: JPG, PNG, PDF (max 10MB)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowSyllabusUpload(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 mr-3 hover:bg-gray-50 transition-all"
-                    disabled={isSyllabusUploading}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-                    disabled={!syllabusFileToUpload || isSyllabusUploading}
-                  >
-                    {isSyllabusUploading ? (
                       <>
                         <svg
                           className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -1376,7 +982,7 @@ const CEDUndergrad = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-blue-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Program Curriculum
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1396,7 +1002,7 @@ const CEDUndergrad = () => {
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1446,146 +1052,7 @@ const CEDUndergrad = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Viewer Modal */}
-      {showSyllabusViewer && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
-            <div className="p-6 flex justify-between items-center border-b">
-              <div>
-                <h3 className="text-xl font-bold text-blue-700">
-                  Program Syllables
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {programsState[selectedProgram].name} - {selectedYear}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => {
-                    setShowSyllabusUpload(true);
-                    setShowSyllabusViewer(false);
-                  }}
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
-                >
-                  <Upload className="h-4 w-4 mr-1" />
-                  Upload New
-                </button>
-                <button
-                  onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-auto p-4 bg-gray-50">
-              <div className="flex justify-center">
-                {programsState[selectedProgram].syllabusFiles[
-                  selectedYear
-                ]?.includes("drive.google.com") ? (
-                  // If it's a Google Drive link
-                  programsState[selectedProgram].syllabusFiles[
-                    selectedYear
-                  ].includes("folders") ? (
-                    // For folder links
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                      <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open
-                        the folder in Google Drive.
-                      </p>
-                      <div className="flex justify-center">
-                        <a
-                          href={
-                            programsState[selectedProgram].syllabusFiles[
-                              selectedYear
-                            ]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 010 2h6a1 1 0 100-2H7z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Open Folder in Google Drive
-                        </a>
-                      </div>
-                    </div>
-                  ) : (
-                    // For file links
-                    <iframe
-                      src={getViewUrl(
-                        programsState[selectedProgram].syllabusFiles[
-                          selectedYear
-                        ]
-                      )}
-                      className="w-full h-[600px] border-0 shadow-md rounded-md"
-                      title={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
-                      allowFullScreen
-                    />
-                  )
-                ) : (
-                  // If it's a regular image or placeholder
-                  <img
-                    src={
-                      programsState[selectedProgram].syllabusFiles[
-                        selectedYear
-                      ] || "/placeholder.svg"
-                    }
-                    alt={`${programsState[selectedProgram].name} Syllables ${selectedYear}`}
-                    className="max-w-full h-auto shadow-md rounded-md"
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="p-4 border-t bg-white">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500">
-                  Click the download button to save this syllables file
-                </div>
-                <a
-                  href={
-                    programsState[selectedProgram].syllabusFiles[selectedYear]
-                  }
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1612,4 +1079,4 @@ const CEDUndergrad = () => {
   );
 };
 
-export default CEDUndergrad;
+export default COFESUndergrad;

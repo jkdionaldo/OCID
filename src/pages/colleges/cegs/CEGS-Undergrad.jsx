@@ -7,82 +7,288 @@ import {
   X,
   Upload,
   FileText,
-  Network,
+  Building,
+  CircuitBoard,
+  Mountain,
+  Compass,
+  Pickaxe,
+  Tractor,
   ArrowLeft,
   ChevronRight,
-  BookOpen,
-  Info,
-  ClipboardList,
-  GraduationCap,
-  Briefcase,
   ExternalLink,
+  Info,
+  BookOpen,
+  GraduationCap,
+  ClipboardList,
+  Briefcase,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
-const CCISGraduate = () => {
-  // Enhanced MSIT program with additional fields
+const CEGSUndergrad = () => {
+  // Undergraduate programs for CEGS with updated icons
   const programs = [
     {
       id: 1,
-      name: "Master of Science in Information Technology (MSIT)",
-      icon: Network,
-      color: "from-red-600 to-red-800",
+      name: "Bachelor of Science in Civil Engineering (BSCE)",
+      icon: Building,
+      color: "from-orange-600 to-orange-800",
       curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1JZvUkOWjc1KwDOoOP1q348R2jYevHro0/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1vUY-3iPCo1LpoS6ZrBGqIXINwN75OT-e?usp=sharing",
+        2023: "/placeholder.svg?height=800&width=600",
+        2022: "https://drive.google.com/file/d/1KvvNyQ4H3B0nEohCLQD_XenpoCYm4xXS/view?usp=sharing",
+        2014: "/placeholder.svg?height=800&width=600",
       },
       description:
-        "The Master of Science in Information Technology program is designed to provide advanced knowledge and skills in information technology management, systems development, and IT infrastructure. The program prepares graduates for leadership roles in the rapidly evolving field of information technology, with emphasis on both technical expertise and management capabilities.",
+        "The Bachelor of Science in Civil Engineering program provides students with a strong foundation in structural engineering, transportation systems, water resources, and construction management. Students learn to design, build, and maintain infrastructure projects.",
       programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Thesis/Capstone: Required",
-        "Comprehensive Exam: Required",
-        "Mode of Delivery: Face-to-face with blended learning components",
+        "Duration: 5 years (10 semesters)",
+        "Total Units: 175 units",
+        "Practicum: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with laboratory work",
       ],
       programEducationalObjectives: [
-        "Produce IT professionals with advanced knowledge and skills in information technology",
-        "Develop leaders who can manage IT resources and implement IT solutions in organizations",
-        "Prepare graduates for research and development in specialized areas of IT",
-        "Foster innovation and ethical practice in information technology",
+        "Produce graduates who can apply engineering principles to solve complex infrastructure problems",
+        "Develop professionals who can lead engineering projects in both public and private sectors",
+        "Prepare students for advanced studies and research in specialized areas of civil engineering",
+        "Foster environmental stewardship and ethical practice in engineering",
       ],
       programOutcomes: [
-        "Apply advanced knowledge of computing, mathematics, and management principles to solve complex IT problems",
-        "Design and implement innovative IT solutions that address organizational needs",
-        "Communicate effectively with diverse stakeholders about complex IT issues and solutions",
-        "Function effectively as a leader or member in diverse teams to achieve common goals",
-        "Make informed judgments in IT practice based on legal, ethical, and professional principles",
-        "Engage in continuous learning and professional development in the rapidly evolving IT field",
+        "Apply knowledge of mathematics, science, and engineering to solve civil engineering problems",
+        "Design and conduct experiments, as well as analyze and interpret data related to civil engineering systems",
+        "Design civil engineering systems, components, or processes to meet desired needs within realistic constraints",
+        "Function effectively on multidisciplinary teams in civil engineering projects",
       ],
-      accreditation: "PAASCU Level II",
       careers: [
-        "IT Manager",
-        "Systems Architect",
-        "IT Project Manager",
-        "Chief Information Officer (CIO)",
-        "IT Consultant",
-        "Information Security Manager",
+        "Structural Engineer",
+        "Transportation Engineer",
+        "Water Resources Engineer",
+        "Construction Manager",
+        "Geotechnical Engineer",
       ],
+      syllabusFiles: {
+        2023: "https://example.com/bsce-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 2,
+      name: "Bachelor of Science in Electrical Engineering (BSEE)",
+      icon: CircuitBoard,
+      color: "from-orange-500 to-orange-700",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The Bachelor of Science in Electrical Engineering program focuses on the study of electricity, electronics, and electromagnetism. Students learn to design and develop electrical systems, electronic devices, and power distribution networks.",
+      programSpecifications: [
+        "Duration: 5 years (10 semesters)",
+        "Total Units: 172 units",
+        "Practicum: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with laboratory work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can design and implement electrical systems and components",
+        "Develop professionals who can adapt to emerging technologies in the electrical engineering field",
+        "Prepare students for advanced studies and research in specialized areas of electrical engineering",
+        "Foster innovation and ethical practice in electrical engineering",
+      ],
+      programOutcomes: [
+        "Apply knowledge of mathematics, science, and engineering to solve electrical engineering problems",
+        "Design and conduct experiments, as well as analyze and interpret data related to electrical systems",
+        "Design electrical systems, components, or processes to meet desired needs within realistic constraints",
+        "Use modern engineering tools necessary for electrical engineering practice",
+      ],
+      careers: [
+        "Electrical Design Engineer",
+        "Power Systems Engineer",
+        "Electronics Engineer",
+        "Control Systems Engineer",
+        "Telecommunications Engineer",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/bsee-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 3,
+      name: "Bachelor of Science in Geology (BS GEOL)",
+      icon: Mountain,
+      color: "from-orange-400 to-orange-600",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The Bachelor of Science in Geology program provides students with a comprehensive understanding of Earth's physical structure and substance, its history, and the processes that act upon it. Students learn about rocks, minerals, fossils, and the forces that shape the Earth.",
+      programSpecifications: [
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 150 units",
+        "Field Work: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can apply geological principles to understand Earth processes",
+        "Develop professionals who can assess geological resources and hazards",
+        "Prepare students for advanced studies and research in specialized areas of geology",
+        "Foster environmental stewardship and ethical practice in geological investigations",
+      ],
+      programOutcomes: [
+        "Apply knowledge of geology to identify and classify rocks, minerals, and fossils",
+        "Interpret geological maps and cross-sections to understand subsurface conditions",
+        "Conduct field investigations to collect geological data",
+        "Analyze geological data to reconstruct Earth history and processes",
+      ],
+      careers: [
+        "Geologist",
+        "Environmental Geologist",
+        "Mining Geologist",
+        "Petroleum Geologist",
+        "Hydrogeologist",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/bsgeol-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 4,
+      name: "Bachelor of Science in Geodetic Engineering (BSGE)",
+      icon: Compass,
+      color: "from-orange-500 to-orange-700",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The Bachelor of Science in Geodetic Engineering program focuses on the measurement and representation of the Earth's surface. Students learn about surveying, mapping, remote sensing, and geographic information systems.",
+      programSpecifications: [
+        "Duration: 5 years (10 semesters)",
+        "Total Units: 170 units",
+        "Field Work: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can apply geodetic principles to measure and map the Earth's surface",
+        "Develop professionals who can utilize modern geospatial technologies",
+        "Prepare students for advanced studies and research in specialized areas of geodetic engineering",
+        "Foster precision and ethical practice in geodetic measurements",
+      ],
+      programOutcomes: [
+        "Apply knowledge of mathematics, science, and engineering to solve geodetic problems",
+        "Conduct land surveys using appropriate equipment and techniques",
+        "Process and analyze geospatial data using modern software tools",
+        "Create accurate maps and geospatial databases for various applications",
+      ],
+      careers: [
+        "Geodetic Engineer",
+        "Land Surveyor",
+        "GIS Specialist",
+        "Remote Sensing Analyst",
+        "Cartographer",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/bsge-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 5,
+      name: "Bachelor of Science in Mining Engineering (BSME)",
+      icon: Pickaxe,
+      color: "from-orange-600 to-orange-800",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The Bachelor of Science in Mining Engineering program focuses on the extraction of minerals from the Earth. Students learn about mine design, mineral processing, rock mechanics, and sustainable mining practices.",
+      programSpecifications: [
+        "Duration: 5 years (10 semesters)",
+        "Total Units: 175 units",
+        "Field Work: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with field work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can design and manage mining operations",
+        "Develop professionals who can implement safe and sustainable mining practices",
+        "Prepare students for advanced studies and research in specialized areas of mining engineering",
+        "Foster environmental stewardship and ethical practice in mineral extraction",
+      ],
+      programOutcomes: [
+        "Apply knowledge of mathematics, science, and engineering to solve mining engineering problems",
+        "Design mine layouts and extraction sequences for optimal resource recovery",
+        "Evaluate mineral processing methods for different ore types",
+        "Implement safety measures and environmental protection in mining operations",
+      ],
+      careers: [
+        "Mining Engineer",
+        "Mine Planning Engineer",
+        "Mineral Processing Engineer",
+        "Mine Safety Officer",
+        "Environmental Compliance Officer",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/bsme-syllabus-2023", // Example URL
+      },
+    },
+    {
+      id: 6,
+      name: "Bachelor of Science in Agricultural And Biosystems Engineering (BSABE)",
+      icon: Tractor,
+      color: "from-orange-600 to-orange-800",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      description:
+        "The Bachelor of Science in Agricultural and Biosystems Engineering program integrates engineering principles with biological sciences to design systems for agricultural production and processing. Students learn about irrigation systems, farm machinery, post-harvest processing, and sustainable agricultural practices.",
+      programSpecifications: [
+        "Duration: 5 years (10 semesters)",
+        "Total Units: 173 units",
+        "Field Work: Required",
+        "Thesis: Required",
+        "Mode of Delivery: Face-to-face with laboratory work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can design and implement agricultural and biosystems engineering solutions",
+        "Develop professionals who can enhance agricultural productivity through engineering innovations",
+        "Prepare students for advanced studies and research in specialized areas of agricultural engineering",
+        "Foster sustainable practices and ethical considerations in agricultural systems",
+      ],
+      programOutcomes: [
+        "Apply knowledge of mathematics, science, and engineering to solve agricultural engineering problems",
+        "Design agricultural machinery and processing equipment for improved efficiency",
+        "Develop irrigation and drainage systems for optimal water management",
+        "Implement post-harvest technologies to reduce losses and maintain product quality",
+      ],
+      careers: [
+        "Agricultural Engineer",
+        "Biosystems Engineer",
+        "Farm Equipment Designer",
+        "Irrigation Engineer",
+        "Food Processing Engineer",
+      ],
+      syllabusFiles: {
+        2023: "https://example.com/bsabe-syllabus-2023", // Example URL
+      },
     },
   ];
 
   const [programsState, setProgramsState] = useState(programs);
   const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
-  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
-  const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [folderStatus, setFolderStatus] = useState("");
-  const [showProgramDetails, setShowProgramDetails] = useState(false);
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [syllabusFileToUpload, setSyllabusFileToUpload] = useState(null);
   const [isSyllabusUploading, setIsSyllabusUploading] = useState(false);
   const [syllabusStatus, setSyllabusStatus] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [showProgramDetails, setShowProgramDetails] = useState(false);
 
   // Google login hook for file upload
   const login = useGoogleLogin({
@@ -93,8 +299,9 @@ const CCISGraduate = () => {
           setIsUploading(true);
           setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CCIS Graduate - PRESERVE EXISTING FOLDER ID
-          const targetFolderId = "1gJvC3GO-4mlKN0KHixF1vmdXpDIbWzx8";
+          // Hardcoded folder ID for CEGS Undergrad
+          // This is the folder ID where all files will be uploaded directly
+          const targetFolderId = "1tzrnWvcbgszczI7EvEuCquHWhsLjoVdL"; // Default folder ID
 
           // First verify we can access the folder
           try {
@@ -253,17 +460,13 @@ const CCISGraduate = () => {
         }
       }
       // Handle syllabus file upload
-      else if (
-        syllabusFileToUpload &&
-        selectedProgram !== null &&
-        showSyllabusUpload
-      ) {
+      else if (syllabusFileToUpload && showSyllabusUpload) {
         try {
           setIsSyllabusUploading(true);
           setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CCIS Graduate Syllabus - PRESERVE EXISTING FOLDER ID
-          const syllabusTargetFolderId = "1gJvC3GO-4mlKN0KHixF1vmdXpDIbWzx8"; // Using the same folder ID for now
+          // Hardcoded folder ID for CEGS Undergrad Syllabus
+          const syllabusTargetFolderId = "11w_b_9Hk46zLFXZ5r_7AtAuuAtA5Tcnm"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
@@ -469,121 +672,39 @@ const CCISGraduate = () => {
     setShowProgramDetails(true);
   };
 
-  // Toggle dropdown visibility
-  const toggleDropdown = (dropdown) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
-  };
-
-  // Updated handleCurriculumYearSelect function to handle all years consistently
-  const handleCurriculumYearSelect = (year) => {
-    const curriculumFile = programsState[selectedProgram].curriculumFiles[year];
-
-    // Check if the curriculum file is a Google Drive link
-    if (curriculumFile && curriculumFile.includes("drive.google.com")) {
-      try {
-        // Get the file ID from the Google Drive URL
-        const fileId = curriculumFile.match(/[-\w]{25,}/)?.[0];
-
-        if (!fileId) {
-          throw new Error("Could not extract file ID from URL");
-        }
-
-        // Use the format that requires authentication
-        const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-        // Open the link directly in a new tab
-        window.open(authRequiredUrl, "_blank");
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the curriculum viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowCurriculumViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the curriculum viewer
-      setSelectedYear(year);
-      setShowCurriculumViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
-  // Handle syllabus year selection
-  const handleSyllabusYearSelect = (year) => {
-    const syllabusFile = programsState[selectedProgram].syllabusFiles[year];
-
-    // Check if the syllabus file is a Google Drive link
-    if (syllabusFile && syllabusFile.includes("drive.google.com")) {
-      try {
-        // For folder links, open directly in a new tab
-        if (syllabusFile.includes("folders")) {
-          window.open(syllabusFile, "_blank");
-        } else {
-          // For file links, extract ID and open
-          const fileId = syllabusFile.match(/[-\w]{25,}/)?.[0];
-
-          if (!fileId) {
-            throw new Error("Could not extract file ID from URL");
-          }
-
-          // Use the format that requires authentication
-          const authRequiredUrl = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-
-          // Open the link directly in a new tab
-          window.open(authRequiredUrl, "_blank");
-        }
-      } catch (error) {
-        // If there's an error (like invalid URL format), show the syllabus viewer instead
-        console.error("Error opening Google Drive link:", error);
-        setSelectedYear(year);
-        setShowSyllabusViewer(true);
-      }
-    } else {
-      // For files that are not Google Drive links, show the syllabus viewer
-      setSelectedYear(year);
-      setShowSyllabusViewer(true);
-    }
-
-    setActiveDropdown(null);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-red-800 to-red-900 text-white py-12 relative">
+      <div className="bg-gradient-to-r from-orange-700 to-orange-900 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
         <div className="container mx-auto px-6 relative">
           <Link
-            to="/colleges"
-            className="absolute left-0 -top-6 inline-flex items-center text-red-800 hover:text-red-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
+            to="/undergrad"
+            className="absolute left-0 -top-6 inline-flex items-center text-orange-800 hover:text-orange-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
-            <span className="font-medium">Back to Colleges </span>
+            <span className="font-medium">Back to Colleges</span>
           </Link>
         </div>
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* CCIS Logo */}
+            {/* CEGS Logo */}
             <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
               <img
-                src="/images/ccis-logo.png"
-                alt="CCIS Logo"
+                src="/images/cegs-logo.png"
+                alt="CEGS Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
-            {/* Update the hero section title and description */}
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              College of Computing and Information Sciences
+              College of Engineering and Geo-Sciences
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to advance your career in
-              the rapidly evolving world of technology and computing.
+              Explore our undergraduate programs designed to prepare you for
+              success in engineering and geo-sciences, building the
+              infrastructure and technology of tomorrow.
             </p>
           </div>
         </div>
@@ -591,12 +712,11 @@ const CCISGraduate = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
-        {/* Change the section heading from "Undergraduate Programs" to "Graduate Programs" */}
         <h2 className="text-2xl font-bold text-gray-800 mb-8">
-          Graduate Programs
+          Undergraduate Programs
         </h2>
 
-        {/* Programs List - Updated to grid layout */}
+        {/* Programs List */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {programsState.map((program, programIndex) => (
             <div
@@ -609,7 +729,7 @@ const CCISGraduate = () => {
                   <div
                     className={`flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br ${program.color} flex items-center justify-center text-white shadow-md mr-4`}
                   >
-                    <Network className="h-6 w-6" />
+                    <program.icon className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800">
                     {program.name}
@@ -619,7 +739,7 @@ const CCISGraduate = () => {
                   {program.description}
                 </p>
                 <div className="flex justify-end">
-                  <button className="text-red-600 hover:text-red-800 font-medium flex items-center text-sm">
+                  <button className="text-orange-600 hover:text-orange-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -633,18 +753,18 @@ const CCISGraduate = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-red-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-orange-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-red-700">
+                  <h3 className="text-2xl font-bold text-orange-700">
                     {programsState[selectedProgram].name}
                   </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-orange-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -657,22 +777,22 @@ const CCISGraduate = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-red-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-orange-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     {programsState[selectedProgram].description}
                   </p>
 
-                  <div className="bg-red-50 p-4 rounded-lg border border-red-100 flex items-start">
-                    <Info className="h-5 w-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-orange-50 p-4 rounded-lg border border-orange-100 flex items-start">
+                    <Info className="h-5 w-5 text-orange-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
-                      This program is designed to prepare students for advanced
-                      careers in the field of{" "}
+                      This program is designed to prepare students for careers
+                      in the field of{" "}
                       {programsState[selectedProgram].name.split("(")[0].trim()}
                       . Students will gain both theoretical knowledge and
-                      practical skills through coursework, research, and
-                      project-based learning.
+                      practical skills through coursework, laboratory sessions,
+                      and field experiences.
                     </p>
                   </div>
                 </div>
@@ -680,7 +800,7 @@ const CCISGraduate = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-red-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-orange-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -690,7 +810,7 @@ const CCISGraduate = () => {
                           key={index}
                           className="bg-gray-50 p-4 rounded-lg flex items-start"
                         >
-                          <span className="w-2 h-2 bg-red-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="w-2 h-2 bg-orange-600 rounded-full mr-2 mt-1.5"></span>
                           <span className="text-gray-700">{spec}</span>
                         </div>
                       )
@@ -701,7 +821,7 @@ const CCISGraduate = () => {
                 {/* Program Educational Objectives */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <GraduationCap className="h-5 w-5 text-red-600 mr-2" />
+                    <GraduationCap className="h-5 w-5 text-orange-600 mr-2" />
                     PROGRAM EDUCATIONAL OBJECTIVES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -713,10 +833,10 @@ const CCISGraduate = () => {
                     ].programEducationalObjectives?.map((objective, index) => (
                       <div
                         key={index}
-                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-red-500"
+                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-orange-500"
                       >
                         <p className="text-gray-700">
-                          <span className="font-semibold text-red-700">
+                          <span className="font-semibold text-orange-700">
                             Objective {index + 1}:
                           </span>{" "}
                           {objective}
@@ -729,7 +849,7 @@ const CCISGraduate = () => {
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-red-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-orange-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -742,10 +862,10 @@ const CCISGraduate = () => {
                       (outcome, index) => (
                         <div
                           key={index}
-                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-red-500"
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-orange-500"
                         >
                           <p className="text-gray-700">
-                            <span className="font-semibold text-red-700">
+                            <span className="font-semibold text-orange-700">
                               Outcome {index + 1}:
                             </span>{" "}
                             {outcome}
@@ -759,8 +879,8 @@ const CCISGraduate = () => {
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-red-600 mr-2" />
-                    CURRICULUM & SYLLABLES
+                    <BookOpen className="h-5 w-5 text-orange-600 mr-2" />
+                    CURRICULUM & SYLLABUS
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -787,7 +907,7 @@ const CCISGraduate = () => {
                                   setSelectedYear(year);
                                   setShowCurriculumViewer(true);
                                 }}
-                                className="text-red-600 hover:text-red-800 text-sm flex items-center"
+                                className="text-orange-600 hover:text-orange-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -802,7 +922,7 @@ const CCISGraduate = () => {
                           setSelectedYear("2023");
                           setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-red-600 text-red-600 rounded-lg hover:bg-red-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
@@ -812,10 +932,10 @@ const CCISGraduate = () => {
                     {/* Syllables */}
                     <div>
                       <h3 className="text-lg font-medium text-gray-800 mb-3">
-                        Course Syllables
+                        Course Syllabus
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Course syllables provide detailed information about
+                        Course syllabus provide detailed information about
                         individual courses, including learning objectives,
                         topics covered, assessment methods, and required
                         readings.
@@ -840,18 +960,13 @@ const CCISGraduate = () => {
                             );
                           }
                         }}
-                        className="px-3 py-1.5 bg-white border border-red-600 text-red-600 rounded-lg hover:bg-red-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 text-sm flex items-center"
                       >
                         <ExternalLink className="h-4 w-4 mr-1" />
-                        View Syllables
+                        View Syllabus
                       </button>
                     </div>
                   </div>
-
-                  <p className="text-gray-600 text-sm italic mt-4">
-                    Select a year to view or upload curriculum and syllables
-                    files.
-                  </p>
                 </div>
               </div>
             </div>
@@ -859,7 +974,7 @@ const CCISGraduate = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
               >
                 Close
               </button>
@@ -874,18 +989,18 @@ const CCISGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-red-700">
+                <h3 className="text-xl font-bold text-orange-700">
                   Upload Curriculum File
                 </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-orange-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-100">
+              <div className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-100">
                 <p className="text-gray-700">
                   Uploading curriculum for:{" "}
                   <span className="font-semibold">
@@ -916,7 +1031,7 @@ const CCISGraduate = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -946,129 +1061,10 @@ const CCISGraduate = () => {
                   <button
                     type="button"
                     onClick={handleCurriculumUpload}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload to Google Drive
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Upload Modal */}
-      {showSyllabusUpload && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-red-700">
-                  Upload Syllabus File
-                </h3>
-                <button
-                  onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-100">
-                <p className="text-gray-700">
-                  Uploading syllabus for:{" "}
-                  <span className="font-semibold">
-                    {programsState[selectedProgram].name}
-                  </span>
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Please upload the syllabus file for this program. The file
-                  will be uploaded directly to Google Drive.
-                </p>
-                {syllabusStatus && (
-                  <p className="text-sm text-gray-600 mt-2 italic">
-                    Status: {syllabusStatus}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-5">
-                {/* Syllabus File Upload */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <div className="flex flex-col items-center">
-                    <BookOpen className="h-12 w-12 text-gray-400 mb-3" />
-                    <p className="text-gray-700 font-medium mb-2">
-                      {syllabusFileToUpload
-                        ? syllabusFileToUpload.name
-                        : "Drag and drop your syllabus file here"}
-                    </p>
-                    <p className="text-gray-500 text-sm mb-4">or</p>
-                    <label
-                      htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors cursor-pointer flex items-center"
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Browse Files
-                    </label>
-                    <input
-                      type="file"
-                      id="syllabusFile"
-                      className="hidden"
-                      accept="image/*,.pdf"
-                      onChange={handleSyllabusFileSelect}
-                    />
-                    <p className="mt-3 text-xs text-gray-500">
-                      Supported formats: JPG, PNG, PDF (max 10MB)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowSyllabusUpload(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 mr-3 hover:bg-gray-50 transition-all"
-                    disabled={isSyllabusUploading}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center"
-                    disabled={!syllabusFileToUpload || isSyllabusUploading}
-                  >
-                    {isSyllabusUploading ? (
                       <>
                         <svg
                           className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -1112,7 +1108,7 @@ const CCISGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-red-700">
+                <h3 className="text-xl font-bold text-orange-700">
                   Program Curriculum
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1132,7 +1128,7 @@ const CCISGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-orange-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1182,146 +1178,7 @@ const CCISGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Syllabus Viewer Modal */}
-      {showSyllabusViewer && selectedProgram !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
-            <div className="p-6 flex justify-between items-center border-b">
-              <div>
-                <h3 className="text-xl font-bold text-red-700">
-                  Program Syllabus
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {programsState[selectedProgram].name} - {selectedYear}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => {
-                    setShowSyllabusUpload(true);
-                    setShowSyllabusViewer(false);
-                  }}
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
-                >
-                  <Upload className="h-4 w-4 mr-1" />
-                  Upload New
-                </button>
-                <button
-                  onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-gray-100"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-auto p-4 bg-gray-50">
-              <div className="flex justify-center">
-                {programsState[selectedProgram].syllabusFiles[
-                  selectedYear
-                ]?.includes("drive.google.com") ? (
-                  // If it's a Google Drive link
-                  programsState[selectedProgram].syllabusFiles[
-                    selectedYear
-                  ].includes("folders") ? (
-                    // For folder links
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                      <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open
-                        the folder in Google Drive.
-                      </p>
-                      <div className="flex justify-center">
-                        <a
-                          href={
-                            programsState[selectedProgram].syllabusFiles[
-                              selectedYear
-                            ]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 010 2h6a1 1 0 100-2H7z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Open Folder in Google Drive
-                        </a>
-                      </div>
-                    </div>
-                  ) : (
-                    // For file links
-                    <iframe
-                      src={getViewUrl(
-                        programsState[selectedProgram].syllabusFiles[
-                          selectedYear
-                        ]
-                      )}
-                      className="w-full h-[600px] border-0 shadow-md rounded-md"
-                      title={`${programsState[selectedProgram].name} Syllabus ${selectedYear}`}
-                      allowFullScreen
-                    />
-                  )
-                ) : (
-                  // If it's a regular image or placeholder
-                  <img
-                    src={
-                      programsState[selectedProgram].syllabusFiles[
-                        selectedYear
-                      ] || "/placeholder.svg"
-                    }
-                    alt={`${programsState[selectedProgram].name} Syllabus ${selectedYear}`}
-                    className="max-w-full h-auto shadow-md rounded-md"
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className="p-4 border-t bg-white">
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-500">
-                  Click the download button to save this syllabus file
-                </div>
-                <a
-                  href={
-                    programsState[selectedProgram].syllabusFiles[selectedYear]
-                  }
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1348,4 +1205,4 @@ const CCISGraduate = () => {
   );
 };
 
-export default CCISGraduate;
+export default CEGSUndergrad;

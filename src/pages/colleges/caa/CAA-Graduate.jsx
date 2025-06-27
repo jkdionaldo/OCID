@@ -7,374 +7,58 @@ import {
   X,
   Upload,
   FileText,
-  Calculator,
+  Wheat,
   ArrowLeft,
   ChevronRight,
-  ExternalLink,
-  Info,
   BookOpen,
+  Info,
   GraduationCap,
-  Microscope,
-  Building2,
-  Languages,
-  BookText,
-  Atom,
-  Users,
   ClipboardList,
   Briefcase,
+  ExternalLink,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
-const CEDGraduate = () => {
-  // Graduate programs for CED with updated icons
+const CAAGraduate = () => {
+  // Change the programs array to only include MS in Crop Science
   const programs = [
     {
       id: 1,
-      name: "Master of Science in Mathematics Education",
-      icon: Calculator,
-      color: "from-blue-600 to-blue-800",
+      name: "Master of Science in Crop Science",
+      icon: Wheat,
+      color: "from-green-600 to-green-800",
       curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5/view?usp=sharing",
+        2023: "https://drive.google.com/file/d/1yshKEhYNkEhFuZN_f8Gfb4TROahV88f_/view?usp=sharing",
       },
       syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
+        2023: "https://drive.google.com/drive/folders/1AdLRd6wuhirbZlaermpLHOXfKpb94tL7",
       },
       description:
-        "The MASTER OF SCIENCE IN MATHEMATICS EDUCATION program focuses on advanced mathematical concepts, teaching methodologies, and educational research. The program prepares graduates to become effective mathematics educators at various levels, develop innovative teaching strategies, and contribute to the field of mathematics education research.",
+        "The MASTER OF SCIENCE IN CROP SCIENCE program includes advanced study of crop production, plant breeding, soil science, and sustainable agricultural practices. The program prepares graduates to address various challenges in modern agriculture, including improving crop yields, developing disease-resistant varieties, and implementing environmentally sustainable farming methods.",
       programOutcomes: [
         {
-          id: "ME01",
-          text: "Apply advanced mathematical knowledge and pedagogical theories to enhance mathematics teaching and learning.",
+          id: "CS01",
+          text: "Apply advanced knowledge of crop science, plant physiology, and agricultural systems to analyze and solve complex problems in crop production and management.",
         },
         {
-          id: "ME02",
-          text: "Design and conduct original research in mathematics education using appropriate methodologies and statistical analyses.",
+          id: "CS02",
+          text: "Design and conduct original research in crop science using appropriate methodologies, statistical analyses, and interpretation of results.",
         },
         {
-          id: "ME03",
-          text: "Communicate mathematical concepts effectively to diverse audiences through clear instruction, writing, and presentations.",
+          id: "CS03",
+          text: "Communicate effectively with the scientific community and with agricultural stakeholders through logical writing, presentations, and clear instructions.",
         },
         {
-          id: "ME04",
-          text: "Function effectively as a member or leader in educational teams to achieve common goals in mathematics education.",
+          id: "CS04",
+          text: "Function effectively as a member or leader in diverse teams to achieve common research and agricultural development goals.",
         },
         {
-          id: "ME05",
-          text: "Recognize professional responsibilities and make informed judgments in mathematics education based on ethical principles and educational standards.",
+          id: "CS05",
+          text: "Recognize professional responsibilities and make informed judgments in crop science research and applications based on legal, social, ethical, and environmental principles.",
         },
         {
-          id: "ME06",
-          text: "Engage in independent learning for continual professional development as a mathematics educator.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Teaching Practicum: Required",
-        "Mode of Delivery: Face-to-face with online components",
-      ],
-      programEducationalObjectives: [
-        "Develop mathematics educators with advanced knowledge in mathematical concepts and teaching methodologies",
-        "Prepare graduates to conduct research in mathematics education",
-        "Equip students with skills to design innovative curriculum materials",
-        "Foster leadership in mathematics education at various levels",
-      ],
-      careers: [
-        "Mathematics Education Specialist",
-        "Mathematics Department Chair",
-        "Mathematics Curriculum Developer",
-        "Educational Researcher",
-        "Mathematics Teacher Trainer",
-        "Academic Administrator",
-      ],
-    },
-    {
-      id: 2,
-      name: "Doctor of Philosophy in Mathematics Education (PhDMathEd)",
-      icon: GraduationCap,
-      color: "from-blue-700 to-blue-900",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/2Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The DOCTOR OF PHILOSOPHY IN MATHEMATICS EDUCATION program is designed for educators seeking to become leaders in mathematics education research, curriculum development, and educational policy. The program emphasizes advanced research methodologies, theoretical frameworks in mathematics education, and the development of innovative approaches to mathematics teaching and learning.",
-      programOutcomes: [
-        {
-          id: "PME01",
-          text: "Demonstrate expertise in advanced mathematical concepts and educational theories to lead innovations in mathematics education.",
-        },
-        {
-          id: "PME02",
-          text: "Design and conduct sophisticated research that contributes significantly to the field of mathematics education.",
-        },
-        {
-          id: "PME03",
-          text: "Communicate complex mathematical and educational concepts effectively to diverse audiences through scholarly writing and presentations.",
-        },
-        {
-          id: "PME04",
-          text: "Lead educational teams and initiatives to improve mathematics education at institutional and policy levels.",
-        },
-        {
-          id: "PME05",
-          text: "Evaluate and develop mathematics education policies based on ethical principles, research evidence, and educational standards.",
-        },
-        {
-          id: "PME06",
-          text: "Contribute to the advancement of mathematics education through original research and scholarly activities.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 3-5 years",
-        "Total Units: 60 units",
-        "Dissertation: Required",
-        "Comprehensive Examination: Required",
-        "Mode of Delivery: Face-to-face with research components",
-      ],
-      programEducationalObjectives: [
-        "Develop scholars who can contribute to the advancement of mathematics education through original research",
-        "Prepare leaders who can influence educational policy in mathematics education",
-        "Equip graduates with skills to design and evaluate mathematics education programs",
-        "Foster innovation in mathematics teaching and learning at all educational levels",
-      ],
-      careers: [
-        "University Professor",
-        "Mathematics Education Researcher",
-        "Educational Policy Advisor",
-        "Mathematics Education Program Director",
-        "Educational Consultant",
-        "Academic Dean",
-      ],
-    },
-    {
-      id: 3,
-      name: "Master of Science Education With specialization In Biology",
-      icon: Microscope,
-      color: "from-blue-500 to-blue-700",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/3Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5Yx5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The MASTER OF SCIENCE EDUCATION WITH SPECIALIZATION IN BIOLOGY program combines advanced biological concepts with educational methodologies. The program prepares biology educators to enhance their teaching practices, develop innovative curriculum materials, and conduct research in biology education.",
-      programOutcomes: [
-        {
-          id: "BIO01",
-          text: "Apply advanced biological knowledge and educational theories to enhance biology teaching and learning.",
-        },
-        {
-          id: "BIO02",
-          text: "Design and conduct research in biology education using appropriate scientific and educational methodologies.",
-        },
-        {
-          id: "BIO03",
-          text: "Communicate biological concepts effectively through clear instruction, scientific writing, and presentations.",
-        },
-        {
-          id: "BIO04",
-          text: "Function effectively in collaborative educational and scientific teams to achieve common goals in biology education.",
-        },
-        {
-          id: "BIO05",
-          text: "Make informed judgments in biology education based on ethical principles, scientific evidence, and educational standards.",
-        },
-        {
-          id: "BIO06",
-          text: "Engage in continuous professional development as a biology educator through independent learning and scientific inquiry.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Laboratory Work: Required",
-        "Mode of Delivery: Face-to-face with laboratory components",
-      ],
-      programEducationalObjectives: [
-        "Develop biology educators with advanced knowledge in biological sciences and teaching methodologies",
-        "Prepare graduates to conduct research in biology education",
-        "Equip students with skills to design innovative biology curriculum materials",
-        "Foster leadership in science education with focus on biological sciences",
-      ],
-      careers: [
-        "Biology Education Specialist",
-        "Science Department Chair",
-        "Biology Curriculum Developer",
-        "Science Education Researcher",
-        "Biology Teacher Trainer",
-        "Science Program Coordinator",
-      ],
-    },
-    {
-      id: 4,
-      name: "Doctor of Education Major in Educational Management",
-      icon: Building2,
-      color: "from-blue-700 to-blue-900",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The DOCTOR OF EDUCATION MAJOR IN EDUCATIONAL MANAGEMENT program prepares educational leaders for advanced roles in school administration, policy development, and institutional leadership. The program emphasizes organizational theory, educational policy analysis, leadership development, and research methodologies applicable to educational management.",
-      programOutcomes: [
-        {
-          id: "EM01",
-          text: "Apply advanced knowledge of educational management theories and practices to address complex challenges in educational institutions.",
-        },
-        {
-          id: "EM02",
-          text: "Design and conduct research that contributes to the improvement of educational management and leadership practices.",
-        },
-        {
-          id: "EM03",
-          text: "Communicate effectively with educational stakeholders through clear writing, presentations, and policy recommendations.",
-        },
-        {
-          id: "EM04",
-          text: "Lead educational organizations and initiatives to achieve institutional goals and implement positive change.",
-        },
-        {
-          id: "EM05",
-          text: "Evaluate and develop educational policies based on ethical principles, research evidence, and educational standards.",
-        },
-        {
-          id: "EM06",
-          text: "Engage in continuous professional development as an educational leader through reflective practice and scholarly activities.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 3-5 years",
-        "Total Units: 60 units",
-        "Dissertation: Required",
-        "Comprehensive Examination: Required",
-        "Mode of Delivery: Face-to-face with field components",
-      ],
-      programEducationalObjectives: [
-        "Develop educational leaders who can effectively manage educational institutions",
-        "Prepare scholars who can contribute to the field of educational management through research",
-        "Equip graduates with skills to formulate and implement educational policies",
-        "Foster innovation in educational administration and leadership",
-      ],
-      careers: [
-        "School Principal",
-        "University Administrator",
-        "Educational Policy Analyst",
-        "Educational Consultant",
-        "Academic Dean",
-        "Educational Program Director",
-      ],
-    },
-    {
-      id: 5,
-      name: "Master of Arts in Educational Management Major in English Language Teaching",
-      icon: Languages,
-      color: "from-blue-500 to-blue-700",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/2Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The MASTER OF ARTS IN EDUCATIONAL MANAGEMENT MAJOR IN ENGLISH LANGUAGE TEACHING program combines principles of educational leadership with specialized knowledge in English language pedagogy. The program prepares graduates to lead English language programs, develop curriculum, and implement effective teaching methodologies in various educational settings.",
-      programOutcomes: [
-        {
-          id: "ELT01",
-          text: "Apply advanced knowledge of educational management and English language teaching methodologies to enhance language programs.",
-        },
-        {
-          id: "ELT02",
-          text: "Design and conduct research in English language teaching using appropriate linguistic and educational methodologies.",
-        },
-        {
-          id: "ELT03",
-          text: "Communicate effectively in English and about English language teaching through clear instruction, writing, and presentations.",
-        },
-        {
-          id: "ELT04",
-          text: "Lead English language programs and initiatives to achieve institutional goals and improve language education.",
-        },
-        {
-          id: "ELT05",
-          text: "Evaluate and develop English language teaching policies based on linguistic theories, research evidence, and educational standards.",
-        },
-        {
-          id: "ELT06",
-          text: "Engage in continuous professional development as an English language educator and leader through reflective practice.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Teaching Practicum: Required",
-        "Mode of Delivery: Face-to-face with online components",
-      ],
-      programEducationalObjectives: [
-        "Develop educational leaders with specialized knowledge in English language teaching",
-        "Prepare graduates to manage English language programs effectively",
-        "Equip students with skills to design and implement English language curriculum",
-        "Foster innovation in English language teaching methodologies",
-      ],
-      careers: [
-        "English Language Program Director",
-        "English Department Chair",
-        "Language School Administrator",
-        "English Curriculum Developer",
-        "Language Assessment Specialist",
-        "English Language Teacher Trainer",
-      ],
-    },
-    {
-      id: 6,
-      name: "Master of Arts in Education Major in Educational Management",
-      icon: Users,
-      color: "from-blue-600 to-blue-800",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/2Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The MASTER OF ARTS IN EDUCATION MAJOR IN EDUCATIONAL MANAGEMENT program prepares educators for leadership roles in school administration and educational organizations. The program focuses on organizational theory, educational leadership, policy analysis, and research methodologies applicable to educational settings.",
-      programOutcomes: [
-        {
-          id: "EDM01",
-          text: "Apply theories and principles of educational management to address challenges in educational institutions.",
-        },
-        {
-          id: "EDM02",
-          text: "Design and conduct research that contributes to the improvement of educational management practices.",
-        },
-        {
-          id: "EDM03",
-          text: "Communicate effectively with educational stakeholders through clear writing, presentations, and policy recommendations.",
-        },
-        {
-          id: "EDM04",
-          text: "Lead educational teams and initiatives to achieve institutional goals and implement positive change.",
-        },
-        {
-          id: "EDM05",
-          text: "Evaluate and develop educational policies based on ethical principles, research evidence, and educational standards.",
-        },
-        {
-          id: "EDM06",
-          text: "Engage in continuous professional development as an educational leader through reflective practice.",
+          id: "CS06",
+          text: "Engage in independent learning for continual professional development as a crop scientist who serves the agricultural community.",
         },
       ],
       accreditation: "CHED Recognized Program",
@@ -386,204 +70,17 @@ const CEDGraduate = () => {
         "Mode of Delivery: Face-to-face with field components",
       ],
       programEducationalObjectives: [
-        "Develop educational leaders with strong management and administrative skills",
-        "Prepare graduates to implement effective organizational strategies in educational settings",
-        "Equip students with skills to analyze and develop educational policies",
-        "Foster ethical leadership in educational institutions",
+        "Produce graduates with advanced knowledge in crop science and sustainable agricultural practices",
+        "Develop professionals who can conduct original research to address agricultural challenges",
+        "Prepare students for leadership roles in agricultural research and development",
+        "Foster innovation in crop production, plant breeding, and soil management",
       ],
       careers: [
-        "School Administrator",
-        "Department Head",
-        "Educational Program Manager",
-        "Academic Coordinator",
-        "School Principal",
-        "Educational Consultant",
-      ],
-    },
-    {
-      id: 7,
-      name: "Master of Arts in Education (MAEd), Major in Teaching Reading and Literature (TRL)",
-      icon: BookText,
-      color: "from-blue-500 to-blue-700",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/3Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5Zx5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The MASTER OF ARTS IN EDUCATION MAJOR IN TEACHING READING AND LITERATURE program focuses on advanced literacy instruction, literary analysis, and reading pedagogy. The program prepares educators to become reading specialists, literacy coaches, and literature teachers who can enhance students' reading comprehension and literary appreciation.",
-      programOutcomes: [
-        {
-          id: "TRL01",
-          text: "Apply advanced knowledge of reading theories, literary analysis, and pedagogical approaches to enhance literacy instruction.",
-        },
-        {
-          id: "TRL02",
-          text: "Design and conduct research in reading education and literature teaching using appropriate methodologies.",
-        },
-        {
-          id: "TRL03",
-          text: "Communicate effectively about literature and reading instruction through clear teaching, writing, and presentations.",
-        },
-        {
-          id: "TRL04",
-          text: "Lead literacy programs and initiatives to improve reading and literature education in various settings.",
-        },
-        {
-          id: "TRL05",
-          text: "Evaluate and develop literacy policies based on reading research, literary theories, and educational standards.",
-        },
-        {
-          id: "TRL06",
-          text: "Engage in continuous professional development as a reading and literature educator through reflective practice.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Teaching Practicum: Required",
-        "Mode of Delivery: Face-to-face with online components",
-      ],
-      programEducationalObjectives: [
-        "Develop reading and literature specialists with advanced knowledge in literacy instruction",
-        "Prepare graduates to implement effective reading and literature teaching strategies",
-        "Equip students with skills to design literacy programs and interventions",
-        "Foster appreciation for literature and effective reading instruction",
-      ],
-      careers: [
-        "Reading Specialist",
-        "Literacy Coach",
-        "Literature Teacher",
-        "Reading Program Coordinator",
-        "Literacy Curriculum Developer",
-        "Reading Intervention Specialist",
-      ],
-    },
-    {
-      id: 8,
-      name: "Doctor Of Philosophy in Science Education with Specialization in Physics (PhDScied Physics)",
-      icon: Atom,
-      color: "from-blue-700 to-blue-900",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/3Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5Ax5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The DOCTOR OF PHILOSOPHY IN SCIENCE EDUCATION WITH SPECIALIZATION IN PHYSICS program prepares educators to become leaders in physics education research, curriculum development, and advanced physics instruction. The program emphasizes advanced physics concepts, educational research methodologies, and innovative approaches to physics teaching and learning.",
-      programOutcomes: [
-        {
-          id: "PSP01",
-          text: "Demonstrate expertise in advanced physics concepts and educational theories to lead innovations in physics education.",
-        },
-        {
-          id: "PSP02",
-          text: "Design and conduct sophisticated research that contributes significantly to the field of physics education.",
-        },
-        {
-          id: "PSP03",
-          text: "Communicate complex physics concepts effectively to diverse audiences through scholarly writing and presentations.",
-        },
-        {
-          id: "PSP04",
-          text: "Lead physics education programs and initiatives to improve science education at institutional and policy levels.",
-        },
-        {
-          id: "PSP05",
-          text: "Evaluate and develop physics education policies based on scientific principles, research evidence, and educational standards.",
-        },
-        {
-          id: "PSP06",
-          text: "Contribute to the advancement of physics education through original research and scholarly activities.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 3-5 years",
-        "Total Units: 60 units",
-        "Dissertation: Required",
-        "Comprehensive Examination: Required",
-        "Mode of Delivery: Face-to-face with laboratory components",
-      ],
-      programEducationalObjectives: [
-        "Develop scholars who can contribute to the advancement of physics education through original research",
-        "Prepare leaders who can influence educational policy in science education",
-        "Equip graduates with skills to design and evaluate physics education programs",
-        "Foster innovation in physics teaching and learning at all educational levels",
-      ],
-      careers: [
-        "Physics Education Researcher",
-        "University Professor",
-        "Science Education Policy Advisor",
-        "Physics Education Program Director",
-        "Science Education Consultant",
-        "Academic Dean for Science Programs",
-      ],
-    },
-    {
-      id: 9,
-      name: "Master of Science Education with specialization in Physics",
-      icon: Atom,
-      color: "from-blue-500 to-blue-700",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/3Dx5Dx5Dx5Dx5Dx5Dx5Dx5Dx5Dx5Dx5/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/19jZ1LQtXHfrw7mdiaGKuWmIFaPelgrEA",
-      },
-      description:
-        "The MASTER OF SCIENCE EDUCATION WITH SPECIALIZATION IN PHYSICS program combines advanced physics concepts with educational methodologies. The program prepares physics educators to enhance their teaching practices, develop innovative curriculum materials, and conduct research in physics education.",
-      programOutcomes: [
-        {
-          id: "PHY01",
-          text: "Apply advanced physics knowledge and educational theories to enhance physics teaching and learning.",
-        },
-        {
-          id: "PHY02",
-          text: "Design and conduct research in physics education using appropriate scientific and educational methodologies.",
-        },
-        {
-          id: "PHY03",
-          text: "Communicate physics concepts effectively through clear instruction, scientific writing, and presentations.",
-        },
-        {
-          id: "PHY04",
-          text: "Function effectively in collaborative educational and scientific teams to achieve common goals in physics education.",
-        },
-        {
-          id: "PHY05",
-          text: "Make informed judgments in physics education based on ethical principles, scientific evidence, and educational standards.",
-        },
-        {
-          id: "PHY06",
-          text: "Engage in continuous professional development as a physics educator through independent learning and scientific inquiry.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 2 years (4 semesters)",
-        "Total Units: 36 units",
-        "Research Thesis: Required",
-        "Laboratory Work: Required",
-        "Mode of Delivery: Face-to-face with laboratory components",
-      ],
-      programEducationalObjectives: [
-        "Develop physics educators with advanced knowledge in physics and teaching methodologies",
-        "Prepare graduates to conduct research in physics education",
-        "Equip students with skills to design innovative physics curriculum materials",
-        "Foster leadership in science education with focus on physics",
-      ],
-      careers: [
-        "Physics Education Specialist",
-        "Science Department Chair",
-        "Physics Curriculum Developer",
-        "Science Education Researcher",
-        "Physics Teacher Trainer",
-        "Science Program Coordinator",
+        "Agricultural Researcher",
+        "Plant Breeder",
+        "Crop Production Specialist",
+        "Agricultural Extension Officer",
+        "Sustainable Farming Consultant",
       ],
     },
   ];
@@ -612,8 +109,8 @@ const CEDGraduate = () => {
           setIsUploading(true);
           setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CED Graduate - PRESERVE EXISTING FOLDER ID
-          const targetFolderId = "1qilGYdnZCNc9iYbKmTfU6ovEYEzSdHCW";
+          // Hardcoded folder ID for CAA Graduate
+          const targetFolderId = "13VLsyljNifJc7QdgT9iGa67pW3Uhn78Z";
 
           // First verify we can access the folder
           try {
@@ -781,8 +278,8 @@ const CEDGraduate = () => {
           setIsSyllabusUploading(true);
           setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CED Graduate Syllabus - PRESERVE EXISTING FOLDER ID
-          const syllabusTargetFolderId = "1qilGYdnZCNc9iYbKmTfU6ovEYEzSdHCW"; // Using the same folder ID for now
+          // Hardcoded folder ID for CAA Graduate Syllabus
+          const syllabusTargetFolderId = "13VLsyljNifJc7QdgT9iGa67pW3Uhn78Z"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
@@ -994,15 +491,21 @@ const CEDGraduate = () => {
     setShowProgramDetails(true);
   };
 
+  // Function to extract folder ID from Google Drive URL
+  const getFolderIdFromUrl = (url) => {
+    const match = url.match(/[-\w]{25,}/);
+    return match ? match[0] : null;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-blue-700 to-blue-800 text-white py-12 relative">
+      <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
         <div className="container mx-auto px-6 relative">
           <Link
             to="/colleges"
-            className="absolute left-0 -top-6 inline-flex items-center text-blue-800 hover:text-blue-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
+            className="absolute left-0 -top-6 inline-flex items-center text-green-800 hover:text-green-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Colleges</span>
@@ -1011,22 +514,23 @@ const CEDGraduate = () => {
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* CED Logo */}
+            {/* CAA Logo */}
             <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
               <img
-                src="/images/ced-logo.png"
-                alt="CED Logo"
+                src="/images/caa-logo.png"
+                alt="CAA Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
+            {/* Update the hero section title and description */}
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              College of Education
+              College of Agriculture and Agri-Industries
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to advance your career in
-              education, develop specialized expertise, and prepare you for
-              leadership roles in educational institutions.
+              Explore our graduate programs designed to prepare you for advanced
+              careers in agricultural sciences, sustainable farming practices,
+              and agricultural research.
             </p>
           </div>
         </div>
@@ -1038,7 +542,7 @@ const CEDGraduate = () => {
           Graduate Programs
         </h2>
 
-        {/* Programs List */}
+        {/* Programs List - Using Grid Layout from CED-Graduate */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {programsState.map((program, programIndex) => (
             <div
@@ -1058,10 +562,10 @@ const CEDGraduate = () => {
                   </h3>
                 </div>
                 <p className="text-gray-600 mb-4 line-clamp-2">
-                  {program.description}
+                  {program.description.substring(0, 150)}...
                 </p>
                 <div className="flex justify-end">
-                  <button className="text-blue-600 hover:text-blue-800 font-medium flex items-center text-sm">
+                  <button className="text-green-600 hover:text-green-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -1075,18 +579,18 @@ const CEDGraduate = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-green-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-blue-700">
+                  <h3 className="text-2xl font-bold text-green-700">
                     {programsState[selectedProgram].name}
                   </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1099,22 +603,24 @@ const CEDGraduate = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-blue-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     {programsState[selectedProgram].description}
                   </p>
 
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 flex items-start">
-                    <Info className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex items-start">
+                    <Info className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
-                      This program is designed to prepare students for advanced
-                      careers in the field of{" "}
-                      {programsState[selectedProgram].name.split("(")[0].trim()}
+                      This program is designed to prepare students for careers
+                      in the field of{" "}
+                      {programsState[selectedProgram].name
+                        .split("in ")[1]
+                        ?.trim() || "Agricultural Sciences"}
                       . Students will gain both theoretical knowledge and
-                      practical skills through coursework, research, and
-                      project-based learning.
+                      practical skills through coursework, laboratory sessions,
+                      and field experiences.
                     </p>
                   </div>
                 </div>
@@ -1122,7 +628,7 @@ const CEDGraduate = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-blue-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1132,7 +638,7 @@ const CEDGraduate = () => {
                           key={index}
                           className="bg-gray-50 p-4 rounded-lg flex items-start"
                         >
-                          <span className="w-2 h-2 bg-blue-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2 mt-1.5"></span>
                           <span className="text-gray-700">{spec}</span>
                         </div>
                       )
@@ -1143,7 +649,7 @@ const CEDGraduate = () => {
                 {/* Program Educational Objectives */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <GraduationCap className="h-5 w-5 text-blue-600 mr-2" />
+                    <GraduationCap className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM EDUCATIONAL OBJECTIVES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -1155,10 +661,10 @@ const CEDGraduate = () => {
                     ].programEducationalObjectives?.map((objective, index) => (
                       <div
                         key={index}
-                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500"
+                        className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                       >
                         <p className="text-gray-700">
-                          <span className="font-semibold text-blue-700">
+                          <span className="font-semibold text-green-700">
                             Objective {index + 1}:
                           </span>{" "}
                           {objective}
@@ -1171,7 +677,7 @@ const CEDGraduate = () => {
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-blue-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -1184,10 +690,10 @@ const CEDGraduate = () => {
                       (outcome, index) => (
                         <div
                           key={index}
-                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500"
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                         >
                           <p className="text-gray-700">
-                            <span className="font-semibold text-blue-700">
+                            <span className="font-semibold text-green-700">
                               {outcome.id}:
                             </span>{" "}
                             {outcome.text}
@@ -1201,8 +707,8 @@ const CEDGraduate = () => {
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-blue-600 mr-2" />
-                    CURRICULUM & SYLLABUS
+                    <BookOpen className="h-5 w-5 text-green-600 mr-2" />
+                    CURRICULUM & SYLLABLES
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1226,10 +732,17 @@ const CEDGraduate = () => {
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  setSelectedYear(year);
-                                  setShowCurriculumViewer(true);
+                                  if (
+                                    fileUrl &&
+                                    fileUrl.includes("drive.google.com")
+                                  ) {
+                                    window.open(fileUrl, "_blank");
+                                  } else {
+                                    setSelectedYear(year);
+                                    setShowCurriculumViewer(true);
+                                  }
                                 }}
-                                className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                                className="text-green-600 hover:text-green-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -1244,7 +757,7 @@ const CEDGraduate = () => {
                           setSelectedYear("2023");
                           setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
@@ -1254,10 +767,10 @@ const CEDGraduate = () => {
                     {/* Syllables */}
                     <div>
                       <h3 className="text-lg font-medium text-gray-800 mb-3">
-                        Course Syllabus
+                        Course Syllables
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Course syllabus provide detailed information about
+                        Course syllables provide detailed information about
                         individual courses, including learning objectives,
                         topics covered, assessment methods, and required
                         readings.
@@ -1285,13 +798,62 @@ const CEDGraduate = () => {
                               );
                             }
                           }}
-                          className="px-3 py-1.5 bg-white border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 text-sm flex items-center"
+                          className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                         >
                           <ExternalLink className="h-4 w-4 mr-1" />
                           View Syllables
                         </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedYear("2023");
+                            setShowSyllabusUpload(true);
+                          }}
+                          className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
+                        >
+                          <Upload className="h-4 w-4 mr-1" />
+                          Upload Syllabus
+                        </button>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Career Opportunities */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <Briefcase className="h-5 w-5 text-green-600 mr-2" />
+                    CAREER OPPORTUNITIES
+                  </h2>
+                  <p className="text-gray-700 mb-4">
+                    Graduates of the {programsState[selectedProgram].name}{" "}
+                    program can pursue various career paths, including:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {programsState[selectedProgram].careers.map(
+                      (career, index) => (
+                        <div
+                          key={index}
+                          className="bg-green-50 p-3 rounded-lg border border-green-100 flex items-center"
+                        >
+                          <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                          <span className="text-gray-800">{career}</span>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+
+                {/* Accreditation */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <span className="w-2 h-6 bg-green-600 rounded-full mr-3 inline-block"></span>
+                    ACCREDITATION(S)
+                  </h2>
+                  <div className="bg-gray-50 p-4 rounded-lg inline-block">
+                    <p className="text-gray-700 font-semibold">
+                      {programsState[selectedProgram].accreditation}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1300,7 +862,7 @@ const CEDGraduate = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 Close
               </button>
@@ -1315,18 +877,18 @@ const CEDGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-blue-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Upload Curriculum File
                 </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-gray-700">
                   Uploading curriculum for:{" "}
                   <span className="font-semibold">
@@ -1357,7 +919,7 @@ const CEDGraduate = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1387,7 +949,7 @@ const CEDGraduate = () => {
                   <button
                     type="button"
                     onClick={handleCurriculumUpload}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
@@ -1434,20 +996,20 @@ const CEDGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-blue-700">
-                  Upload Syllabus File
+                <h3 className="text-xl font-bold text-green-700">
+                  Upload Syllables File
                 </h3>
                 <button
                   onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-gray-700">
-                  Uploading syllabus for:{" "}
+                  Uploading syllables for:{" "}
                   <span className="font-semibold">
                     {programsState[selectedProgram].name}
                   </span>
@@ -1467,16 +1029,16 @@ const CEDGraduate = () => {
                 {/* Syllabus File Upload */}
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                   <div className="flex flex-col items-center">
-                    <Upload className="h-12 w-12 text-gray-400 mb-3" />
+                    <BookOpen className="h-12 w-12 text-gray-400 mb-3" />
                     <p className="text-gray-700 font-medium mb-2">
                       {syllabusFileToUpload
                         ? syllabusFileToUpload.name
-                        : "Drag and drop your syllabus file here"}
+                        : "Drag and drop your syllables file here"}
                     </p>
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1506,7 +1068,7 @@ const CEDGraduate = () => {
                   <button
                     type="button"
                     onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                     disabled={!syllabusFileToUpload || isSyllabusUploading}
                   >
                     {isSyllabusUploading ? (
@@ -1553,7 +1115,7 @@ const CEDGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-blue-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Program Curriculum
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1566,14 +1128,14 @@ const CEDGraduate = () => {
                     setShowCurriculumUpload(true);
                     setShowCurriculumViewer(false);
                   }}
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                  className="text-green-600 hover:text-green-800 text-sm flex items-center"
                 >
                   <Upload className="h-4 w-4 mr-1" />
                   Upload New
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1623,7 +1185,7 @@ const CEDGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1653,7 +1215,7 @@ const CEDGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-blue-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Program Syllables
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1666,14 +1228,14 @@ const CEDGraduate = () => {
                     setShowSyllabusUpload(true);
                     setShowSyllabusViewer(false);
                   }}
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                  className="text-green-600 hover:text-green-800 text-sm flex items-center"
                 >
                   <Upload className="h-4 w-4 mr-1" />
                   Upload New
                 </button>
                 <button
                   onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-blue-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1688,42 +1250,48 @@ const CEDGraduate = () => {
                   // If it's a Google Drive link
                   programsState[selectedProgram].syllabusFiles[
                     selectedYear
-                  ].includes("folders") ? (
+                  ].includes("/folders/") ? (
                     // For folder links
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                      <p className="text-center mb-4">
-                        This is a folder link. Click the button below to open
-                        the folder in Google Drive.
+                    <div className="w-full h-[600px] flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md">
+                      <img
+                        src="/google-drive-folder.png"
+                        alt="Google Drive Folder"
+                        className="w-24 h-24 mb-4"
+                      />
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                        Google Drive Folder
+                      </h3>
+                      <p className="text-gray-600 mb-6 text-center">
+                        This is a Google Drive folder that contains multiple
+                        files. Click the button below to open it in a new tab.
                       </p>
-                      <div className="flex justify-center">
-                        <a
-                          href={
-                            programsState[selectedProgram].syllabusFiles[
-                              selectedYear
-                            ]
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                      <a
+                        href={`https://drive.google.com/drive/folders/${getFolderIdFromUrl(
+                          programsState[selectedProgram].syllabusFiles[
+                            selectedYear
+                          ]
+                        )}?usp=sharing`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center shadow-md"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Open Folder in Google Drive
-                        </a>
-                      </div>
+                          <path
+                            fillRule="evenodd"
+                            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 010 2h6a1 1 0 100-2H7z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Open Google Drive Folder
+                      </a>
                     </div>
                   ) : (
-                    // For file links
+                    // If it's a regular Google Drive file
                     <iframe
                       src={getViewUrl(
                         programsState[selectedProgram].syllabusFiles[
@@ -1762,7 +1330,7 @@ const CEDGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1789,4 +1357,4 @@ const CEDGraduate = () => {
   );
 };
 
-export default CEDGraduate;
+export default CAAGraduate;

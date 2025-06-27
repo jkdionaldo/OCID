@@ -13,7 +13,7 @@ import {
   ChevronRight,
   BookOpen,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
 const CHASSGraduate = () => {
   // Graduate programs for CHASS with updated icons

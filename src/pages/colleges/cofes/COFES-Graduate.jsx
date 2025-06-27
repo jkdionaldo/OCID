@@ -7,42 +7,41 @@ import {
   X,
   Upload,
   FileText,
-  Calculator,
+  Leaf,
   ArrowLeft,
   ChevronRight,
   BookOpen,
-  GraduationCap,
   ExternalLink,
   Info,
   ClipboardList,
   Briefcase,
 } from "lucide-react";
-import { getViewUrl } from "../../utils/googleDriveUtils";
+import { getViewUrl } from "../../../utils/googleDriveUtils";
 
-const CMNSGraduate = () => {
-  // CMNS-specific programs - keep the existing curriculum file links
+const COFESGraduate = () => {
+  // COFES-specific programs - keep the existing curriculum file links
   const programs = [
     {
       id: 1,
-      name: "Master of Science in Mathematics",
-      icon: Calculator,
-      color: "from-teal-600 to-teal-800",
+      name: "Master in Science in Environmental Science and Management",
+      icon: Leaf,
+      color: "from-green-600 to-green-800",
       curriculumFiles: {
-        2023: "https://drive.google.com/file/d/1cn1dmsleFJ5dbsEqxwTYFPQ8VobgDcHL/view?usp=sharing",
+        2023: "https://drive.google.com/file/d/1XO3dimuQDJBOpOzZ-NGErRTZrDh5D5U8/view?usp=sharing",
       },
       syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1tbEXz6DnSsQhBm9_ri1VQScmQzjeCfv4",
+        2023: "https://drive.google.com/drive/folders/1qilGYdnZCNc9iYbKmTfU6ovEYEzSdHCW",
       },
       description:
-        "The MASTER OF SCIENCE IN MATHEMATICS program includes advanced study of mathematical theory, analysis, and applications. The program prepares graduates to address various challenges in modern mathematics, including developing new mathematical models, solving complex problems, and implementing computational methods for scientific and industrial applications.",
+        "The MASTER IN SCIENCE IN ENVIRONMENTAL SCIENCE AND MANAGEMENT program is designed to prepare students for careers in environmental management, conservation, and sustainable resource utilization. The program integrates scientific principles with management strategies to address complex environmental challenges.",
       programOutcomes: [
         {
           id: "MS01",
-          text: "Apply advanced knowledge of mathematical theory, analysis, and applications to solve complex problems in various fields.",
+          text: "Apply advanced knowledge of environmental science and management principles to solve complex environmental problems.",
         },
         {
           id: "MS02",
-          text: "Design and conduct original research in mathematics using appropriate methodologies, analytical techniques, and interpretation of results.",
+          text: "Design and conduct original research in environmental science using appropriate methodologies, analytical techniques, and interpretation of results.",
         },
         {
           id: "MS03",
@@ -50,15 +49,15 @@ const CMNSGraduate = () => {
         },
         {
           id: "MS04",
-          text: "Function effectively as a member or leader in diverse teams to achieve common research and development goals.",
+          text: "Function effectively as a member or leader in diverse teams to achieve common research and development goals in environmental management.",
         },
         {
           id: "MS05",
-          text: "Recognize professional responsibilities and make informed judgments in mathematical research and applications based on logical, social, ethical, and scientific principles.",
+          text: "Recognize professional responsibilities and make informed judgments in environmental science and management based on ecological, social, ethical, and scientific principles.",
         },
         {
           id: "MS06",
-          text: "Engage in independent learning for continual professional development as a mathematician who serves the scientific community.",
+          text: "Engage in independent learning for continual professional development as an environmental scientist who serves the community and environment.",
         },
       ],
       accreditation: "CHED Recognized Program",
@@ -66,67 +65,22 @@ const CMNSGraduate = () => {
         "Duration: 2 years (4 semesters)",
         "Total Units: 36 units",
         "Research Thesis: Required",
-        "Mode of Delivery: Face-to-face with computational components",
+        "Field Work: Required",
+        "Mode of Delivery: Face-to-face with field components",
       ],
       programEducationalObjectives: [
-        "Develop mathematicians with advanced knowledge in mathematical theory and applications",
-        "Prepare graduates to conduct original research in mathematics",
-        "Equip students with skills to solve complex mathematical problems in various fields",
-        "Foster innovation in mathematical modeling and computational methods",
+        "Develop environmental scientists with advanced knowledge in ecological principles and management strategies",
+        "Prepare graduates to conduct original research in environmental science and management",
+        "Equip students with skills to address complex environmental challenges",
+        "Foster innovation in sustainable resource management and conservation",
       ],
-    },
-    {
-      id: 2,
-      name: "Doctor of Philosophy in Mathematics (PhD Math)",
-      icon: GraduationCap,
-      color: "from-teal-700 to-teal-900",
-      curriculumFiles: {
-        2023: "https://drive.google.com/file/d/11glbB9QIOGL9WBYCSt4hV1S0e-fO7PBF/view?usp=sharing",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1tbEXz6DnSsQhBm9_ri1VQScmQzjeCfv4",
-      },
-      description:
-        "The DOCTOR OF PHILOSOPHY IN MATHEMATICS program is designed for students who wish to pursue advanced research in mathematics. The program provides comprehensive training in mathematical theory, analysis, and applications, preparing graduates for careers in academia, research institutions, and specialized industries.",
-      programOutcomes: [
-        {
-          id: "PhD01",
-          text: "Demonstrate mastery of advanced mathematical concepts, theories, and methodologies to address complex mathematical problems.",
-        },
-        {
-          id: "PhD02",
-          text: "Conduct original and significant research that contributes to the advancement of mathematical knowledge and applications.",
-        },
-        {
-          id: "PhD03",
-          text: "Communicate complex mathematical ideas effectively to both specialized and general audiences through publications, presentations, and teaching.",
-        },
-        {
-          id: "PhD04",
-          text: "Collaborate effectively with researchers from diverse disciplines to address multidisciplinary problems requiring mathematical expertise.",
-        },
-        {
-          id: "PhD05",
-          text: "Evaluate the ethical implications of mathematical research and applications in various contexts.",
-        },
-        {
-          id: "PhD06",
-          text: "Develop and maintain a program of independent research and lifelong learning in mathematics and related fields.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 3-5 years",
-        "Total Units: 60 units",
-        "Dissertation: Required",
-        "Comprehensive Examination: Required",
-        "Mode of Delivery: Face-to-face with research components",
-      ],
-      programEducationalObjectives: [
-        "Develop scholars who can contribute to the advancement of mathematical knowledge through original research",
-        "Prepare leaders in mathematical research and education",
-        "Equip graduates with skills to address complex mathematical problems in various disciplines",
-        "Foster innovation in mathematical theory and applications",
+      careers: [
+        "Environmental Scientist",
+        "Conservation Specialist",
+        "Environmental Consultant",
+        "Natural Resource Manager",
+        "Sustainability Coordinator",
+        "Environmental Policy Analyst",
       ],
     },
   ];
@@ -156,8 +110,8 @@ const CMNSGraduate = () => {
           setIsUploading(true);
           setFolderStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CMNS Graduate - PRESERVE EXISTING FOLDER ID
-          const targetFolderId = "1HhlqFwiIJ3LDCLXGtbfdsFPD278jPFWa";
+          // Hardcoded folder ID for COFES Graduate - PRESERVE EXISTING FOLDER ID
+          const targetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP";
 
           // First verify we can access the folder
           try {
@@ -325,8 +279,8 @@ const CMNSGraduate = () => {
           setIsSyllabusUploading(true);
           setSyllabusStatus("Starting upload process...");
 
-          // Hardcoded folder ID for CMNS Graduate Syllabus - PRESERVE EXISTING FOLDER ID
-          const syllabusTargetFolderId = "1HhlqFwiIJ3LDCLXGtbfdsFPD278jPFWa"; // Using the same folder ID for now
+          // Hardcoded folder ID for COFES Graduate Syllabus - PRESERVE EXISTING FOLDER ID
+          const syllabusTargetFolderId = "1GsDcyIvzFAkdEYyfy6wSy6ssgFa7J3kP"; // Using the same folder ID for now
 
           // First verify we can access the folder
           try {
@@ -631,12 +585,12 @@ const CMNSGraduate = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section with Back Button */}
-      <div className="bg-gradient-to-r from-teal-800 to-teal-900 text-white py-12 relative">
+      <div className="bg-gradient-to-r from-green-800 to-green-900 text-white py-12 relative">
         {/* Back Button - Aligned with the navbar logo */}
         <div className="container mx-auto px-6 relative">
           <Link
             to="/colleges"
-            className="absolute left-0 -top-6 inline-flex items-center text-teal-800 hover:text-teal-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
+            className="absolute left-0 -top-6 inline-flex items-center text-green-800 hover:text-green-900 bg-white hover:bg-white/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-md z-10"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Colleges</span>
@@ -645,23 +599,22 @@ const CMNSGraduate = () => {
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center text-center relative">
-            {/* CMNS Logo */}
+            {/* COFES Logo */}
             <div className="w-24 h-24 bg-white rounded-full p-1 flex-shrink-0 mb-6 shadow-lg">
               <img
-                src="/images/cmns-logo.png"
-                alt="CMNS Logo"
+                src="/images/cofes-logo.png"
+                alt="COFES Logo"
                 className="w-full h-full object-contain"
               />
             </div>
 
-            {/* Update the hero section title and description */}
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              College of Mathematics and Natural Sciences
+              College of Forestry and Environmental Sciences
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-              Explore our graduate programs designed to advance your expertise
-              in mathematics and prepare you for careers in research, academia,
-              and specialized industries.
+              Explore our graduate programs designed to prepare you for advanced
+              careers in forestry, environmental management, and sustainable
+              resource conservation.
             </p>
           </div>
         </div>
@@ -669,7 +622,6 @@ const CMNSGraduate = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
-        {/* Change the section heading from "Undergraduate Programs" to "Graduate Programs" */}
         <h2 className="text-2xl font-bold text-gray-800 mb-8">
           Graduate Programs
         </h2>
@@ -697,7 +649,7 @@ const CMNSGraduate = () => {
                   {program.description}
                 </p>
                 <div className="flex justify-end">
-                  <button className="text-teal-600 hover:text-teal-800 font-medium flex items-center text-sm">
+                  <button className="text-green-600 hover:text-green-800 font-medium flex items-center text-sm">
                     View Details <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -711,18 +663,18 @@ const CMNSGraduate = () => {
       {showProgramDetails && selectedProgram !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col my-4">
-            <div className="p-6 border-b bg-gradient-to-r from-teal-50 to-white">
+            <div className="p-6 border-b bg-gradient-to-r from-green-50 to-white">
               <div className="flex justify-between items-center">
                 <div className="w-8">{/* Empty div for spacing */}</div>
                 <div className="text-center flex-1">
-                  <h3 className="text-2xl font-bold text-teal-700">
+                  <h3 className="text-2xl font-bold text-green-700">
                     {programsState[selectedProgram].name}
                   </h3>
                   <p className="text-sm text-gray-600">Program Details</p>
                 </div>
                 <button
                   onClick={() => setShowProgramDetails(false)}
-                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100 w-8 h-8 flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -735,22 +687,24 @@ const CMNSGraduate = () => {
                 {/* Program Overview */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="w-2 h-8 bg-teal-600 rounded-full mr-3 inline-block"></span>
+                    <span className="w-2 h-8 bg-green-600 rounded-full mr-3 inline-block"></span>
                     Program Overview
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     {programsState[selectedProgram].description}
                   </p>
 
-                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-100 flex items-start">
-                    <Info className="h-5 w-5 text-teal-600 mr-3 flex-shrink-0 mt-0.5" />
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex items-start">
+                    <Info className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
                       This program is designed to prepare students for advanced
                       careers in the field of{" "}
-                      {programsState[selectedProgram].name.split("(")[0].trim()}
+                      {programsState[selectedProgram].name
+                        .split("in")[1]
+                        ?.trim() || "Environmental Science"}
                       . Students will gain both theoretical knowledge and
                       practical skills through coursework, research, and
-                      project-based learning.
+                      field-based learning.
                     </p>
                   </div>
                 </div>
@@ -758,7 +712,7 @@ const CMNSGraduate = () => {
                 {/* Program Specifications */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-teal-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM SPECIFICATIONS
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -768,7 +722,7 @@ const CMNSGraduate = () => {
                           key={index}
                           className="bg-gray-50 p-4 rounded-lg flex items-start"
                         >
-                          <span className="w-2 h-2 bg-teal-600 rounded-full mr-2 mt-1.5"></span>
+                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2 mt-1.5"></span>
                           <span className="text-gray-700">{spec}</span>
                         </div>
                       )
@@ -781,7 +735,7 @@ const CMNSGraduate = () => {
                   .programEducationalObjectives && (
                   <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                      <GraduationCap className="h-5 w-5 text-teal-600 mr-2" />
+                      <BookOpen className="h-5 w-5 text-green-600 mr-2" />
                       PROGRAM EDUCATIONAL OBJECTIVES
                     </h2>
                     <p className="text-gray-700 mb-4">
@@ -794,10 +748,10 @@ const CMNSGraduate = () => {
                         (objective, index) => (
                           <div
                             key={index}
-                            className="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500"
+                            className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                           >
                             <p className="text-gray-700">
-                              <span className="font-semibold text-teal-700">
+                              <span className="font-semibold text-green-700">
                                 Objective {index + 1}:
                               </span>{" "}
                               {objective}
@@ -812,7 +766,7 @@ const CMNSGraduate = () => {
                 {/* Program Outcomes */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <ClipboardList className="h-5 w-5 text-teal-600 mr-2" />
+                    <ClipboardList className="h-5 w-5 text-green-600 mr-2" />
                     PROGRAM OUTCOMES
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -825,10 +779,10 @@ const CMNSGraduate = () => {
                       (outcome, index) => (
                         <div
                           key={index}
-                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-teal-500"
+                          className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500"
                         >
                           <p className="text-gray-700">
-                            <span className="font-semibold text-teal-700">
+                            <span className="font-semibold text-green-700">
                               {outcome.id}:
                             </span>{" "}
                             {outcome.text}
@@ -842,8 +796,8 @@ const CMNSGraduate = () => {
                 {/* Curriculum Section */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <BookOpen className="h-5 w-5 text-teal-600 mr-2" />
-                    CURRICULUM & SYLLABLES
+                    <BookOpen className="h-5 w-5 text-green-600 mr-2" />
+                    CURRICULUM & SYLLABUS
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -870,7 +824,7 @@ const CMNSGraduate = () => {
                                   setSelectedYear(year);
                                   setShowCurriculumViewer(true);
                                 }}
-                                className="text-teal-600 hover:text-teal-800 text-sm flex items-center"
+                                className="text-green-600 hover:text-green-800 text-sm flex items-center"
                               >
                                 <ExternalLink className="h-3 w-3 mr-1" />
                                 View
@@ -885,7 +839,7 @@ const CMNSGraduate = () => {
                           setSelectedYear("2023");
                           setShowCurriculumUpload(true);
                         }}
-                        className="px-3 py-1.5 bg-white border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 text-sm flex items-center"
+                        className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                       >
                         <Upload className="h-4 w-4 mr-1" />
                         Upload Curriculum
@@ -926,7 +880,7 @@ const CMNSGraduate = () => {
                               );
                             }
                           }}
-                          className="px-3 py-1.5 bg-white border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 text-sm flex items-center"
+                          className="px-3 py-1.5 bg-white border border-green-600 text-green-600 rounded-lg hover:bg-green-50 text-sm flex items-center"
                         >
                           <ExternalLink className="h-4 w-4 mr-1" />
                           View Syllabus
@@ -941,7 +895,7 @@ const CMNSGraduate = () => {
             <div className="p-4 border-t bg-white flex justify-end">
               <button
                 onClick={() => setShowProgramDetails(false)}
-                className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 Close
               </button>
@@ -956,18 +910,18 @@ const CMNSGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-teal-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Upload Syllabus File
                 </h3>
                 <button
                   onClick={() => setShowSyllabusUpload(false)}
-                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-gray-700">
                   Uploading syllabus for:{" "}
                   <span className="font-semibold">
@@ -998,7 +952,7 @@ const CMNSGraduate = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="syllabusFile"
-                      className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1028,7 +982,7 @@ const CMNSGraduate = () => {
                   <button
                     type="button"
                     onClick={handleSyllabusUpload}
-                    className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                     disabled={!syllabusFileToUpload || isSyllabusUploading}
                   >
                     {isSyllabusUploading ? (
@@ -1075,18 +1029,18 @@ const CMNSGraduate = () => {
           <div className="bg-white rounded-xl max-w-md w-full shadow-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-teal-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Upload Curriculum File
                 </h3>
                 <button
                   onClick={() => setShowCurriculumUpload(false)}
-                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-100">
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <p className="text-gray-700">
                   Uploading curriculum for:{" "}
                   <span className="font-semibold">
@@ -1116,7 +1070,7 @@ const CMNSGraduate = () => {
                     <p className="text-gray-500 text-sm mb-4">or</p>
                     <label
                       htmlFor="curriculumFile"
-                      className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors cursor-pointer flex items-center"
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer flex items-center"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Browse Files
@@ -1146,7 +1100,7 @@ const CMNSGraduate = () => {
                   <button
                     type="button"
                     onClick={handleFileUpload}
-                    className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                     disabled={!fileToUpload || isUploading}
                   >
                     {isUploading ? (
@@ -1193,7 +1147,7 @@ const CMNSGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-teal-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Program Curriculum
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1213,7 +1167,7 @@ const CMNSGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowCurriculumViewer(false)}
-                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1263,7 +1217,7 @@ const CMNSGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1293,7 +1247,7 @@ const CMNSGraduate = () => {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
             <div className="p-6 flex justify-between items-center border-b">
               <div>
-                <h3 className="text-xl font-bold text-teal-700">
+                <h3 className="text-xl font-bold text-green-700">
                   Program Syllables
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -1313,7 +1267,7 @@ const CMNSGraduate = () => {
                 </button>
                 <button
                   onClick={() => setShowSyllabusViewer(false)}
-                  className="text-gray-400 hover:text-teal-700 transition-colors p-1 rounded-full hover:bg-gray-100"
+                  className="text-gray-400 hover:text-green-700 transition-colors p-1 rounded-full hover:bg-gray-100"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -1344,7 +1298,7 @@ const CMNSGraduate = () => {
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1402,7 +1356,7 @@ const CMNSGraduate = () => {
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1429,4 +1383,4 @@ const CMNSGraduate = () => {
   );
 };
 
-export default CMNSGraduate;
+export default COFESGraduate;
