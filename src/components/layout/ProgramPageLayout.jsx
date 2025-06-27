@@ -80,7 +80,7 @@ const ProgramPageTemplate = ({
 
         {/* Banner Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
           style={{
             backgroundImage: `url(${bannerImage})`,
             backgroundSize: "cover",
