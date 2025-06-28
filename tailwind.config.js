@@ -8,6 +8,20 @@ module.exports = {
     "app/**/*.{ts,tsx}",
     "components/**/*.{ts,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /from-(red|blue|green|yellow|purple|pink|gray)-(700|800|900)/,
+    },
+    {
+      pattern: /to-(red|blue|green|yellow|purple|pink|gray)-(700|800|900)/,
+    },
+    {
+      pattern: /text-(red|blue|green|yellow|purple|pink|gray)-(700|800|900)/,
+    },
+    {
+      pattern: /bg-(red|blue|green|yellow|purple|pink|gray)-(50|700)/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -65,5 +79,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
-
+};
