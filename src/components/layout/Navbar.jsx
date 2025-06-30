@@ -43,19 +43,19 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-6 sm:px-12 py-2 sm:py-3 flex items-center ml-2">
+      <div className="container mx-auto px-6 sm:px-12 py-2 sm:py-3 flex items-center">
         {/* OCID Logo */}
         <Link to="/" className="flex items-center flex-shrink-0">
           <div className="flex items-center justify-center h-[50px] sm:h-[60px]">
             <img
               src="/images/ocid_logo.png"
               alt="OCID Logo"
-              className="h-[40px] sm:h-[80px] object-contain"
+              className="h-[65px] sm:h-[80px] object-contain sm:ml-2"
             />
             <img
               src="/images/logo_text_2.png"
               alt="OCID Logo"
-              className="h-[40px] sm:h-[45px] w-auto object-contain"
+              className="h-[37px] sm:h-[45px] w-auto object-contain"
             />
           </div>
         </Link>
