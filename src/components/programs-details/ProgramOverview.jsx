@@ -9,7 +9,7 @@ const ProgramOverview = ({ program, themeColor = "green" }) => {
         ></span>
         Program Overview
       </h2>
-      <p className="text-gray-700 leading-relaxed mb-6">
+      <p className="text-gray-700 leading-relaxed mb-6 text ">
         {program.description}
       </p>
 
@@ -19,7 +19,7 @@ const ProgramOverview = ({ program, themeColor = "green" }) => {
         <Info
           className={`h-5 w-5 text-${themeColor}-600 mr-3 flex-shrink-0 mt-0.5`}
         />
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-700 text-left">
           This program is designed to prepare students for{" "}
           {program.isGraduate ? "advanced " : ""}careers in the field of{" "}
           {program.name.split("in")[1]?.trim() ||
