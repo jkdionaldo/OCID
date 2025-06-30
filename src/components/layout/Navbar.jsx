@@ -43,21 +43,26 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
-        {/* CSU Logo */}
-        <Link to="/" className="flex-shrink-0">
-          <div className="h-[50px] sm:h-[60px] w-[100px] sm:w-[120px] flex items-center">
+      <div className="container mx-auto px-6 sm:px-12 py-2 sm:py-3 flex items-center ml-2">
+        {/* OCID Logo */}
+        <Link to="/" className="flex items-center flex-shrink-0">
+          <div className="flex items-center justify-center h-[50px] sm:h-[60px]">
             <img
-              src="/images/csu-logo.png"
-              alt="Caraga State University Logo"
-              className="h-full object-contain"
+              src="/images/ocid_logo.png"
+              alt="OCID Logo"
+              className="h-[40px] sm:h-[80px] object-contain"
+            />
+            <img
+              src="/images/logo_text_2.png"
+              alt="OCID Logo"
+              className="h-[40px] sm:h-[45px] w-auto object-contain"
             />
           </div>
         </Link>
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden p-2 rounded-md text-gray-700"
+          className="md:hidden ml-auto p-2 rounded-md text-gray-700"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
@@ -77,13 +82,13 @@ const Navbar = () => {
         </button>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex items-center space-x-8 lg:space-x-12">
+        <div className="hidden md:flex text-center space-x-8 lg:space-x-12 mx-auto">
           <Link
             to="/home"
             className={`font-medium uppercase text-sm lg:text-base ${
               isActive("/home") || isActive("/")
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
-                : "text-gray-600 hover:text-green-700"
+                : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             HOME
@@ -93,19 +98,24 @@ const Navbar = () => {
             className={`font-medium uppercase text-sm lg:text-base ${
               isCollegeActive()
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
-                : "text-gray-600 hover:text-green-700"
+                : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             COLLEGES
           </Link>
           <a
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            className="font-medium uppercase text-sm lg:text-base text-gray-600 hover:text-green-700 transition-colors duration-200"
+            className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
             ABOUT OCID
           </a>
+        </div>
+
+        {/* Right side - Space for future login button */}
+        <div className="hidden md:block flex-shrink-0 w-[240px] sm:w-[210px]">
+          {/* This space is reserved for the login button */}
         </div>
 
         {/* Mobile navigation */}
@@ -147,7 +157,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* OCID Logo */}
+        {/* OCID Logo 
         <div id="ocidlogo" className="hidden md:block">
           <Link to="/">
             <div className="h-[50px] sm:h-[60px] w-[100px] sm:w-[120px] flex items-center justify-center">
@@ -159,6 +169,7 @@ const Navbar = () => {
             </div>
           </Link>
         </div>
+        */}
       </div>
     </nav>
   );
