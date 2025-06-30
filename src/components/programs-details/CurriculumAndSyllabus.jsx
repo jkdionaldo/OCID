@@ -11,18 +11,18 @@ const CurriculumAndSyllabus = ({
 }) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
         <BookOpen className={`h-5 w-5 text-${themeColor}-600 mr-2`} />
         CURRICULUM & SYLLABUS
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Curriculum Files */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-medium text-gray-800 mb-3">
             Curriculum Files
           </h3>
-          <div className="space-y-3 mb-4">
+          <div className="space-y-3 mb-4 w-full">
             {Object.entries(curriculumFiles || {}).map(([year, fileUrl]) => (
               <div
                 key={year}
@@ -81,7 +81,7 @@ const CurriculumAndSyllabus = ({
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
           </p>
-          <div className="flex space-x-3">
+          <div className="flex">
             <button
               onClick={(e) => {
                 e.stopPropagation();
