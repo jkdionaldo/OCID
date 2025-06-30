@@ -10,15 +10,16 @@ const CurriculumAndSyllabus = ({
   themeColor = "green",
 }) => {
   return (
+    // main container with padding and rounded corners
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
       <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
         <BookOpen className={`h-5 w-5 text-${themeColor}-600 mr-2`} />
         CURRICULUM & SYLLABUS
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
         {/* Curriculum Files */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center h-full">
           <h3 className="text-lg font-medium text-gray-800 mb-3">
             Curriculum Files
           </h3>
@@ -28,7 +29,8 @@ const CurriculumAndSyllabus = ({
                 key={year}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
               >
-                <div className="flex justify-between items-center">
+                {/* added m-1 to balance UI from both containers */}
+                <div className="flex justify-between items-center m-1">
                   <span className="font-medium text-gray-800">
                     {year} Curriculum
                   </span>
@@ -58,7 +60,6 @@ const CurriculumAndSyllabus = ({
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -72,22 +73,23 @@ const CurriculumAndSyllabus = ({
         </div>
 
         {/* Syllabus */}
-        <div>
+        <div className="flex flex-col items-center h-full">
           <h3 className="text-lg font-medium text-gray-800 mb-3">
             Course Syllabus
           </h3>
+
           <p className="text-sm text-gray-600 mb-4 text-justify">
             Course syllabus provide detailed information about individual
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
           </p>
-          <div className="flex">
-            <button
+          <div>
+            {/* <button
               onClick={(e) => {
                 e.stopPropagation();
                 onViewSyllabus();
               }}
-              className={`px-3 py-1.5 bg-${themeColor}-600 text-white rounded-lg hover:bg-${themeColor}-700 text-sm flex items-center`}
+              className={`px-3 py-1.5 bg-${themeColor}-600 text-white rounded-lg hover:bg-${themeColor}-700 text-sm items-center`}
             >
               <svg
                 className="h-4 w-4 mr-1"
@@ -104,7 +106,7 @@ const CurriculumAndSyllabus = ({
                 />
               </svg>
               Browse Syllabus
-            </button>
+            </button> */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -112,6 +114,7 @@ const CurriculumAndSyllabus = ({
               }}
               className={`px-3 py-1.5 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
             >
+              {/* px-3 py-1.5 bg-white border border-red-600 text-red-600 rounded-lg hover:bg-red-50 text-sm  items-center */}
               <svg
                 className="h-4 w-4 mr-1"
                 fill="none"
