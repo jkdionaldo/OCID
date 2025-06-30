@@ -11,7 +11,7 @@ const ProgramOutcomes = ({ outcomes, programName, themeColor = "green" }) => {
         Upon successful completion of the {programName} program, graduates will
         be able to:
       </p>
-      <div className="space-y-3">
+      <div className="space-y-3 text-justify">
         {outcomes.map((outcome, index) => (
           <div
             key={index}
