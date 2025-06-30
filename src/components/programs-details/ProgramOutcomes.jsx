@@ -11,13 +11,13 @@ const ProgramOutcomes = ({ outcomes, programName, themeColor = "green" }) => {
         Upon successful completion of the {programName} program, graduates will
         be able to:
       </p>
-      <div className="space-y-3 text-justify">
+      <div className="space-y-3">
         {outcomes.map((outcome, index) => (
           <div
             key={index}
             className={`bg-gray-50 p-4 rounded-lg border-l-4 border-${themeColor}-500`}
           >
-            <p className="text-gray-700">
+            <p className="text-gray-700 text-left">
               <span className={`font-semibold text-${themeColor}-700`}>
                 {outcome.id || `Outcome ${index + 1}`}:
               </span>{" "}
