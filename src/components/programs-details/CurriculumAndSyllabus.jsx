@@ -81,7 +81,7 @@ const CurriculumAndSyllabus = ({
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
           </p>
-          <div className="flex space-x-3">
+          <div className="flex">
             <button
               onClick={(e) => {
                 e.stopPropagation();
