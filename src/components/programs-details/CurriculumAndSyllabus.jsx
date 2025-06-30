@@ -10,6 +10,8 @@ const CurriculumAndSyllabus = ({
   themeColor = "green",
 }) => {
   return (
+    
+    // main container with padding and rounded corners
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
       <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
         <BookOpen className={`h-5 w-5 text-${themeColor}-600 mr-2`} />
@@ -28,7 +30,8 @@ const CurriculumAndSyllabus = ({
                 key={year}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
               >
-                <div className="flex justify-between items-center">
+                {/* added py to balance UI from both containers */}
+                <div className="flex justify-between items-center py-2">
                   <span className="font-medium text-gray-800">
                     {year} Curriculum
                   </span>
@@ -51,8 +54,9 @@ const CurriculumAndSyllabus = ({
               e.stopPropagation();
               onUploadCurriculum();
             }}
-            className={`px-3 py-1.5 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
+            className={`px-3 py-1.5 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm  items-center`}
           >
+            {/*  px-3 py-1.5 bg-${themeColor}-600 text-white rounded-lg hover:bg-${themeColor}-700 text-sm items-center */}
             <svg
               className="h-4 w-4 mr-1"
               fill="none"
@@ -87,7 +91,7 @@ const CurriculumAndSyllabus = ({
                 e.stopPropagation();
                 onViewSyllabus();
               }}
-              className={`px-3 py-1.5 bg-${themeColor}-600 text-white rounded-lg hover:bg-${themeColor}-700 text-sm flex items-center`}
+              className={`px-3 py-1.5 bg-${themeColor}-600 text-white rounded-lg hover:bg-${themeColor}-700 text-sm items-center`}
             >
               <svg
                 className="h-4 w-4 mr-1"
