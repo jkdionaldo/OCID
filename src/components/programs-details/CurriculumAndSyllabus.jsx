@@ -76,7 +76,7 @@ const CurriculumAndSyllabus = ({
           <h3 className="text-lg font-medium text-gray-800 mb-3">
             Course Syllabus
           </h3>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-gray-600 mb-4 text-justify">
             Course syllabus provide detailed information about individual
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
