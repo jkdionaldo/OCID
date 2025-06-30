@@ -43,14 +43,19 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center">
+      <div className="container mx-auto px-6 sm:px-12 py-2 sm:py-3 flex items-center ml-2">
         {/* OCID Logo */}
-        <Link to="/" className="flex-shrink-0">
-          <div className="h-[50px] sm:h-[60px] w-[100px] sm:w-[120px] flex items-center justify-center">
+        <Link to="/" className="flex items-center flex-shrink-0">
+          <div className="flex items-center justify-center h-[50px] sm:h-[60px]">
             <img
-              src="/images/ocid-logo.png"
+              src="/images/ocid_logo.png"
               alt="OCID Logo"
-              className="h-full object-contain"
+              className="h-[40px] sm:h-[80px] object-contain"
+            />
+            <img
+              src="/images/logo_text_2.png"
+              alt="OCID Logo"
+              className="h-[40px] sm:h-[45px] w-auto object-contain"
             />
           </div>
         </Link>
@@ -77,7 +82,7 @@ const Navbar = () => {
         </button>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex items-center space-x-8 lg:space-x-12 mx-auto">
+        <div className="hidden md:flex text-center space-x-8 lg:space-x-12 mx-auto">
           <Link
             to="/home"
             className={`font-medium uppercase text-sm lg:text-base ${
@@ -109,7 +114,7 @@ const Navbar = () => {
         </div>
 
         {/* Right side - Space for future login button */}
-        <div className="hidden md:block flex-shrink-0 w-[100px] sm:w-[120px]">
+        <div className="hidden md:block flex-shrink-0 w-[240px] sm:w-[210px]">
           {/* This space is reserved for the login button */}
         </div>
 
