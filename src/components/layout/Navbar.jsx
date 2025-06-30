@@ -88,7 +88,7 @@ const Navbar = () => {
             className={`font-medium uppercase text-sm lg:text-base ${
               isActive("/home") || isActive("/")
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
-                : "text-gray-600 hover:text-green-700"
+                : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             HOME
@@ -98,14 +98,14 @@ const Navbar = () => {
             className={`font-medium uppercase text-sm lg:text-base ${
               isCollegeActive()
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
-                : "text-gray-600 hover:text-green-700"
+                : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             COLLEGES
           </Link>
           <a
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            className="font-medium uppercase text-sm lg:text-base text-gray-600 hover:text-green-700 transition-colors duration-200"
+            className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
