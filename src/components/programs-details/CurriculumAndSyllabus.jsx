@@ -30,7 +30,7 @@ const CurriculumAndSyllabus = ({
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
               >
                 {/* added m-1 to balance UI from both containers */}
-                <div className="flex justify-between items-center m-1">
+                <div className="flex justify-between items-center p-1">
                   <span className="font-medium text-gray-800">
                     {year} Curriculum
                   </span>
@@ -53,7 +53,7 @@ const CurriculumAndSyllabus = ({
               e.stopPropagation();
               onUploadCurriculum();
             }}
-            className={`px-3 py-1.5 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
+            className={` px-3 py-2 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
           >
             <svg
               className="h-4 w-4 mr-1"
@@ -83,7 +83,7 @@ const CurriculumAndSyllabus = ({
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
           </p>
-          <div>
+          {/* <div> */}
             {/* <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -112,7 +112,7 @@ const CurriculumAndSyllabus = ({
                 e.stopPropagation();
                 onUploadSyllabus();
               }}
-              className={`px-3 py-1.5 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
+              className={`px-3 py-2 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
             >
               {/* px-3 py-1.5 bg-white border border-red-600 text-red-600 rounded-lg hover:bg-red-50 text-sm  items-center */}
               <svg
@@ -134,7 +134,7 @@ const CurriculumAndSyllabus = ({
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
