@@ -11,10 +11,10 @@ const ProgramSpecifications = ({ specifications, themeColor = "green" }) => {
         {specifications?.map((spec, index) => (
           <div
             key={index}
-            className="bg-gray-50 p-4 rounded-lg flex items-start"
+            className="bg-gray-50 p-4 rounded-lg flex items-start text-left"
           >
             <span
-              className={`w-2 h-2 bg-${themeColor}-600 rounded-full mr-2 mt-1.5`}
+              className={`w-2 h-2 bg-${themeColor}-600 rounded-full mr-2 mt-1.5 `}
             ></span>
             <span className="text-gray-700">{spec}</span>
           </div>
