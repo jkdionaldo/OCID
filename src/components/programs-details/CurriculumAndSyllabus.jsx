@@ -83,7 +83,7 @@ const CurriculumAndSyllabus = ({
             courses, including learning objectives, topics covered, assessment
             methods, and required readings.
           </p>
-          {/* <div> */}
+          {/* <div className="flex flex-col items-center"> */}
             {/* <button
               onClick={(e) => {
                 e.stopPropagation();
