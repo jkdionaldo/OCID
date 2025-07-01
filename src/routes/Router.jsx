@@ -5,7 +5,7 @@ import { graduateRoutes, undergradRoutes } from "./CollegeRoutes";
 
 // Import main pages
 import Home from "@/pages/HomePage";
-import Colleges from "@/pages/GraduateSchoolPage.jsx";
+import Colleges from "@/pages/GraduateSchoolPage";
 import Undergrad from "@/pages/UndergradPage";
 
 const Router = () => {
