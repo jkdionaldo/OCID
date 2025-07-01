@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 
-const Colleges = () => {
+const GraduateSchools = () => {
   // Only include the 5 specified colleges for graduate programs
   const collegeLogos = [
     {
@@ -99,4 +99,4 @@ const Colleges = () => {
   );
 };
 
-export default Colleges;
+export default GraduateSchools;
