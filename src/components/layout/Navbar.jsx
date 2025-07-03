@@ -92,16 +92,34 @@ const Navbar = () => {
           >
             HOME
           </Link>
-          <Link
-            to="/colleges"
-            className={`font-medium uppercase text-sm lg:text-base ${
-              isCollegeActive()
-                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
-                : "text-green-950 hover:text-green-700"
-            } transition-colors duration-200`}
-          >
-            COLLEGES
-          </Link>
+
+          {/* there is still not sure what to put in CSU-CC as content may varied from the Main Campus */}
+          <div className="relative">
+            <button
+              className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              Colleges
+            </button>
+            {isMenuOpen && (
+              <div className="absolute left-0 mt-2 bg-white shadow-md rounded-lg flex flex-col w-48">
+                <Link
+                  to="/colleges"
+                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  CSU-MAIN
+                </Link>
+                <Link
+                  to="/"
+                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  CSU-CC
+                </Link>
+              </div>
+            )}
+          </div>
 
           <a
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
@@ -110,6 +128,14 @@ const Navbar = () => {
             rel="noopener noreferrer"
           >
             ABOUT OCID
+          </a>
+          <a
+            href="/"
+            className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Dowloadables
           </a>
         </div>
 
@@ -134,18 +160,33 @@ const Navbar = () => {
               >
                 HOME
               </Link>
-              <Link
-                to="/colleges"
-                className={`${
-                  isCollegeActive()
-                    ? "font-bold text-green-700 border-l-4 border-green-700 pl-2"
-                    : "text-gray-600 hover:text-green-700"
-                } transition-colors duration-200`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                COLLEGES
-              </Link>
-
+              {/* Mobile dropdown for Colleges */}
+              <div className="relative">
+  <button
+    className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+    onClick={() => setIsMenuOpen(!isMenuOpen)}
+  >
+    Colleges
+  </button>
+  {isMenuOpen && (
+    <div className="absolute left-0 mt-2 bg-white shadow-md rounded-lg flex flex-col w-48">
+      <Link
+        to="/colleges"
+        className="block px-4 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        CSU-MAIN
+      </Link>
+      <Link
+        to="/"
+        className="block px-4 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        CSU-CC
+      </Link>
+    </div>
+  )}
+</div>
               <a
                 href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
                 className="text-gray-600 hover:text-green-700 transition-colors duration-200"
@@ -154,6 +195,16 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 ABOUT OCID
+              </a>
+              {/* added to be edited */}
+
+              <a
+                href="/"
+                className="text-gray-600 hover:text-green-700 transition-colors duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Dowloadables
               </a>
               <LoginModal />
             </div>
