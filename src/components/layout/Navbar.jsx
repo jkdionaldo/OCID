@@ -83,9 +83,9 @@ const Navbar = () => {
         {/* Desktop navigation */}
         <div className="hidden md:flex text-center space-x-8 lg:space-x-12 mx-auto">
           <Link
-            to="/home"
+            to="/"
             className={`font-medium uppercase text-sm lg:text-base ${
-              isActive("/home") || isActive("/")
+              isActive("/") || isActive("/")
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
@@ -124,9 +124,9 @@ const Navbar = () => {
           <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md rounded-b-xl ">
             <div className="flex flex-col items-center justify-center p-4 space-y-4 my-4">
               <Link
-                to="/home"
+                to="/"
                 className={`${
-                  isActive("/home") || isActive("/")
+                  isActive("/") || isActive("/")
                     ? "font-bold text-green-700 border-l-4 border-green-700 pl-2"
                     : "text-gray-600 hover:text-green-700"
                 } transition-colors duration-200`}
