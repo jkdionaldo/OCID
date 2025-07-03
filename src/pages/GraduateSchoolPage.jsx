@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 
 const GraduateSchools = () => {
-  // Only include the 5 specified colleges for graduate programs
+  // Only include the 6 specified colleges for graduate programs
   const collegeLogos = [
     {
       path: "/colleges/ccis/graduate",
@@ -39,7 +39,7 @@ const GraduateSchools = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-      {/* Tab Navigation */}
+      {/* start Tab Navigation */}
       <div className="mb-8 sm:mb-10">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center sm:justify-start">
           <div className="relative">
@@ -54,10 +54,9 @@ const GraduateSchools = () => {
           >
             Undergraduate
           </button>
-
-
         </div>
       </div>
+      {/* end Navigation */}
 
       {/* College Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8">
