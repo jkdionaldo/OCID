@@ -111,6 +111,14 @@ const Navbar = () => {
           >
             ABOUT OCID
           </a>
+          <a
+            href="/"
+            className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Dowloadables
+          </a>
         </div>
 
         {/* Right side login button */}
@@ -154,6 +162,16 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 ABOUT OCID
+              </a>
+              {/* added to be edited */}
+     
+              <a
+                href="/"
+                className="text-gray-600 hover:text-green-700 transition-colors duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Dowloadables
               </a>
               <LoginModal />
             </div>

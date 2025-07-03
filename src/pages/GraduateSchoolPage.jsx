@@ -54,6 +54,8 @@ const GraduateSchools = () => {
           >
             Undergraduate
           </button>
+
+
         </div>
       </div>
 
@@ -87,7 +89,7 @@ const GraduateSchools = () => {
               {/* View Button */}
               <Link
                 to={college.path}
-                 className="rounded-xl w-64 inline-block px-6 py-2 bg-neutral-500 text-white hover:bg-green-800 transition-all duration-300 text-center shadow-sm hover:shadow-md"
+                className="rounded-xl w-64 inline-block px-6 py-2 bg-neutral-500 text-white hover:bg-green-800 transition-all duration-300 text-center shadow-sm hover:shadow-md"
               >
                 View Details
               </Link>
