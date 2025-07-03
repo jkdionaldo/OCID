@@ -1,8 +1,7 @@
 "use client";
-
+import LoginModal from "@/components/modals/auth/LoginModal";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { use } from "react";
 
 const Navbar = () => {
   const location = useLocation();
@@ -103,6 +102,7 @@ const Navbar = () => {
           >
             COLLEGES
           </Link>
+
           <a
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
             className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
@@ -113,15 +113,16 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Right side - Space for future login button */}
+        {/* Right side login button */}
+        {/* hidden md:flex text-center space-x-8 lg:space-x-12 mx-auto */}
         <div className="hidden md:block flex-shrink-0 w-[240px] sm:w-[210px]">
-          {/* This space is reserved for the login button */}
+          <LoginModal />
         </div>
 
         {/* Mobile navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md rounded-b-xl">
-            <div className="flex flex-col p-4 space-y-4">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md rounded-b-xl ">
+            <div className="flex flex-col items-center justify-center p-4 space-y-4 my-4">
               <Link
                 to="/home"
                 className={`${
@@ -144,6 +145,7 @@ const Navbar = () => {
               >
                 COLLEGES
               </Link>
+
               <a
                 href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
                 className="text-gray-600 hover:text-green-700 transition-colors duration-200"
@@ -153,6 +155,7 @@ const Navbar = () => {
               >
                 ABOUT OCID
               </a>
+              <LoginModal />
             </div>
           </div>
         )}
