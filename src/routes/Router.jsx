@@ -5,7 +5,8 @@ import { graduateRoutes, undergradRoutes } from "./CollegeRoutes";
 
 // Import main pages
 import Home from "@/pages/HomePage";
-import Colleges from "@/pages/CollegesPage";
+// CSU main page 
+import Colleges from "@/pages/GraduateSchoolPage";
 import Undergrad from "@/pages/UndergradPage";
 
 const Router = () => {
@@ -13,7 +14,8 @@ const Router = () => {
     <Routes>
       {/* Main routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
+
+      {/*csu-main */}
       <Route path="/colleges" element={<Colleges />} />
       <Route path="/undergrad" element={<Undergrad />} />
 
