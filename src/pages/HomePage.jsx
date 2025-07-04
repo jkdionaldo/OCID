@@ -64,9 +64,39 @@ const Home = () => {
               CORE VALUES
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              Competence Service; and Uprightness
-            </p>
+            {/*layout for core values*/}
+            <div className="flex flex-col gap-4 mt-6">
+              {/* for C*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                  C
+                </span>
+                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                  OMPETENCE
+                </span>
+              </div>
+              {/* for S*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                  S
+                </span>
+                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                  ERVICE
+                </span>
+              </div>
+              {/* for U*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                  U
+                </span>
+                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                  PRIGHTNESS
+                </span>
+              </div>
+            </div>
           </Card>
 
           {/* Our Mission */}

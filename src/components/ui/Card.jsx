@@ -17,7 +17,7 @@ const StyledWrapper = styled.div`
     min-width: 220px;
     max-width: 350px;
     min-height: 220px;
-    height: 400px;
+    height: 320px;
     /*height: 254px;*/
     background: rgba(217, 217, 217, 0.58);
     border: 1px solid white;
