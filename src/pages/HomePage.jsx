@@ -1,3 +1,5 @@
+import Card from "../components/ui/Card";
+
 const Home = () => {
   return (
     <div className="flex flex-col w-full">
@@ -41,11 +43,11 @@ const Home = () => {
       </div>
 
       {/* Content Sections with Cream Background */}
-      <div className="py-6 sm:py-10 md:py-16">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <div className="py-6 sm:py-10 md:py-16 px-4 sm:px-8 md:px-16">
+        <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 mb-8 sm:mb-12 md:mb-16">
           {/* Our Vision */}
-          <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
+          <Card>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center   mb-4 sm:mb-6 relative font-poppins">
               Our Vision
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
@@ -53,10 +55,21 @@ const Home = () => {
               A globally-engaged University excelling in science, engineering
               and the arts.
             </p>
-          </div>
+          </Card>
+
+          {/* Core Values */}
+          <Card>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
+              Core Values
+              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
+            </h2>
+            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
+              Competence Service; and Uprightness
+            </p>
+          </Card>
 
           {/* Our Mission */}
-          <div className="mb-8 sm:mb-12 md:mb-16">
+          <Card>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
               Our Mission
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
@@ -66,9 +79,9 @@ const Home = () => {
               and socially responsible human capital towards the sustainable and
               inclusive development of Caraga Region and beyond.
             </p>
-          </div>
+          </Card>
 
-          {/* General Mandate - Simplified on mobile */}
+          {/* General Mandate - Simplified on mobile 
           <div className="mb-8 sm:mb-12 md:mb-16">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
               General Mandate
@@ -85,17 +98,7 @@ const Home = () => {
               leadership in its areas of specialization.
             </p>
           </div>
-
-          {/* Core Values */}
-          <div>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Core Values
-              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
-            </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              Competence Service; and Uprightness
-            </p>
-          </div>
+          */}
         </div>
       </div>
     </div>
