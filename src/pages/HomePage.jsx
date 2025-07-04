@@ -48,19 +48,20 @@ const Home = () => {
           {/* Our Vision */}
           <Card>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center   mb-4 sm:mb-6 relative font-poppins">
-              Our Vision
+              OUR VISION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
             <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              A globally-engaged University excelling in science, engineering
-              and the arts.
+              A socially-engaged digital, innovation, and entrepreneurial
+              university excelling globally in science,engineering, and the arts
+              by 2028.
             </p>
           </Card>
 
           {/* Core Values */}
           <Card>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Core Values
+              CORE VALUES
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
             <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
@@ -71,13 +72,13 @@ const Home = () => {
           {/* Our Mission */}
           <Card>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Our Mission
+              OUR MISSION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
             <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              Caraga State University endeavors to produce globallycompetitive
-              and socially responsible human capital towards the sustainable and
-              inclusive development of Caraga Region and beyond.
+              As a transformative university, CSU is a responsible steward of
+              problem-solvers and value creators who are driven to create a
+              sustainable future for the region, the nation,and beyond.
             </p>
           </Card>
 
