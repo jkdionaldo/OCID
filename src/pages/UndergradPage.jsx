@@ -63,8 +63,8 @@ const Undergrad = () => {
 
       {/* College Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8">
-        {collegeLogos.map((college) => (
-          <div key={college.id} className="mb-4">
+        {collegeLogos.map((college, index) => (
+          <div key={college.path || index} className="mb-4">
             <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 h-[300px] sm:h-[350px] flex flex-col items-center justify-between p-4 sm:p-6">
               {/* Logo */}
               <div className="flex-1 w-full flex flex-col items-center justify-center mb-4">
