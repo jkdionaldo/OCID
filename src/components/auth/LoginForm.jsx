@@ -43,7 +43,7 @@ export default function LoginForm() {
           Login
         </button>
         <a
-          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 flex items-center"
           href="#"
         >
           Forgot Password?
