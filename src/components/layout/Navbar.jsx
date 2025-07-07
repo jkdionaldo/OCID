@@ -2,7 +2,7 @@
 import LoginModal from "@/components/modals/auth/LoginModal";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { ChevronDown } from "lucide-react"; // Ensure you have lucide-react installed
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -96,14 +96,18 @@ const Navbar = () => {
           {/* there is still not sure what to put in CSU-CC as content may varied from the Main Campus */}
           <div className="relative">
             <button
-              className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+              className={`font-medium uppercase text-sm lg:text-base flex ${
+                isCollegeActive("/") || isCollegeActive("/")
+                  ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                  : "text-green-950 hover:text-green-700"
+              } transition-colors duration-200`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              Colleges
+              Colleges <ChevronDown />
             </button>
 
             {isMenuOpen && (
-              <div className="absolute left-0 mt-2 bg-white shadow-md rounded-lg flex flex-col w-48">
+              <div className="absolute left-0 mt-2 bg-white shadow-md rounded-xl flex flex-col w-48">
                 <Link
                   to="/colleges"
                   className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
