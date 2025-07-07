@@ -6,6 +6,7 @@ import { ChevronDown } from "lucide-react"; // Ensure you have lucide-react inst
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false); // Add this new state
   const [isScrolled, setIsScrolled] = useState(false);
 
   //navbar blur component logic
@@ -138,7 +139,7 @@ const Navbar = () => {
             to="/downloadables"
             className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
           >
-            Downloadables
+            DOWNLOAD
           </Link>
         </div>
 
@@ -150,11 +151,14 @@ const Navbar = () => {
 
         {/* Mobile navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md rounded-b-xl ">
-            <div className="flex flex-col items-center justify-center p-4 space-y-4 my-4">
-              <Link
+          <div
+            className="md:hidden absolute top-full left-0 right-0 bg-white
+          shadow-md rounded-b-xl "
+          >
+            <div className="flex flex-col items-center justify-center my-2">
+               <Link
                 to="/"
-                className={`${
+                className={`flex items-center ${
                   isActive("/") || isActive("/")
                     ? "font-bold text-green-700 border-l-4 border-green-700 pl-2"
                     : "text-gray-600 hover:text-green-700"
@@ -166,24 +170,34 @@ const Navbar = () => {
               {/* Mobile dropdown for Colleges */}
               <div className="relative">
                 <button
-                  className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className={`${
+                    isCollegeActive("/") || isCollegeActive("/")
+                      ? "font-bold text-green-700 border-l-4 border-green-700 pl-2"
+                      : "text-gray-600 hover:text-green-700"
+                  } transition-colors duration-200`}
+                  onClick={() => setIsMobileCollegesOpen(!isMobileCollegesOpen)} // Use the new state
                 >
-                  Colleges
+                  COLLEGES <ChevronDown className="inline-block ml-1" />
                 </button>
-                {isMenuOpen && (
+                {isMobileCollegesOpen && ( // Use the new state
                   <div className="absolute left-0 mt-2 bg-white shadow-md rounded-lg flex flex-col w-48">
                     <Link
                       to="/colleges"
                       className="block px-4 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsMobileCollegesOpen(false);
+                      }}
                     >
                       CSU-MAIN
                     </Link>
                     <Link
                       to="/"
                       className="block px-4 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsMobileCollegesOpen(false);
+                      }}
                     >
                       CSU-CC
                     </Link>
@@ -192,7 +206,7 @@ const Navbar = () => {
               </div>
               <a
                 href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-                className="text-gray-600 hover:text-green-700 transition-colors duration-200"
+                className="text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)}
@@ -203,11 +217,11 @@ const Navbar = () => {
 
               <a
                 href="/"
-                className="text-gray-600 hover:text-green-700 transition-colors duration-200"
+                className="text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Dowloadables
+                DOWNLOAD
               </a>
               <LoginModal />
             </div>

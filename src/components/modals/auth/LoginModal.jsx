@@ -13,7 +13,7 @@ export default function LoginModal() {
     <>
       {/* Button to open the modal */}
       <button
-        className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200 flex items-center"
+        className="font-medium uppercase text-sm lg:text-base text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
         onClick={openModal}
       >
         LOGIN
