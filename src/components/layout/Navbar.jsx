@@ -137,7 +137,11 @@ const Navbar = () => {
           </a>
           <Link
             to="/downloadables"
-            className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+             className={`font-medium uppercase text-sm lg:text-base ${
+              isActive("/downloadables") || isActive("/downloadables")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
           >
             DOWNLOAD
           </Link>
