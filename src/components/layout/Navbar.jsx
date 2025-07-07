@@ -215,14 +215,16 @@ const Navbar = () => {
               </a>
               {/* added to be edited */}
 
-              <a
-                href="/"
-                className="text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                DOWNLOAD
-              </a>
+             <Link
+            to="/downloadables"
+            className={`flex items-center ${
+                  isActive("/downloadables") || isActive("/downloadables")
+                    ? "font-bold text-green-700 border-l-4 border-green-700 pl-2"
+                    : "text-gray-600 hover:text-green-700"
+                } transition-colors duration-200`}
+          >
+            DOWNLOAD
+          </Link>
               <LoginModal />
             </div>
           </div>
