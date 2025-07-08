@@ -8,8 +8,8 @@ import Home from "@/pages/HomePage";
 // downloadables page
 import Downloadables from "@/pages/Downloadables"; // Ensure the correct file path and extension
 // CSU main page
-import Colleges from "@/pages/GraduateSchoolPage";
-import Undergrad from "@/pages/UndergradPage";
+import Colleges from "@/pages/CSU-Main/GraduateSchoolPage"; 
+import Undergrad from "@/pages/CSU-Main/UndergradPage"; 
 
 const Router = () => {
   return (
