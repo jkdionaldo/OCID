@@ -1,3 +1,5 @@
+import Card from "../components/ui/Card";
+
 const Home = () => {
   return (
     <div className="flex flex-col w-full">
@@ -41,40 +43,79 @@ const Home = () => {
       </div>
 
       {/* Content Sections with Cream Background */}
-      <div className="py-6 sm:py-10 md:py-16">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <div className="py-6 sm:py-10 md:py-16 px-4 sm:px-8 md:px-16">
+        <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 mb-8 sm:mb-12 md:mb-16">
           {/* Our Vision */}
-          <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Our Vision
+          <Card>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800  text-center   mb-4 sm:mb-6 relative font-poppins">
+              OUR VISION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              A globally-engaged University excelling in science, engineering
-              and the arts.
+            <p className="text-center text-left text-sm md:text-base max-w-2xl mx-auto text-csuGreen lg:text-[0.8rem] mt-6">
+              A socially-engaged digital, innovation, and entrepreneurial
+              university excelling globally in science,engineering, and the arts
+              by 2028.
             </p>
-          </div>
-
+          </Card>
+          {/* Core Values */}
+          <Card>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text- text-gray-800  mb-4 sm:mb-6 relative font-poppins">
+              CORE VALUES
+              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
+            </h2>
+            {/*layout for core values*/}
+            <div className="flex flex-col gap-4 mt-6">
+              {/* for C*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
+                  C
+                </span>
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
+                  OMPETENCE
+                </span>
+              </div>
+              {/* for S*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
+                  S
+                </span>
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
+                  ERVICE
+                </span>
+              </div>
+              {/* for U*/}
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
+                  U
+                </span>
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
+                  PRIGHTNESS
+                </span>
+              </div>
+            </div>
+          </Card>
           {/* Our Mission */}
-          <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Our Mission
+          <Card>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative font-poppins">
+              OUR MISSION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              Caraga State University endeavors to produce globallycompetitive
-              and socially responsible human capital towards the sustainable and
-              inclusive development of Caraga Region and beyond.
+            <p className="text-center text-left text-sm md:text-base lg:text-[0.8rem] max-w-2xl mx-auto text-csuGreen mt-6">
+              As a transformative university, CSU is a responsible steward of
+              problem-solvers and value creators who are driven to create a
+              sustainable future for the region, the nation,and beyond.
             </p>
-          </div>
-
-          {/* General Mandate - Simplified on mobile */}
+          </Card>
+          {/* General Mandate - Simplified on mobile*/}
           <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-csuGreen text-center mb-4 sm:mb-6 relative">
               General Mandate
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
+            <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
               Caraga State University shall primarily provide advanced
               education, higher technological, professional instruction and
               training in the fields of agriculture and environmental studies,
@@ -83,17 +124,6 @@ const Home = () => {
               technology, arts and sciences and other related courses. It shall
               undertake research and extension services, and provide progressive
               leadership in its areas of specialization.
-            </p>
-          </div>
-
-          {/* Core Values */}
-          <div>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
-              Core Values
-              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
-            </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
-              Competence Service; and Uprightness
             </p>
           </div>
         </div>
