@@ -17,21 +17,21 @@ import CMNSUndergrad from "@/pages/colleges/csu-main/cmns/CMNS-Undergrad";
 
 // Graduate college routes
 export const graduateRoutes = [
-  { path: "/colleges/ccis/graduate", element: <CCISGraduate /> },
-  { path: "/colleges/caa/graduate", element: <CAAGraduate /> },
-  { path: "/colleges/ced/graduate", element: <CEDGraduate /> },
-  { path: "/colleges/cmns/graduate", element: <CMNSGraduate /> },
-  { path: "/colleges/cofes/graduate", element: <COFESGraduate /> },
-  { path: "/colleges/chass/graduate", element: <CHASSGraduate /> },
+  { path: "/colleges/csu-main/ccis/graduate", element: <CCISGraduate /> },
+  { path: "/colleges/csu-main/caa/graduate", element: <CAAGraduate /> },
+  { path: "/colleges/csu-main/ced/graduate", element: <CEDGraduate /> },
+  { path: "/colleges/csu-main/cmns/graduate", element: <CMNSGraduate /> },
+  { path: "/colleges/csu-main/cofes/graduate", element: <COFESGraduate /> },
+  { path: "/colleges/csu-main/chass/graduate", element: <CHASSGraduate /> },
 ];
 
 // Undergraduate college routes
 export const undergradRoutes = [
-  { path: "/colleges/ccis/undergrad", element: <CCISUndergrad /> },
-  { path: "/colleges/caa/undergrad", element: <CAAUndergrad /> },
-  { path: "/colleges/ced/undergrad", element: <CEDUndergrad /> },
-  { path: "/colleges/cofes/undergrad", element: <COFESUndergrad /> },
-  { path: "/colleges/chass/undergrad", element: <CHASSUndergrad /> },
-  { path: "/colleges/cegs/undergrad", element: <CEGSUndergrad /> },
-  { path: "/colleges/cmns/undergrad", element: <CMNSUndergrad /> },
+  { path: "/colleges/csu-main/ccis/undergrad", element: <CCISUndergrad /> },
+  { path: "/colleges/csu-main/caa/undergrad", element: <CAAUndergrad /> },
+  { path: "/colleges/csu-main/ced/undergrad", element: <CEDUndergrad /> },
+  { path: "/colleges/csu-main/cofes/undergrad", element: <COFESUndergrad /> },
+  { path: "/colleges/csu-main/chass/undergrad", element: <CHASSUndergrad /> },
+  { path: "/colleges/csu-main/cegs/undergrad", element: <CEGSUndergrad /> },
+  { path: "/colleges/csu-main/cmns/undergrad", element: <CMNSUndergrad /> },
 ];

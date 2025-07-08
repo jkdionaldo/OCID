@@ -6,37 +6,37 @@ import { Link } from "react-router-dom";
 const Undergrad = () => {
   const collegeLogos = [
     {
-      path: "/colleges/caa/undergrad",
+      path: "/colleges/csu-main/caa/undergrad",
       color: "#3E7B31",
       logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/ccis/undergrad",
+      path: "/colleges/csu-main/ccis/undergrad",
       color: "#8B2E00",
       logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/ced/undergrad",
+      path: "/colleges/csu-main/ced/undergrad",
       color: "#0047AB",
       logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/cofes/undergrad",
+      path: "/colleges/csu-main/cofes/undergrad",
       color: "#3E7B31",
       logo: "/images/cofes-logo.png",
     },
     {
-      path: "/colleges/chass/undergrad",
+      path: "/colleges/csu-main/chass/undergrad",
       color: "#7E3794",
       logo: "/images/chass-logo.png",
     },
     {
-      path: "/colleges/cegs/undergrad",
+      path: "/colleges/csu-main/cegs/undergrad",
       color: "#C45500",
       logo: "/images/cegs-logo.png",
     },
     {
-      path: "/colleges/cmns/undergrad",
+      path: "/colleges/csu-main/cmns/undergrad",
       color: "#008080",
       logo: "/images/cmns-logo.png",
     },
