@@ -2,6 +2,7 @@
 
 import { Link } from "react-router-dom";
 
+
 const GraduateSchools = () => {
   // Only include the 6 specified colleges for graduate programs
   const collegeLogos = [
