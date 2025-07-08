@@ -47,20 +47,19 @@ const Home = () => {
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 mb-8 sm:mb-12 md:mb-16">
           {/* Our Vision */}
           <Card>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center   mb-4 sm:mb-6 relative font-poppins">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800  text-center   mb-4 sm:mb-6 relative font-poppins">
               OUR VISION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
+            <p className="text-center text-left text-sm md:text-base max-w-2xl mx-auto text-csuGreen lg:text-[0.8rem] mt-6">
               A socially-engaged digital, innovation, and entrepreneurial
               university excelling globally in science,engineering, and the arts
               by 2028.
             </p>
           </Card>
-
           {/* Core Values */}
           <Card>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative font-poppins">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text- text-gray-800  mb-4 sm:mb-6 relative font-poppins">
               CORE VALUES
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
@@ -68,57 +67,55 @@ const Home = () => {
             <div className="flex flex-col gap-4 mt-6">
               {/* for C*/}
               <div className="flex items-center">
-                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
                   C
                 </span>
-                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
-                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
                   OMPETENCE
                 </span>
               </div>
               {/* for S*/}
               <div className="flex items-center">
-                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
                   S
                 </span>
-                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
-                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
                   ERVICE
                 </span>
               </div>
               {/* for U*/}
               <div className="flex items-center">
-                <span className="text-4xl font-bold text-gray-800 font-cinzel w-10 text-center">
+                <span className="text-4xl font-bold text-csuGreen font-cinzel w-10 text-center">
                   U
                 </span>
-                <span className="mx-2 text-2xl font-bold text-gray-800">-</span>
-                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 tracking-wide font-cinzel">
+                <span className="mx-2 text-2xl font-bold text-csuGreen">-</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-csuGreen tracking-wide font-cinzel">
                   PRIGHTNESS
                 </span>
               </div>
             </div>
           </Card>
-
           {/* Our Mission */}
           <Card>
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative font-poppins">
               OUR MISSION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-gray-700 mt-6">
+            <p className="text-center text-left text-sm md:text-base lg:text-[0.8rem] max-w-2xl mx-auto text-csuGreen mt-6">
               As a transformative university, CSU is a responsible steward of
               problem-solvers and value creators who are driven to create a
               sustainable future for the region, the nation,and beyond.
             </p>
           </Card>
-
-          {/* General Mandate - Simplified on mobile 
+          {/* General Mandate - Simplified on mobile*/}
           <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-csuGreen text-center mb-4 sm:mb-6 relative">
               General Mandate
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
+            <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
               Caraga State University shall primarily provide advanced
               education, higher technological, professional instruction and
               training in the fields of agriculture and environmental studies,
@@ -129,7 +126,6 @@ const Home = () => {
               leadership in its areas of specialization.
             </p>
           </div>
-          */}
         </div>
       </div>
     </div>

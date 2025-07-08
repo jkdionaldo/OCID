@@ -38,7 +38,7 @@ const StyledWrapper = styled.div`
   }
 
   .card:hover {
-    border: 1px solid black;
+    border: 1px solid #003800;
     transform: scale(1.05);
   }
 `;
