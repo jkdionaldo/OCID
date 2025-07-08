@@ -2,42 +2,41 @@
 
 import { Link } from "react-router-dom";
 
-
 const GraduateSchools = () => {
   // Only include the 6 specified colleges for graduate programs
   const collegeLogos = [
     {
-      path: "/colleges/csu-main/ccis/graduate",
+      path: "/colleges/ccis/graduate",
       color: "#8B2E00",
       logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/csu-main/ced/graduate",
+      path: "/colleges/ced/graduate",
       color: "#0047AB",
       logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/csu-main/caa/graduate",
+      path: "/colleges/caa/graduate",
       color: "#3E7B31",
       logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/csu-main/cmns/graduate",
+      path: "/colleges/cmns/graduate",
       color: "#008080",
       logo: "/images/cmns-logo.png",
     },
     {
-      path: "/colleges/csu-main/cofes/graduate",
+      path: "/colleges/cofes/graduate",
       color: "#3E7B31",
       logo: "/images/cofes-logo.png",
     },
     {
-      path: "/colleges/csu-main/chass/graduate",
+      path: "/colleges/chass/graduate",
       color: "#7E3794",
       logo: "/images/chass-logo.png",
     },
   ];
-
+  
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* start Tab Navigation */}

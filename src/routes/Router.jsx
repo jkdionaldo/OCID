@@ -13,6 +13,7 @@ import Undergrad from "@/pages/CSU-Main/UndergradPage";
 //  CSU-CC main pages
 import Colleges_cc from "@/pages/CSU-CC/GraduateSchoolPage";
 import Undergrad_cc from "@/pages/CSU-CC/UndergradPage";
+
 const Router = () => {
   return (
     <Routes>

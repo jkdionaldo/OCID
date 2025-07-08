@@ -2,45 +2,46 @@
 
 import { Link } from "react-router-dom";
 
+
 const Undergrad = () => {
   const collegeLogos = [
     {
-      path: "/colleges/csi-main/caa/undergrad",
+      path: "/colleges/caa/undergrad",
       color: "#3E7B31",
       logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/csi-main/ccis/undergrad",
+      path: "/colleges/ccis/undergrad",
       color: "#8B2E00",
       logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/csi-main/ced/undergrad",
+      path: "/colleges/ced/undergrad",
       color: "#0047AB",
       logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/csi-main/cofes/undergrad",
+      path: "/colleges/cofes/undergrad",
       color: "#3E7B31",
       logo: "/images/cofes-logo.png",
     },
     {
-      path: "/colleges/csi-main/chass/undergrad",
+      path: "/colleges/chass/undergrad",
       color: "#7E3794",
       logo: "/images/chass-logo.png",
     },
     {
-      path: "/colleges/csi-main/cegs/undergrad",
+      path: "/colleges/cegs/undergrad",
       color: "#C45500",
       logo: "/images/cegs-logo.png",
     },
     {
-      path: "/colleges/csi-main/cmns/undergrad",
+      path: "/colleges/cmns/undergrad",
       color: "#008080",
       logo: "/images/cmns-logo.png",
     },
   ];
-
+  
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* Tab Navigation */}
