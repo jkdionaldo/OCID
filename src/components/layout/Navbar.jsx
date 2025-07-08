@@ -27,13 +27,19 @@ const Navbar = () => {
       location.pathname === "/colleges" ||
       location.pathname === "/graduate" ||
       location.pathname === "/undergrad" ||
+      location.pathname === "/colleges_cc" ||
+      location.pathname === "/undergrad_cc" ||
       location.pathname.includes("/ccis") ||
       location.pathname.includes("/caa") ||
       location.pathname.includes("/ced") ||
       location.pathname.includes("/cofes") ||
       location.pathname.includes("/cmns") ||
       location.pathname.includes("/cegs") ||
-      location.pathname.includes("/chass")
+      location.pathname.includes("/chass") ||
+      location.pathname.includes("/cba") ||
+      location.pathname.includes("/citte") ||
+      location.pathname.includes("/ceit") ||
+      location.pathname.includes("/cthm") 
     );
   };
 

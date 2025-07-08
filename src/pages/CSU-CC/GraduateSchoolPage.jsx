@@ -6,35 +6,26 @@ const GraduateSchools = () => {
   // Only include the 6 specified colleges for graduate programs
   const collegeLogos = [
     {
-      path: "/colleges/ccis/graduate",
+      path: "/colleges/csu-cc/cba/graduate",
       color: "#8B2E00",
-      logo: "/images/ccis-logo.png",
+      // logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/ced/graduate",
+      path: "/colleges/csu-cc/ceit/graduate",
       color: "#0047AB",
-      logo: "/images/ced-logo.png",
+      // logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/caa/graduate",
+      path: "/colleges/csu-cc/citte/graduate",
       color: "#3E7B31",
-      logo: "/images/caa-logo.png",
+      // logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/cmns/graduate",
+      path: "/colleges/csu-cc/cthm/graduate",
       color: "#008080",
-      logo: "/images/cmns-logo.png",
+      // logo: "/images/cmns-logo.png",
     },
-    {
-      path: "/colleges/cofes/graduate",
-      color: "#3E7B31",
-      logo: "/images/cofes-logo.png",
-    },
-    {
-      path: "/colleges/chass/graduate",
-      color: "#7E3794",
-      logo: "/images/chass-logo.png",
-    },
+  
   ];
 
   return (

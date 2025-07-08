@@ -1,4 +1,5 @@
 // Import Graduate College Pages
+
 // CSU MAIN College Routes
 import CCISGraduate from "@/pages/colleges/csu-main/ccis/CCIS-Graduate";
 import CAAGraduate from "@/pages/colleges/csu-main/caa/CAA-Graduate";
@@ -6,11 +7,11 @@ import CEDGraduate from "@/pages/colleges/csu-main/ced/CED-Graduate";
 import CMNSGraduate from "@/pages/colleges/csu-main/cmns/CMNS-Graduate";
 import COFESGraduate from "@/pages/colleges/csu-main/cofes/COFES-Graduate";
 import CHASSGraduate from "@/pages/colleges/csu-main/chass/CHASS-Graduate";
-// CSU CC College Routes
-import CBAGraduate from "@/pages/colleges/csu-cc/cba/CBA-Graduate";
-import CEITGraduate from "@/pages/colleges/csu-cc/ceit/CEIT-Graduate";
-import CITTEGraduate from "@/pages/colleges/csu-cc/citte/CITTE-Graduate";
-import CTHMGraduate from "@/pages/colleges/csu-cc/cthm/CTHM-Graduate";
+// CSU CC College Routes - Fixed paths
+import CBAGraduate from "@/pages/colleges/csu_cc/cba/CBA-Graduate";
+import CEITGraduate from "@/pages/colleges/csu_cc/ceit/CEIT-Graduate";
+import CITTEGraduate from "@/pages/colleges/csu_cc/citte/CITTE-Graduate";
+import CTHMGraduate from "@/pages/colleges/csu_cc/cthm/CTHM-Graduate";
 
 // Import Undergraduate College Pages
 // CSU MAIN College Routes
@@ -21,11 +22,11 @@ import COFESUndergrad from "@/pages/colleges/csu-main/cofes/COFES-Undergrad";
 import CHASSUndergrad from "@/pages/colleges/csu-main/chass/CHASS-Undergrad";
 import CEGSUndergrad from "@/pages/colleges/csu-main/cegs/CEGS-Undergrad";
 import CMNSUndergrad from "@/pages/colleges/csu-main/cmns/CMNS-Undergrad";
-// CSU CC College Routes
-import CBAUndergrad from "@/pages/colleges/csu-cc/cba/CBA-Undergrad";
-import CEITUndergrad from "@/pages/colleges/csu-cc/ceit/CEIT-Undergrad";
-import CITTEUndergrad from "@/pages/colleges/csu-cc/citte/CITTE-Undergrad";
-import CTHMUndergrad from "@/pages/colleges/csu-cc/cthm/CTHM-Undergrad";
+// CSU CC College Routes - Fixed paths
+import CBAUndergrad from "@/pages/colleges/csu_cc/cba/CBA-undergrad";
+import CEITUndergrad from "@/pages/colleges/csu_cc/ceit/CEIT-undergrad";
+import CITTEUndergrad from "@/pages/colleges/csu_cc/citte/CITTE-undergrad";
+import CTHMUndergrad from "@/pages/colleges/csu_cc/cthm/CTHM-undergrad";
 
 // Graduate college routes
 export const graduateRoutes = [
@@ -50,16 +51,16 @@ export const undergradRoutes = [
 
 // CSU CC Graduate college routes
 export const ccGraduateRoutes = [
-  {path: "/colleges/csu-cc/cba/graduate", element: <CBAGraduate /> },
-  {path: "/colleges/csu-cc/ceit/graduate", element: <CEITGraduate /> },
-  {path: "/colleges/csu-cc/citte/graduate", element: <CITTEGraduate /> },
-  {path: "/colleges/csu-cc/cthm/graduate", element: <CTHMGraduate /> },
+  { path: "/colleges/csu-cc/cba/graduate", element: <CBAGraduate /> },
+  { path: "/colleges/csu-cc/ceit/graduate", element: <CEITGraduate /> },
+  { path: "/colleges/csu-cc/citte/graduate", element: <CITTEGraduate /> },
+  { path: "/colleges/csu-cc/cthm/graduate", element: <CTHMGraduate /> },
 ];
 
 // CSU CC Undergraduate college routes
 export const ccUndergradRoutes = [
-  {path: "/colleges/csu-cc/cba/undergrad", element: <CBAUndergrad /> },
-  {path: "/colleges/csu-cc/ceit/undergrad", element: <CEITUndergrad /> },
-  {path: "/colleges/csu-cc/citte/undergrad", element: <CITTEUndergrad /> },
-  {path: "/colleges/csu-cc/cthm/undergrad", element: <CTHMUndergrad /> },
-]
+  { path: "/colleges/csu-cc/cba/undergrad", element: <CBAUndergrad /> },
+  { path: "/colleges/csu-cc/ceit/undergrad", element: <CEITUndergrad /> },
+  { path: "/colleges/csu-cc/citte/undergrad", element: <CITTEUndergrad /> },
+  { path: "/colleges/csu-cc/cthm/undergrad", element: <CTHMUndergrad /> },
+];
