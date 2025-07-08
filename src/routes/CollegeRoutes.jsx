@@ -1,19 +1,19 @@
 // Import Graduate College Pages
-import CCISGraduate from "@/pages/colleges/ccis/CCIS-Graduate";
-import CAAGraduate from "@/pages/colleges/caa/CAA-Graduate";
-import CEDGraduate from "@/pages/colleges/ced/CED-Graduate";
-import CMNSGraduate from "@/pages/colleges/cmns/CMNS-Graduate";
-import COFESGraduate from "@/pages/colleges/cofes/COFES-Graduate";
-import CHASSGraduate from "@/pages/colleges/chass/CHASS-Graduate";
+import CCISGraduate from "@/pages/colleges/csu-main/ccis/CCIS-Graduate";
+import CAAGraduate from "@/pages/colleges/csu-main/caa/CAA-Graduate";
+import CEDGraduate from "@/pages/colleges/csu-main/ced/CED-Graduate";
+import CMNSGraduate from "@/pages/colleges/csu-main/cmns/CMNS-Graduate";
+import COFESGraduate from "@/pages/colleges/csu-main/cofes/COFES-Graduate";
+import CHASSGraduate from "@/pages/colleges/csu-main/chass/CHASS-Graduate";
 
 // Import Undergraduate College Pages
-import CCISUndergrad from "@/pages/colleges/ccis/CCIS-Undergrad";
-import CAAUndergrad from "@/pages/colleges/caa/CAA-Undergrad";
-import CEDUndergrad from "@/pages/colleges/ced/CED-Undergrad";
-import COFESUndergrad from "@/pages/colleges/cofes/COFES-Undergrad";
-import CHASSUndergrad from "@/pages/colleges/chass/CHASS-Undergrad";
-import CEGSUndergrad from "@/pages/colleges/cegs/CEGS-Undergrad";
-import CMNSUndergrad from "@/pages/colleges/cmns/CMNS-Undergrad";
+import CCISUndergrad from "@/pages/colleges/csu-main/ccis/CCIS-Undergrad";
+import CAAUndergrad from "@/pages/colleges/csu-main/caa/CAA-Undergrad";
+import CEDUndergrad from "@/pages/colleges/csu-main/ced/CED-Undergrad";
+import COFESUndergrad from "@/pages/colleges/csu-main/cofes/COFES-Undergrad";
+import CHASSUndergrad from "@/pages/colleges/csu-main/chass/CHASS-Undergrad";
+import CEGSUndergrad from "@/pages/colleges/csu-main/cegs/CEGS-Undergrad";
+import CMNSUndergrad from "@/pages/colleges/csu-main/cmns/CMNS-Undergrad";
 
 // Graduate college routes
 export const graduateRoutes = [

@@ -6,11 +6,13 @@ import { graduateRoutes, undergradRoutes } from "./CollegeRoutes";
 // Import main pages
 import Home from "@/pages/HomePage";
 // downloadables page
-import Downloadables from "@/pages/Downloadables"; // Ensure the correct file path and extension
+import Downloadables from "@/pages/Downloadables";
 // CSU main page
-import Colleges from "@/pages/CSU-Main/GraduateSchoolPage"; 
-import Undergrad from "@/pages/CSU-Main/UndergradPage"; 
-
+import Colleges from "@/pages/CSU-Main/GraduateSchoolPage";
+import Undergrad from "@/pages/CSU-Main/UndergradPage";
+//  CSU-CC main pages
+import Colleges_cc from "@/pages/CSU-CC/GraduateSchoolPage";
+import Undergrad_cc from "@/pages/CSU-CC/UndergradPage";
 const Router = () => {
   return (
     <Routes>
@@ -21,6 +23,9 @@ const Router = () => {
       {/*csu-main */}
       <Route path="/colleges" element={<Colleges />} />
       <Route path="/undergrad" element={<Undergrad />} />
+      {/* CSU-CC  */}
+      <Route path="/colleges_cc" element={<Colleges_cc />} />
+      <Route path="/undergrad_cc" element={<Undergrad_cc />} />
 
       {/* Dynamic routes from collections */}
       {graduateRoutes.map((route) => (

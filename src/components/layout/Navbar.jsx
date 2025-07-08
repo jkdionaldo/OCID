@@ -117,7 +117,7 @@ const Navbar = () => {
                   CSU-MAIN
                 </Link>
                 <Link
-                  to="/"
+                  to="/colleges_cc"
                   className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -192,7 +192,7 @@ const Navbar = () => {
                       CSU-MAIN
                     </Link>
                     <Link
-                      to="/"
+                      to="/colleges_cc"
                       className="block px-4 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
                       onClick={() => {
                         setIsMenuOpen(false);
