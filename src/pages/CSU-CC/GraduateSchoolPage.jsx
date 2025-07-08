@@ -41,7 +41,7 @@ const GraduateSchools = () => {
           </div>
           <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/undergrad")}
+            onClick={() => (window.location.href = "/undergrad_cc")}
           >
             Undergraduate
           </button>
