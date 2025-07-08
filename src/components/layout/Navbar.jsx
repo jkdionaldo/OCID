@@ -101,6 +101,7 @@ const Navbar = () => {
             >
               Colleges
             </button>
+
             {isMenuOpen && (
               <div className="absolute left-0 mt-2 bg-white shadow-md rounded-lg flex flex-col w-48">
                 <Link
@@ -129,14 +130,12 @@ const Navbar = () => {
           >
             ABOUT OCID
           </a>
-          <a
-            href="/"
+          <Link
+            to="/downloadables"
             className="font-medium uppercase text-sm lg:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            Dowloadables
-          </a>
+            Downloadables
+          </Link>
         </div>
 
         {/* Right side login button */}
