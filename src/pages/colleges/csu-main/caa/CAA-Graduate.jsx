@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Wheat } from "lucide-react";
 import ProgramPageLayout from "@/components/layout/ProgramPageLayout";
 

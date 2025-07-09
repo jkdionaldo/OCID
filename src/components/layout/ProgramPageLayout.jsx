@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProgramCard from "@/components/programs-details/ProgramCard";
 import ProgramDetailsHeader from "@/components/programs-details/ProgramDetailsHeader";
 import ProgramOverview from "@/components/programs-details/ProgramOverview";
@@ -19,6 +19,7 @@ const ProgramPageTemplate = ({
   bannerImage = "/images/campus.jpg",
   collegeName,
 }) => {
+  const navigate = useNavigate();
   const [programsState, setProgramsState] = useState(programs);
   const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
   const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
@@ -60,6 +61,16 @@ const ProgramPageTemplate = ({
     }, 2000);
   };
 
+  const handleBackClick = () => {
+    // Check if there's history to go back to
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      // Fallback to default routes
+      navigate(isGraduate ? "/colleges" : "/undergrad");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Banner Section */}
@@ -68,14 +79,13 @@ const ProgramPageTemplate = ({
       >
         {/* Back Button */}
         <div className="absolute top-8 left-8 z-10">
-          <Link to={isGraduate ? "/colleges" : "/undergrad"}>
-            <div
-              className={`flex items-center gap-2 bg-white px-4 py-2 rounded-md shadow-md hover:bg-${themeColor}-50 transition-colors duration-200 cursor-pointer`}
-            >
-              <ArrowLeft className={`text-${themeColor}-700 w-5 h-5`} />
-              <span className={`text-${themeColor}-700 font-medium`}>Back</span>
-            </div>
-          </Link>
+          <div
+            onClick={handleBackClick}
+            className={`flex items-center gap-2 bg-white px-4 py-2 rounded-md shadow-md hover:bg-${themeColor}-50 transition-colors duration-200 cursor-pointer`}
+          >
+            <ArrowLeft className={`text-${themeColor}-700 w-5 h-5`} />
+            <span className={`text-${themeColor}-700 font-medium`}>Back</span>
+          </div>
         </div>
 
         {/* Banner Image */}

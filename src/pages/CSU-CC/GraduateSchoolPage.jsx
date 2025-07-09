@@ -2,64 +2,52 @@
 
 import { Link } from "react-router-dom";
 
-const Undergrad = () => {
+const GraduateSchools = () => {
+  // Only include the 4 specified colleges for graduate programs
   const collegeLogos = [
     {
-      path: "/colleges/caa/undergrad",
-      color: "#3E7B31",
-      logo: "/images/caa-logo.png",
-    },
-    {
-      path: "/colleges/ccis/undergrad",
+      path: "/colleges/csu-cc/cba/graduate",
       color: "#8B2E00",
-      logo: "/images/ccis-logo.png",
+      // logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/ced/undergrad",
+      path: "/colleges/csu-cc/ceit/graduate",
       color: "#0047AB",
-      logo: "/images/ced-logo.png",
+      // logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/cofes/undergrad",
+      path: "/colleges/csu-cc/citte/graduate",
       color: "#3E7B31",
-      logo: "/images/cofes-logo.png",
+      // logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/chass/undergrad",
-      color: "#7E3794",
-      logo: "/images/chass-logo.png",
-    },
-    {
-      path: "/colleges/cegs/undergrad",
-      color: "#C45500",
-      logo: "/images/cegs-logo.png",
-    },
-    {
-      path: "/colleges/cmns/undergrad",
+      path: "/colleges/csu-cc/cthm/graduate",
       color: "#008080",
-      logo: "/images/cmns-logo.png",
+      // logo: "/images/cmns-logo.png",
     },
+  
   ];
 
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-      {/* Tab Navigation */}
+      {/* start Tab Navigation */}
       <div className="mb-8 sm:mb-10">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center sm:justify-start">
-          <button
-            className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/colleges")}
-          >
-            Graduate School
-          </button>
           <div className="relative">
             <button className="text-green-700 text-xl sm:text-2xl font-bold px-0">
-              Undergraduate
+              Graduate School
             </button>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-green-700 rounded-full"></div>
           </div>
+          <button
+            className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
+            onClick={() => (window.location.href = "/colleges_undergraduate_cc")}
+          >
+            Undergraduate
+          </button>
         </div>
       </div>
+      {/* end Navigation */}
 
       {/* College Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8">
@@ -103,4 +91,4 @@ const Undergrad = () => {
   );
 };
 
-export default Undergrad;
+export default GraduateSchools;

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Network } from "lucide-react";
 import ProgramPageLayout from "@/components/layout/ProgramPageLayout";
 
 const CCISGraduate = () => {
-  // Graduate programs for CED with updated icons
   const programs = [
     {
       id: 1,
