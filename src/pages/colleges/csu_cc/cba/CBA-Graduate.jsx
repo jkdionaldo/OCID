@@ -202,8 +202,8 @@ const CBAGraduate = () => {
       programs={programs}
       themeColor="blue"
       isGraduate={true}
-      bannerImage="/images/cba-logo.png"
-      collegeName="College of Business Administration - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CBA.png"
+      collegeName="College of Business and Accountancy - CSU Cabadbaran Campus"
     />
   );
 };
