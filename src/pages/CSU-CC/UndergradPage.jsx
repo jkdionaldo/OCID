@@ -5,22 +5,22 @@ import { Link } from "react-router-dom";
 const Undergrad = () => {
   const collegeLogos = [
     {
-      path: "/colleges/csu_cc/cba/undergrad",
+      path: "/colleges/csu-cc/cba/undergrad",
       color: "#3E7B31",
       // logo: "/images/caa-logo.png",
     },
     {
-      path: "/colleges/csu_cc/ceit/undergrad",
+      path: "/colleges/csu-cc/ceit/undergrad",
       color: "#8B2E00",
       // logo: "/images/ccis-logo.png",
     },
     {
-      path: "/colleges/csu_cc/citte/undergrad",
+      path: "/colleges/csu-cc/citte/undergrad",
       color: "#0047AB",
       // logo: "/images/ced-logo.png",
     },
     {
-      path: "/colleges/csu_cc/cthm/undergrad",
+      path: "/colleges/csu-cc/cthm/undergrad",
       color: "#3E7B31",
       // logo: "/images/cofes-logo.png",
     },
@@ -34,7 +34,7 @@ const Undergrad = () => {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center sm:justify-start">
           <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/colleges_cc")}
+            onClick={() => (window.location.href = "/colleges_graduate_cc")}
           >
             Graduate School
           </button>
