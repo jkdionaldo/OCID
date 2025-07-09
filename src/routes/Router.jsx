@@ -1,7 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // Import route collections
-import { graduateRoutes, undergradRoutes, ccGraduateRoutes, ccUndergradRoutes } from "./CollegeRoutes";
+import {
+  graduateRoutes,
+  undergradRoutes,
+  ccGraduateRoutes,
+  ccUndergradRoutes,
+} from "./CollegeRoutes";
 
 // Import main pages
 import Home from "@/pages/HomePage";
@@ -10,27 +15,35 @@ import Home from "@/pages/HomePage";
 import Downloadables from "@/pages/Downloadables";
 
 // CSU main page
-import Colleges from "@/pages/CSU-Main/GraduateSchoolPage";
-import Undergrad from "@/pages/CSU-Main/UndergradPage";
+import Colleges_Graduate_Main from "@/pages/CSU-Main/GraduateSchoolPage";
+import Colleges_Undergraduate_Main from "@/pages/CSU-Main/UndergradPage";
 
 //  CSU-CC main pages
-import Colleges_cc from "@/pages/CSU-CC/GraduateSchoolPage";
-import Undergrad_cc from "@/pages/CSU-CC/UndergradPage";
+import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
+import Colleges_Undergraduate_cc from "@/pages/CSU-CC/UndergradPage";
 
 const Router = () => {
   return (
-
     <Routes>
       {/* Main routes */}
       <Route path="/" element={<Home />} />
       {/* dowloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
       {/*csu-main */}
-      <Route path="/colleges" element={<Colleges />} />
-      <Route path="/undergrad" element={<Undergrad />} />
+      <Route
+        path="/colleges_graduate_main"
+        element={<Colleges_Graduate_Main />}
+      />
+      <Route
+        path="/colleges_undergraduate_main"
+        element={<Colleges_Undergraduate_Main />}
+      />
       {/* CSU-CC  */}
-      <Route path="/colleges_cc" element={<Colleges_cc />} />
-      <Route path="/undergrad_cc" element={<Undergrad_cc />} />
+      <Route path="/colleges_graduate_cc" element={<Colleges_Graduate_cc />} />
+      <Route
+        path="/colleges_undergraduate_cc"
+        element={<Colleges_Undergraduate_cc />}
+      />
 
       {/* Dynamic routes from collections */}
       {/* CSU MAIN */}

@@ -3,7 +3,7 @@
 import { Link } from "react-router-dom";
 
 const GraduateSchools = () => {
-  // Only include the 6 specified colleges for graduate programs
+  // Only include the 4 specified colleges for graduate programs
   const collegeLogos = [
     {
       path: "/colleges/csu-cc/cba/graduate",
@@ -41,7 +41,7 @@ const GraduateSchools = () => {
           </div>
           <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/undergrad_cc")}
+            onClick={() => (window.location.href = "/colleges_undergraduate_cc")}
           >
             Undergraduate
           </button>
