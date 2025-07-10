@@ -32,12 +32,12 @@ const Undergrad = () => {
       {/* Tab Navigation */}
       <div className="mb-8 sm:mb-10">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center sm:justify-start">
-          <button
+          {/* <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
             onClick={() => (window.location.href = "/colleges_graduate_cc")}
           >
             Graduate School
-          </button>
+          </button> */}
           <div className="relative">
             <button className="text-green-700 text-xl sm:text-2xl font-bold px-0">
               Undergraduate

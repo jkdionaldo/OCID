@@ -50,12 +50,12 @@ export const undergradRoutes = [
 ];
 
 // CSU CC Graduate college routes
-export const ccGraduateRoutes = [
-  { path: "/colleges/csu-cc/cba/graduate", element: <CBAGraduate /> },
-  { path: "/colleges/csu-cc/ceit/graduate", element: <CEITGraduate /> },
-  { path: "/colleges/csu-cc/citte/graduate", element: <CITTEGraduate /> },
-  { path: "/colleges/csu-cc/cthm/graduate", element: <CTHMGraduate /> },
-];
+// export const ccGraduateRoutes = [
+//   { path: "/colleges/csu-cc/cba/graduate", element: <CBAGraduate /> },
+//   { path: "/colleges/csu-cc/ceit/graduate", element: <CEITGraduate /> },
+//   { path: "/colleges/csu-cc/citte/graduate", element: <CITTEGraduate /> },
+//   { path: "/colleges/csu-cc/cthm/graduate", element: <CTHMGraduate /> },
+// ];
 
 // CSU CC Undergraduate college routes
 export const ccUndergradRoutes = [

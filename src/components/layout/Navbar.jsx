@@ -26,7 +26,7 @@ const Navbar = () => {
     return (
       location.pathname === "/colleges_graduate_main" ||
       location.pathname === "/colleges_undergraduate_main" ||
-      location.pathname === "/colleges_graduate_cc" ||
+      // location.pathname === "/colleges_graduate_cc" ||
       location.pathname === "/colleges_undergraduate_cc" ||
       location.pathname.includes("/ccis") ||
       location.pathname.includes("/caa") ||
@@ -121,7 +121,7 @@ const Navbar = () => {
                   CSU-MAIN
                 </Link>
                 <Link
-                  to="/colleges_graduate_cc"
+                  to="/colleges_undergraduate_cc"
                   className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
