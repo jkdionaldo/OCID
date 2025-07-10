@@ -200,10 +200,10 @@ const CTHMGraduate = () => {
       title="Graduate Programs"
       description="Advance your career with our graduate programs designed to develop leaders and innovators in tourism, hospitality, and culinary arts management."
       programs={programs}
-      themeColor="blue"
+      themeColor="pink"
       isGraduate={true}
-      bannerImage="/images/cthm-logo.png"
-      collegeName="College of Tourism and Hospitality Management - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CTHM-logo.png"
+      collegeName="College of Tourism and Hospitality Management - CSU Cabadbaran Campus"
     />
   );
 };

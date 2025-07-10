@@ -263,10 +263,10 @@ const CTHMUndergrad = () => {
       title="Undergraduate Programs"
       description="Explore our undergraduate programs designed to prepare you for exciting careers in tourism, hospitality, and travel management, developing skills to serve guests and promote destinations with excellence."
       programs={programs}
-      themeColor="blue"
+      themeColor="pink"
       isGraduate={false}
-      bannerImage="/images/cthm-logo.png"
-      collegeName="College of Tourism and Hospitality Management - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CTHM-logo.png"
+      collegeName="College of Tourism and Hospitality Management - CSU Cabadbaran Campus"
     />
   );
 };

@@ -202,7 +202,7 @@ const CBAGraduate = () => {
       programs={programs}
       themeColor="blue"
       isGraduate={true}
-      bannerImage="/images/csu-cc/CBA.png"
+      bannerImage="/images/csu-cc/CBA-logo.png"
       collegeName="College of Business and Accountancy - CSU Cabadbaran Campus"
     />
   );

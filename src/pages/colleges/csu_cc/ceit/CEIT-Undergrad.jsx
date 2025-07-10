@@ -265,8 +265,8 @@ const CEITUndergrad = () => {
       programs={programs}
       themeColor="red"
       isGraduate={false}
-      bannerImage="/images/ceit-logo.png"
-      collegeName="College of Engineering and Information Technology - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CEIT-logo.png"
+      collegeName="College of Engineering and Information Technology - CSU Cabadbaran Campus"
     />
   );
 };
