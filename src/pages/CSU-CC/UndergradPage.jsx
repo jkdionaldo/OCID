@@ -7,22 +7,22 @@ const Undergrad = () => {
     {
       path: "/colleges/csu-cc/cba/undergrad",
       color: "#3E7B31",
-      // logo: "/images/caa-logo.png",
+      logo: "/images/csu-cc/CBA-logo.png",
     },
     {
       path: "/colleges/csu-cc/ceit/undergrad",
       color: "#8B2E00",
-      // logo: "/images/ccis-logo.png",
+      logo: "/images/csu-cc/CEIT-logo.png",
     },
     {
       path: "/colleges/csu-cc/citte/undergrad",
       color: "#0047AB",
-      // logo: "/images/ced-logo.png",
+      logo: "/images/csu-cc/CITTE-logo.png",
     },
     {
       path: "/colleges/csu-cc/cthm/undergrad",
       color: "#3E7B31",
-      // logo: "/images/cofes-logo.png",
+      logo: "/images/csu-cc/CTHM-logo.png",
     },
    
   ];

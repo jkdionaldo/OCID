@@ -8,22 +8,22 @@ const GraduateSchools = () => {
     {
       path: "/colleges/csu-cc/cba/graduate",
       color: "#8B2E00",
-      // logo: "/images/ccis-logo.png",
+      logo: "/images/csu-cc/CBA-logo.png",
     },
     {
       path: "/colleges/csu-cc/ceit/graduate",
       color: "#0047AB",
-      // logo: "/images/ced-logo.png",
+      logo: "/images/csu-cc/CEIT-logo.png",
     },
     {
       path: "/colleges/csu-cc/citte/graduate",
       color: "#3E7B31",
-      // logo: "/images/caa-logo.png",
+      logo: "/images/csu-cc/CITTE-logo.png",
     },
     {
       path: "/colleges/csu-cc/cthm/graduate",
       color: "#008080",
-      // logo: "/images/cmns-logo.png",
+      logo: "/images/csu-cc/CTHM-logo.png",
     },
   
   ];

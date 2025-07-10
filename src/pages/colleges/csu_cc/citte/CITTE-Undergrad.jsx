@@ -263,10 +263,10 @@ const CITTEUndergrad = () => {
       title="Undergraduate Programs"
       description="Explore our undergraduate programs designed to prepare you for careers in technical education and industrial technology, combining hands-on skills with teaching excellence."
       programs={programs}
-      themeColor="orange"
+      themeColor="gray"
       isGraduate={false}
-      bannerImage="/images/citte-logo.png"
-      collegeName="College of Industrial Technology and Teacher Education - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CITTE-logo.png"
+      collegeName="College of Industrial Technology and Teacher Education - CSU Cabadbaran Campus"
     />
   );
 };

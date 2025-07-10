@@ -200,10 +200,10 @@ const CITTEGraduate = () => {
       title="Graduate Programs"
       description="Advance your career with our graduate programs designed to develop leaders in technical education, industrial technology, and technology management."
       programs={programs}
-      themeColor="orange"
+      themeColor="gray"
       isGraduate={true}
-      bannerImage="/images/citte-logo.png"
-      collegeName="College of Industrial Technology and Teacher Education - CSU Carig Campus"
+      bannerImage="/images/csu-cc/CITTE-logo.png"
+      collegeName="College of Industrial Technology and Teacher Education - CSU Cabadbaran Campus"
     />
   );
 };
