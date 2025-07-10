@@ -9,7 +9,7 @@ const CBAUndergrad = () => {
       name: "Bachelor of Science in Business Administration (BSBA) major in Marketing Management",
       icon: TrendingUp,
       color: "from-blue-600 to-blue-800",
-      curriculumFiles: {
+      curriculumFiles: {  
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
       },
