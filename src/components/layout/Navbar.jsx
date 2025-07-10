@@ -21,12 +21,12 @@ const Navbar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   };
-
+ // location.pathname === "/colleges_graduate_cc" ||
   const isCollegeActive = () => {
     return (
       location.pathname === "/colleges_graduate_main" ||
       location.pathname === "/colleges_undergraduate_main" ||
-      // location.pathname === "/colleges_graduate_cc" ||
+     
       location.pathname === "/colleges_undergraduate_cc" ||
       location.pathname.includes("/ccis") ||
       location.pathname.includes("/caa") ||

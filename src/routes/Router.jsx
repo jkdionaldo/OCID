@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // Import route collections
+  // ccGraduateRoutes,
+
 import {
   graduateRoutes,
   undergradRoutes,
-  ccGraduateRoutes,
   ccUndergradRoutes,
 } from "./CollegeRoutes";
 
@@ -51,9 +52,9 @@ const Router = () => {
         <Route key={route.path} path={route.path} element={route.element} />
       ))}
       {/* CSU Cc */}
-      {ccGraduateRoutes.map((route) => (
+      {/* {ccGraduateRoutes.map((route) => (
         <Route key={route.path} path={route.path} element={route.element} />
-      ))}
+      ))} */}
       {/* CSU MAIN Undergrad */}
       {undergradRoutes.map((route) => (
         <Route key={route.path} path={route.path} element={route.element} />

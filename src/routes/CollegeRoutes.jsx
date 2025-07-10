@@ -8,10 +8,10 @@ import CMNSGraduate from "@/pages/colleges/csu-main/cmns/CMNS-Graduate";
 import COFESGraduate from "@/pages/colleges/csu-main/cofes/COFES-Graduate";
 import CHASSGraduate from "@/pages/colleges/csu-main/chass/CHASS-Graduate";
 // CSU CC College Routes - Fixed paths
-import CBAGraduate from "@/pages/colleges/csu_cc/cba/CBA-Graduate";
-import CEITGraduate from "@/pages/colleges/csu_cc/ceit/CEIT-Graduate";
-import CITTEGraduate from "@/pages/colleges/csu_cc/citte/CITTE-Graduate";
-import CTHMGraduate from "@/pages/colleges/csu_cc/cthm/CTHM-Graduate";
+// import CBAGraduate from "@/pages/colleges/csu_cc/cba/CBA-Graduate";
+// import CEITGraduate from "@/pages/colleges/csu_cc/ceit/CEIT-Graduate";
+// import CITTEGraduate from "@/pages/colleges/csu_cc/citte/CITTE-Graduate";
+// import CTHMGraduate from "@/pages/colleges/csu_cc/cthm/CTHM-Graduate";
 
 // Import Undergraduate College Pages
 // CSU MAIN College Routes
