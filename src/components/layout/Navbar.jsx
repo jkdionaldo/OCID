@@ -21,12 +21,11 @@ const Navbar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   };
- // location.pathname === "/colleges_graduate_cc" ||
+  // location.pathname === "/colleges_graduate_cc" ||
   const isCollegeActive = () => {
     return (
       location.pathname === "/colleges_graduate_main" ||
       location.pathname === "/colleges_undergraduate_main" ||
-     
       location.pathname === "/colleges_undergraduate_cc" ||
       location.pathname.includes("/ccis") ||
       location.pathname.includes("/caa") ||
@@ -48,31 +47,19 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-<<<<<<< HEAD
-      <div className="container mx-auto px-6 sm:px-12 py-2 sm:py-3 flex items-center">
-=======
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 flex items-center ml-2">
->>>>>>> d4cd8643c3b80ab1129dbe21ab89fb99895e4751
         {/* OCID Logo */}
         <Link to="/" className="flex items-center flex-shrink-0">
           <div className="flex items-center justify-center h-[50px] sm:h-[60px] md:h-[70px]">
             <img
               src="/images/ocid_logo.png"
               alt="OCID Logo"
-<<<<<<< HEAD
-              className="h-[65px] sm:h-[80px] object-contain sm:ml-2"
-=======
               className="h-[40px] sm:h-[50px] md:h-[70px] lg:h-[80px] object-contain"
->>>>>>> d4cd8643c3b80ab1129dbe21ab89fb99895e4751
             />
             <img
               src="/images/logo_text_2.png"
               alt="OCID Logo"
-<<<<<<< HEAD
-              className="h-[37px] sm:h-[45px] w-auto object-contain"
-=======
               className="h-[40px] sm:h-[45px] md:h-[50px] lg:h-[45px] w-auto object-contain"
->>>>>>> d4cd8643c3b80ab1129dbe21ab89fb99895e4751
             />
           </div>
         </Link>
