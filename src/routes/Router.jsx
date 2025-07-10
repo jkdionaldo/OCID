@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // Import route collections
+  // ccGraduateRoutes,
+
 import {
   graduateRoutes,
   undergradRoutes,
-  ccGraduateRoutes,
   ccUndergradRoutes,
 } from "./CollegeRoutes";
 
@@ -19,7 +20,7 @@ import Colleges_Graduate_Main from "@/pages/CSU-Main/GraduateSchoolPage";
 import Colleges_Undergraduate_Main from "@/pages/CSU-Main/UndergradPage";
 
 //  CSU-CC main pages
-import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
+// import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
 import Colleges_Undergraduate_cc from "@/pages/CSU-CC/UndergradPage";
 
 const Router = () => {
@@ -39,7 +40,7 @@ const Router = () => {
         element={<Colleges_Undergraduate_Main />}
       />
       {/* CSU-CC  */}
-      <Route path="/colleges_graduate_cc" element={<Colleges_Graduate_cc />} />
+      {/* <Route path="/colleges_graduate_cc" element={<Colleges_Graduate_cc />} /> */}
       <Route
         path="/colleges_undergraduate_cc"
         element={<Colleges_Undergraduate_cc />}
@@ -51,9 +52,9 @@ const Router = () => {
         <Route key={route.path} path={route.path} element={route.element} />
       ))}
       {/* CSU Cc */}
-      {ccGraduateRoutes.map((route) => (
+      {/* {ccGraduateRoutes.map((route) => (
         <Route key={route.path} path={route.path} element={route.element} />
-      ))}
+      ))} */}
       {/* CSU MAIN Undergrad */}
       {undergradRoutes.map((route) => (
         <Route key={route.path} path={route.path} element={route.element} />
