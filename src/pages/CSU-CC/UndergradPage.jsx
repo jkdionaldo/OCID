@@ -5,40 +5,26 @@ import { Link } from "react-router-dom";
 const Undergrad = () => {
   const collegeLogos = [
     {
-      path: "/colleges/caa/undergrad",
+      path: "/colleges/csu-cc/cba/undergrad",
       color: "#3E7B31",
-      logo: "/images/caa-logo.png",
+      logo: "/images/csu-cc/CBA-logo.png",
     },
     {
-      path: "/colleges/ccis/undergrad",
+      path: "/colleges/csu-cc/ceit/undergrad",
       color: "#8B2E00",
-      logo: "/images/ccis-logo.png",
+      logo: "/images/csu-cc/CEIT-logo.png",
     },
     {
-      path: "/colleges/ced/undergrad",
+      path: "/colleges/csu-cc/citte/undergrad",
       color: "#0047AB",
-      logo: "/images/ced-logo.png",
+      logo: "/images/csu-cc/CITTE-logo.png",
     },
     {
-      path: "/colleges/cofes/undergrad",
+      path: "/colleges/csu-cc/cthm/undergrad",
       color: "#3E7B31",
-      logo: "/images/cofes-logo.png",
+      logo: "/images/csu-cc/CTHM-logo.png",
     },
-    {
-      path: "/colleges/chass/undergrad",
-      color: "#7E3794",
-      logo: "/images/chass-logo.png",
-    },
-    {
-      path: "/colleges/cegs/undergrad",
-      color: "#C45500",
-      logo: "/images/cegs-logo.png",
-    },
-    {
-      path: "/colleges/cmns/undergrad",
-      color: "#008080",
-      logo: "/images/cmns-logo.png",
-    },
+   
   ];
 
   return (
@@ -48,7 +34,7 @@ const Undergrad = () => {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center sm:justify-start">
           <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/colleges")}
+            onClick={() => (window.location.href = "/colleges_graduate_cc")}
           >
             Graduate School
           </button>

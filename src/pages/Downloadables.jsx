@@ -1,11 +1,10 @@
-export default function Downloadables () {
+export default function Downloadables() {
   return (
-    <>
-     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4">Downloadables</h1>
-      <p className="text-lg">This page is under construction.</p>
+    <div className="grid grid-cols-2 grid-rows-2 gap-1 m-4">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
     </div>
-    </>
-   
   );
 }
