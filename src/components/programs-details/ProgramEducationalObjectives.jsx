@@ -14,7 +14,7 @@ const ProgramEducationalObjectives = ({ objectives, themeColor }) => {
       </div>
       <ul className="space-y-3">
         {objectives.map((objective, index) => (
-          <li key={index} className="flex items-start gap-3">
+          <li key={index} className="flex itm gap-3">
             <span className={`text-${themeColor}-600 font-bold mt-1 `}>
               {index + 1}.
             </span>
