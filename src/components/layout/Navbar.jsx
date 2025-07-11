@@ -1,7 +1,7 @@
 "use client";
 import LoginModal from "@/components/modals/auth/LoginModal";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 
 const Navbar = () => {
@@ -9,14 +9,29 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      setIsMenuOpen(false);
     };
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -98,31 +113,39 @@ const Navbar = () => {
             HOME
           </Link>
 
-          <div className="relative">
-            <button
-              className={`font-medium uppercase text-sm xl:text-base flex ${
+          <div
+            className="relative"
+            onMouseEnter={() => setIsMenuOpen(true)}
+            onMouseLeave={() => setIsMenuOpen(false)}
+          >
+            <div
+              className={` uppercase text-sm xl:text-base flex cursor-pointer ${
                 isCollegeActive()
                   ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                   : "text-green-950 hover:text-green-700"
               } transition-colors duration-200`}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              Colleges <ChevronDown />
-            </button>
+              Colleges{" "}
+              <ChevronDown
+                className={`ml-1 transition-transform duration-300`}
+              />
+            </div>
 
             {isMenuOpen && (
-              <div className="absolute left-0 mt-2 rounded-xl bg-white shadow-md flex flex-col w-48">
+              <div
+                ref={dropdownRef}
+                className="absolute mt-1 left-0 rounded-xl bg-white shadow-md flex flex-col w-48"
+                style={{ scrollBehavior: "auto" }}
+              >
                 <Link
                   to="/colleges_graduate_main"
                   className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-t-xl transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
                   className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-b-xl transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   CSU-CC
                 </Link>

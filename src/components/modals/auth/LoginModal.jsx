@@ -10,26 +10,29 @@ export default function LoginModal() {
   useEffect(() => {
     if (isOpen) {
       // Prevent body scroll on mobile
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
       document.body.style.top = `-${window.scrollY}px`;
-      document.body.style.width = '100%';
+      document.body.style.width = "100%";
     } else {
       // Restore body scroll
       const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      // Only restore scroll if we actually changed it
+      if (scrollY && scrollY !== "") {
+        window.scrollTo(0, parseInt(scrollY) * -1);
+      }
     }
 
     // Cleanup function to restore scroll on unmount
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
     };
   }, [isOpen]);
 
@@ -38,7 +41,7 @@ export default function LoginModal() {
 
   return (
     <>
-        {/* Login Button - Responsive text sizing and icon spacing */}
+      {/* Login Button - Responsive text sizing and icon spacing */}
       <button
         className="font-medium uppercase  text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
         onClick={openModal}
