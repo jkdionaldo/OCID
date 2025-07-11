@@ -101,7 +101,7 @@ const Navbar = () => {
         </button>
 
         {/* Desktop navigation */}
-        <div className="hidden xl:flex text-center space-x-8 xl:space-x-12 mx-auto ">
+        <div className="hidden xl:flex text-center space-x-8 xl:space-x-12 mx-auto">
           <Link
             to="/"
             className={`font-semibold uppercase xl:text-sm ${
@@ -134,18 +134,18 @@ const Navbar = () => {
             {isMenuOpen && (
               <div
                 ref={dropdownRef}
-                className="absolute mt-1 left-0 rounded-xl bg-white shadow-md flex flex-col w-48"
+                className="absolute left-0 rounded-xl bg-white shadow-md flex flex-col w-48 rounded-t-xl"
                 style={{ scrollBehavior: "auto" }}
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-t-xl transition-colors duration-200 text-sm"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 rounded-t-xl transition-colors duration-200 text-sm font-medium"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-b-xl transition-colors duration-200 text-sm"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 rounded-b-xl transition-colors duration-200 text-sm font-medium"
                 >
                   CSU-CC
                 </Link>
