@@ -134,7 +134,7 @@ const Navbar = () => {
             {isMenuOpen && (
               <div
                 ref={dropdownRef}
-                className="absolute left-0 rounded-xl bg-white shadow-md flex flex-col w-48"
+                className="absolute mt-1 left-0 rounded-xl bg-white shadow-md flex flex-col w-48"
                 style={{ scrollBehavior: "auto" }}
               >
                 <Link
