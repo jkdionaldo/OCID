@@ -119,7 +119,7 @@ const Navbar = () => {
             onMouseLeave={() => setIsMenuOpen(false)}
           >
             <div
-              className={`font-medium uppercase text-sm xl:text-base flex cursor-pointer ${
+              className={` uppercase text-sm xl:text-base flex cursor-pointer ${
                 isCollegeActive()
                   ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                   : "text-green-950 hover:text-green-700"
