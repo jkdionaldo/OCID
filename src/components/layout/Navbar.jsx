@@ -127,6 +127,7 @@ const Navbar = () => {
             >
               Colleges{" "}
               <ChevronDown
+                size={20}
                 className={`ml-1 transition-transform duration-300`}
               />
             </div>
