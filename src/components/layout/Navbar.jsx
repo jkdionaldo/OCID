@@ -101,10 +101,10 @@ const Navbar = () => {
         </button>
 
         {/* Desktop navigation */}
-        <div className="hidden xl:flex text-center space-x-8 xl:space-x-12 mx-auto">
+        <div className="hidden xl:flex text-center space-x-8 xl:space-x-12 mx-auto ">
           <Link
             to="/"
-            className={`font-medium uppercase text-sm xl:text-base ${
+            className={`font-semibold uppercase xl:text-sm ${
               isActive("/")
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                 : "text-green-950 hover:text-green-700"
@@ -119,7 +119,7 @@ const Navbar = () => {
             onMouseLeave={() => setIsMenuOpen(false)}
           >
             <div
-              className={` uppercase text-sm xl:text-base flex cursor-pointer ${
+              className={`font-semibold uppercase text-sm xl:text-sm flex cursor-pointer ${
                 isCollegeActive()
                   ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                   : "text-green-950 hover:text-green-700"
@@ -139,13 +139,13 @@ const Navbar = () => {
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-t-xl transition-colors duration-200"
+                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-t-xl transition-colors duration-200 text-sm"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-b-xl transition-colors duration-200"
+                  className="block px-6 py-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-b-xl transition-colors duration-200 text-sm"
                 >
                   CSU-CC
                 </Link>
@@ -155,7 +155,7 @@ const Navbar = () => {
 
           <a
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            className="font-medium uppercase text-sm xl:text-base text-green-950 hover:text-green-700 transition-colors duration-200"
+            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -163,7 +163,7 @@ const Navbar = () => {
           </a>
           <Link
             to="/downloadables"
-            className={`font-medium uppercase text-sm xl:text-base ${
+            className={`font-semibold uppercase text-sm xl:text-sm ${
               isActive("/downloadables")
                 ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
                 : "text-green-950 hover:text-green-700"
