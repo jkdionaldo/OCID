@@ -47,7 +47,7 @@ const Home = () => {
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 mb-8 sm:mb-12 md:mb-16">
           {/* Our Vision */}
           <Card>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800  text-center   mb-4 sm:mb-6 relative font-poppins">
+            <h2 className="text-lg sm:text-xl md:text-xl font-bold text-gray-800  text-center   mb-4 sm:mb-6 relative font-poppins">
               OUR VISION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
@@ -59,7 +59,7 @@ const Home = () => {
           </Card>
           {/* Core Values */}
           <Card>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text- text-gray-800  mb-4 sm:mb-6 relative font-poppins">
+            <h2 className="text-lg sm:text-xl md:text-md font-bold text- text-gray-800  mb-4 sm:mb-6 relative font-poppins">
               CORE VALUES
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
@@ -99,7 +99,7 @@ const Home = () => {
           </Card>
           {/* Our Mission */}
           <Card>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-4 sm:mb-6 relative font-poppins">
+            <h2 className="text-lg sm:text-xl md:text-md font-bold text-gray-800 text-center mb-4 sm:mb-6 relative font-poppins">
               OUR MISSION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
@@ -111,8 +111,8 @@ const Home = () => {
           </Card>
           {/* General Mandate - Simplified on mobile*/}
           <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-csuGreen text-center mb-4 sm:mb-6 relative">
-              General Mandate
+            <h2 className="text-lg sm:text-xl md:text-xl font-bold text-csuGreen text-center mb-4 sm:mb-6 relative">
+              GENERAL MANDATE
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
             <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
