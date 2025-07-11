@@ -9,7 +9,7 @@ const ProgramOverview = ({ program, themeColor = "green" }) => {
         ></span>
         Program Overview
       </h2>
-      <p className="text-gray-700 leading-relaxed mb-6 text ">
+      <p className="text-gray-700 leading-relaxed mb-6 text">
         {program.description}
       </p>
 

@@ -6,45 +6,12 @@ const CBAUndergrad = () => {
   const programs = [
     {
       id: 1,
-      name: "Bachelor of Science in Business Administration (BSBA) major in Marketing Management",
+      name: "Bachelor of Science in Accountancy (BSA)",
       icon: TrendingUp,
       color: "from-blue-600 to-blue-800",
-      curriculumFiles: {  
-        2023: "/placeholder.svg?height=800&width=600",
-        2020: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://example.com/bsba-marketing-syllabus-2023",
-      },
+
       description:
-        "The BSBA in Marketing Management program prepares students to understand consumer behavior, develop marketing strategies, and manage brand communications. Students learn market research, digital marketing, sales management, and customer relationship management to succeed in today's competitive business environment.",
-      programOutcomes: [
-        {
-          id: "MKT01",
-          text: "Analyze market opportunities and consumer behavior to develop effective marketing strategies.",
-        },
-        {
-          id: "MKT02",
-          text: "Create comprehensive marketing plans that integrate traditional and digital marketing channels.",
-        },
-        {
-          id: "MKT03",
-          text: "Apply marketing research methods to gather and interpret market data for decision-making.",
-        },
-        {
-          id: "MKT04",
-          text: "Develop brand management strategies that enhance customer loyalty and market position.",
-        },
-        {
-          id: "MKT05",
-          text: "Implement sales management techniques to achieve organizational revenue goals.",
-        },
-        {
-          id: "MKT06",
-          text: "Demonstrate ethical marketing practices and social responsibility in business operations.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
+        "The Bachelor of Science in Accountancy (BSA) is a comprehensive program designed to prepare students for professional careers in accounting and finance. It provides in-depth knowledge of financial reporting, auditing, taxation, and business laws, equipping graduates with the competencies required to pursue licensure as Certified Public Accountants (CPAs) and excel in various sectors of the industry.",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
         "Total Units: 124 units",
@@ -52,12 +19,48 @@ const CBAUndergrad = () => {
         "Thesis: Required",
         "Mode of Delivery: Face-to-face with practical applications",
       ],
+      programOutcomes: [
+        {
+          id: "BSA01",
+          text: "Apply accounting, auditing, and taxation principles in compliance with professional standards and legal frameworks.",
+        },
+        {
+          id: "BSA02",
+          text: "Analyze and interpret financial information to support business decision-making.",
+        },
+        {
+          id: "BSA03",
+          text: "Demonstrate ethical and professional behavior in accounting practices.",
+        },
+        {
+          id: "BSA04",
+          text: "Communicate effectively in both written and oral forms in a business environment.",
+        },
+        {
+          id: "BSA05",
+          text: "Engage in lifelong learning and adapt to the evolving accounting profession.",
+        },
+        {
+          id: "BSA06",
+          text: "Utilize information technology and accounting software to enhance efficiency and accuracy in accounting tasks.",
+        },
+      ],
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      syllabusFiles: {
+        2023: "https://example.com/bsba-marketing-syllabus-2023",
+      },
+
+      accreditation: "CHED Recognized Program", //not shown in the UI
+
       programEducationalObjectives: [
         "Produce graduates who can develop and implement effective marketing strategies",
         "Develop professionals who can lead marketing teams and manage brand portfolios",
         "Prepare students for careers in marketing research, advertising, and sales management",
         "Foster innovation and ethical practice in marketing and business management",
-      ],
+      ], //not shown in the UI
       careers: [
         "Marketing Manager",
         "Brand Manager",
@@ -65,22 +68,23 @@ const CBAUndergrad = () => {
         "Sales Manager",
         "Market Research Analyst",
         "Advertising Executive",
-      ],
+      ], // not shown in the UI
     },
     {
       id: 2,
-      name: "Bachelor of Science in Business Administration (BSBA) major in Human Resource Management",
+      name: "Bachelor of Science in Management Accounting (BSMA)",
       icon: Users,
       color: "from-green-600 to-green-800",
-      curriculumFiles: {
-        2023: "/placeholder.svg?height=800&width=600",
-        2020: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://example.com/bsba-hrm-syllabus-2023",
-      },
+
       description:
-        "The BSBA in Human Resource Management program focuses on developing strategic HR professionals who can manage organizational talent effectively. Students learn recruitment, training and development, compensation management, labor relations, and organizational behavior to build productive workplace environments.",
+        "The Bachelor of Science in Accountancy (BSA) is a comprehensive program designed to prepare students for professional careers in accounting and finance. It provides in-depth knowledge of financial reporting, auditing, taxation, and business laws, equipping graduates with the competencies required to pursue licensure as Certified Public Accountants (CPAs) and excel in various sectors of the industry.",
+      programSpecifications: [
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 124 units",
+        "Internship: Required (240 hours)",
+        "Practicum: Required",
+        "Mode of Delivery: Face-to-face with case studies",
+      ],
       programOutcomes: [
         {
           id: "HRM01",
@@ -107,20 +111,22 @@ const CBAUndergrad = () => {
           text: "Implement performance management systems that drive organizational success.",
         },
       ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 124 units",
-        "Internship: Required (240 hours)",
-        "Practicum: Required",
-        "Mode of Delivery: Face-to-face with case studies",
-      ],
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      syllabusFiles: {
+        2023: "https://example.com/bsba-hrm-syllabus-2023",
+      },
+     
+      accreditation: "CHED Recognized Program", // not shown in the UI
+
       programEducationalObjectives: [
         "Produce graduates who can strategically manage human resources in organizations",
         "Develop professionals who can create positive workplace cultures and employee engagement",
         "Prepare students for leadership roles in HR management and organizational development",
         "Foster ethical practice and social responsibility in human resource management",
-      ],
+      ], // not shown in the UI
       careers: [
         "HR Manager",
         "Recruitment Specialist",
@@ -128,7 +134,7 @@ const CBAUndergrad = () => {
         "Compensation and Benefits Analyst",
         "Employee Relations Specialist",
         "Organizational Development Consultant",
-      ],
+      ], // not shown in the UI
     },
     {
       id: 3,
@@ -261,12 +267,12 @@ const CBAUndergrad = () => {
   return (
     <ProgramPageLayout
       title="Undergraduate Programs"
-      description="Explore our undergraduate programs designed to prepare you for leadership roles in business administration, developing strategic thinking and management skills for the modern business environment."
+      description="The College of Business and Accountancy (CBA) is dedicated to developing future business leaders and accounting professionals through quality education, innovative teaching, and practical training. With programs grounded in ethics, leadership, and industry relevance, CBA equips students with the skills and knowledge needed to thrive in a dynamic global business environment."
       programs={programs}
       themeColor="blue"
       isGraduate={false}
       bannerImage="/images/csu-cc/CBA-logo.png"
-      collegeName="College of Business Administration - CSU Cabadbaran Campus"
+      collegeName="College of Business & Accountancy (CBA)- CSU Cabadbaran Campus"
     />
   );
 };
