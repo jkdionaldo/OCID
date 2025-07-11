@@ -43,7 +43,7 @@ export default function LoginModal() {
     <>
       {/* Login Button - Responsive text sizing and icon spacing */}
       <button
-        className="font-medium uppercase  text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center"
+        className="font-semibold uppercase text-gray-600 hover:text-green-700 transition-colors duration-200 flex items-center text-sm"
         onClick={openModal}
       >
         <span className="hidden sm:inline">LOGIN</span>
