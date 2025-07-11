@@ -15,14 +15,7 @@ const CEDUndergrad = () => {
       name: "Bachelor of Elementary Education (BEEd)",
       icon: School,
       color: "from-blue-600 to-blue-800",
-      curriculumFiles: {
-        2023: "/placeholder.svg?height=800&width=600",
-        2022: "https://drive.google.com/file/d/1KvvNyQ4H3B0nEohCLQD_XenpoCYm4xXS/view?usp=sharing",
-        2014: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
-      },
+
       description:
         "The BACHELOR OF ELEMENTARY EDUCATION (BEEd) program prepares students to become effective elementary school teachers. The curriculum focuses on child development, teaching methodologies, and subject matter knowledge across all elementary education areas. Graduates are equipped to teach in elementary schools and contribute to the educational development of young learners.",
       programOutcomes: [
@@ -72,6 +65,14 @@ const CEDUndergrad = () => {
         "Academic Coordinator",
         "Educational Materials Developer",
       ],
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2022: "https://drive.google.com/file/d/1KvvNyQ4H3B0nEohCLQD_XenpoCYm4xXS/view?usp=sharing",
+        2014: "/placeholder.svg?height=800&width=600",
+      },
+      syllabusFiles: {
+        2023: "https://drive.google.com/drive/folders/1xbq5iAKxVi8IETIC38pTXKTAW-ujJR7k",
+      },
     },
     {
       id: 2,
