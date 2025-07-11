@@ -6,6 +6,9 @@ import ProgramOverview from "@/components/programs-details/ProgramOverview";
 import ProgramSpecifications from "@/components/programs-details/ProgramSpecifications";
 import ProgramOutcomes from "@/components/programs-details/ProgramOutcomes";
 import CurriculumAndSyllabus from "@/components/programs-details/CurriculumAndSyllabus";
+import ProgramAccreditation from "@/components/programs-details/ProgramAccreditation";
+import ProgramEducationalObjectives from "@/components/programs-details/ProgramEducationalObjectives";
+import ProgramCareers from "@/components/programs-details/ProgramCareers";
 import FileUploadModal from "@/components/modals/FileUploadModal";
 import FileViewerModal from "@/components/modals/FileViewerModal";
 import { ArrowLeft } from "lucide-react";
@@ -164,19 +167,29 @@ const ProgramPageTemplate = ({
                   }
                   themeColor={themeColor}
                 />
+                {/* Program Accreditation */}
+                <ProgramAccreditation
+                  accreditation={programsState[selectedProgram].accreditation}
+                  themeColor={themeColor}
+                />
 
                 {/* Program Educational Objectives */}
-                {programsState[selectedProgram]
-                  .programEducationalObjectives && (
-                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    {/* Extract this to another component if needed */}
-                  </div>
-                )}
+                <ProgramEducationalObjectives
+                  objectives={
+                    programsState[selectedProgram].programEducationalObjectives
+                  }
+                  themeColor={themeColor}
+                />
 
                 {/* Program Outcomes */}
                 <ProgramOutcomes
                   outcomes={programsState[selectedProgram].programOutcomes}
                   programName={programsState[selectedProgram].name}
+                  themeColor={themeColor}
+                />
+                {/* Career Opportunities */}
+                <ProgramCareers
+                  careers={programsState[selectedProgram].careers}
                   themeColor={themeColor}
                 />
 

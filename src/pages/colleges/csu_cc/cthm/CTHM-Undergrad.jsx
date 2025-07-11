@@ -1,70 +1,70 @@
 import React from "react";
-import { Plane, Hotel, Utensils, MapPin } from "lucide-react";
+import { Utensils, Hotel, Plane } from "lucide-react";
 import ProgramPageLayout from "@/components/layout/ProgramPageLayout";
 
 const CTHMUndergrad = () => {
   const programs = [
     {
       id: 1,
-      name: "Bachelor of Science in Tourism Management (BSTM)",
-      icon: Plane,
-      color: "from-blue-600 to-blue-800",
+      name: "Bachelor of Science in Food and Beverage Service Management (BSFBSM)",
+      icon: Utensils,
+      color: "from-red-600 to-red-800",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
       },
       syllabusFiles: {
-        2023: "https://example.com/bstm-syllabus-2023",
+        2023: "https://example.com/bsfbsm-syllabus-2023",
       },
       description:
-        "The Bachelor of Science in Tourism Management program prepares students for careers in the dynamic tourism industry. Students learn tourism planning and development, sustainable tourism practices, tour operations, destination management, and cultural heritage preservation to promote responsible tourism development.",
+        "The Bachelor of Science in Food and Beverage Service Management program prepares students for leadership roles in food service operations. Students learn food and beverage management, culinary arts, restaurant operations, menu planning, cost control, and customer service to excel in the food service industry.",
       programOutcomes: [
         {
-          id: "TM01",
-          text: "Analyze tourism markets and develop effective tourism products and services.",
+          id: "FBSM01",
+          text: "Manage food and beverage operations in restaurants, hotels, and catering establishments.",
         },
         {
-          id: "TM02",
-          text: "Plan and implement sustainable tourism development projects.",
+          id: "FBSM02",
+          text: "Develop innovative menus and food products that meet customer preferences and dietary requirements.",
         },
         {
-          id: "TM03",
-          text: "Manage tour operations and travel services effectively.",
+          id: "FBSM03",
+          text: "Apply food safety and sanitation standards in food service operations.",
         },
         {
-          id: "TM04",
-          text: "Apply destination marketing strategies to promote tourism areas.",
+          id: "FBSM04",
+          text: "Implement cost control and inventory management systems for food and beverage operations.",
         },
         {
-          id: "TM05",
-          text: "Demonstrate cultural sensitivity and promote responsible tourism practices.",
+          id: "FBSM05",
+          text: "Provide exceptional customer service and manage dining experiences.",
         },
         {
-          id: "TM06",
-          text: "Use technology and digital platforms for tourism marketing and operations.",
+          id: "FBSM06",
+          text: "Lead food service teams and maintain high standards of service quality.",
         },
       ],
       accreditation: "CHED Recognized Program",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
-        "Total Units: 144 units",
+        "Total Units: 148 units",
         "Internship: Required (600 hours)",
-        "Study Tour: Required",
-        "Mode of Delivery: Face-to-face with field trips and practical training",
+        "Culinary Practicum: Required",
+        "Mode of Delivery: Face-to-face with professional kitchen and restaurant laboratory",
       ],
       programEducationalObjectives: [
-        "Produce tourism professionals who can develop and manage sustainable tourism initiatives",
-        "Develop graduates who can promote Philippine destinations effectively",
-        "Prepare students for careers in tour operations, destination management, and tourism planning",
-        "Foster entrepreneurship and innovation in tourism business development",
+        "Produce food service professionals who can manage restaurant and catering operations effectively",
+        "Develop graduates who can create innovative food and beverage experiences",
+        "Prepare students for management careers in restaurants, hotels, and food service establishments",
+        "Foster excellence in food service operations and customer satisfaction",
       ],
       careers: [
-        "Tourism Officer",
-        "Tour Operations Manager",
-        "Destination Marketing Specialist",
-        "Travel Consultant",
-        "Tourism Development Officer",
-        "Heritage Site Manager",
+        "Restaurant Manager",
+        "Food and Beverage Manager",
+        "Catering Manager",
+        "Food Service Director",
+        "Banquet Manager",
+        "Culinary Operations Manager",
       ],
     },
     {
@@ -132,128 +132,65 @@ const CTHMUndergrad = () => {
     },
     {
       id: 3,
-      name: "Bachelor of Science in Culinary Arts Management (BSCAM)",
-      icon: Utensils,
-      color: "from-red-600 to-red-800",
+      name: "Bachelor of Science in Tourism Management (BSTM)",
+      icon: Plane,
+      color: "from-blue-600 to-blue-800",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
       },
       syllabusFiles: {
-        2023: "https://example.com/bscam-syllabus-2023",
+        2023: "https://example.com/bstm-syllabus-2023",
       },
       description:
-        "The Bachelor of Science in Culinary Arts Management program combines culinary skills with business management knowledge. Students learn food preparation techniques, menu development, kitchen management, cost control, and restaurant operations to become professional chefs and food service managers.",
+        "The Bachelor of Science in Tourism Management program prepares students for careers in the dynamic tourism industry. Students learn tourism planning and development, sustainable tourism practices, tour operations, destination management, and cultural heritage preservation to promote responsible tourism development.",
       programOutcomes: [
         {
-          id: "CAM01",
-          text: "Demonstrate advanced culinary skills and food preparation techniques.",
+          id: "TM01",
+          text: "Analyze tourism markets and develop effective tourism products and services.",
         },
         {
-          id: "CAM02",
-          text: "Design and develop innovative menus and food products.",
+          id: "TM02",
+          text: "Plan and implement sustainable tourism development projects.",
         },
         {
-          id: "CAM03",
-          text: "Manage kitchen operations and food service establishments effectively.",
+          id: "TM03",
+          text: "Manage tour operations and travel services effectively.",
         },
         {
-          id: "CAM04",
-          text: "Apply food safety and sanitation standards in culinary operations.",
+          id: "TM04",
+          text: "Apply destination marketing strategies to promote tourism areas.",
         },
         {
-          id: "CAM05",
-          text: "Implement cost control and inventory management systems in food service.",
+          id: "TM05",
+          text: "Demonstrate cultural sensitivity and promote responsible tourism practices.",
         },
         {
-          id: "CAM06",
-          text: "Lead culinary teams and maintain high standards of food quality and presentation.",
+          id: "TM06",
+          text: "Use technology and digital platforms for tourism marketing and operations.",
         },
       ],
       accreditation: "CHED Recognized Program",
       programSpecifications: [
         "Duration: 4 years (8 semesters)",
-        "Total Units: 148 units",
+        "Total Units: 144 units",
         "Internship: Required (600 hours)",
-        "Culinary Practicum: Required",
-        "Mode of Delivery: Face-to-face with professional kitchen laboratory",
+        "Study Tour: Required",
+        "Mode of Delivery: Face-to-face with field trips and practical training",
       ],
       programEducationalObjectives: [
-        "Produce culinary professionals who can create innovative food products and experiences",
-        "Develop graduates who can manage culinary operations and food service businesses",
-        "Prepare students for careers as executive chefs and food service managers",
-        "Foster creativity and entrepreneurship in culinary arts and food business",
+        "Produce tourism professionals who can develop and manage sustainable tourism initiatives",
+        "Develop graduates who can promote Philippine destinations effectively",
+        "Prepare students for careers in tour operations, destination management, and tourism planning",
+        "Foster entrepreneurship and innovation in tourism business development",
       ],
       careers: [
-        "Executive Chef",
-        "Restaurant Manager",
-        "Food and Beverage Director",
-        "Culinary Instructor",
-        "Food Product Developer",
-        "Catering Manager",
-      ],
-    },
-    {
-      id: 4,
-      name: "Bachelor of Science in Travel Management (BSTM)",
-      icon: MapPin,
-      color: "from-purple-600 to-purple-800",
-      curriculumFiles: {
-        2023: "/placeholder.svg?height=800&width=600",
-        2020: "/placeholder.svg?height=800&width=600",
-      },
-      syllabusFiles: {
-        2023: "https://example.com/bstm-travel-syllabus-2023",
-      },
-      description:
-        "The Bachelor of Science in Travel Management program focuses on travel agency operations, airline and transportation management, and travel technology systems. Students learn ticketing procedures, travel planning, customer service, and travel industry regulations to excel in travel and transportation services.",
-      programOutcomes: [
-        {
-          id: "TRM01",
-          text: "Manage travel agency operations and provide comprehensive travel services.",
-        },
-        {
-          id: "TRM02",
-          text: "Use travel reservation systems and technology platforms effectively.",
-        },
-        {
-          id: "TRM03",
-          text: "Plan and organize domestic and international travel itineraries.",
-        },
-        {
-          id: "TRM04",
-          text: "Apply travel industry regulations and legal requirements.",
-        },
-        {
-          id: "TRM05",
-          text: "Provide excellent customer service and handle travel-related issues.",
-        },
-        {
-          id: "TRM06",
-          text: "Develop travel products and packages for different market segments.",
-        },
-      ],
-      accreditation: "CHED Recognized Program",
-      programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 142 units",
-        "Internship: Required (600 hours)",
-        "Travel Systems Training: Required",
-        "Mode of Delivery: Face-to-face with travel laboratory and system training",
-      ],
-      programEducationalObjectives: [
-        "Produce travel professionals who can manage travel services efficiently",
-        "Develop graduates who can adapt to changing travel industry technologies",
-        "Prepare students for careers in travel agencies, airlines, and transportation companies",
-        "Foster customer service excellence and travel industry innovation",
-      ],
-      careers: [
-        "Travel Agent",
-        "Airline Customer Service Manager",
-        "Tour Coordinator",
-        "Travel Technology Specialist",
-        "Corporate Travel Manager",
-        "Transportation Services Manager",
+        "Tourism Officer",
+        "Tour Operations Manager",
+        "Destination Marketing Specialist",
+        "Travel Consultant",
+        "Tourism Development Officer",
+        "Heritage Site Manager",
       ],
     },
   ];
@@ -261,12 +198,12 @@ const CTHMUndergrad = () => {
   return (
     <ProgramPageLayout
       title="Undergraduate Programs"
-      description="Explore our undergraduate programs designed to prepare you for exciting careers in tourism, hospitality, and travel management, developing skills to serve guests and promote destinations with excellence."
+      description="The College of Tourism and Hospitality Management (CTHM) offers specialized programs in food service, hospitality operations, and tourism development. Our programs combine theoretical knowledge with hands-on experience, preparing students for successful careers in the dynamic tourism and hospitality industry through practical training and industry partnerships."
       programs={programs}
       themeColor="pink"
       isGraduate={false}
       bannerImage="/images/csu-cc/CTHM-logo.png"
-      collegeName="College of Tourism and Hospitality Management - CSU Cabadbaran Campus"
+      collegeName="College of Tourism and Hospitality Management (CTHM) - CSU Cabadbaran Campus"
     />
   );
 };

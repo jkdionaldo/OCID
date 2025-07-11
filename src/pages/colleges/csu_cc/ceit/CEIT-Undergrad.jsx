@@ -1,5 +1,5 @@
 import React from "react";
-import { Code, Cpu, Wrench, Cog } from "lucide-react";
+import { Code, Cpu, Wrench, Zap, GraduationCap } from "lucide-react";
 import ProgramPageLayout from "@/components/layout/ProgramPageLayout";
 
 const CEITUndergrad = () => {
@@ -69,6 +69,69 @@ const CEITUndergrad = () => {
     },
     {
       id: 2,
+      name: "Bachelor of Science in Electrical Engineering (BSEE)",
+      icon: Zap,
+      color: "from-yellow-600 to-yellow-800",
+      curriculumFiles: {
+        2023: "/placeholder.svg?height=800&width=600",
+        2020: "/placeholder.svg?height=800&width=600",
+      },
+      syllabusFiles: {
+        2023: "https://example.com/bsee-syllabus-2023",
+      },
+      description:
+        "The Bachelor of Science in Electrical Engineering program focuses on the design, development, and maintenance of electrical systems and equipment. Students learn power systems, electronics, control systems, and electrical machinery to solve complex electrical engineering problems in various industries.",
+      programOutcomes: [
+        {
+          id: "EE01",
+          text: "Apply knowledge of mathematics, science, and engineering fundamentals to solve electrical engineering problems.",
+        },
+        {
+          id: "EE02",
+          text: "Design and analyze electrical power systems, including generation, transmission, and distribution.",
+        },
+        {
+          id: "EE03",
+          text: "Develop control systems for industrial automation and process control applications.",
+        },
+        {
+          id: "EE04",
+          text: "Design and implement electrical machines and drive systems.",
+        },
+        {
+          id: "EE05",
+          text: "Apply safety standards and regulations in electrical system design and operation.",
+        },
+        {
+          id: "EE06",
+          text: "Use modern engineering tools and software for electrical system analysis and design.",
+        },
+      ],
+      accreditation: "ABET Accredited Program",
+      programSpecifications: [
+        "Duration: 4 years (8 semesters)",
+        "Total Units: 168 units",
+        "Internship: Required (320 hours)",
+        "Design Project: Required",
+        "Mode of Delivery: Face-to-face with extensive laboratory work",
+      ],
+      programEducationalObjectives: [
+        "Produce graduates who can design and develop electrical power systems and equipment",
+        "Develop professionals who can work in power generation, distribution, and industrial automation",
+        "Prepare students for advanced studies and research in electrical engineering",
+        "Foster innovation and sustainable practices in electrical engineering solutions",
+      ],
+      careers: [
+        "Electrical Engineer",
+        "Power Systems Engineer",
+        "Control Systems Engineer",
+        "Electrical Design Engineer",
+        "Plant Engineer",
+        "Project Engineer",
+      ],
+    },
+    {
+      id: 3,
       name: "Bachelor of Science in Information Technology (BSIT)",
       icon: Code,
       color: "from-blue-600 to-blue-800",
@@ -131,8 +194,8 @@ const CEITUndergrad = () => {
       ],
     },
     {
-      id: 3,
-      name: "Bachelor of Science in Electronics Engineering (BSEE)",
+      id: 4,
+      name: "Electrical Engineering Technology (EET)",
       icon: Wrench,
       color: "from-green-600 to-green-800",
       curriculumFiles: {
@@ -140,120 +203,120 @@ const CEITUndergrad = () => {
         2020: "/placeholder.svg?height=800&width=600",
       },
       syllabusFiles: {
-        2023: "https://example.com/bsee-syllabus-2023",
+        2023: "https://example.com/eet-syllabus-2023",
       },
       description:
-        "The Bachelor of Science in Electronics Engineering program prepares students to design, develop, and maintain electronic systems and devices. Students learn circuit design, microelectronics, telecommunications, control systems, and signal processing to create innovative electronic solutions for various industries.",
+        "The Electrical Engineering Technology program provides hands-on training in electrical systems, focusing on practical application and technical skills. Students learn electrical installation, maintenance, troubleshooting, and testing of electrical equipment and systems in industrial and commercial settings.",
       programOutcomes: [
         {
-          id: "ECE01",
-          text: "Apply knowledge of mathematics, physics, and engineering fundamentals to analyze electronic systems.",
+          id: "EET01",
+          text: "Apply technical knowledge to install, maintain, and troubleshoot electrical systems and equipment.",
         },
         {
-          id: "ECE02",
-          text: "Design and implement electronic circuits and systems for specific applications.",
+          id: "EET02",
+          text: "Use electrical testing instruments and tools to diagnose system problems.",
         },
         {
-          id: "ECE03",
-          text: "Analyze and design communication systems and signal processing applications.",
+          id: "EET03",
+          text: "Read and interpret electrical blueprints, schematics, and technical drawings.",
         },
         {
-          id: "ECE04",
-          text: "Apply control systems theory to design automatic control systems.",
+          id: "EET04",
+          text: "Apply electrical codes and safety standards in installation and maintenance work.",
         },
         {
-          id: "ECE05",
-          text: "Use modern engineering tools and software for electronic design and simulation.",
+          id: "EET05",
+          text: "Perform preventive maintenance on electrical systems and equipment.",
         },
         {
-          id: "ECE06",
-          text: "Design solutions that consider safety, sustainability, and societal impact.",
+          id: "EET06",
+          text: "Work effectively as part of a technical team in industrial environments.",
         },
       ],
-      accreditation: "ABET Accredited Program",
+      accreditation: "CHED Recognized Program",
       programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 170 units",
-        "Internship: Required (320 hours)",
-        "Design Project: Required",
-        "Mode of Delivery: Face-to-face with extensive laboratory work",
+        "Duration: 3 years (6 semesters)",
+        "Total Units: 108 units",
+        "Internship: Required (240 hours)",
+        "Hands-on Training: Required",
+        "Mode of Delivery: Face-to-face with extensive practical work",
       ],
       programEducationalObjectives: [
-        "Produce graduates who can design and develop electronic systems and devices",
-        "Develop professionals who can work in telecommunications, automation, and electronics industries",
-        "Prepare students for advanced studies and research in electronics engineering",
-        "Foster innovation and entrepreneurship in electronics and technology development",
+        "Produce graduates who can work as electrical technicians in various industries",
+        "Develop professionals who can support electrical engineers in system implementation",
+        "Prepare students for technical careers in electrical installation and maintenance",
+        "Foster practical skills and safety consciousness in electrical work",
       ],
       careers: [
-        "Electronics Engineer",
-        "Telecommunications Engineer",
-        "Control Systems Engineer",
-        "RF Engineer",
-        "Product Development Engineer",
-        "Test Engineer",
+        "Electrical Technician",
+        "Maintenance Technician",
+        "Electrical Installer",
+        "Instrumentation Technician",
+        "Power Plant Technician",
+        "Electrical Inspector",
       ],
     },
     {
-      id: 4,
-      name: "Bachelor of Science in Mechanical Engineering (BSME)",
-      icon: Cog,
-      color: "from-orange-600 to-orange-800",
+      id: 5,
+      name: "Diploma in Computer Technology (DCT)",
+      icon: GraduationCap,
+      color: "from-purple-600 to-purple-800",
       curriculumFiles: {
         2023: "/placeholder.svg?height=800&width=600",
         2020: "/placeholder.svg?height=800&width=600",
       },
       syllabusFiles: {
-        2023: "https://example.com/bsme-syllabus-2023",
+        2023: "https://example.com/dct-syllabus-2023",
       },
       description:
-        "The Bachelor of Science in Mechanical Engineering program provides students with knowledge in mechanics, thermodynamics, materials science, and manufacturing processes. Students learn to design, analyze, and manufacture mechanical systems, engines, machines, and thermal systems for various industrial applications.",
+        "The Diploma in Computer Technology program provides foundational knowledge and practical skills in computer systems, programming, and information technology. This program prepares students for entry-level positions in the IT industry or serves as a pathway to higher education in computer-related fields.",
       programOutcomes: [
         {
-          id: "ME01",
-          text: "Apply principles of mathematics, science, and engineering to solve mechanical engineering problems.",
+          id: "DCT01",
+          text: "Apply basic programming concepts to develop simple software applications.",
         },
         {
-          id: "ME02",
-          text: "Design mechanical systems and components that meet specified requirements and constraints.",
+          id: "DCT02",
+          text: "Install, configure, and maintain computer hardware and software systems.",
         },
         {
-          id: "ME03",
-          text: "Analyze and design thermal and fluid systems for various engineering applications.",
+          id: "DCT03",
+          text: "Perform basic network administration and troubleshooting tasks.",
         },
         {
-          id: "ME04",
-          text: "Select appropriate materials and manufacturing processes for mechanical design.",
+          id: "DCT04",
+          text: "Create and maintain databases for small to medium-scale applications.",
         },
         {
-          id: "ME05",
-          text: "Apply modern engineering tools and software for design, analysis, and simulation.",
+          id: "DCT05",
+          text: "Apply cybersecurity best practices to protect computer systems and data.",
         },
         {
-          id: "ME06",
-          text: "Consider sustainability, safety, and economic factors in engineering design decisions.",
+          id: "DCT06",
+          text: "Provide technical support and user assistance in computer-related problems.",
         },
       ],
-      accreditation: "ABET Accredited Program",
+      accreditation: "CHED Recognized Program",
       programSpecifications: [
-        "Duration: 4 years (8 semesters)",
-        "Total Units: 172 units",
-        "Internship: Required (320 hours)",
-        "Design Project: Required",
-        "Mode of Delivery: Face-to-face with machine shop and laboratory work",
+        "Duration: 2 years (4 semesters)",
+        "Total Units: 72 units",
+        "Practicum: Required (200 hours)",
+        "Portfolio Project: Required",
+        "Mode of Delivery: Face-to-face with hands-on laboratory sessions",
       ],
       programEducationalObjectives: [
-        "Produce graduates who can design and analyze mechanical systems and components",
-        "Develop professionals who can work in manufacturing, automotive, and energy industries",
-        "Prepare students for leadership roles in mechanical engineering and technology management",
-        "Foster innovation in sustainable engineering design and green technology",
+        "Produce graduates who can work as computer technicians and IT support staff",
+        "Develop basic programming and system administration skills for entry-level IT positions",
+        "Prepare students for further studies in computer science or information technology",
+        "Foster practical problem-solving skills in computer technology applications",
       ],
       careers: [
-        "Mechanical Engineer",
-        "Design Engineer",
-        "Manufacturing Engineer",
-        "HVAC Engineer",
-        "Automotive Engineer",
-        "Project Engineer",
+        "Computer Technician",
+        "IT Support Specialist",
+        "Junior Programmer",
+        "Database Assistant",
+        "Network Support Technician",
+        "Technical Support Representative",
       ],
     },
   ];
@@ -261,12 +324,12 @@ const CEITUndergrad = () => {
   return (
     <ProgramPageLayout
       title="Undergraduate Programs"
-      description="Explore our undergraduate programs designed to prepare you for careers in engineering and information technology, developing innovative solutions for modern technological challenges."
+      description="The College of Engineering and Information Technology (CEIT) offers comprehensive programs in engineering and technology fields. Our programs combine theoretical knowledge with practical skills, preparing students for successful careers in engineering, information technology, and technical fields through hands-on learning and industry-relevant curriculum."
       programs={programs}
       themeColor="red"
       isGraduate={false}
       bannerImage="/images/csu-cc/CEIT-logo.png"
-      collegeName="College of Engineering and Information Technology - CSU Cabadbaran Campus"
+      collegeName="College of Engineering and Information Technology (CEIT) - CSU Cabadbaran Campus"
     />
   );
 };
