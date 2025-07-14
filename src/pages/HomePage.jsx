@@ -153,7 +153,7 @@ const Home = () => {
         <div className="flex flex-col md:flex-row gap-11 item-center md:items-start md:py-10"> 
            <div className="flex-1 text-center">
                <h2 className="text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
-               <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
+               <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
                   The CSUAN graduate is globally competent, lifelong learner, visionary steward, sustainability-advocate, morally-upright, ethically critical, with integrity, adaptable to change, innovative, has entrepreneurial mindset, and a transformative leader.
                   <br></br><br></br>
                   <b>Definition:</b><br></br>
