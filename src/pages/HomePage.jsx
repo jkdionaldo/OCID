@@ -150,9 +150,9 @@ const Home = () => {
           </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start md:py-10"> 
+        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start md:py-10"> 
            <div className="flex-1 text-center">
-               <h2 className="text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
+               <h2 className="text-lg sm:text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
                <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
                   The CSUAN graduate is globally competent, lifelong learner, visionary steward, sustainability-advocate, morally-upright, ethically critical, with integrity, adaptable to change, innovative, has entrepreneurial mindset, and a transformative leader.
                   <br></br><br></br>
@@ -168,7 +168,7 @@ const Home = () => {
            </div>
            <img 
                 src="/images/CSU - Goals.jpg"
-                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
+                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto py-12"
                 alt="Insitutional Outcomes"
                 loading="eager"
               ></img>
