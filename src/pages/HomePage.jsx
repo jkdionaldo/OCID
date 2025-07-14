@@ -129,7 +129,7 @@ const Home = () => {
         </div>
 
         {/*For Insitutional Outcomes*/}
-          <div className="flex flex-col md:flex-row gap-10 items-center md:items-start py-11 mb-12 "> 
+          <div className="flex flex-col md:flex-row gap-10 items-center md:items-start md:py-11 mb-12 "> 
             <img 
             src="/images/CSU - Goals.jpg"
             className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
@@ -150,7 +150,7 @@ const Home = () => {
           </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-10"> 
+        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start md:py-10"> 
            <div className="flex-1 text-center">
                <h2 className="text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
                <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
