@@ -149,7 +149,30 @@ const Home = () => {
             </div>
           </div>
 
-        
+        {/*Graduate Attributes*/}
+        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-11"> 
+           <div className="flex-1 text-center">
+               <h2 className="text-4xl font-extrabold text-left">Graduate Attributes</h2>
+               <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-5 text-csuGreen">
+                  The CSUAN graduate is globally competent, lifelong learner, visionary steward, sustainability-advocate, morally-upright, ethically critical, with integrity, adaptable to change, innovative, has entrepreneurial mindset, and a transformative leader.
+                  <br></br><br></br>
+                  <b>Definition:</b><br></br>
+                  A CSUAN demonstrates expertise and lifelong learning, continuously enhancing their knowledge and skills to meet evolving industry and societal demands.
+                  <br></br><br></br>
+                  A CSUAN actively participates in addressing societal issues, fostering inclusive development, and advocating for sustainable and transformative change.
+                  <br></br><br></br>
+                  A CSUAN upholds integrity, ethical responsibility, and accountability, ensuring that their actions reflect the core values and mission of the university.
+                  <br></br><br></br>
+                  A CSUAN is adaptable to change, embraces innovation and entrepreneurship, and applies creative solutions to solve complex challenges in a dynamic world.
+              </p>
+           </div>
+           <img 
+                src="/images/CSU - Goals.jpg"
+                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
+                alt="Insitutional Outcomes"
+                loading="eager"
+              ></img>
+        </div>
       </div>
     </div>
   );
