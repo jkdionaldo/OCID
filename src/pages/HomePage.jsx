@@ -51,11 +51,7 @@ const Home = () => {
               OUR VISION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-<<<<<<< HEAD
-            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-csuGreen lg:text-[0.8rem] mt-6">
-=======
-            <p className="text-center text-left text-sm md:text-base max-w-2xl mx-auto text-csuGreen lg:text-[0.8rem] mt-6 font-poppins">
->>>>>>> ade33ff911ba70f2fc932bb280337581b38d05b3
+            <p className="text-center text-sm md:text-base max-w-2xl mx-auto text-csuGreen lg:text-[0.8rem] mt-6 font-poppins">
               A socially-engaged digital, innovation, and entrepreneurial
               university excelling globally in science,engineering, and the arts
               by 2028.
@@ -107,11 +103,7 @@ const Home = () => {
               OUR MISSION
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-<<<<<<< HEAD
-            <p className="text-center  text-sm md:text-base lg:text-[0.8rem] max-w-2xl mx-auto text-csuGreen mt-6">
-=======
-            <p className="text-center text-left text-sm md:text-base lg:text-[0.8rem] max-w-2xl mx-auto text-csuGreen mt-6 font-poppins">
->>>>>>> ade33ff911ba70f2fc932bb280337581b38d05b3
+            <p className="text-center text-sm md:text-base lg:text-[0.8rem] max-w-2xl mx-auto text-csuGreen mt-6 font-poppins">
               As a transformative university, CSU is a responsible steward of
               problem-solvers and value creators who are driven to create a
               sustainable future for the region, the nation,and beyond.
@@ -123,11 +115,7 @@ const Home = () => {
               GENERAL MANDATE
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-<<<<<<< HEAD
-            <p className="text-justify text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
-=======
-            <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto mt-6 text-csuGreen font-poppins">
->>>>>>> ade33ff911ba70f2fc932bb280337581b38d05b3
+            <p className="text-justify text-sm md:text-base max-w-3xl mx-auto mt-6 text-csuGreen font-poppins">
               Caraga State University shall primarily provide advanced
               education, higher technological, professional instruction and
               training in the fields of agriculture and environmental studies,
