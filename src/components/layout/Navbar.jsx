@@ -3,6 +3,7 @@ import LoginModal from "@/components/modals/auth/LoginModal";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const location = useLocation();
@@ -10,6 +11,8 @@ const Navbar = () => {
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
+
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -175,7 +178,16 @@ const Navbar = () => {
 
         {/* Right side login button */}
         <div className="hidden xl:block flex-shrink-0 w-[240px] sm:w-[210px]">
-          <LoginModal />
+          {isAuthenticated ? (
+            <button
+              onClick={logout}
+              className="font-medium uppercase text-sm xl:text-base text-red-600 hover:text-red-500 transition-colors duration-200"
+            >
+              Logout
+            </button>
+          ) : (
+            <LoginModal />
+          )}
         </div>
 
         {/* Mobile navigation */}
@@ -252,7 +264,19 @@ const Navbar = () => {
               >
                 DOWNLOAD
               </Link>
-              <LoginModal />
+              {isAuthenticated ? (
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-red-600 hover:text-red-500 transition-colors duration-200 mt-2"
+                >
+                  LOGOUT
+                </button>
+              ) : (
+                <LoginModal />
+              )}
             </div>
           </div>
         )}
