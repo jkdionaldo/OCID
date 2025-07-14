@@ -168,7 +168,7 @@ const Home = () => {
            </div>
            <img 
                 src="/images/CSU - Goals.jpg"
-                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto py-12"
+                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto my-12 md:my-0"
                 alt="Insitutional Outcomes"
                 loading="eager"
               ></img>
