@@ -67,7 +67,7 @@ export default function LoginModal() {
               </button>
 
               {/* Logo Section - Responsive logo sizing */}
-              <div className="flex items-center justify-center mb-4 sm:mb-6">
+              <div className="flex items-center justify-center mt-4 pb-5 sm:mb-6">
                 <img
                   src="/images/ocid_logo.png"
                   alt="OCID Logo"
@@ -79,9 +79,6 @@ export default function LoginModal() {
                   className="h-10 sm:h-14 lg:h-16 w-auto object-contain ml-1 sm:ml-2"
                 />
               </div>
-
-              {/* Divider - Responsive margin */}
-              <hr className="my-4 sm:my-6 lg:my-8" />
 
               {/* Login Form Container */}
               <div className="w-full">
