@@ -207,12 +207,12 @@ const LoginForm = () => {
         {/* Register Link */}
         <div className="text-center pb-5">
           <p className="text-sm text-gray-600">
-            Don't have an account?{" "}
+            Don't have an Access?{" "}
             <Link
               to="/register"
               className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
             >
-              Create an account
+              Request Access
             </Link>
           </p>
         </div>
