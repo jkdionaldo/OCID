@@ -129,7 +129,7 @@ const Home = () => {
         </div>
 
         {/*For Insitutional Outcomes*/}
-          <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-11 mb-12"> 
+          <div className="flex flex-col md:flex-row gap-10 item-center md:items-start py-11 mb-12"> 
             <img 
             src="/images/CSU - Goals.jpg"
             className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
@@ -137,9 +137,9 @@ const Home = () => {
             loading="eager"
             ></img>
             <div className="flex-1 text-center">
-                <h2 className="text-lg font-semibold text-left">Aligned with the Caraga State University's Vision, Mission, Core Values, and Quality Objectives the following Institutional Outcomes are expected of the graduates</h2>
+                <h2 className="text-3xl font-bold font-poppins text-left">Aligned with the Caraga State University's Vision, Mission, Core Values, and Quality Objectives the following Institutional Outcomes are expected of the graduates</h2>
 
-                <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-11 text-csuGreen">
+                <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-11 text-csuGreen font-poppins">
                 <b>IO1. Transformative Leadership and Stewardship.</b> A CSUAN applies advanced expertise in addressing complex societal challenges as a transformative leader and purpose-driven steward.
                 <br></br><br></br>
                 <b>IO2. Research, Innovation and Enterprise.</b> A CSUAN produces quality research outputs, applies innovative thinking, and develops entrepreneurial solutions that address regional and global issues, in pursuit of sustainability and economic advancement.
@@ -150,10 +150,10 @@ const Home = () => {
           </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-11"> 
+        <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-10"> 
            <div className="flex-1 text-center">
-               <h2 className="text-4xl font-extrabold text-left">Graduate Attributes</h2>
-               <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-5 text-csuGreen">
+               <h2 className="text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
+               <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
                   The CSUAN graduate is globally competent, lifelong learner, visionary steward, sustainability-advocate, morally-upright, ethically critical, with integrity, adaptable to change, innovative, has entrepreneurial mindset, and a transformative leader.
                   <br></br><br></br>
                   <b>Definition:</b><br></br>
