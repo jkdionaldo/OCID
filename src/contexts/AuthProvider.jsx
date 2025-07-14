@@ -4,7 +4,6 @@ import { AuthContext } from "./AuthContext";
 
 // Configure axios defaults
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
-axios.defaults.withCredentials = true;
 
 // Request interceptor to add auth token
 axios.interceptors.request.use((config) => {
@@ -15,55 +14,145 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor to handle token expiration
+// Response interceptor to handle token expiration and errors
 axios.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("user_data");
-      window.location.href = "/login";
+    const originalRequest = error.config;
+
+    // Handle 401 Unauthorized (token expired/invalid)
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      // Try to refresh token first
+      const refreshResult = await tryRefreshToken();
+      if (refreshResult.success) {
+        // Retry original request with new token
+        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem(
+          "auth_token"
+        )}`;
+        return axios(originalRequest);
+      } else {
+        // Refresh failed, logout user
+        clearAuthData();
+        window.location.href = "/login";
+      }
     }
+
+    // Handle other errors
+    if (error.response?.status === 422) {
+      // Validation errors - return for handling in components
+      return Promise.reject(error);
+    }
+
     return Promise.reject(error);
   }
 );
+
+// Helper function to try token refresh
+const tryRefreshToken = async () => {
+  try {
+    const token = localStorage.getItem("auth_token");
+    const expiresAt = localStorage.getItem("token_expires_at");
+
+    if (!token || !expiresAt) return { success: false };
+
+    // Check if token is close to expiring (within 1 hour)
+    const now = new Date();
+    const expiry = new Date(expiresAt);
+    const timeUntilExpiry = expiry - now;
+
+    if (timeUntilExpiry > 60 * 60 * 1000) {
+      return { success: true }; // Token still valid
+    }
+
+    // Attempt refresh
+    const response = await axios.post("/auth/refresh");
+    const { token: newToken, expires_at } = response.data;
+
+    localStorage.setItem("auth_token", newToken);
+    localStorage.setItem("token_expires_at", expires_at);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Token refresh failed:", error);
+    return { success: false };
+  }
+};
+
+// Helper function to clear auth data
+const clearAuthData = () => {
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("user_data");
+  localStorage.removeItem("token_expires_at");
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Initialize CSRF token
-  const initializeCsrf = async () => {
-    try {
-      await axios.get("/sanctum/csrf-cookie");
-    } catch (error) {
-      console.error("CSRF initialization failed:", error);
-    }
-  };
-
   // Check if user is authenticated on app load
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("auth_token");
       const userData = localStorage.getItem("user_data");
+      const expiresAt = localStorage.getItem("token_expires_at");
 
-      if (token && userData) {
+      if (token && userData && expiresAt) {
         try {
-          // Verify token is still valid
-          const response = await axios.get("/auth/user");
-          setUser(response.data.user);
+          // Check if token is expired
+          const now = new Date();
+          const expiry = new Date(expiresAt);
+
+          if (now >= expiry) {
+            // Token expired, try refresh
+            const refreshResult = await tryRefreshToken();
+            if (!refreshResult.success) {
+              clearAuthData();
+              setIsLoading(false);
+              return;
+            }
+          }
+
+          // Use stored user data first (faster loading)
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
           setIsAuthenticated(true);
+
+          // Verify token is still valid in background
+          try {
+            const response = await axios.get("/auth/user");
+            const freshUser = response.data.user;
+
+            // Update if user data changed
+            if (JSON.stringify(parsedUser) !== JSON.stringify(freshUser)) {
+              setUser(freshUser);
+              localStorage.setItem("user_data", JSON.stringify(freshUser));
+            }
+          } catch (error) {
+            // Token invalid, clear storage
+            clearAuthData();
+            setUser(null);
+            setIsAuthenticated(false);
+          }
         } catch (error) {
-          // Token is invalid, clear storage
-          localStorage.removeItem("auth_token");
-          localStorage.removeItem("user_data");
+          clearAuthData();
         }
       }
       setIsLoading(false);
     };
 
-    initializeCsrf().then(() => checkAuth());
+    checkAuth();
+
+    // Set up token refresh timer
+    const refreshInterval = setInterval(() => {
+      if (localStorage.getItem("auth_token")) {
+        tryRefreshToken();
+      }
+    }, 5 * 60 * 1000); // Check every 5 minutes
+
+    return () => clearInterval(refreshInterval);
   }, []);
 
   const login = async (credentials) => {
@@ -77,17 +166,26 @@ export const AuthProvider = ({ children }) => {
         device_name: navigator.userAgent || "Unknown Device",
       });
 
-      const { user: userData, token } = response.data;
+      const { user: userData, token, expires_at } = response.data;
 
-      // Store auth data
+      // Store auth data with expiration
       localStorage.setItem("auth_token", token);
       localStorage.setItem("user_data", JSON.stringify(userData));
+      localStorage.setItem("token_expires_at", expires_at);
 
       setUser(userData);
       setIsAuthenticated(true);
 
       return { success: true, user: userData };
     } catch (error) {
+      // Handle validation errors
+      if (error.response?.status === 422) {
+        const errors = error.response.data.errors;
+        const message =
+          errors?.email?.[0] || errors?.password?.[0] || "Invalid credentials";
+        return { success: false, error: message, errors };
+      }
+
       const message = error.response?.data?.message || "Login failed";
       return { success: false, error: message };
     } finally {
@@ -107,17 +205,24 @@ export const AuthProvider = ({ children }) => {
         device_name: navigator.userAgent || "Unknown Device",
       });
 
-      const { user: newUser, token } = response.data;
+      const { user: newUser, token, expires_at } = response.data;
 
-      // Store auth data
+      // Store auth data with expiration
       localStorage.setItem("auth_token", token);
       localStorage.setItem("user_data", JSON.stringify(newUser));
+      localStorage.setItem("token_expires_at", expires_at);
 
       setUser(newUser);
       setIsAuthenticated(true);
 
       return { success: true, user: newUser, message: response.data.message };
     } catch (error) {
+      // Handle validation errors
+      if (error.response?.status === 422) {
+        const errors = error.response.data.errors;
+        return { success: false, error: "Validation failed", errors };
+      }
+
       const message = error.response?.data?.message || "Registration failed";
       return { success: false, error: message };
     } finally {
@@ -131,9 +236,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout API call failed:", error);
     } finally {
-      // Clear local storage regardless of API call success
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("user_data");
+      clearAuthData();
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -145,8 +248,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout all API call failed:", error);
     } finally {
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("user_data");
+      clearAuthData();
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -166,6 +268,12 @@ export const AuthProvider = ({ children }) => {
         message: response.data.message,
       };
     } catch (error) {
+      // Handle validation errors
+      if (error.response?.status === 422) {
+        const errors = error.response.data.errors;
+        return { success: false, error: "Validation failed", errors };
+      }
+
       const message = error.response?.data?.message || "Profile update failed";
       return { success: false, error: message };
     }
@@ -181,7 +289,51 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true, message: response.data.message };
     } catch (error) {
+      // Handle validation errors
+      if (error.response?.status === 422) {
+        const errors = error.response.data.errors;
+        const message =
+          errors?.current_password?.[0] ||
+          errors?.password?.[0] ||
+          "Password change failed";
+        return { success: false, error: message, errors };
+      }
+
       const message = error.response?.data?.message || "Password change failed";
+      return { success: false, error: message };
+    }
+  };
+
+  // New method to get user tokens
+  const getUserTokens = async () => {
+    try {
+      const response = await axios.get("/auth/tokens");
+      return { success: true, tokens: response.data.tokens };
+    } catch (error) {
+      const message = error.response?.data?.message || "Failed to fetch tokens";
+      return { success: false, error: message };
+    }
+  };
+
+  // New method to revoke specific token
+  const revokeToken = async (tokenId) => {
+    try {
+      const response = await axios.delete(`/auth/tokens/${tokenId}`);
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      const message = error.response?.data?.message || "Failed to revoke token";
+      return { success: false, error: message };
+    }
+  };
+
+  // New method to cleanup expired tokens
+  const cleanupTokens = async () => {
+    try {
+      const response = await axios.post("/auth/cleanup-tokens");
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      const message =
+        error.response?.data?.message || "Failed to cleanup tokens";
       return { success: false, error: message };
     }
   };
@@ -196,6 +348,9 @@ export const AuthProvider = ({ children }) => {
     logoutAll,
     updateProfile,
     changePassword,
+    getUserTokens,
+    revokeToken,
+    cleanupTokens,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
