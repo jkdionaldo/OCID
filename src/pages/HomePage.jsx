@@ -42,7 +42,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Content Sections with Cream Background */}
+      {/* Content Sections*/}
       <div className="py-6 sm:py-10 md:py-16 px-4 sm:px-8 md:px-16">
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 mb-8 sm:mb-12 md:mb-16">
           {/* Our Vision */}
@@ -111,11 +111,11 @@ const Home = () => {
           </Card>
           {/* General Mandate - Simplified on mobile*/}
           <div className="mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-lg sm:text-xl md:text-xl font-bold text-csuGreen text-center mb-4 sm:mb-6 relative">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-4 sm:mb-6 relative">
               GENERAL MANDATE
               <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-12 sm:w-16 h-1 bg-green-700"></span>
             </h2>
-            <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto text-gray-700 mt-6">
+            <p className="text-center text-justify text-sm md:text-base max-w-3xl mx-auto mt-6 text-csuGreen">
               Caraga State University shall primarily provide advanced
               education, higher technological, professional instruction and
               training in the fields of agriculture and environmental studies,
@@ -127,6 +127,29 @@ const Home = () => {
             </p>
           </div>
         </div>
+
+        {/*For Insitutional Outcomes*/}
+          <div className="flex flex-col md:flex-row gap-11 item-center md:items-start py-11 mb-12"> 
+            <img 
+            src="/images/CSU - Goals.jpg"
+            className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
+            alt="Insitutional Outcomes"
+            loading="eager"
+            ></img>
+            <div className="flex-1 text-center">
+                <h2 className="text-lg font-semibold text-left">Aligned with the Caraga State University's Vision, Mission, Core Values, and Quality Objectives the following Institutional Outcomes are expected of the graduates</h2>
+
+                <p className="text-left text-sm md:text-base max-w-3xl mx-auto mt-11 text-csuGreen">
+                <b>IO1. Transformative Leadership and Stewardship.</b> A CSUAN applies advanced expertise in addressing complex societal challenges as a transformative leader and purpose-driven steward.
+                <br></br><br></br>
+                <b>IO2. Research, Innovation and Enterprise.</b> A CSUAN produces quality research outputs, applies innovative thinking, and develops entrepreneurial solutions that address regional and global issues, in pursuit of sustainability and economic advancement.
+                <br></br><br></br>
+                <b>IO3.  Lifelong Learning and Social Responsibility.</b> A CSUAN continually enhances their knowledge and skills, and actively contributes to community development while exemplifying social responsibility, ethical standards, and the core values of Caraga State University.
+            </p>
+            </div>
+          </div>
+
+        
       </div>
     </div>
   );
