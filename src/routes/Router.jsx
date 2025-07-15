@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "@/pages/HomePage";
+import Dashboard from "@/pages/Dashboard";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 // Import route collections
-  // ccGraduateRoutes,
+// ccGraduateRoutes,
 
 import {
   graduateRoutes,
@@ -28,8 +31,20 @@ const Router = () => {
     <Routes>
       {/* Main routes */}
       <Route path="/" element={<Home />} />
-      {/* dowloadables */}
+
+      {/* Protected Dashboard Route */}
+      <Route
+        path="/dashboard"
+        element={
+          // <ProtectedRoute>
+            <Dashboard />
+          // </ProtectedRoute>  
+        }
+      />
+
+      {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
+
       {/*csu-main */}
       <Route
         path="/colleges_graduate_main"

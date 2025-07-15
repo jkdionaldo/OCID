@@ -8,7 +8,7 @@ const ProgramOutcomes = ({ outcomes, programName, themeColor = "green" }) => {
         PROGRAM OUTCOMES
       </h2>
       <p className="text-gray-700 mb-4">
-        Upon successful completion of the {programName} program, graduates will
+        Upon successful completion of the {programName} program, <br />graduates will
         be able to:
       </p>
       <div className="space-y-3">
