@@ -177,15 +177,19 @@ const Home = () => {
         </div>
       </div>
        {/*Educational Philosophy*/}
-       <div className="flex flex-col md:flex-row item-center md:items-start md:pb-11 w-full bg-csuGreen">
-          <div className="flex-1 md:px-16 mt-16 text-center">
-              <h2 className="text-lg sm:text-4xl md:text-6xl font-bold font-poppins text-start text-white">Educational </h2>
-              <h2 className="text-lg sm:text-4xl md:text-6xl font-bold font-poppins text-start ml-20 text-white"> Philosophy</h2>
-          </div>
-          <div className="flex-2 md:px-16 mt-16">
-              <p className="text-left text-xs md:text-base max-w-10xl mx-auto text-white font-poppins text-justify">Caraga State University upholds education as a transformative force that creates futures and empowers communities. It is through meaningful, values-driven learning that individuals are shaped into competent professionals, ethical leaders, and innovative problem-solvers. CSU believes that education should go beyond knowledge transmission—it must inspire lifelong learning, cultivate social responsibility, and enable graduates to lead change, foster inclusivity, and contribute to the sustainable development of the Caraga Region and beyond. </p>
-          </div>
+      <div className="w-full bg-csuGreen py-12 px-4 md:px-16 flex flex-col md:flex-row items-center md:items-center justify-center">
+        {/* Left: Headings */}
+        <div className="flex-1 flex flex-col items-center md:items-start justify-center mb-8 md:mb-0 md:px-16">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight">Educational</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight md:ml-24">Philosophy</h2>
         </div>
+        {/* Right: Paragraph */}
+        <div className="flex-2 flex md:justify-start md:px-15">
+          <p className="text-justify md:text-justify text-xs md:text-base max-w-2xl mx-auto mt-0 text-white font-poppins">
+            Caraga State University upholds education as a transformative force that creates futures and empowers communities. It is through meaningful, values-driven learning that individuals are shaped into competent professionals, ethical leaders, and innovative problem-solvers. CSU believes that education should go beyond knowledge transmission—it must inspire lifelong learning, cultivate social responsibility, and enable graduates to lead change, foster inclusivity, and contribute to the sustainable development of the Caraga Region and beyond.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
