@@ -37,8 +37,8 @@ const Router = () => {
         path="/dashboard"
         element={
           // <ProtectedRoute>
-            <Dashboard />
-          // </ProtectedRoute>  
+          <Dashboard />
+          // </ProtectedRoute>
         }
       />
 
