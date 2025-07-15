@@ -23,6 +23,7 @@ const CurriculumAndSyllabus = ({
           <h3 className="text-lg font-medium text-gray-800 mb-3">
             Curriculum Files
           </h3>
+
           <div className="space-y-3 mb-4 w-full">
             {Object.entries(curriculumFiles || {}).map(([year, fileUrl]) => (
               <div
@@ -48,7 +49,7 @@ const CurriculumAndSyllabus = ({
               </div>
             ))}
           </div>
-          <button
+          {/* <button
             onClick={(e) => {
               e.stopPropagation();
               onUploadCurriculum();
@@ -69,7 +70,7 @@ const CurriculumAndSyllabus = ({
               />
             </svg>
             Upload Curriculum
-          </button>
+          </button> */}
         </div>
 
         {/* Syllabus */}
@@ -84,7 +85,7 @@ const CurriculumAndSyllabus = ({
             methods, and required readings.
           </p>
           {/* <div className="flex flex-col items-center"> */}
-            {/* <button
+          {/* <button
               onClick={(e) => {
                 e.stopPropagation();
                 onViewSyllabus();
@@ -107,33 +108,32 @@ const CurriculumAndSyllabus = ({
               </svg>
               Browse Syllabus
             </button> */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onUploadSyllabus();
-              }}
-              className={`px-3 py-2 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
+          {/* <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onUploadSyllabus();
+            }}
+            className={`px-3 py-2 bg-white border border-${themeColor}-600 text-${themeColor}-600 rounded-lg hover:bg-${themeColor}-50 text-sm flex items-center`}
+          >
+            <svg
+              className="h-4 w-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              {/* px-3 py-1.5 bg-white border border-red-600 text-red-600 rounded-lg hover:bg-red-50 text-sm  items-center */}
-              <svg
-                className="h-4 w-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12"
-                />
-              </svg>
-              Upload Syllabus
-            </button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12"
+              />
+            </svg>
+            Upload Syllabus
+          </button> */}
         </div>
       </div>
+    </div>
     // </div>
   );
 };
