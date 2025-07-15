@@ -10,7 +10,7 @@ const Footer = () => {
               target="_blank"
             >
               Office of Curriculum and Instruction Development (OCID)
-            </a><br></br>or email at ocid@carsu.edu.ph</p>
+            </a><br></br>or email at <a className="text-[#2356f6]">ocid@carsu.edu.ph</a></p>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-center md:text-left mb-4 md:mb-0">
