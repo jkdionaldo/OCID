@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
+import Status from "./Dashboard Components/status";
+import Search from "./Dashboard Components/Search";
 import {
   Upload,
   Download,
@@ -10,10 +12,6 @@ import {
   Archive,
   Trash2,
   Eye,
-  Search,
-  Filter,
-  Grid,
-  List,
   Plus,
   Edit3,
   Calendar,
@@ -305,21 +303,6 @@ const Dashboard = () => {
     }
   };
 
-  // Calculate statistics
-  const stats = {
-    total: files.length,
-    curriculum: files.filter((f) => f.category === "Curriculum").length,
-    syllabus: files.filter((f) => f.category === "Syllabus").length,
-    documents: files.filter((f) => f.category === "Documents").length,
-    images: files.filter((f) => f.category === "Images").length,
-    totalSize: files
-      .reduce((acc, file) => {
-        const size = parseFloat(file.size);
-        return acc + size;
-      }, 0)
-      .toFixed(1),
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 pt-20 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -333,105 +316,8 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Files</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {stats.total}
-                </p>
-              </div>
-              <File className="w-8 h-8 text-blue-500" />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Curriculum</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {stats.curriculum}
-                </p>
-              </div>
-              <BookOpen className="w-8 h-8 text-green-500" />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Syllabus</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {stats.syllabus}
-                </p>
-              </div>
-              <GraduationCap className="w-8 h-8 text-purple-500" />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Documents</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {stats.documents}
-                </p>
-              </div>
-              <FileText className="w-8 h-8 text-red-500" />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Storage</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {stats.totalSize} MB
-                </p>
-              </div>
-              <Archive className="w-8 h-8 text-orange-500" />
-            </div>
-          </div>
-        </div>
-
-        {/* Bulk Actions Bar */}
-        {showBulkActions && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Users className="w-5 h-5 text-blue-600 mr-2" />
-                <span className="text-blue-800 font-medium">
-                  {selectedFiles.length} files selected
-                </span>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={handleBulkDownload}
-                  className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
-                >
-                  Download All
-                </button>
-                <button
-                  onClick={handleBulkDelete}
-                  className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
-                >
-                  Delete All
-                </button>
-                <button
-                  onClick={() => {
-                    setSelectedFiles([]);
-                    setShowBulkActions(false);
-                  }}
-                  className="px-3 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Stats Cards - Now using the Status component */}
+        <Status files={files} />
 
         {/* Upload Area */}
         <div className="mb-8">
@@ -470,111 +356,63 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Advanced Controls */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search files, programs, colleges..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
-            </div>
+        {/* Search Component */}
+        <Search
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          selectedCollege={selectedCollege}
+          setSelectedCollege={setSelectedCollege}
+          selectedStatus={selectedStatus}
+          setSelectedStatus={setSelectedStatus}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          categories={categories}
+          colleges={colleges}
+          statuses={statuses}
+        />
 
-            <div className="flex items-center gap-4 flex-wrap">
-              {/* Category Filter */}
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-gray-400" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
-                >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </option>
-                  ))}
-                </select>
+        {/* Bulk Actions Bar */}
+        {showBulkActions && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <Users className="w-5 h-5 text-blue-600 mr-2" />
+                <span className="text-blue-800 font-medium">
+                  {selectedFiles.length} files selected
+                </span>
               </div>
-
-              {/* College Filter */}
-              <div className="flex items-center gap-2">
-                <Building className="w-4 h-4 text-gray-400" />
-                <select
-                  value={selectedCollege}
-                  onChange={(e) => setSelectedCollege(e.target.value)}
-                  className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
-                >
-                  {colleges.map((college) => (
-                    <option key={college} value={college}>
-                      {college === "all" ? "All Colleges" : college}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Status Filter */}
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
-              >
-                {statuses.map((status) => (
-                  <option key={status} value={status}>
-                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                  </option>
-                ))}
-              </select>
-
-              {/* Sort Options */}
-              <select
-                value={`${sortBy}-${sortOrder}`}
-                onChange={(e) => {
-                  const [field, order] = e.target.value.split("-");
-                  setSortBy(field);
-                  setSortOrder(order);
-                }}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
-              >
-                <option value="uploadDate-desc">Newest First</option>
-                <option value="uploadDate-asc">Oldest First</option>
-                <option value="name-asc">Name A-Z</option>
-                <option value="name-desc">Name Z-A</option>
-                <option value="size-desc">Largest First</option>
-                <option value="size-asc">Smallest First</option>
-              </select>
-
-              {/* View Mode Toggle */}
-              <div className="flex border border-gray-300 rounded-md overflow-hidden">
+              <div className="flex space-x-2">
                 <button
-                  onClick={() => setViewMode("grid")}
-                  className={`p-2 ${
-                    viewMode === "grid"
-                      ? "bg-green-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-50"
-                  }`}
+                  onClick={handleBulkDownload}
+                  className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
                 >
-                  <Grid className="w-4 h-4" />
+                  Download All
                 </button>
                 <button
-                  onClick={() => setViewMode("list")}
-                  className={`p-2 ${
-                    viewMode === "list"
-                      ? "bg-green-600 text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-50"
-                  }`}
+                  onClick={handleBulkDelete}
+                  className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
                 >
-                  <List className="w-4 h-4" />
+                  Delete All
+                </button>
+                <button
+                  onClick={() => {
+                    setSelectedFiles([]);
+                    setShowBulkActions(false);
+                  }}
+                  className="px-3 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm"
+                >
+                  Cancel
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Files Display */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
