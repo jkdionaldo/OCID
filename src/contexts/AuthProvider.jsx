@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
+import SecureStorage from "@/utils/secureStorage";
 
-// Configure axios defaults
+// Axios configuration
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
 // Request interceptor to add auth token
-axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem("auth_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+axios.interceptors.request.use(async (config) => {
+  try {
+    const authData = await SecureStorage.getItem("auth_session");
+    if (authData?.token) {
+      config.headers.Authorization = `Bearer ${authData.token}`;
+    }
+  } catch (error) {
+    console.error("Failed to get auth token:", error);
   }
   return config;
 });
@@ -20,28 +25,27 @@ axios.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Handle 401 Unauthorized (token expired/invalid)
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      // Try to refresh token first
       const refreshResult = await tryRefreshToken();
       if (refreshResult.success) {
-        // Retry original request with new token
-        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem(
-          "auth_token"
-        )}`;
-        return axios(originalRequest);
+        try {
+          const authData = await SecureStorage.getItem("auth_session");
+          originalRequest.headers.Authorization = `Bearer ${authData.token}`;
+          return axios(originalRequest);
+        } catch (encryptionError) {
+          console.error("Failed to get refreshed token:", encryptionError);
+          clearAuthData();
+          window.location.href = "/login";
+        }
       } else {
-        // Refresh failed, logout user
         clearAuthData();
         window.location.href = "/login";
       }
     }
 
-    // Handle other errors
     if (error.response?.status === 422) {
-      // Validation errors - return for handling in components
       return Promise.reject(error);
     }
 
@@ -49,29 +53,30 @@ axios.interceptors.response.use(
   }
 );
 
-// Helper function to try token refresh
+// Function to try refreshing the token
 const tryRefreshToken = async () => {
   try {
-    const token = localStorage.getItem("auth_token");
-    const expiresAt = localStorage.getItem("token_expires_at");
+    const authData = await SecureStorage.getItem("auth_session");
 
-    if (!token || !expiresAt) return { success: false };
+    if (!authData?.token || !authData?.expires_at) return { success: false };
 
-    // Check if token is close to expiring (within 1 hour)
     const now = new Date();
-    const expiry = new Date(expiresAt);
+    const expiry = new Date(authData.expires_at);
     const timeUntilExpiry = expiry - now;
 
     if (timeUntilExpiry > 60 * 60 * 1000) {
-      return { success: true }; // Token still valid
+      return { success: true };
     }
 
-    // Attempt refresh
     const response = await axios.post("/auth/refresh");
     const { token: newToken, expires_at } = response.data;
 
-    localStorage.setItem("auth_token", newToken);
-    localStorage.setItem("token_expires_at", expires_at);
+    const updatedAuthData = {
+      ...authData,
+      token: newToken,
+      expires_at: expires_at,
+    };
+    await SecureStorage.setItem("auth_session", updatedAuthData);
 
     return { success: true };
   } catch (error) {
@@ -80,13 +85,85 @@ const tryRefreshToken = async () => {
   }
 };
 
-// Helper function to clear auth data
-const clearAuthData = () => {
-  localStorage.removeItem("auth_token");
-  localStorage.removeItem("user_data");
-  localStorage.removeItem("token_expires_at");
+// Function to clear authentication data
+const clearAuthData = async () => {
+  try {
+    await SecureStorage.removeItem("auth_session");
+    localStorage.removeItem("session_active");
+  } catch (error) {
+    console.error("Failed to clear auth data:", error);
+    // Fallback to clearing localStorage directly
+    localStorage.removeItem("auth_session");
+    localStorage.removeItem("session_active");
+  }
 };
 
+// Function to store authentication data securely
+const storeAuthData = async (token, userData, expiresAt) => {
+  try {
+    // Store only essential, non-sensitive user info
+    const safeUserData = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      avatar: userData.avatar,
+      email_verified_at: userData.email_verified_at,
+    };
+
+    // Use secure storage with AES encryption
+    await SecureStorage.setItem("auth_session", {
+      token: token,
+      user: safeUserData,
+      expires_at: expiresAt,
+      stored_at: new Date().toISOString(),
+      checksum: await generateChecksum(token + userData.id), // Integrity check
+    });
+
+    // Set a simple flag for quick session check
+    localStorage.setItem("session_active", "true");
+  } catch (error) {
+    console.error("Failed to store auth data:", error);
+    throw new Error("Failed to store authentication data securely");
+  }
+};
+
+// Generate checksum for integrity verification
+const generateChecksum = async (data) => {
+  const encoder = new TextEncoder();
+  const dataBuffer = encoder.encode(data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+};
+
+// Function to retrieve stored authentication data
+const getStoredAuthData = async () => {
+  try {
+    const sessionActive = localStorage.getItem("session_active");
+    if (!sessionActive) return null;
+
+    const authData = await SecureStorage.getItem("auth_session");
+
+    // Verify data integrity
+    if (authData && authData.checksum) {
+      const expectedChecksum = await generateChecksum(
+        authData.token + authData.user.id
+      );
+      if (expectedChecksum !== authData.checksum) {
+        console.warn("Auth data integrity check failed");
+        await clearAuthData();
+        return null;
+      }
+    }
+
+    return authData;
+  } catch (error) {
+    console.error("Failed to get stored auth data:", error);
+    return null;
+  }
+};
+
+// AuthProvider component to manage authentication state
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,29 +172,26 @@ export const AuthProvider = ({ children }) => {
   // Check if user is authenticated on app load
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem("auth_token");
-      const userData = localStorage.getItem("user_data");
-      const expiresAt = localStorage.getItem("token_expires_at");
+      try {
+        const authData = await getStoredAuthData();
 
-      if (token && userData && expiresAt) {
-        try {
+        if (authData?.token && authData?.user) {
           // Check if token is expired
           const now = new Date();
-          const expiry = new Date(expiresAt);
+          const expiry = new Date(authData.expires_at);
 
           if (now >= expiry) {
             // Token expired, try refresh
             const refreshResult = await tryRefreshToken();
             if (!refreshResult.success) {
-              clearAuthData();
+              await clearAuthData();
               setIsLoading(false);
               return;
             }
           }
 
           // Use stored user data first (faster loading)
-          const parsedUser = JSON.parse(userData);
-          setUser(parsedUser);
+          setUser(authData.user);
           setIsAuthenticated(true);
 
           // Verify token is still valid in background
@@ -125,20 +199,32 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.get("/auth/user");
             const freshUser = response.data.user;
 
-            // Update if user data changed
-            if (JSON.stringify(parsedUser) !== JSON.stringify(freshUser)) {
-              setUser(freshUser);
-              localStorage.setItem("user_data", JSON.stringify(freshUser));
+            // Update if user data changed (but only store safe data)
+            if (JSON.stringify(authData.user) !== JSON.stringify(freshUser)) {
+              const updatedAuthData = {
+                ...authData,
+                user: {
+                  id: freshUser.id,
+                  name: freshUser.name,
+                  email: freshUser.email,
+                  avatar: freshUser.avatar,
+                  email_verified_at: freshUser.email_verified_at,
+                },
+                checksum: await generateChecksum(authData.token + freshUser.id),
+              };
+              await SecureStorage.setItem("auth_session", updatedAuthData);
+              setUser(updatedAuthData.user);
             }
           } catch (error) {
             // Token invalid, clear storage
-            clearAuthData();
+            await clearAuthData();
             setUser(null);
             setIsAuthenticated(false);
           }
-        } catch (error) {
-          clearAuthData();
         }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        await clearAuthData();
       }
       setIsLoading(false);
     };
@@ -146,9 +232,14 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
 
     // Set up token refresh timer
-    const refreshInterval = setInterval(() => {
-      if (localStorage.getItem("auth_token")) {
-        tryRefreshToken();
+    const refreshInterval = setInterval(async () => {
+      try {
+        const authData = await getStoredAuthData();
+        if (authData?.token) {
+          await tryRefreshToken();
+        }
+      } catch (error) {
+        console.error("Token refresh timer failed:", error);
       }
     }, 5 * 60 * 1000); // Check every 5 minutes
 
@@ -168,17 +259,19 @@ export const AuthProvider = ({ children }) => {
 
       const { user: userData, token, expires_at } = response.data;
 
-      // Store auth data with expiration
-      localStorage.setItem("auth_token", token);
-      localStorage.setItem("user_data", JSON.stringify(userData));
-      localStorage.setItem("token_expires_at", expires_at);
+      await storeAuthData(token, userData, expires_at);
 
-      setUser(userData);
+      setUser({
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        avatar: userData.avatar,
+        email_verified_at: userData.email_verified_at,
+      });
       setIsAuthenticated(true);
 
       return { success: true, user: userData };
     } catch (error) {
-      // Handle validation errors
       if (error.response?.status === 422) {
         const errors = error.response.data.errors;
         const message =
@@ -207,17 +300,19 @@ export const AuthProvider = ({ children }) => {
 
       const { user: newUser, token, expires_at } = response.data;
 
-      // Store auth data with expiration
-      localStorage.setItem("auth_token", token);
-      localStorage.setItem("user_data", JSON.stringify(newUser));
-      localStorage.setItem("token_expires_at", expires_at);
+      await storeAuthData(token, newUser, expires_at);
 
-      setUser(newUser);
+      setUser({
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        avatar: newUser.avatar,
+        email_verified_at: newUser.email_verified_at,
+      });
       setIsAuthenticated(true);
 
       return { success: true, user: newUser, message: response.data.message };
     } catch (error) {
-      // Handle validation errors
       if (error.response?.status === 422) {
         const errors = error.response.data.errors;
         return { success: false, error: "Validation failed", errors };
@@ -236,7 +331,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout API call failed:", error);
     } finally {
-      clearAuthData();
+      await clearAuthData();
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -248,7 +343,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout all API call failed:", error);
     } finally {
-      clearAuthData();
+      await clearAuthData();
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -259,8 +354,27 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.put("/auth/profile", profileData);
       const updatedUser = response.data.user;
 
-      setUser(updatedUser);
-      localStorage.setItem("user_data", JSON.stringify(updatedUser));
+      // Update both state and secure storage
+      const safeUserData = {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        avatar: updatedUser.avatar,
+        email_verified_at: updatedUser.email_verified_at,
+      };
+
+      setUser(safeUserData);
+
+      // Update stored data
+      const authData = await getStoredAuthData();
+      if (authData) {
+        const updatedAuthData = {
+          ...authData,
+          user: safeUserData,
+          checksum: await generateChecksum(authData.token + safeUserData.id),
+        };
+        await SecureStorage.setItem("auth_session", updatedAuthData);
+      }
 
       return {
         success: true,
@@ -268,7 +382,6 @@ export const AuthProvider = ({ children }) => {
         message: response.data.message,
       };
     } catch (error) {
-      // Handle validation errors
       if (error.response?.status === 422) {
         const errors = error.response.data.errors;
         return { success: false, error: "Validation failed", errors };
@@ -304,7 +417,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // New method to get user tokens
+  // Function to get user tokens
   const getUserTokens = async () => {
     try {
       const response = await axios.get("/auth/tokens");
@@ -315,7 +428,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // New method to revoke specific token
+  // Function to revoke a specific token
   const revokeToken = async (tokenId) => {
     try {
       const response = await axios.delete(`/auth/tokens/${tokenId}`);
@@ -326,7 +439,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // New method to cleanup expired tokens
+  // Function to cleanup expired tokens
   const cleanupTokens = async () => {
     try {
       const response = await axios.post("/auth/cleanup-tokens");
