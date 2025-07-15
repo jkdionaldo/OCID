@@ -19,7 +19,7 @@ const StyledWrapper = styled.div`
     min-height: 220px;
     height: 320px;
     /*height: 254px;*/
-    background: rgba(217, 217, 217, 0.58);
+    background: rgba(255, 255, 255, 0.58);
     border: 1px solid white;
     box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
     backdrop-filter: blur(6px);
@@ -35,10 +35,10 @@ const StyledWrapper = styled.div`
     font-weight: bolder;
     color: black;
     padding: 1rem;
+    border: 1px solid #003800;
   }
 
   .card:hover {
-    border: 1px solid #003800;
     transform: scale(1.05);
   }
 `;
