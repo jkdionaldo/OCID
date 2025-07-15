@@ -150,7 +150,7 @@ const Home = () => {
           </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start md:py-10"> 
+        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start"> 
            <div className="flex-1 text-center">
                <h2 className="text-lg sm:text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
                <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
@@ -164,11 +164,13 @@ const Home = () => {
                   A CSUAN upholds integrity, ethical responsibility, and accountability, ensuring that their actions reflect the core values and mission of the university.
                   <br></br><br></br>
                   A CSUAN is adaptable to change, embraces innovation and entrepreneurship, and applies creative solutions to solve complex challenges in a dynamic world.
+                  <br></br><br></br>
+                  A CSUAN inspires and empowers others through collaborative and compassionate leadership, fostering growth, mentorship, and a culture of excellence.
               </p>
            </div>
            <img 
                 src="/images/CSU - Goals.jpg"
-                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto my-12 md:my-0"
+                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto my-12 md:my-14 md:mt-16"
                 alt="Insitutional Outcomes"
                 loading="eager"
               ></img>
