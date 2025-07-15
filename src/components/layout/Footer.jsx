@@ -3,7 +3,7 @@ const Footer = () => {
       <footer className="bg-gray-900 text-white py-2 text-sm">
         <div className="container mx-auto px-6">
           {/*For part 1 footer*/}
-          <div className="w-full md:pb-5">
+          <div className="w-full md:py-2 text-xs">
             <p>For concerns and Inquiry about the website please visit<br></br><a
               href="https://ocid.carsu.edu.ph"
               className="text-[#2356f6] underline"
