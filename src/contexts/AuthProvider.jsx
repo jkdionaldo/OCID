@@ -337,18 +337,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutAll = async () => {
-    try {
-      await axios.post("/auth/logout-all");
-    } catch (error) {
-      console.error("Logout all API call failed:", error);
-    } finally {
-      await clearAuthData();
-      setUser(null);
-      setIsAuthenticated(false);
-    }
-  };
-
   const updateProfile = async (profileData) => {
     try {
       const response = await axios.put("/auth/profile", profileData);
@@ -417,40 +405,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Function to get user tokens
-  const getUserTokens = async () => {
-    try {
-      const response = await axios.get("/auth/tokens");
-      return { success: true, tokens: response.data.tokens };
-    } catch (error) {
-      const message = error.response?.data?.message || "Failed to fetch tokens";
-      return { success: false, error: message };
-    }
-  };
-
-  // Function to revoke a specific token
-  const revokeToken = async (tokenId) => {
-    try {
-      const response = await axios.delete(`/auth/tokens/${tokenId}`);
-      return { success: true, message: response.data.message };
-    } catch (error) {
-      const message = error.response?.data?.message || "Failed to revoke token";
-      return { success: false, error: message };
-    }
-  };
-
-  // Function to cleanup expired tokens
-  const cleanupTokens = async () => {
-    try {
-      const response = await axios.post("/auth/cleanup-tokens");
-      return { success: true, message: response.data.message };
-    } catch (error) {
-      const message =
-        error.response?.data?.message || "Failed to cleanup tokens";
-      return { success: false, error: message };
-    }
-  };
-
   const value = {
     user,
     isAuthenticated,
@@ -458,12 +412,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    logoutAll,
     updateProfile,
     changePassword,
-    getUserTokens,
-    revokeToken,
-    cleanupTokens,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
