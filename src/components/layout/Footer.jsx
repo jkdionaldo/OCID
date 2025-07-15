@@ -12,11 +12,13 @@ const Footer = () => {
               Office of Curriculum and Instruction Development (OCID)
             </a><br></br>or email at <a className="text-[#2356f6]">ocid@carsu.edu.ph</a></p>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row  items-center">
+            <img src='/images/CSU-Official-Seal_1216-x-2009-1.svg'></img>
+            <img src='/images/Hi-Res-BAGONG-PILIPINAS-LOGO-1474x1536-1-1.svg'></img>
             <p className="text-center md:text-left mb-4 md:mb-0">
               Copyright &copy; Caraga State University {new Date().getFullYear()}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 ml-auto md:mt-0">
               <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
                 Privacy Policy
               </a>
