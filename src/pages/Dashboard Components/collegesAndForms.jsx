@@ -170,7 +170,7 @@ export default function CollegesAndForms({ files }) {
                 onClick={() => setActiveMainTab("graduate")}
                 className={`px-4 py-2 rounded-md text-sm font-medium duration-200 ${
                   activeMainTab === "graduate"
-                    ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
+                    ? "bg-gradient-to-r from-emerald-600 to-green-500 text-white shadow-lg"
                     : "text-gray-700 hover:text-green-700 hover:bg-green-50"
                 }`}
               >
@@ -183,7 +183,7 @@ export default function CollegesAndForms({ files }) {
           </div>
 
           {/* College Cards for CSU-MAIN */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
             {collegesData["CSU-MAIN"][activeMainTab].map((college) => (
               <CardDashboard
                 key={college.id}
@@ -206,7 +206,7 @@ export default function CollegesAndForms({ files }) {
               {collegesData["CSU-CC"].length} Colleges
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {collegesData["CSU-CC"].map((college) => (
               <CardDashboard
                 key={college.id}

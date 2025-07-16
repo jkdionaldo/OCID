@@ -12,13 +12,12 @@ export default function CardDashboard({ college, campus }) {
       CEGS: "/images/cegs-logo.png",
       CMNS: "/images/cmns-logo.png",
       CHASS: "/images/chass-logo.png",
-    
 
       // CSU-CC logos
-        CBA: "/images/csu-cc/CBA-logo.png",
+      CBA: "/images/csu-cc/CBA-logo.png",
       CEIT: "/images/csu-cc/CEIT-logo.png",
       CITTE: "/images/csu-cc/CITTE-logo.png",
-        CTHM: "/images/csu-cc/CTHM-logo.png",
+      CTHM: "/images/csu-cc/CTHM-logo.png",
     };
 
     return logoMap[shortName] || "/placeholder.svg";
@@ -27,19 +26,11 @@ export default function CardDashboard({ college, campus }) {
   const logoSrc = getCollegeLogo(college.shortName, campus);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 h-[450px] flex flex-col items-center justify-between p-6">
-      {/* College Info */}
-      <div className="text-center">
-        <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
-          {college.shortName}
-        </h3>
-        <p className="text-xs uppercase tracking-wide text-center max-w-[200px] mx-auto font-medium text-gray-600">
-          {college.name}
-        </p>
-      </div>
-      {/* Logo Section */}
-      <div className="flex-1 w-full flex flex-col items-center justify-center mb-4">
-        <div className="w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] flex items-center justify-center bg-white rounded-xl mb-3 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-md hover:shadow-lg hover:shadow-green-500 duration-300 h-[300px] flex flex-col p-4 border border-gray-200">
+      {/* Top Section - Logo and College Info */}
+      <div className="flex items-start gap-4 mb-4">
+        {/* Logo */}
+        <div className="w-[100px] h-[100px] flex-shrink-0  flex items-center justify-center bg-white overflow-hidden">
           <img
             src={logoSrc}
             alt={`${college.shortName} Logo`}
@@ -47,16 +38,30 @@ export default function CardDashboard({ college, campus }) {
           />
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mt-3 w-full max-w-[160px]">
-          <div className="text-center bg-gray-50 rounded-lg p-2">
-            <div className="text-sm font-bold text-gray-900">
+        {/* College Info */}
+        <div className="flex-1">
+          <div className=" rounded-lg p-2 ">
+            <h3 className="text-lg font-bold text-gray-900">
+              {college.shortName}
+            </h3>
+          </div>
+           <div className=" rounded-lg p-2">
+            <p className="text-left text-sm text-gray-600 line-clamp-2">{college.name}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Section */}
+      <div className="bg-gray-100 rounded-lg p-3  flex-1">
+        <div className="grid grid-cols-2">
+          <div className="text-center">
+            <div className="text-lg font-bold text-gray-900">
               {college.programs}
             </div>
             <div className="text-xs text-gray-500">Programs</div>
           </div>
-          <div className="text-center bg-gray-50 rounded-lg p-2">
-            <div className="text-sm font-bold text-gray-900">
+          <div className="text-center">
+            <div className="text-lg font-bold text-gray-900">
               {college.files}
             </div>
             <div className="text-xs text-gray-500">Files</div>
@@ -64,8 +69,8 @@ export default function CardDashboard({ college, campus }) {
         </div>
       </div>
 
-      {/* Uniform Button */}
-      <button className="rounded-xl w-64 inline-block px-6 py-2 bg-neutral-500 text-white hover:bg-green-800 transition-all duration-300 text-center shadow-sm hover:shadow-md">
+      {/* Button */}
+      <button className="w-full py-3 mt-4 bg-gray-100 text-gray-700 rounded-xl hover:bg-green-600 hover:text-white transition-all duration-300 font-medium">
         View Details
       </button>
     </div>
