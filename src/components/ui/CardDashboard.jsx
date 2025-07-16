@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-export default function CardDashboard({ college, campus }) {
+export default function CardDashboard({ college, campus, onViewDetails }) {
   // Define college logos based on shortName and campus
   const getCollegeLogo = (shortName) => {
     const logoMap = {
@@ -26,53 +27,62 @@ export default function CardDashboard({ college, campus }) {
   const logoSrc = getCollegeLogo(college.shortName, campus);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-lg hover:shadow-green-500 duration-300 h-[300px] flex flex-col p-4 border border-gray-200">
-      {/* Top Section - Logo and College Info */}
-      <div className="flex items-start gap-4 mb-4">
-        {/* Logo */}
-        <div className="w-[100px] h-[100px] flex-shrink-0  flex items-center justify-center bg-white overflow-hidden">
-          <img
-            src={logoSrc}
-            alt={`${college.shortName} Logo`}
-            className="w-full h-full object-contain"
-          />
+    <>
+      <div className="bg-white rounded-2xl shadow-md hover:shadow-lg hover:shadow-green-500 duration-300 h-[300px] flex flex-col p-4 border border-gray-200">
+        {/* Top Section - Logo and College Info */}
+        <div className="flex items-start gap-4 mb-4">
+          {/* Logo */}
+          <div className="w-[100px] h-[100px] flex-shrink-0 flex items-center justify-center bg-white overflow-hidden">
+            <img
+              src={logoSrc}
+              alt={`${college.shortName} Logo`}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* College Info */}
+          <div className="flex-1">
+            <div className="rounded-lg p-2">
+              <h3 className="text-lg font-bold text-gray-900">
+                {college.shortName}
+              </h3>
+            </div>
+            <div className="rounded-lg p-2">
+              <p className="text-left text-sm text-gray-600 line-clamp-2">
+                {college.name}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* College Info */}
-        <div className="flex-1">
-          <div className=" rounded-lg p-2 ">
-            <h3 className="text-lg font-bold text-gray-900">
-              {college.shortName}
-            </h3>
+        {/* Stats Section */}
+        <div className="bg-gray-100 rounded-lg p-3 flex-1">
+          <div className="grid grid-cols-2">
+            <div className="text-center">
+              <div className="text-lg font-bold text-gray-900">
+                {college.programs}
+              </div>
+              <div className="text-xs text-gray-500">Programs</div>
+            </div>
+            <div className="text-center">
+              <div className="text-lg font-bold text-gray-900">
+                {college.files}
+              </div>
+              <div className="text-xs text-gray-500">Files</div>
+            </div>
           </div>
-           <div className=" rounded-lg p-2">
-            <p className="text-left text-sm text-gray-600 line-clamp-2">{college.name}</p>
-          </div>
+        </div>
+
+        {/* Button */}
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={() => onViewDetails(college)}
+            className="rounded-xl w-64 inline-block px-6 py-2 bg-neutral-500 text-white hover:bg-green-800 transition-all duration-300 text-center shadow-sm hover:shadow-md"
+          >
+            View Details
+          </button>
         </div>
       </div>
-
-      {/* Stats Section */}
-      <div className="bg-gray-100 rounded-lg p-3  flex-1">
-        <div className="grid grid-cols-2">
-          <div className="text-center">
-            <div className="text-lg font-bold text-gray-900">
-              {college.programs}
-            </div>
-            <div className="text-xs text-gray-500">Programs</div>
-          </div>
-          <div className="text-center">
-            <div className="text-lg font-bold text-gray-900">
-              {college.files}
-            </div>
-            <div className="text-xs text-gray-500">Files</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Button */}
-      <button className="w-full py-3 mt-4 bg-gray-100 text-gray-700 rounded-xl hover:bg-green-600 hover:text-white transition-all duration-300 font-medium">
-        View Details
-      </button>
-    </div>
+    </>
   );
 }
