@@ -13,7 +13,7 @@ export default function CollegesAndForms({ files }) {
           id: "caa",
           name: "College of Agriculture and Agri-Industries",
           shortName: "CAA",
-          programs: 12,
+          programs: 6,
           files: files.filter((f) => f.college === "CAA").length,
         },
         {
