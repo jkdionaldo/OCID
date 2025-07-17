@@ -33,7 +33,7 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
     },
   ];
 
-  // Program data mapping based on college shortName
+  // Complete Program data mapping based on college shortName
   const programsData = {
     // CSU-MAIN Programs
     CAA: {
@@ -510,42 +510,50 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
   // Curriculum and Syllabus handlers
   const handleViewCurriculum = (year) => {
     console.log("Viewing curriculum for year:", year);
-    // Implement view curriculum logic
+    // Implement view curriculum logic - open PDF viewer or download
   };
 
   const handleViewSyllabus = (syllabus) => {
     console.log("Viewing syllabus:", syllabus);
-    // Implement view syllabus logic
+    // Implement view syllabus logic - open PDF viewer or download
   };
 
   const handleUploadCurriculum = () => {
     console.log("Upload curriculum");
-    // Implement upload curriculum logic
+    // Implement upload curriculum logic - open file picker
   };
 
   const handleUploadSyllabus = () => {
     console.log("Upload syllabus");
-    // Implement upload syllabus logic
+    // Implement upload syllabus logic - open file picker
   };
 
   const handleUpdateCurriculum = (year) => {
     console.log("Update curriculum for year:", year);
-    // Implement update curriculum logic
+    // Implement update curriculum logic - open file picker for replacement
   };
 
   const handleUpdateSyllabus = (syllabus) => {
     console.log("Update syllabus:", syllabus);
-    // Implement update syllabus logic
+    // Implement update syllabus logic - open file picker for replacement
   };
 
   const handleDeleteCurriculum = (year) => {
-    console.log("Delete curriculum for year:", year);
-    // Implement delete curriculum logic
+    if (confirm(`Are you sure you want to delete the ${year} curriculum?`)) {
+      console.log("Delete curriculum for year:", year);
+      // Implement delete curriculum logic
+    }
   };
 
   const handleDeleteSyllabus = (syllabus) => {
-    console.log("Delete syllabus:", syllabus);
-    // Implement delete syllabus logic
+    if (
+      confirm(
+        `Are you sure you want to delete the syllabus for ${syllabus.courseName}?`
+      )
+    ) {
+      console.log("Delete syllabus:", syllabus);
+      // Implement delete syllabus logic
+    }
   };
 
   if (!isOpen || !college) return null;
