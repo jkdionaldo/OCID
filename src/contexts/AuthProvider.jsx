@@ -281,8 +281,8 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true, user: userData };
     } catch (error) {
-      console.error("Login error details:", error.response?.data); // ADD this line
-      console.error("Login error status:", error.response?.status); // ADD this line
+      console.error("Login error details:", error.response?.data);
+      console.error("Login error status:", error.response?.status);
 
       if (error.response?.status === 422) {
         const errors = error.response.data.errors;
