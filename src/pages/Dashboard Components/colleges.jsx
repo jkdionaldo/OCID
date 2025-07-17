@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { MapPin } from "lucide-react";
 import CardDashboard from "../../components/ui/CardDashboard";
+import DashboardProgramModal from "../../components/modals/Dashboard/DashboardProgramModal";
 
-export default function CollegesAndForms({ files }) {
+export default function Colleges({ files }) {
   const [activeMainTab, setActiveMainTab] = useState("undergraduate");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCollege, setSelectedCollege] = useState(null);
+  const [selectedCampus, setSelectedCampus] = useState("");
 
   // College data for both campuses
   const collegesData = {
@@ -136,6 +140,12 @@ export default function CollegesAndForms({ files }) {
     ],
   };
 
+  const handleViewDetails = (college, campus) => {
+    setSelectedCollege(college);
+    setSelectedCampus(campus);
+    setShowModal(true);
+  };
+
   return (
     <div className="mb-8">
       <div className="mb-8">
@@ -155,7 +165,7 @@ export default function CollegesAndForms({ files }) {
             <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg w-fit">
               <button
                 onClick={() => setActiveMainTab("undergraduate")}
-                className={`px-4 py-2 rounded-md text-sm font-medium  duration-200 ${
+                className={`px-4 py-2 rounded-md text-sm font-medium duration-200 ${
                   activeMainTab === "undergraduate"
                     ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
                     : "text-gray-700 hover:text-green-700 hover:bg-green-50"
@@ -190,6 +200,9 @@ export default function CollegesAndForms({ files }) {
                 college={college}
                 activeMainTab={activeMainTab}
                 campus="CSU-MAIN"
+                onViewDetails={(college) =>
+                  handleViewDetails(college, "CSU-MAIN")
+                }
               />
             ))}
           </div>
@@ -213,6 +226,9 @@ export default function CollegesAndForms({ files }) {
                 college={college}
                 activeMainTab={null}
                 campus="CSU-CC"
+                onViewDetails={(college) =>
+                  handleViewDetails(college, "CSU-CC")
+                }
               />
             ))}
           </div>
@@ -298,6 +314,14 @@ export default function CollegesAndForms({ files }) {
           </div>
         </div>
       </div>
+
+      {/* Program Modal */}
+      <DashboardProgramModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        college={selectedCollege}
+        campus={selectedCampus}
+      />
     </div>
   );
 }

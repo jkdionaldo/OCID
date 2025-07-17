@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Status from "./Dashboard Components/status";
 import Search from "./Dashboard Components/Search";
 import FileComponent from "./Dashboard Components/file";
-import CollegesAndForms from "./Dashboard Components/collegesAndForms";
+import CollegesAndForms from "./Dashboard Components/colleges";
 import {
   File,
   FileText,
