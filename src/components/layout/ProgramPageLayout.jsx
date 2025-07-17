@@ -19,7 +19,7 @@ const ProgramPageTemplate = ({
   programs,
   themeColor,
   isGraduate = false,
-  bannerImage = "/images/campus.jpg",
+  bannerImage = "/images/csu-logo.png",
   collegeName,
 }) => {
   const navigate = useNavigate();

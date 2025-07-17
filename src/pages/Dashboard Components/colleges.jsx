@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MapPin } from "lucide-react";
 import CardDashboard from "../../components/ui/CardDashboard";
-import DashboardProgramModal from "../../components/modals/DashboardProgramModal";
+import DashboardProgramModal from "../../components/modals/Dashboard/DashboardProgramModal";
 
 export default function Colleges({ files }) {
   const [activeMainTab, setActiveMainTab] = useState("undergraduate");

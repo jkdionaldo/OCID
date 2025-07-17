@@ -1,10 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { X, GraduationCap, BookOpen, Users, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import CurriculumSyllabusProgramModal from "./CurriculumSyllabusProgramModal";
 
 const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
   const [programs, setPrograms] = useState([]);
   const [activeTab, setActiveTab] = useState("undergraduate");
+  const [showCurriculumModal, setShowCurriculumModal] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState(null);
+
+  // Sample curriculum and syllabus data - replace with real data
+  const sampleCurriculumFiles = {
+    2024: "/files/curriculum/2024-curriculum.pdf",
+    2023: "/files/curriculum/2023-curriculum.pdf",
+    2022: "/files/curriculum/2022-curriculum.pdf",
+  };
+
+  const sampleSyllabusFiles = [
+    {
+      courseName: "Introduction to Programming",
+      courseCode: "CS101",
+      fileUrl: "/files/syllabus/cs101-syllabus.pdf",
+    },
+    {
+      courseName: "Data Structures and Algorithms",
+      courseCode: "CS201",
+      fileUrl: "/files/syllabus/cs201-syllabus.pdf",
+    },
+    {
+      courseName: "Database Systems",
+      courseCode: "CS301",
+      fileUrl: "/files/syllabus/cs301-syllabus.pdf",
+    },
+  ];
 
   // Program data mapping based on college shortName
   const programsData = {
@@ -466,14 +493,127 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
     }
   }, [college]);
 
-  if (!isOpen || !college) return null;
-
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
+  const handleViewDetails = (program) => {
+    setSelectedProgram(program);
+    setShowCurriculumModal(true);
+  };
+
+  const handleCurriculumModalClose = () => {
+    setShowCurriculumModal(false);
+    setSelectedProgram(null);
+  };
+
+  // Curriculum and Syllabus handlers
+  const handleViewCurriculum = (year) => {
+    console.log("Viewing curriculum for year:", year);
+    // Implement view curriculum logic
+  };
+
+  const handleViewSyllabus = (syllabus) => {
+    console.log("Viewing syllabus:", syllabus);
+    // Implement view syllabus logic
+  };
+
+  const handleUploadCurriculum = () => {
+    console.log("Upload curriculum");
+    // Implement upload curriculum logic
+  };
+
+  const handleUploadSyllabus = () => {
+    console.log("Upload syllabus");
+    // Implement upload syllabus logic
+  };
+
+  const handleUpdateCurriculum = (year) => {
+    console.log("Update curriculum for year:", year);
+    // Implement update curriculum logic
+  };
+
+  const handleUpdateSyllabus = (syllabus) => {
+    console.log("Update syllabus:", syllabus);
+    // Implement update syllabus logic
+  };
+
+  const handleDeleteCurriculum = (year) => {
+    console.log("Delete curriculum for year:", year);
+    // Implement delete curriculum logic
+  };
+
+  const handleDeleteSyllabus = (syllabus) => {
+    console.log("Delete syllabus:", syllabus);
+    // Implement delete syllabus logic
+  };
+
+  if (!isOpen || !college) return null;
+
   const currentPrograms = programs[activeTab] || [];
-  const hasGraduatePrograms = programs.graduate && programs.graduate.length > 0;
+
+  // If curriculum modal is open, show it instead
+  if (showCurriculumModal) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="bg-white rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 relative">
+            <button
+              onClick={handleCurriculumModalClose}
+              className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors duration-200"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <div className="flex items-center mb-4">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mr-4">
+                <BookOpen className="h-8 w-8 text-green-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">{selectedProgram?.name}</h2>
+                <p className="text-green-100">
+                  {college.shortName} - {campus} Campus
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Curriculum Modal Content */}
+          <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+            <CurriculumSyllabusProgramModal
+              curriculumFiles={sampleCurriculumFiles}
+              syllabusFiles={sampleSyllabusFiles}
+              onViewCurriculum={handleViewCurriculum}
+              onViewSyllabus={handleViewSyllabus}
+              onUploadCurriculum={handleUploadCurriculum}
+              onUploadSyllabus={handleUploadSyllabus}
+              onUpdateCurriculum={handleUpdateCurriculum}
+              onUpdateSyllabus={handleUpdateSyllabus}
+              onDeleteCurriculum={handleDeleteCurriculum}
+              onDeleteSyllabus={handleDeleteSyllabus}
+              themeColor="green"
+            />
+          </div>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleCurriculumModalClose}
+                className="text-gray-600 hover:text-gray-800 text-sm font-medium"
+              >
+                ← Back to Programs
+              </button>
+              <div className="text-sm text-gray-600">
+                <span className="font-medium">{selectedProgram?.name}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -566,9 +706,8 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
                     </div>
                   </div>
 
-                  <Link
-                    to={program.path}
-                    onClick={onClose}
+                  <button
+                    onClick={() => handleViewDetails(program)}
                     className="inline-flex items-center px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors duration-200"
                   >
                     View Details
@@ -585,7 +724,7 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
@@ -614,9 +753,7 @@ const DashboardProgramModal = ({ isOpen, onClose, college, campus }) => {
             </div>
             <div className="flex items-center space-x-4">
               <span>{programs.undergraduate?.length || 0} Undergraduate</span>
-              {hasGraduatePrograms && (
-                <span>{programs.graduate?.length || 0} Graduate</span>
-              )}
+              <span>{programs.graduate?.length || 0} Graduate</span>
             </div>
           </div>
         </div>
