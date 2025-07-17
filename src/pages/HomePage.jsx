@@ -170,7 +170,7 @@ const Home = () => {
            </div>
            <img 
                 src="/images/csuan.svg"
-                className=" w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg "
+                className=" w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg mt-5 md:mt-0"
                 alt="Insitutional Outcomes"
                 loading="eager"
               ></img>
