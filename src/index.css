@@ -115,3 +115,8 @@ body {
     @apply w-[120px] h-[120px] mb-3;
   }
 }
+
+/* For Radius */
+:root {
+  --radius: 0.3rem;
+}

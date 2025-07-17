@@ -132,7 +132,7 @@ const Home = () => {
           <div className="flex flex-col md:flex-row gap-10 items-center md:items-start md:py-11 mb-12 "> 
             <img 
             src="/images/institutional_outcome.svg"
-            className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
+            className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg"
             alt="Insitutional Outcomes"
             loading="eager"
             ></img>
@@ -150,7 +150,7 @@ const Home = () => {
           </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start"> 
+        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start mb-12"> 
            <div className="flex-1 text-center">
                <h2 className="text-lg sm:text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
                <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
@@ -170,7 +170,7 @@ const Home = () => {
            </div>
            <img 
                 src="/images/csuan.svg"
-                className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto my-12 md:my-14 md:mt-16"
+                className=" w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg "
                 alt="Insitutional Outcomes"
                 loading="eager"
               ></img>
