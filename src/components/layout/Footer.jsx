@@ -17,7 +17,9 @@ const Footer = () => {
             <img src='/images/CSU-Official-Seal_1216-x-2009-1.svg'
             className="w-16 h-16 md:w-24 md:h-28"
             ></img>
-            <img src='/images/Hi-Res-BAGONG-PILIPINAS-LOGO-1474x1536-1-1.svg'></img>
+            <img src='/images/Hi-Res-BAGONG-PILIPINAS-LOGO-1474x1536-1-1.svg'
+            className="w-16 h-16 md:w-24 md:h-28"
+            ></img>
             <p className="text-center md:text-left mb-4 md:mb-0">
               Copyright &copy; Caraga State University {new Date().getFullYear()}
             </p>
