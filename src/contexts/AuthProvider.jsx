@@ -250,6 +250,14 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
 
+      console.log("Login payload:", {
+        email: credentials.email,
+        password: credentials.password,
+        remember_me: credentials.rememberMe || false,
+        device_name: navigator.userAgent || "Unknown Device",
+        recaptcha_token: credentials.recaptcha_token,
+      });
+
       const response = await axios.post("/auth/login", {
         email: credentials.email,
         password: credentials.password,
@@ -273,6 +281,9 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true, user: userData };
     } catch (error) {
+      console.error("Login error details:", error.response?.data); // ADD this line
+      console.error("Login error status:", error.response?.status); // ADD this line
+
       if (error.response?.status === 422) {
         const errors = error.response.data.errors;
         const message =
