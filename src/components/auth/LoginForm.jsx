@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Eye, EyeOff, Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  AlertCircle,
+  Loader2,
+  Shield,
+} from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
+  const recaptchaRef = useRef(null);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -15,6 +25,7 @@ const LoginForm = () => {
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -27,6 +38,30 @@ const LoginForm = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
+  };
+
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+    // Clear reCAPTCHA error when token is received
+    if (errors.recaptcha_token) {
+      setErrors((prev) => ({ ...prev, recaptcha_token: "" }));
+    }
+  };
+
+  const handleRecaptchaExpired = () => {
+    setRecaptchaToken(null);
+    setErrors((prev) => ({
+      ...prev,
+      recaptcha_token: "reCAPTCHA expired. Please verify again.",
+    }));
+  };
+
+  const handleRecaptchaError = () => {
+    setRecaptchaToken(null);
+    setErrors((prev) => ({
+      ...prev,
+      recaptcha_token: "reCAPTCHA error. Please try again.",
+    }));
   };
 
   const validateForm = () => {
@@ -51,6 +86,10 @@ const LoginForm = () => {
         "Password must contain uppercase, lowercase, number, and special character";
     }
 
+    if (!recaptchaToken) {
+      newErrors.recaptcha_token = "Please complete the reCAPTCHA verification";
+    }
+
     // Sanitize inputs
     const sanitizedEmail = formData.email.trim().toLowerCase();
     const sanitizedPassword = formData.password.trim();
@@ -73,13 +112,27 @@ const LoginForm = () => {
       return;
     }
 
-    const result = await login(formData);
+    const result = await login({
+      ...formData,
+      recaptcha_token: recaptchaToken,
+    });
 
     if (result.success) {
-      console.log("User successfully logged in:", result.user); // temporary Tangala rani
+      console.log("User successfully logged in:", result.user);
       navigate("/dashboard");
     } else {
       setErrors({ general: result.error });
+
+      // Reset reCAPTCHA on failed login attempt
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        setRecaptchaToken(null);
+      }
+
+      // If there are specific field errors, show them
+      if (result.errors) {
+        setErrors((prev) => ({ ...prev, ...result.errors }));
+      }
     }
   };
 
@@ -178,6 +231,27 @@ const LoginForm = () => {
           )}
         </div>
 
+        {/* reCAPTCHA */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-center">
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              onChange={handleRecaptchaChange}
+              onExpired={handleRecaptchaExpired}
+              onError={handleRecaptchaError}
+              theme="light"
+              size="normal"
+            />
+          </div>
+          {errors.recaptcha_token && (
+            <p className="text-sm text-red-600 flex items-center justify-center text-center">
+              <Shield className="w-4 h-4 mr-1" />
+              {errors.recaptcha_token}
+            </p>
+          )}
+        </div>
+
         {/* Remember Me Checkbox */}
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -208,7 +282,7 @@ const LoginForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || !recaptchaToken}
           className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100"
         >
           {isLoading ? (
