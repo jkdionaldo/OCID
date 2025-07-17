@@ -131,7 +131,7 @@ const Home = () => {
         {/*For Insitutional Outcomes*/}
           <div className="flex flex-col md:flex-row gap-10 items-center md:items-start md:py-11 mb-12 "> 
             <img 
-            src="/images/CSU - Goals.jpg"
+            src="/images/institutional_outcome.svg"
             className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto"
             alt="Insitutional Outcomes"
             loading="eager"
@@ -169,7 +169,7 @@ const Home = () => {
               </p>
            </div>
            <img 
-                src="/images/CSU - Goals.jpg"
+                src="/images/csuan.svg"
                 className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto my-12 md:my-14 md:mt-16"
                 alt="Insitutional Outcomes"
                 loading="eager"
