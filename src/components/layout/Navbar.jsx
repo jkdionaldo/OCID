@@ -1,8 +1,13 @@
-"use client";
 import LoginModal from "@/components/modals/auth/LoginModal";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronDown, User } from "lucide-react";
+import {
+  ChevronDown,
+  User,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+} from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
@@ -61,7 +66,7 @@ const Navbar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   };
-  // location.pathname === "/colleges_graduate_cc" ||
+
   const isCollegeActive = () => {
     return (
       location.pathname === "/colleges_graduate_main" ||
@@ -97,8 +102,8 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 flex items-center ml-2">
-        {/* OCID Logo */}
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-5 py-2 sm:py-3 flex justify-between items-center">
+        {/* OCID Logo - Left aligned */}
         <Link to="/" className="flex items-center flex-shrink-0">
           <div className="flex items-center justify-center h-[50px] sm:h-[60px] md:h-[70px]">
             <img
@@ -116,7 +121,7 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <button
-          className="xl:hidden ml-auto p-2 rounded-md text-gray-700"
+          className="xl:hidden p-2 rounded-md text-gray-700"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
@@ -135,8 +140,8 @@ const Navbar = () => {
           </svg>
         </button>
 
-        {/* Desktop navigation */}
-        <div className="hidden xl:flex text-center space-x-8 xl:space-x-12 mx-auto">
+        {/* Desktop navigation - Center aligned */}
+        <div className="hidden xl:flex items-center justify-center space-x-8 xl:space-x-12">
           <Link
             to="/"
             className={`font-semibold uppercase xl:text-sm ${
@@ -209,8 +214,8 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Right side - User Avatar or Login */}
-        <div className="hidden xl:block flex-shrink-0 w-[240px] sm:w-[210px]">
+        {/* Right side - User Avatar or Login - Right aligned */}
+        <div className="hidden xl:block">
           {isAuthenticated ? (
             <div className="relative" ref={userDropdownRef}>
               {/* User Avatar */}
@@ -218,9 +223,12 @@ const Navbar = () => {
                 onClick={() => setShowUserDropdown(!showUserDropdown)}
                 className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
               >
-                <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                <div className="w-9 h-9 bg-gradient-to-br from-green-600 to-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-semibold shadow-sm">
                   {getUserInitials(user?.name)}
                 </div>
+                <span className="text-sm font-medium text-gray-800 max-w-[120px] truncate">
+                  {user?.name}
+                </span>
                 <ChevronDown
                   className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
                     showUserDropdown ? "rotate-180" : ""
@@ -230,22 +238,46 @@ const Navbar = () => {
 
               {/* User Dropdown */}
               {showUserDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1">
-                  <div className="px-4 py-2 border-b border-gray-100">
+                <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 overflow-hidden transition-all duration-200 ease-in-out transform origin-top-right">
+                  <div className="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-green-50 to-emerald-50">
                     <p className="text-sm font-medium text-gray-900">
                       {user?.name}
                     </p>
                     <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setShowUserDropdown(false);
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
-                  >
-                    Logout
-                  </button>
+
+                  <div className="py-1">
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      Dashboard
+                    </Link>
+
+                    <Link
+                      to="/profile"
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <Settings className="h-4 w-4 mr-2" />
+                      Profile Settings
+                    </Link>
+                  </div>
+
+                  <div className="border-t border-gray-100 mt-1 py-1">
+                    <button
+                      onClick={() => {
+                        logout();
+                        setShowUserDropdown(false);
+                      }}
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -339,7 +371,7 @@ const Navbar = () => {
                 {isAuthenticated ? (
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-semibold shadow-sm">
                         {getUserInitials(user?.name)}
                       </div>
                       <div>
@@ -349,13 +381,33 @@ const Navbar = () => {
                         <p className="text-xs text-gray-500">{user?.email}</p>
                       </div>
                     </div>
+
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center w-full text-left py-2 text-sm text-gray-700 hover:text-green-700 transition-colors duration-200"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      Dashboard
+                    </Link>
+
+                    <Link
+                      to="/profile"
+                      className="flex items-center w-full text-left py-2 text-sm text-gray-700 hover:text-green-700 transition-colors duration-200"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Settings className="h-4 w-4 mr-2" />
+                      Profile Settings
+                    </Link>
+
                     <button
                       onClick={() => {
                         logout();
                         setIsMenuOpen(false);
                       }}
-                      className="w-full text-left text-red-600 hover:text-red-500 transition-colors duration-200"
+                      className="flex items-center w-full text-left text-red-600 hover:text-red-500 transition-colors duration-200"
                     >
+                      <LogOut className="h-4 w-4 mr-2" />
                       Logout
                     </button>
                   </div>
