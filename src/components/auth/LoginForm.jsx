@@ -151,7 +151,7 @@ const LoginForm = ({onRequestAccess}) => {
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="block text-sm font-semibold text-gray-700"
+            className="block text-sm font-semibold text-gray-700 text-left"
           >
             Email Address
           </label>
