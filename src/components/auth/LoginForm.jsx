@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = () => {
+const LoginForm = ({onRequestAccess}) => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
   const recaptchaRef = useRef(null);
@@ -299,12 +299,13 @@ const LoginForm = () => {
         <div className="text-center pb-5">
           <p className="text-sm text-gray-600">
             Don't have an Access?{" "}
-            <Link
-              to="/register"
+            <button
+              type="button"
+              onClick={onRequestAccess}
               className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
             >
               Request Access
-            </Link>
+            </button>
           </p>
         </div>
       </form>

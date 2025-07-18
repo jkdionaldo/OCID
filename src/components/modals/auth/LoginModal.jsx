@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import {motion, AnimatePresence} from "framer-motion";
 import LoginForm from "@/components/auth/LoginForm";
+import RequestAccessForm from "@/components/auth/RequestAccessForm";
 import { X, LogIn } from "lucide-react";
 // import { logo } from "@/public/images/ocid-logo";
 
 export default function LoginModal() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [showRegister, setShowRegister] = useState(false);
+  const [direction, setDirection] = useState(1);
   // Lock body scroll when modal is open (mobile scroll restriction)
   useEffect(() => {
     if (isOpen) {
@@ -37,7 +40,10 @@ export default function LoginModal() {
   }, [isOpen]);
 
   const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    setIsOpen(false);
+    setShowRegister(false);
+  };
 
   return (
     <>
@@ -55,7 +61,7 @@ export default function LoginModal() {
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm">
           {/* Modal Container - Responsive sizing and positioning */}
-          <div className="relative bg-white rounded-lg sm:rounded-xl shadow-lg w-full max-w-sm sm:max-w-md mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white rounded-lg sm:rounded-xl shadow-lg w-full max-w-sm sm:max-w-md mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-hidden h-[635px]">
             {/* Modal Content - Responsive padding */}
             <div className="p-4 sm:p-6">
               {/* Close Button - Responsive positioning and sizing */}
@@ -68,7 +74,7 @@ export default function LoginModal() {
 
               {/* Logo Section - Responsive logo sizing */}
               <div className="flex items-center justify-center mt-4 pb-5 sm:mb-6">
-                <img
+                <img  
                   src="/images/ocid_logo.png"
                   alt="OCID Logo"
                   className="h-8 sm:h-12 lg:h-16 object-contain"
@@ -81,8 +87,33 @@ export default function LoginModal() {
               </div>
 
               {/* Login Form Container */}
-              <div className="w-full">
-                <LoginForm />
+              <div className="w-full min-h-[350px]">
+                <AnimatePresence custom={direction}>
+                  {showRegister ? (
+                    <motion.div 
+                    key="register"
+                    custom={direction}
+                    initial={{x: direction === 1 ? "100%" : "-100%" }}
+                    animate={{x: 0}}
+                    exit={{x: direction === 1 ? "-100%" : "100%" }}
+                    transition={{ duration: 0.2 }}
+                    className="w-full"
+                    >
+                      <RequestAccessForm onBack={() => { setDirection(-1); setShowRegister(false); }}></RequestAccessForm>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="login"
+                      initial={{x: direction === 1 ? "-100%" : "100%" }}
+                      animate={{x: 0}}
+                      exit={{x: direction === 1 ? "100%" : "-100%" }}
+                      transition={{ duration: 0.1 }}
+                      className="w-full"
+                    >
+                      <LoginForm onRequestAccess={() => { setDirection(1); setShowRegister(true); }}></LoginForm>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </div>
