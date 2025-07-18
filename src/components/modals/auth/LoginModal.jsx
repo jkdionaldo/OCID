@@ -87,8 +87,8 @@ export default function LoginModal() {
               </div>
 
               {/* Login Form Container */}
-              <div className="w-full min-h-[350px]">
-                <AnimatePresence custom={direction}>
+              <div className="w-full min-h-[350px] relative">
+                <AnimatePresence mode="sync" custom={direction}>
                   {showRegister ? (
                     <motion.div 
                     key="register"
@@ -97,7 +97,7 @@ export default function LoginModal() {
                     animate={{x: 0}}
                     exit={{x: direction === 1 ? "-100%" : "100%" }}
                     transition={{ duration: 0.2 }}
-                    className="w-full"
+                    className="w-full absolute top-0 left-0"
                     >
                       <RequestAccessForm onBack={() => { setDirection(-1); setShowRegister(false); }}></RequestAccessForm>
                     </motion.div>
@@ -107,8 +107,8 @@ export default function LoginModal() {
                       initial={{x: direction === 1 ? "-100%" : "100%" }}
                       animate={{x: 0}}
                       exit={{x: direction === 1 ? "100%" : "-100%" }}
-                      transition={{ duration: 0.1 }}
-                      className="w-full"
+                      transition={{ duration: 0.2 }}
+                      className="w-full absolute top-0 left-0"
                     >
                       <LoginForm onRequestAccess={() => { setDirection(1); setShowRegister(true); }}></LoginForm>
                     </motion.div>
