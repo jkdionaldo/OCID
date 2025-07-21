@@ -90,7 +90,7 @@ const Navbar = () => {
         isScrolled ? "bg-white/50 backdrop-blur-md" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-5 py-2 sm:py-3 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-2 sm:py-3 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center flex-shrink-0">
           <div className="flex items-center justify-center h-[50px] sm:h-[60px] md:h-[70px]">
