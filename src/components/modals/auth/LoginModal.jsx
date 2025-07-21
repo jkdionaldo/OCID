@@ -39,7 +39,10 @@ export default function LoginModal() {
     };
   }, [isOpen]);
 
-  const openModal = () => setIsOpen(true);
+  const openModal = () => {
+    setDirection(-1);
+    setIsOpen(true);
+  } 
   const closeModal = () => {
     setIsOpen(false);
     setShowRegister(false);
@@ -93,9 +96,9 @@ export default function LoginModal() {
                     <motion.div 
                     key="register"
                     custom={direction}
-                    initial={{x: direction === 1 ? "100%" : "-100%" }}
-                    animate={{x: 0}}
-                    exit={{x: direction === 1 ? "-100%" : "100%" }}
+                    initial={{ x: direction === 1 ? "100%" : "-100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: direction === 1 ? "-100%" : "100%" }}
                     transition={{ duration: 0.2 }}
                     className="w-full absolute top-0 left-0"
                     >
@@ -104,9 +107,10 @@ export default function LoginModal() {
                   ) : (
                     <motion.div
                       key="login"
-                      initial={{x: direction === 1 ? "-100%" : "100%" }}
-                      animate={{x: 0}}
-                      exit={{x: direction === 1 ? "100%" : "-100%" }}
+                      custom={direction}
+                      initial={{ x: direction === 1 ? "-100%" : "100%" }}
+                      animate={{ x: 0 }}
+                      exit={{ x: direction === 1 ? "100%" : "-100%" }}
                       transition={{ duration: 0.2 }}
                       className="w-full absolute top-0 left-0"
                     >
