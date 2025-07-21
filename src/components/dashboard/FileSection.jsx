@@ -131,9 +131,7 @@ export default function FileComponent({
                       <h3 className="font-medium text-gray-900 mt-3 mb-1 truncate w-full text-sm">
                         {file.name}
                       </h3>
-                      <p className="text-xs text-gray-500 mb-1">
-                        {file.size}
-                      </p>
+                      <p className="text-xs text-gray-500 mb-1">{file.size}</p>
                       <div className="text-xs text-gray-400 mb-2">
                         <p>
                           {file.college} - {file.program}

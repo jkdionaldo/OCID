@@ -1,144 +1,15 @@
 import React, { useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Plus } from "lucide-react";
 import CardDashboard from "../../components/ui/CardDashboard";
 import DashboardProgramModal from "../../components/modals/Dashboard/DashboardProgramModal";
+import AddCollegeModal from "../../components/modals/Dashboard/AddCollegeModal";
 
-export default function Colleges({ files }) {
+export default function Colleges({ files, colleges, onAddCollege }) {
   const [activeMainTab, setActiveMainTab] = useState("undergraduate");
   const [showModal, setShowModal] = useState(false);
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [selectedCampus, setSelectedCampus] = useState("");
-
-  // College data for both campuses
-  const collegesData = {
-    "CSU-MAIN": {
-      undergraduate: [
-        {
-          id: "caa",
-          name: "College of Agriculture and Agri-Industries",
-          shortName: "CAA",
-          programs: 6,
-          files: files.filter((f) => f.college === "CAA").length,
-        },
-        {
-          id: "cofes-main",
-          name: "College of Forestry and Environmental Science",
-          shortName: "CoFES",
-          programs: 8,
-          files: files.filter((f) => f.college === "COFES").length,
-        },
-        {
-          id: "ccis",
-          name: "College of Computing and Information Sciences",
-          shortName: "CCIS",
-          programs: 6,
-          files: files.filter((f) => f.college === "CCIS").length,
-        },
-        {
-          id: "ced",
-          name: "College of Education",
-          shortName: "CED",
-          programs: 10,
-          files: files.filter((f) => f.college === "CED").length,
-        },
-        {
-          id: "cegs",
-          name: "College of Engineering and Geo-Sciences",
-          shortName: "CEGS",
-          programs: 7,
-          files: files.filter((f) => f.college === "CEGS").length,
-        },
-        {
-          id: "cmns",
-          name: "College of Mathematics and Natural Sciences",
-          shortName: "CMNS",
-          programs: 9,
-          files: files.filter((f) => f.college === "CMNS").length,
-        },
-        {
-          id: "chass",
-          name: "College of Humanities, Arts and Social Sciences",
-          shortName: "CHASS",
-          programs: 5,
-          files: files.filter((f) => f.college === "CHASS").length,
-        },
-      ],
-      graduate: [
-        {
-          id: "caa-grad",
-          name: "College of Agriculture and Agri-Industries",
-          shortName: "CAA",
-          programs: 3,
-          files: files.filter((f) => f.college === "CAA").length,
-        },
-        {
-          id: "ccis-grad",
-          name: "College of Computing and Information Sciences",
-          shortName: "CCIS",
-          programs: 2,
-          files: files.filter((f) => f.college === "CCIS").length,
-        },
-        {
-          id: "ced-grad",
-          name: "College of Education",
-          shortName: "CED",
-          programs: 8,
-          files: files.filter((f) => f.college === "CED").length,
-        },
-        {
-          id: "cmns-grad",
-          name: "College of Mathematics and Natural Sciences",
-          shortName: "CMNS",
-          programs: 2,
-          files: files.filter((f) => f.college === "CMNS").length,
-        },
-        {
-          id: "cofes",
-          name: "College of Forestry and Environmental Science",
-          shortName: "CoFES",
-          programs: 2,
-          files: files.filter((f) => f.college === "CoFES").length,
-        },
-        {
-          id: "chass",
-          name: "College of Humanities, Arts and Social Sciences",
-          shortName: "CHASS",
-          programs: 1,
-          files: files.filter((f) => f.college === "CHASS").length,
-        },
-      ],
-    },
-    "CSU-CC": [
-      {
-        id: "cba-cc",
-        name: "College of Business Administration",
-        shortName: "CBA",
-        programs: 6,
-        files: files.filter((f) => f.college === "CBA").length,
-      },
-      {
-        id: "ceit",
-        name: "College of Engineering and Information Technology",
-        shortName: "CEIT",
-        programs: 8,
-        files: files.filter((f) => f.college === "CEIT").length,
-      },
-      {
-        id: "citte",
-        name: "College of Industrial Technology and Teacher Education",
-        shortName: "CITTE",
-        programs: 7,
-        files: files.filter((f) => f.college === "CITTE").length, // Fixed: removed the quote before "f"
-      },
-      {
-        id: "cthm-cc",
-        name: "College of Tourism and Hospitality Management",
-        shortName: "CTHM",
-        programs: 5,
-        files: files.filter((f) => f.college === "CTHM").length,
-      },
-    ],
-  };
+  const [showAddCollegeModal, setShowAddCollegeModal] = useState(false);
 
   const handleViewDetails = (college, campus) => {
     setSelectedCollege(college);
@@ -149,7 +20,19 @@ export default function Colleges({ files }) {
   return (
     <div className="mb-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">All Colleges</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            All Colleges
+          </h2>
+
+          <button
+            onClick={() => setShowAddCollegeModal(true)}
+            className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            <Plus className="h-5 w-5" />
+            <span>Add College</span>
+          </button>
+        </div>
 
         {/* CSU-MAIN Colleges with Tabs */}
         <div className="mb-8">
@@ -173,7 +56,7 @@ export default function Colleges({ files }) {
               >
                 Undergraduate
                 <span className="ml-2 px-2 py-0.5 bg-white bg-opacity-20 text-xs rounded-full">
-                  {collegesData["CSU-MAIN"].undergraduate.length}
+                  {colleges["CSU-MAIN"]?.undergraduate?.length || 0}
                 </span>
               </button>
               <button
@@ -186,7 +69,7 @@ export default function Colleges({ files }) {
               >
                 Graduate School
                 <span className="ml-2 px-2 py-0.5 bg-white bg-opacity-20 text-xs rounded-full">
-                  {collegesData["CSU-MAIN"].graduate.length}
+                  {colleges["CSU-MAIN"]?.graduate?.length || 0}
                 </span>
               </button>
             </div>
@@ -194,7 +77,7 @@ export default function Colleges({ files }) {
 
           {/* College Cards for CSU-MAIN */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
-            {collegesData["CSU-MAIN"][activeMainTab].map((college) => (
+            {(colleges["CSU-MAIN"]?.[activeMainTab] || []).map((college) => (
               <CardDashboard
                 key={college.id}
                 college={college}
@@ -216,11 +99,11 @@ export default function Colleges({ files }) {
               CSU-CC Campus
             </h3>
             <span className="ml-2 px-3 py-1 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-sm rounded-full font-medium">
-              {collegesData["CSU-CC"].length} Colleges
+              {colleges["CSU-CC"]?.length || 0} Colleges
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            {collegesData["CSU-CC"].map((college) => (
+            {(colleges["CSU-CC"] || []).map((college) => (
               <CardDashboard
                 key={college.id}
                 college={college}
@@ -248,15 +131,15 @@ export default function Colleges({ files }) {
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-sm font-bold text-green-900">
-                    {collegesData["CSU-MAIN"].undergraduate.length +
-                      collegesData["CSU-MAIN"].graduate.length}
+                    {(colleges["CSU-MAIN"]?.undergraduate?.length || 0) +
+                      (colleges["CSU-MAIN"]?.graduate?.length || 0)}
                   </div>
                   <div className="text-xs text-green-700">Total Colleges</div>
                 </div>
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-sm font-bold text-green-900">
-                    {collegesData["CSU-MAIN"][activeMainTab].reduce(
-                      (sum, college) => sum + college.programs,
+                    {(colleges["CSU-MAIN"]?.[activeMainTab] || []).reduce(
+                      (sum, college) => sum + (college.programs || 0),
                       0
                     )}
                   </div>
@@ -264,8 +147,8 @@ export default function Colleges({ files }) {
                 </div>
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-sm font-bold text-green-900">
-                    {collegesData["CSU-MAIN"][activeMainTab].reduce(
-                      (sum, college) => sum + college.files,
+                    {(colleges["CSU-MAIN"]?.[activeMainTab] || []).reduce(
+                      (sum, college) => sum + (college.files || 0),
                       0
                     )}
                   </div>
@@ -287,14 +170,14 @@ export default function Colleges({ files }) {
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-lg font-bold text-blue-900">
-                    {collegesData["CSU-CC"].length}
+                    {colleges["CSU-CC"]?.length || 0}
                   </div>
                   <div className="text-xs text-blue-700">Colleges</div>
                 </div>
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-lg font-bold text-blue-900">
-                    {collegesData["CSU-CC"].reduce(
-                      (sum, college) => sum + college.programs,
+                    {(colleges["CSU-CC"] || []).reduce(
+                      (sum, college) => sum + (college.programs || 0),
                       0
                     )}
                   </div>
@@ -302,8 +185,8 @@ export default function Colleges({ files }) {
                 </div>
                 <div className="bg-white bg-opacity-50 rounded-lg p-2">
                   <div className="text-lg font-bold text-blue-900">
-                    {collegesData["CSU-CC"].reduce(
-                      (sum, college) => sum + college.files,
+                    {(colleges["CSU-CC"] || []).reduce(
+                      (sum, college) => sum + (college.files || 0),
                       0
                     )}
                   </div>
@@ -321,6 +204,13 @@ export default function Colleges({ files }) {
         onClose={() => setShowModal(false)}
         college={selectedCollege}
         campus={selectedCampus}
+      />
+
+      {/* Add College Modal */}
+      <AddCollegeModal
+        isOpen={showAddCollegeModal}
+        onClose={() => setShowAddCollegeModal(false)}
+        onAddCollege={onAddCollege}
       />
     </div>
   );
