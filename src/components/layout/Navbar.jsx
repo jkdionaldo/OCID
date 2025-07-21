@@ -163,13 +163,13 @@ const Navbar = () => {
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-t-xl"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-b-xl"
                 >
                   CSU-CC
                 </Link>
