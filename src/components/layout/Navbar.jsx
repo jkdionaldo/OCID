@@ -238,7 +238,7 @@ const Navbar = (props) => {
                   </Link>
 
                   <Link
-                    to="/profile"
+                    to="/profile-settings"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
                     onClick={() => setShowUserDropdown(false)}
                   >
