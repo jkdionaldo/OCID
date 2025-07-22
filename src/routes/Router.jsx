@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-
+import ProfileSettings from "@/pages/ProfileSettings";
 // Import route collections
 // ccGraduateRoutes,
 
@@ -40,6 +40,16 @@ const Router = () => {
             <Dashboard />
         }
       />
+      {/* Profile Settings Route */}
+      <Route
+        path="/profile-settings"
+        element={
+          // <ProtectedRoute>
+            <ProfileSettings />
+          /* </ProtectedRoute> */
+        }
+      />
+
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />

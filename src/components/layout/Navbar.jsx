@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
@@ -238,7 +238,7 @@ const Navbar = () => {
                   </Link>
 
                   <Link
-                    to="/profile"
+                    to="/profile-settings"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
                     onClick={() => setShowUserDropdown(false)}
                   >
@@ -260,7 +260,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <LoginModal />
+            <button className="btn" onClick={props.onOpenModal}>Login</button>
           )}
         </div>
       </div>
@@ -388,7 +388,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <LoginModal />
+            <button className="btn w-full" onClick={props.onOpenModal}>Login</button>
           )}
         </div>
       </div>
