@@ -1,59 +1,45 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 export const useDashboardState = () => {
-  // UI state
-  const [viewMode, setViewMode] = useState("grid");
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showBulkActions, setShowBulkActions] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCollege, setSelectedCollege] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const [isDragging, setIsDragging] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showBulkActions, setShowBulkActions] = useState(false);
   const [sortBy, setSortBy] = useState("uploadDate");
   const [sortOrder, setSortOrder] = useState("desc");
-  const fileInputRef = useRef(null);
+  const [viewMode, setViewMode] = useState("grid");
 
-  // Options for filters
-  const categories = [
-    "all",
-    "Curriculum",
-    "Syllabus",
-    "Documents",
-    "Images",
-    "Videos",
-    "Others",
-  ];
-
+  // Define filter options
   const statuses = ["all", "active", "draft", "archived", "pending"];
+  const categories = ["all", "Curriculum", "Syllabus", "Documents", "Images"];
 
-  return {
-    state: {
-      viewMode,
-      searchTerm,
-      selectedCategory,
-      selectedCollege,
-      selectedStatus,
-      isDragging,
-      selectedFiles,
-      showBulkActions,
-      sortBy,
-      sortOrder,
-      fileInputRef,
-      categories,
-      statuses,
-    },
-    setters: {
-      setViewMode,
-      setSearchTerm,
-      setSelectedCategory,
-      setSelectedCollege,
-      setSelectedStatus,
-      setIsDragging,
-      setSelectedFiles,
-      setShowBulkActions,
-      setSortBy,
-      setSortOrder,
-    },
+  const state = {
+    selectedFiles,
+    showBulkActions,
+    searchTerm,
+    selectedCategory,
+    selectedCollege,
+    selectedStatus,
+    sortBy,
+    sortOrder,
+    viewMode,
+    statuses,
+    categories,
   };
+
+  const setters = {
+    setSelectedFiles,
+    setShowBulkActions,
+    setSearchTerm,
+    setSelectedCategory,
+    setSelectedCollege,
+    setSelectedStatus,
+    setSortBy,
+    setSortOrder,
+    setViewMode,
+  };
+
+  return { state, setters };
 };

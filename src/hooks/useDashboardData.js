@@ -53,13 +53,15 @@ export const useDashboardData = () => {
         ]);
 
       // Update with complete data
-      setData({
+      const completeData = {
         ...criticalData,
         curriculum: curriculumRes.data.data || curriculumRes.data,
         syllabus: syllabusRes.data.data || syllabusRes.data,
         undergrads: undergradsRes.data.data || undergradsRes.data,
         graduates: graduatesRes.data.data || graduatesRes.data,
-      });
+      };
+
+      setData(completeData);
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
       setError(err.message || "Failed to fetch dashboard data");
@@ -72,7 +74,7 @@ export const useDashboardData = () => {
     try {
       setError(null);
       const response = await collegeApi.create(collegeData);
-      await fetchAllData(); // Refresh all data
+      await fetchAllData();
       return { success: true, data: response.data };
     } catch (err) {
       console.error("Error creating college:", err);
@@ -91,29 +93,81 @@ export const useDashboardData = () => {
     }
   };
 
-  const updateCollege = async (id, collegeData) => {
+  // Program management functions
+  const createProgram = async (programData) => {
     try {
       setError(null);
-      const response = await collegeApi.update(id, collegeData);
-      await fetchAllData(); // Refresh all data
+      let response;
+
+      if (programData.program_type === "graduate") {
+        response = await programApi.createGraduate({
+          program_name: programData.program_name,
+          acronym: programData.acronym || undefined,
+          college_id: programData.college_id,
+        });
+      } else {
+        response = await programApi.createUndergrad({
+          program_name: programData.program_name,
+          acronym: programData.acronym || undefined,
+          college_id: programData.college_id,
+        });
+      }
+
+      await fetchAllData();
       return { success: true, data: response.data };
     } catch (err) {
-      console.error("Error updating college:", err);
-      const message = err.response?.data?.message || "Failed to update college";
+      console.error("Error creating program:", err);
+      let message = "Failed to create program";
+
+      if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (err.response?.data?.errors) {
+        const errors = err.response.data.errors;
+        const firstErrorKey = Object.keys(errors)[0];
+        message = errors[firstErrorKey]?.[0] || message;
+      }
+
       setError(message);
       return { success: false, error: message };
     }
   };
 
-  const deleteCollege = async (id) => {
+  const updateProgram = async (id, programData, programType) => {
     try {
       setError(null);
-      await collegeApi.delete(id);
-      await fetchAllData(); // Refresh all data
+      let response;
+
+      if (programType === "graduate") {
+        response = await programApi.updateGraduate(id, programData);
+      } else {
+        response = await programApi.updateUndergrad(id, programData);
+      }
+
+      await fetchAllData();
+      return { success: true, data: response.data };
+    } catch (err) {
+      console.error("Error updating program:", err);
+      const message = err.response?.data?.message || "Failed to update program";
+      setError(message);
+      return { success: false, error: message };
+    }
+  };
+
+  const deleteProgram = async (id, programType) => {
+    try {
+      setError(null);
+
+      if (programType === "graduate") {
+        await programApi.deleteGraduate(id);
+      } else {
+        await programApi.deleteUndergrad(id);
+      }
+
+      await fetchAllData();
       return { success: true };
     } catch (err) {
-      console.error("Error deleting college:", err);
-      const message = err.response?.data?.message || "Failed to delete college";
+      console.error("Error deleting program:", err);
+      const message = err.response?.data?.message || "Failed to delete program";
       setError(message);
       return { success: false, error: message };
     }
@@ -135,7 +189,7 @@ export const useDashboardData = () => {
         response = await syllabusApi.create(formData);
       }
 
-      await fetchAllData(); // Refresh all data
+      await fetchAllData();
       return { success: true, data: response.data };
     } catch (err) {
       console.error("Error uploading file:", err);
@@ -156,7 +210,7 @@ export const useDashboardData = () => {
         await syllabusApi.delete(originalId);
       }
 
-      await fetchAllData(); // Refresh all data
+      await fetchAllData();
       return { success: true };
     } catch (err) {
       console.error("Error deleting file:", err);
@@ -240,8 +294,9 @@ export const useDashboardData = () => {
     files: transformedFiles,
     // Functions
     createCollege,
-    updateCollege,
-    deleteCollege,
+    createProgram,
+    updateProgram,
+    deleteProgram,
     uploadFile,
     deleteFile,
   };

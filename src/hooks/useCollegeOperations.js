@@ -2,11 +2,9 @@ import { useState } from "react";
 import { showLoadingToast, updateToast } from "@/utils/toast";
 
 export const useCollegeOperations = (dashboardData, createCollege) => {
+  // Initialize with proper structure to avoid the map error
   const [collegesData, setCollegesData] = useState({
-    "CSU-MAIN": {
-      undergraduate: [],
-      graduate: [],
-    },
+    "CSU-MAIN": [],
     "CSU-CC": [],
   });
 
@@ -15,45 +13,43 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
     const loadingToastId = showLoadingToast("Creating new college...");
 
     try {
+      // Find the selected campus by acronym
+      const selectedCampus = dashboardData.campuses.find(
+        (campus) => campus.acronym === newCollege.campus
+      );
+
+      if (!selectedCampus) {
+        updateToast(
+          loadingToastId,
+          `Campus "${newCollege.campus}" not found`,
+          "error"
+        );
+        return;
+      }
+
       // Optimistic update
       const tempCollegeId = `temp-${Date.now()}`;
       const tempCollege = {
         id: tempCollegeId,
         name: newCollege.name,
         shortName: newCollege.shortName,
+        undergraduate_programs: 0,
+        graduate_programs: 0,
         programs: 0,
         files: 0,
         logo_url: newCollege.logoPreview,
       };
 
-      const selectedCampus = dashboardData.campuses.find(
-        (campus) =>
-          campus.acronym === newCollege.campus ||
-          campus.name === newCollege.campus
-      );
-
-      // Update UI optimistically
+      // Update UI optimistically based on campus acronym
       setCollegesData((prevData) => {
         const updatedData = { ...prevData };
 
-        if (
-          selectedCampus?.name.includes("MAIN") ||
-          selectedCampus?.acronym === "CSU-MAIN"
-        ) {
-          updatedData["CSU-MAIN"] = {
-            undergraduate: [
-              ...(updatedData["CSU-MAIN"]?.undergraduate || []),
-              tempCollege,
-            ],
-            graduate: [
-              ...(updatedData["CSU-MAIN"]?.graduate || []),
-              { ...tempCollege, id: `${tempCollegeId}-grad` },
-            ],
-          };
-        } else if (
-          selectedCampus?.name.includes("CC") ||
-          selectedCampus?.acronym === "CSU-CC"
-        ) {
+        if (selectedCampus.acronym === "CSU-MAIN") {
+          updatedData["CSU-MAIN"] = [
+            ...(updatedData["CSU-MAIN"] || []),
+            tempCollege,
+          ];
+        } else if (selectedCampus.acronym === "CSU-CC") {
           updatedData["CSU-CC"] = [
             ...(updatedData["CSU-CC"] || []),
             tempCollege,
@@ -67,9 +63,7 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
       const formData = new FormData();
       formData.append("name", newCollege.name);
       formData.append("acronym", newCollege.shortName);
-      if (selectedCampus) {
-        formData.append("campus_id", selectedCampus.id);
-      }
+      formData.append("campus_id", selectedCampus.id);
       if (newCollege.logo) {
         formData.append("logo", newCollege.logo);
       }
@@ -106,26 +100,14 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
     setCollegesData((prevData) => {
       const updatedData = { ...prevData };
 
-      if (
-        selectedCampus?.name.includes("MAIN") ||
-        selectedCampus?.acronym === "CSU-MAIN"
-      ) {
-        updatedData["CSU-MAIN"] = {
-          undergraduate:
-            updatedData["CSU-MAIN"]?.undergraduate?.filter(
-              (c) => c.id !== tempCollegeId
-            ) || [],
-          graduate:
-            updatedData["CSU-MAIN"]?.graduate?.filter(
-              (c) => c.id !== `${tempCollegeId}-grad`
-            ) || [],
-        };
-      } else if (
-        selectedCampus?.name.includes("CC") ||
-        selectedCampus?.acronym === "CSU-CC"
-      ) {
-        updatedData["CSU-CC"] =
-          updatedData["CSU-CC"]?.filter((c) => c.id !== tempCollegeId) || [];
+      if (selectedCampus.acronym === "CSU-MAIN") {
+        updatedData["CSU-MAIN"] = (updatedData["CSU-MAIN"] || []).filter(
+          (c) => c.id !== tempCollegeId
+        );
+      } else if (selectedCampus.acronym === "CSU-CC") {
+        updatedData["CSU-CC"] = (updatedData["CSU-CC"] || []).filter(
+          (c) => c.id !== tempCollegeId
+        );
       }
 
       return updatedData;

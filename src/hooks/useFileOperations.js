@@ -1,3 +1,4 @@
+import React from "react";
 import { useDashboardData } from "./useDashboardData";
 import {
   File,
@@ -13,30 +14,42 @@ import {
 } from "lucide-react";
 
 export const useFileOperations = () => {
-  const { dashboardData, uploadFile, deleteFile } = useDashboardData();
+  const { data: dashboardData, uploadFile, deleteFile } = useDashboardData();
 
   // Function to get appropriate icon for file type
   const getFileIcon = (type) => {
     switch (type) {
       case "pdf":
-        return <FileText className="w-8 h-8 text-red-500" />;
+        return React.createElement(FileText, {
+          className: "w-8 h-8 text-red-500",
+        });
       case "doc":
       case "docx":
-        return <FileEdit className="w-8 h-8 text-blue-500" />;
+        return React.createElement(FileEdit, {
+          className: "w-8 h-8 text-blue-500",
+        });
       case "jpg":
       case "jpeg":
       case "png":
       case "gif":
-        return <Image className="w-8 h-8 text-green-500" />;
+        return React.createElement(Image, {
+          className: "w-8 h-8 text-green-500",
+        });
       case "mp4":
       case "avi":
       case "mov":
-        return <Video className="w-8 h-8 text-purple-500" />;
+        return React.createElement(Video, {
+          className: "w-8 h-8 text-purple-500",
+        });
       case "xlsx":
       case "xls":
-        return <File className="w-8 h-8 text-green-600" />;
+        return React.createElement(File, {
+          className: "w-8 h-8 text-green-600",
+        });
       default:
-        return <File className="w-8 h-8 text-gray-500" />;
+        return React.createElement(File, {
+          className: "w-8 h-8 text-gray-500",
+        });
     }
   };
 
@@ -44,21 +57,31 @@ export const useFileOperations = () => {
   const getStatusIcon = (status) => {
     switch (status) {
       case "active":
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return React.createElement(CheckCircle, {
+          className: "w-4 h-4 text-green-500",
+        });
       case "draft":
-        return <Edit3 className="w-4 h-4 text-yellow-500" />;
+        return React.createElement(Edit3, {
+          className: "w-4 h-4 text-yellow-500",
+        });
       case "archived":
-        return <Archive className="w-4 h-4 text-gray-500" />;
+        return React.createElement(Archive, {
+          className: "w-4 h-4 text-gray-500",
+        });
       case "pending":
-        return <Clock className="w-4 h-4 text-blue-500" />;
+        return React.createElement(Clock, {
+          className: "w-4 h-4 text-blue-500",
+        });
       default:
-        return <AlertCircle className="w-4 h-4 text-red-500" />;
+        return React.createElement(AlertCircle, {
+          className: "w-4 h-4 text-red-500",
+        });
     }
   };
 
   // Function to handle file upload
   const handleFileUpload = async (uploadedFiles) => {
-    const firstProgram = dashboardData.undergrads[0];
+    const firstProgram = dashboardData.undergrads?.[0];
     if (!firstProgram) {
       alert("No programs available for file upload");
       return;
