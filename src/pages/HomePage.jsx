@@ -1,4 +1,4 @@
-import Card from "../c../components/ui/HomeCard";
+import Card from "../components/ui/HomeCard";
 
 const Home = () => {
   return (
