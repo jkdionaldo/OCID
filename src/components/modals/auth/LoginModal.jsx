@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LoginForm from "@/components/auth/LoginForm";
 import RequestAccessForm from "@/components/auth/RequestAccessForm";
+import ForgotPassword from "../../auth/ForgotPassword";
 import { X, LogIn } from "lucide-react";
 
 export default function LoginModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [direction, setDirection] = useState(1);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const scrollPosition = useRef(0);
 
   useEffect(() => {
@@ -76,7 +78,21 @@ export default function LoginModal() {
               </div>
               <div className="w-full min-h-[350px] relative">
                 <AnimatePresence mode="sync" custom={direction}>
-                  {showRegister ? (
+                  {showForgotPassword ? (
+                    <motion.div
+                      key="register"
+                      custom={direction}
+                      initial={{ x: direction === 1 ? "100%" : "-100%" }}
+                      animate={{ x: 0 }}
+                      exit={{ x: direction === 1 ? "-100%" : "100%" }}
+                      transition={{ duration: 0.2 }}
+                      className="w-full absolute top-0 left-0"
+                    >
+                      <ForgotPassword
+                        onBack={() => setShowForgotPassword(false)}
+                      />
+                    </motion.div>
+                  ) : showRegister ? (
                     <motion.div
                       key="register"
                       custom={direction}
@@ -108,6 +124,7 @@ export default function LoginModal() {
                           setDirection(1);
                           setShowRegister(true);
                         }}
+                        onForgotPassword={() => setShowForgotPassword(true)}
                       />
                     </motion.div>
                   )}

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = ({ onRequestAccess }) => {
+const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
   const recaptchaRef = useRef(null);
@@ -271,12 +271,18 @@ const LoginForm = ({ onRequestAccess }) => {
               Remember me
             </label>
           </div>
-          <Link
-            to="/forgot-password"
-            className="text-sm font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
-          >
-            Forgot your password?
-          </Link>
+          {/* Forgot Password */}
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              <button
+                type="button"
+                onClick={onForgotPassword}
+                className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
+              >
+                Forgot Your Password?
+              </button>
+            </p>
+          </div>
         </div>
 
         {/* Submit Button */}
