@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { useDashboardState } from "@/hooks/useDashboardState";
 import { useFileOperations } from "@/hooks/useFileOperations";
@@ -35,7 +35,8 @@ const Dashboard = () => {
     deleteProgram,
   } = useDashboardData();
 
-  // State management
+  const memoizedFiles = useMemo(() => files, [files.length]);
+
   const { state, setters } = useDashboardState();
 
   // File operations
@@ -173,7 +174,9 @@ const Dashboard = () => {
         const graduatePrograms = dashboardData.graduates.filter(
           (p) => p.college_id === college.id
         );
-        const collegeFiles = files.filter((f) => f.college === college.acronym);
+        const collegeFiles = memoizedFiles.filter(
+          (f) => f.college === college.acronym
+        );
 
         const collegeInfo = {
           id: college.id,
@@ -196,7 +199,14 @@ const Dashboard = () => {
 
       setCollegesData(transformedData);
     }
-  }, [colleges, dashboardData, files, setCollegesData]);
+  }, [
+    colleges,
+    dashboardData.campuses,
+    dashboardData.undergrads,
+    dashboardData.graduates,
+    memoizedFiles,
+    setCollegesData,
+  ]);
 
   // Show error state
   if (dashboardError) {
