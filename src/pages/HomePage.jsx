@@ -1,4 +1,4 @@
-import Card from "../components/ui/Card";
+import Card from "../c../components/ui/HomeCard";
 
 const Home = () => {
   return (
@@ -129,64 +129,109 @@ const Home = () => {
         </div>
 
         {/*For Insitutional Outcomes*/}
-          <div className="flex flex-col md:flex-row gap-10 items-center md:items-start md:py-11 mb-12 "> 
-            <img 
+        <div className="flex flex-col md:flex-row gap-10 items-center md:items-start md:py-11 mb-12 ">
+          <img
             src="/images/institutional_outcome.svg"
             className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg"
             alt="Insitutional Outcomes"
             loading="eager"
-            ></img>
-            <div className="flex-1 text-center">
-                <h2 className="text-md sm:text-xl md:text-3xl font-bold font-poppins text-left">Aligned with the Caraga State University's Vision, Mission, Core Values, and Quality Objectives the following Institutional Outcomes are expected of the graduates</h2>
+          ></img>
+          <div className="flex-1 text-center">
+            <h2 className="text-md sm:text-xl md:text-3xl font-bold font-poppins text-left">
+              Aligned with the Caraga State University's Vision, Mission, Core
+              Values, and Quality Objectives the following Institutional
+              Outcomes are expected of the graduates
+            </h2>
 
-                <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-4 md:mt-11 text-csuGreen font-poppins">
-                <b>IO1. Transformative Leadership and Stewardship.</b> A CSUAN applies advanced expertise in addressing complex societal challenges as a transformative leader and purpose-driven steward.
-                <br></br><br></br>
-                <b>IO2. Research, Innovation and Enterprise.</b> A CSUAN produces quality research outputs, applies innovative thinking, and develops entrepreneurial solutions that address regional and global issues, in pursuit of sustainability and economic advancement.
-                <br></br><br></br>
-                <b>IO3.  Lifelong Learning and Social Responsibility.</b> A CSUAN continually enhances their knowledge and skills, and actively contributes to community development while exemplifying social responsibility, ethical standards, and the core values of Caraga State University.
+            <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-4 md:mt-11 text-csuGreen font-poppins">
+              <b>IO1. Transformative Leadership and Stewardship.</b> A CSUAN
+              applies advanced expertise in addressing complex societal
+              challenges as a transformative leader and purpose-driven steward.
+              <br></br>
+              <br></br>
+              <b>IO2. Research, Innovation and Enterprise.</b> A CSUAN produces
+              quality research outputs, applies innovative thinking, and
+              develops entrepreneurial solutions that address regional and
+              global issues, in pursuit of sustainability and economic
+              advancement.
+              <br></br>
+              <br></br>
+              <b>IO3. Lifelong Learning and Social Responsibility.</b> A CSUAN
+              continually enhances their knowledge and skills, and actively
+              contributes to community development while exemplifying social
+              responsibility, ethical standards, and the core values of Caraga
+              State University.
             </p>
-            </div>
           </div>
+        </div>
 
         {/*Graduate Attributes*/}
-        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start mb-12"> 
-           <div className="flex-1 text-center">
-               <h2 className="text-lg sm:text-4xl font-bold font-poppins text-left">Graduate Attributes</h2>
-               <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
-                  The CSUAN graduate is globally competent, lifelong learner, visionary steward, sustainability-advocate, morally-upright, ethically critical, with integrity, adaptable to change, innovative, has entrepreneurial mindset, and a transformative leader.
-                  <br></br><br></br>
-                  <b>Definition:</b><br></br>
-                  A CSUAN demonstrates expertise and lifelong learning, continuously enhancing their knowledge and skills to meet evolving industry and societal demands.
-                  <br></br><br></br>
-                  A CSUAN actively participates in addressing societal issues, fostering inclusive development, and advocating for sustainable and transformative change.
-                  <br></br><br></br>
-                  A CSUAN upholds integrity, ethical responsibility, and accountability, ensuring that their actions reflect the core values and mission of the university.
-                  <br></br><br></br>
-                  A CSUAN is adaptable to change, embraces innovation and entrepreneurship, and applies creative solutions to solve complex challenges in a dynamic world.
-                  <br></br><br></br>
-                  A CSUAN inspires and empowers others through collaborative and compassionate leadership, fostering growth, mentorship, and a culture of excellence.
-              </p>
-           </div>
-           <img 
-                src="/images/csuan.svg"
-                className=" w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg mt-5 md:mt-0"
-                alt="Insitutional Outcomes"
-                loading="eager"
-              ></img>
+        <div className="flex flex-col md:flex-row md:gap-11 item-center md:items-start mb-12">
+          <div className="flex-1 text-center">
+            <h2 className="text-lg sm:text-4xl font-bold font-poppins text-left">
+              Graduate Attributes
+            </h2>
+            <p className="text-left text-xs md:text-base max-w-3xl mx-auto mt-5 text-csuGreen font-poppins">
+              The CSUAN graduate is globally competent, lifelong learner,
+              visionary steward, sustainability-advocate, morally-upright,
+              ethically critical, with integrity, adaptable to change,
+              innovative, has entrepreneurial mindset, and a transformative
+              leader.
+              <br></br>
+              <br></br>
+              <b>Definition:</b>
+              <br></br>A CSUAN demonstrates expertise and lifelong learning,
+              continuously enhancing their knowledge and skills to meet evolving
+              industry and societal demands.
+              <br></br>
+              <br></br>A CSUAN actively participates in addressing societal
+              issues, fostering inclusive development, and advocating for
+              sustainable and transformative change.
+              <br></br>
+              <br></br>A CSUAN upholds integrity, ethical responsibility, and
+              accountability, ensuring that their actions reflect the core
+              values and mission of the university.
+              <br></br>
+              <br></br>A CSUAN is adaptable to change, embraces innovation and
+              entrepreneurship, and applies creative solutions to solve complex
+              challenges in a dynamic world.
+              <br></br>
+              <br></br>A CSUAN inspires and empowers others through
+              collaborative and compassionate leadership, fostering growth,
+              mentorship, and a culture of excellence.
+            </p>
+          </div>
+          <img
+            src="/images/csuan.svg"
+            className=" w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg mt-5 md:mt-0"
+            alt="Insitutional Outcomes"
+            loading="eager"
+          ></img>
         </div>
       </div>
-       {/*Educational Philosophy*/}
+      {/*Educational Philosophy*/}
       <div className="w-full bg-csuGreen py-12 px-4 md:px-16 flex flex-col md:flex-row items-center md:items-center justify-center">
         {/* Left: Headings */}
         <div className="flex-1 flex flex-col items-center md:items-start justify-center mb-8 md:mb-0 md:px-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight">Educational</h2>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight md:ml-24">Philosophy</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight">
+            Educational
+          </h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight md:ml-24">
+            Philosophy
+          </h2>
         </div>
         {/* Right: Paragraph */}
         <div className="flex-2 flex md:justify-start md:px-15">
           <p className="text-justify md:text-justify text-xs md:text-base max-w-2xl mx-auto mt-0 text-white font-poppins">
-            Caraga State University upholds education as a transformative force that creates futures and empowers communities. It is through meaningful, values-driven learning that individuals are shaped into competent professionals, ethical leaders, and innovative problem-solvers. CSU believes that education should go beyond knowledge transmission—it must inspire lifelong learning, cultivate social responsibility, and enable graduates to lead change, foster inclusivity, and contribute to the sustainable development of the Caraga Region and beyond.
+            Caraga State University upholds education as a transformative force
+            that creates futures and empowers communities. It is through
+            meaningful, values-driven learning that individuals are shaped into
+            competent professionals, ethical leaders, and innovative
+            problem-solvers. CSU believes that education should go beyond
+            knowledge transmission—it must inspire lifelong learning, cultivate
+            social responsibility, and enable graduates to lead change, foster
+            inclusivity, and contribute to the sustainable development of the
+            Caraga Region and beyond.
           </p>
         </div>
       </div>
