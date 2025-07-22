@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { showLoadingToast, updateToast } from "@/utils/toast";
 
 export const useCollegeOperations = (dashboardData, createCollege) => {
   // Initialize with proper structure to avoid the map error
-  const [collegesData, setCollegesData] = useState({
+  const [collegesData, setCollegesDataState] = useState({
     "CSU-MAIN": [],
     "CSU-CC": [],
   });
+
+  // ✅ Memoize the setCollegesData function to prevent unnecessary re-renders
+  const setCollegesData = useCallback((data) => {
+    // Only update if the data has actually changed
+    setCollegesDataState((prevData) => {
+      // Simple deep comparison for the structure we're dealing with
+      if (JSON.stringify(prevData) === JSON.stringify(data)) {
+        return prevData;
+      }
+      return data;
+    });
+  }, []);
 
   // Handle adding a new college
   const handleAddCollege = async (newCollege) => {
@@ -96,23 +108,26 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
     }
   };
 
-  const revertOptimisticUpdate = (tempCollegeId, selectedCampus) => {
-    setCollegesData((prevData) => {
-      const updatedData = { ...prevData };
+  const revertOptimisticUpdate = useCallback(
+    (tempCollegeId, selectedCampus) => {
+      setCollegesDataState((prevData) => {
+        const updatedData = { ...prevData };
 
-      if (selectedCampus.acronym === "CSU-MAIN") {
-        updatedData["CSU-MAIN"] = (updatedData["CSU-MAIN"] || []).filter(
-          (c) => c.id !== tempCollegeId
-        );
-      } else if (selectedCampus.acronym === "CSU-CC") {
-        updatedData["CSU-CC"] = (updatedData["CSU-CC"] || []).filter(
-          (c) => c.id !== tempCollegeId
-        );
-      }
+        if (selectedCampus.acronym === "CSU-MAIN") {
+          updatedData["CSU-MAIN"] = (updatedData["CSU-MAIN"] || []).filter(
+            (c) => c.id !== tempCollegeId
+          );
+        } else if (selectedCampus.acronym === "CSU-CC") {
+          updatedData["CSU-CC"] = (updatedData["CSU-CC"] || []).filter(
+            (c) => c.id !== tempCollegeId
+          );
+        }
 
-      return updatedData;
-    });
-  };
+        return updatedData;
+      });
+    },
+    []
+  );
 
   return {
     collegesData,
