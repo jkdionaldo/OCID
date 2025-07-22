@@ -5,9 +5,10 @@ import RequestAccessForm from "@/components/auth/RequestAccessForm";
 import { X, LogIn } from "lucide-react";
 
 export default function LoginModal({ open, onClose }) {
-  if (!open) return null;
   const [showRegister, setShowRegister] = useState(false);
   const [direction, setDirection] = useState(1);
+
+  if (!open) return null;
 
   // Optional: Reset modal state when closed
   const handleClose = () => {
