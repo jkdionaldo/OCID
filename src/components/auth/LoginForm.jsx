@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = ({onRequestAccess}) => {
+const LoginForm = ({ onRequestAccess }) => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
   const recaptchaRef = useRef(null);
