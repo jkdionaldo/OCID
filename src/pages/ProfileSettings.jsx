@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Camera, Lock, X } from "lucide-react";
 import PasswordSettingModal from "../components/modals/auth/PasswordSettingModal";
+import { useAuth } from "@/hooks/useAuth"; // Add this import
 
 const ProfileSettings = () => {
+  const { user } = useAuth(); // Get user from auth context
+
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "john@example.com",
+    name: user?.name || "",
+    email: user?.email || "",
     password: "",
     avatar: null,
   });
