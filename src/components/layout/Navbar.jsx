@@ -196,7 +196,19 @@ const Navbar = () => {
           >
             DOWNLOAD
           </Link>
+          
+          <Link
+            to="/procedurals"
+            className={`font-semibold uppercase xl:text-sm ${
+              isActive("/procedurals")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+          >
+            PROCEDURALS
+          </Link>
         </div>
+
 
         {/* Desktop User */}
         <div className="hidden xl:block">
