@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, X } from "lucide-react";
+import useProfile from "@/hooks/useProfile";
 
 const PasswordSettingForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
     password: false,
     confirmPassword: false,
   });
+
+  const { changePassword, loading, error, success } = useProfile();
 
   const handleChange = (e) => {
     setFormData({
@@ -26,10 +29,12 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your password update logic here
-    console.log("Password update submitted:", formData);
+    await changePassword({
+      password: formData.password,
+      password_confirmation: formData.confirmPassword,
+    });
   };
 
   if (!isOpen) return null;
@@ -48,7 +53,7 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-2 text-left">
-              Password
+              New Password
             </label>
             <div className="relative">
               <input
@@ -56,7 +61,7 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 bg-gray-50 cursor-not-allowed"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 bg-gray-50"
                 required
               />
               <button
@@ -83,7 +88,7 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 bg-gray-50 cursor-not-allowed"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 bg-gray-50"
                 required
               />
               <button
@@ -100,11 +105,21 @@ const PasswordSettingForm = ({ isOpen, onClose }) => {
             </div>
           </div>
 
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
+          {success && (
+            <div className="text-green-600 text-sm text-center">
+              Password changed successfully!
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-medium mt-6 "
+            className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-medium mt-6"
+            disabled={loading}
           >
-            Change Password
+            {loading ? "Changing..." : "Change Password"}
           </button>
         </form>
       </div>

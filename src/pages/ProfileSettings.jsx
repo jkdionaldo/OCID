@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Camera, Lock, X } from "lucide-react";
+import { Camera, Lock } from "lucide-react";
 import PasswordSettingModal from "../components/modals/auth/PasswordSettingModal";
 
 const ProfileSettings = () => {
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "john@example.com",
+    name: "",
+    email: "",
     password: "",
     avatar: null,
   });
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Fetch user profile data on component mount
   useEffect(() => {
-    fetchUserProfile();
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchUserProfile();
+    }
   }, []);
 
   const fetchUserProfile = async () => {
+    setLoading(true);
     try {
-      // Replace with your actual API endpoint
+      const token = localStorage.getItem("token");
       const response = await fetch("/api/user/profile", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -29,14 +34,23 @@ const ProfileSettings = () => {
       if (response.ok) {
         const userData = await response.json();
         setProfile({
-          name: userData.name || "John Doe",
-          email: userData.email || "john@example.com",
+          name: userData.name || "",
+          email: userData.email || "",
           password: "",
           avatar: userData.avatar || null,
+        });
+      } else {
+        setProfile({
+          name: "",
+          email: "",
+          password: "",
+          avatar: null,
         });
       }
     } catch (error) {
       console.error("Failed to fetch user profile:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,16 +87,18 @@ const ProfileSettings = () => {
 
       if (response.ok) {
         alert("Profile saved successfully!");
+        fetchUserProfile(); // Refresh data
       } else {
         alert("Failed to save profile. Please try again.");
       }
     } catch (error) {
       console.error("Error saving profile:", error);
-      alert("Profile saved!"); // Fallback for demo
+      alert("Failed to save profile.");
     }
   };
 
   const getInitials = (name) => {
+    if (!name) return "";
     return name
       .split(" ")
       .map((n) => n[0])
@@ -90,9 +106,17 @@ const ProfileSettings = () => {
       .toUpperCase();
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="text-gray-500 text-xl">Loading...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 flex">
-      <div className=" bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mx-auto ">
+      <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-gray-800 text-center">
           Profile Settings
         </h2>
@@ -100,32 +124,38 @@ const ProfileSettings = () => {
         <div className="grid grid-cols-2 grid-rows-1 gap-5">
           <div>
             {/* Avatar Section */}
-            <div className="flex flex-col items-center mb-8 ">
-              <div className="relative mb-4">
-                {profile.avatar ? (
-                  <img
-                    src={profile.avatar}
-                    alt="Profile"
-                    className="w-64 h-64 rounded-full object-cover border-4 border-green-500 shadow-lg"
-                  />
-                ) : (
-                  <div className="w-64 h-64 rounded-full bg-green-500 flex items-center justify-center text-white text-9xl font-bold shadow-lg">
-                    {getInitials(profile.name)}
-                  </div>
-                )}
-                <div className="absolute bottom-4 right-6 bg-blue-500 rounded-full p-2 shadow-lg">
-                  <Camera className="w-8 h-8 text-white" />
+            <div className="flex flex-col items-center mb-8">
+              <div className="flex flex-col items-center mb-8">
+                <div className="relative mb-4">
+                  {profile.avatar ? (
+                    <img
+                      src={profile.avatar}
+                      alt="Profile"
+                      className="w-64 h-64 rounded-full object-cover border-4 border-green-500 shadow-lg"
+                    />
+                  ) : (
+                    <div className="w-64 h-64 rounded-full bg-green-500 flex items-center justify-center text-white text-9xl font-bold shadow-lg">
+                      {getInitials(profile.name)}
+                    </div>
+                  )}
+                  <label className="absolute bottom-4 right-6 bg-blue-500 rounded-full p-2 shadow-lg cursor-pointer">
+                    <Camera className="w-8 h-8 text-white" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
+                    />
+                  </label>
                 </div>
+                {/* Show full name below the avatar */}
+                {/* <span className="text-xl font-semibold text-gray-800 mt-2">
+                  {profile.name}
+                </span> */}
+                <span className="text-blue-500 font-medium">
+                  Change Avatar Icon
+                </span>
               </div>
-              <label className="text-blue-500 cursor-pointer hover:underline font-medium">
-                Change Avatar Icon
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarChange}
-                  className="hidden"
-                />
-              </label>
             </div>
           </div>
 
@@ -140,8 +170,8 @@ const ProfileSettings = () => {
                   type="text"
                   name="name"
                   value={profile.name}
-                  readonly
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2   focus:ring-blue-200 transition-all  bg-gray-50 cursor-not-allowed"
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50"
                   required
                 />
               </div>
@@ -153,8 +183,9 @@ const ProfileSettings = () => {
                   type="email"
                   name="email"
                   value={profile.email}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 cursor-not-allowed"
-                  readOnly
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50"
+                  required
                 />
               </div>
 
@@ -169,7 +200,7 @@ const ProfileSettings = () => {
                     name="password"
                     value={profile.password}
                     onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg pl-10 pr-32 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 cursor-not-allowed"
+                    className="w-full border border-gray-300 rounded-lg pl-10 pr-32 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50"
                     placeholder="••••••••"
                     readOnly
                   />
