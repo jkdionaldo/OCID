@@ -31,21 +31,58 @@ export const showWarningToast = (message, options = {}) => {
   toast.warning(message, { ...defaultToastConfig, ...options });
 };
 
-export const showLoadingToast = (message, options = {}) => {
-  return toast.loading(message, { ...defaultToastConfig, ...options });
+export const showLoadingToast = (message) => {
+  return toast.loading(message, {
+    position: "top-right",
+    autoClose: false,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: false,
+  });
 };
 
-export const updateToast = (
-  toastId,
-  message,
-  type = "success",
-  options = {}
-) => {
-  toast.update(toastId, {
-    render: message,
-    type: type,
-    isLoading: false,
-    ...defaultToastConfig,
-    ...options,
-  });
+export const updateToast = (toastId, message, type) => {
+  const options = {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  switch (type) {
+    case "success":
+      toast.update(toastId, {
+        render: message,
+        type: "success",
+        isLoading: false,
+        ...options,
+      });
+      break;
+    case "error":
+      toast.update(toastId, {
+        render: message,
+        type: "error",
+        isLoading: false,
+        ...options,
+      });
+      break;
+    case "info":
+      toast.update(toastId, {
+        render: message,
+        type: "info",
+        isLoading: false,
+        ...options,
+      });
+      break;
+    default:
+      toast.update(toastId, {
+        render: message,
+        type: "default",
+        isLoading: false,
+        ...options,
+      });
+  }
 };

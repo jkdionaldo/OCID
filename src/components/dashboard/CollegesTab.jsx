@@ -11,19 +11,24 @@ import {
 import CollegeCard from "@/components/ui/CardDashboard";
 import AddCollegeModal from "@/components/modals/dashboard/AddCollegeModal";
 import EditCollegeModal from "@/components/modals/dashboard/EditCollegeModal";
+import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
+import { showLoadingToast, updateToast } from "@/utils/toast";
 
 export default function CollegesTab({
   colleges,
   campuses,
   onAddCollege,
+  onDeleteCollege,
   loading,
 }) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCampus, setFilterCampus] = useState("all");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   if (loading) {
     return <DashboardLoading type="colleges" />;
@@ -32,6 +37,50 @@ export default function CollegesTab({
   const handleEditCollege = (college, campus) => {
     setSelectedCollege({ ...college, campus });
     setShowEditModal(true);
+  };
+
+  const handleDeleteCollege = (college, campus) => {
+    setSelectedCollege({ ...college, campus });
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteCollege = async () => {
+    if (!selectedCollege || !onDeleteCollege) return;
+
+    setIsDeleting(true);
+    const loadingToastId = showLoadingToast("Deleting college...");
+
+    try {
+      const result = await onDeleteCollege(
+        selectedCollege.id,
+        selectedCollege.campus
+      );
+
+      if (result?.success !== false) {
+        updateToast(
+          loadingToastId,
+          `College "${selectedCollege.name}" has been deleted successfully!`,
+          "success"
+        );
+        setShowDeleteModal(false);
+        setSelectedCollege(null);
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete college: ${result?.error || "Unknown error"}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting college:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   // Safely combine all colleges for unified display
@@ -137,18 +186,11 @@ export default function CollegesTab({
                   <Edit className="w-4 h-4 text-blue-600" />
                 </button>
                 <button
-                  onClick={() => {
-                    if (
-                      confirm("Are you sure you want to delete this college?")
-                    ) {
-                      // Handle delete
-                      console.log("Delete college:", college.id);
-                    }
-                  }}
-                  className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+                  onClick={() => handleDeleteCollege(college, college.campus)}
+                  className="p-2 bg-white rounded-full shadow-lg hover:bg-red-50 transition-colors group/delete"
                   title="Delete College"
                 >
-                  <Trash2 className="w-4 h-4 text-red-600" />
+                  <Trash2 className="w-4 h-4 text-red-600 group-hover/delete:text-red-700" />
                 </button>
               </div>
             </div>
@@ -286,6 +328,32 @@ export default function CollegesTab({
           // Handle college update
           console.log("Update college:", updatedCollege);
         }}
+      />
+
+      <DeleteConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setSelectedCollege(null);
+        }}
+        onConfirm={confirmDeleteCollege}
+        isDeleting={isDeleting}
+        title="Delete College"
+        description="This will permanently remove the college and all its associated data."
+        itemName={
+          selectedCollege?.name ||
+          selectedCollege?.shortName ||
+          selectedCollege?.acronym ||
+          ""
+        }
+        itemType="College"
+        warningMessage="Deleting this college will also remove all associated programs, files, and other data."
+        additionalInfo={`Campus: ${
+          selectedCollege?.campus || "Unknown"
+        } | Programs: ${
+          (selectedCollege?.undergraduate_programs || 0) +
+          (selectedCollege?.graduate_programs || 0)
+        } | Files: ${selectedCollege?.files || 0}`}
       />
     </div>
   );

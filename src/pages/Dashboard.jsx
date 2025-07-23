@@ -5,6 +5,7 @@ import { useFileOperations } from "@/hooks/useFileOperations";
 import { useCollegeOperations } from "@/hooks/useCollegeOperations";
 import { useFileActions } from "@/hooks/useFileActions";
 import { useDashboardFilters } from "@/hooks/useDashboardFilters";
+import { collegeApi } from "../services/api/dashboardApi";
 
 import StatusCards from "@/components/dashboard/StatusCards";
 import FilesTab from "@/components/dashboard/FilesTab";
@@ -131,6 +132,34 @@ const Dashboard = () => {
         "error"
       );
       console.error("Error deleting program:", error);
+    }
+  };
+
+  const handleDeleteCollege = async (collegeId, campus) => {
+    const loadingToastId = showLoadingToast("Deleting college...");
+
+    try {
+      const response = await collegeApi.delete(collegeId);
+
+      if (response.data.success !== false) {
+        updateToast(loadingToastId, `College deleted successfully!`, "success");
+        return { success: true };
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete college: ${response.data.message}`,
+          "error"
+        );
+        return { success: false, error: response.data.message };
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting college:", error);
+      return { success: false, error: error.message };
     }
   };
 
@@ -342,6 +371,7 @@ const Dashboard = () => {
                   colleges={collegesData}
                   campuses={dashboardData.campuses}
                   onAddCollege={handleAddCollege}
+                  onDeleteCollege={handleDeleteCollege}
                   loading={dashboardLoading}
                 />
               )}
