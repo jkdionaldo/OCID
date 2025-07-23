@@ -137,7 +137,7 @@ const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-xs mx-auto">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* General Error Message */}
         {errors.general && (

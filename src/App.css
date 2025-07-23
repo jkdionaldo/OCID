@@ -187,3 +187,11 @@ body {
 .Toastify__progress-bar--error {
   background: #991b1b;
 }
+
+/* For shadcn customization */
+.dialog-content {
+  min-height: 650px;
+  background: rgb(255, 255, 255) !important;
+  padding: 30px;
+  border-radius: 4px;
+}
