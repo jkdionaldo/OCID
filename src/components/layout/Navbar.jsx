@@ -177,14 +177,16 @@ const Navbar = () => {
             )}
           </div>
 
-          <a
-            href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200"
-          >
-            ABOUT OCID
-          </a>
+         <Link 
+         to="/about"
+          className={`font-semibold uppercase xl:text-sm ${
+              isActive("/about")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+         >
+         ABOUT OCID
+         </Link>
 
           <Link
             to="/downloadables"
