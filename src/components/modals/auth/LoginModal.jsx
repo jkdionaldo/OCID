@@ -80,11 +80,11 @@ export default function LoginModal() {
                 <AnimatePresence mode="sync" custom={direction}>
                   {showForgotPassword ? (
                     <motion.div
-                      key="register"
+                      key="forgot"
                       custom={direction}
-                      initial={{ x: direction === 1 ? "100%" : "-100%" }}
+                      initial={{ x: direction === 1 ? "-100%" : "100%" }}
                       animate={{ x: 0 }}
-                      exit={{ x: direction === 1 ? "-100%" : "100%" }}
+                      exit={{ x: direction === 1 ? "100%" : "-100%" }}
                       transition={{ duration: 0.2 }}
                       className="w-full absolute top-0 left-0"
                     >
