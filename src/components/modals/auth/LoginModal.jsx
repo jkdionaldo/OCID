@@ -58,15 +58,27 @@ export default function LoginModal() {
 
   return (
     <>
-      <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button variant="outline">Login</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[435px] dialog-content">
-            <DialogHeader>
-              <div className="flex items-center justify-center sm:mb-6 mt-12">
-                <img
+      <button
+        className="font-semibold uppercase text-gray-700 hover:text-green-700 transition-colors duration-200 flex mx-auto text-sm "
+        onClick={openModal}
+      >
+        <span className="hidden sm:inline">LOGIN</span>
+        <span className="sm:hidden">LOGIN</span>
+        <LogIn className="ml-1 sm:ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+      </button>
+
+      {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm">
+          <div className="relative bg-white rounded-lg sm:rounded-xl shadow-lg w-full max-w-sm sm:max-w-md mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] overflow-hidden h-[635px]">
+            <div className="p-4 sm:p-6">
+              <button
+                className="absolute top-2 right-2 sm:top-3 sm:right-3 text-gray-500 hover:text-gray-700 text-lg sm:text-xl p-1"
+                onClick={closeModal}
+              >
+                <X className="h-5 w-5 sm:h-6 sm:w-6" />
+              </button>
+              <div className="flex items-center justify-center mt-4 pb-5 sm:mb-6">
+                <img  
                   src="/images/ocid_logo.png"
                   alt="OCID Logo"
                   className="h-8 sm:h-12 lg:h-16 object-contain"
