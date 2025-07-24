@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import SecureStorage from "@/utils/secureStorage";
+import DevToolsDetection from "@/utils/devToolsDetection";
 
 // Axios configuration
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -184,6 +185,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        if (import.meta.env.DEV) {
+          DevToolsDetection.addDevToolsWarning();
+        }
+
         const authData = await getStoredAuthData();
 
         if (authData?.token && authData?.user) {
@@ -257,7 +262,16 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Auth check failed:", error);
-        await clearAuthData();
+
+        // Don't automatically clear auth data if DevTools might be the cause
+        if (!DevToolsDetection.isDevToolsOpen()) {
+          await clearAuthData();
+        } else {
+          console.warn(
+            "Auth check failed, but DevTools is open. Keeping session."
+          );
+        }
+
         setIsLoading(false);
       }
     };

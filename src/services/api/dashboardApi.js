@@ -2,6 +2,12 @@ import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// Dashboard API
+export const dashboardApi = {
+  getAll: () => axios.get(`${BASE_URL}/dashboard`),
+  clearCache: () => axios.post(`${BASE_URL}/dashboard/clear-cache`),
+};
+
 // Campus API
 export const campusApi = {
   getAll: () => axios.get(`${BASE_URL}/campuses`),
