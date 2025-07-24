@@ -13,7 +13,7 @@ import AddCollegeModal from "@/components/modals/dashboard/AddCollegeModal";
 import EditCollegeModal from "@/components/modals/dashboard/EditCollegeModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
-import { showLoadingToast, updateToast } from "@/utils/toast";
+import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 export default function CollegesTab({
   colleges,

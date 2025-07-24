@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { showLoadingToast, updateToast } from "@/utils/toast";
+import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 export const useCollegeOperations = (
   dashboardData,

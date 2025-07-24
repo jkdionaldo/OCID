@@ -13,7 +13,7 @@ import AddProgramModal from "@/components/modals/dashboard/AddProgramModal";
 import EditProgramModal from "@/components/modals/dashboard/EditProgramModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
-import { showLoadingToast, updateToast } from "@/utils/toast";
+import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 export default function ProgramsTab({
   undergrads,
