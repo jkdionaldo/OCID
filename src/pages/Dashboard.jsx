@@ -11,6 +11,7 @@ import StatusCards from "@/components/dashboard/StatusCards";
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
 import ProgramsTab from "@/components/dashboard/ProgramsTab";
+import PerformanceMonitor from "@/components/dashboard/PerformanceMonitor";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
 import DashboardError from "@/components/dashboard/DashboardError";
@@ -23,17 +24,21 @@ import { Search, Building, BookOpen, GraduationCap } from "lucide-react";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("files");
 
-  // Data hooks
+  // Data hooks with optimized caching
   const {
     data: dashboardData,
     loading: dashboardLoading,
     error: dashboardError,
+    lastFetch,
+    cacheInfo,
     colleges,
     files,
     createCollege,
     createProgram,
     updateProgram,
     deleteProgram,
+    refetch,
+    isCacheValid,
   } = useDashboardData();
 
   const memoizedFiles = useMemo(() => files, [files.length]);
@@ -239,7 +244,9 @@ const Dashboard = () => {
 
   // Show error state
   if (dashboardError) {
-    return <DashboardError error={dashboardError} />;
+    return (
+      <DashboardError error={dashboardError} onRetry={() => refetch(true)} />
+    );
   }
 
   const tabs = [
@@ -266,7 +273,26 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-20 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <DashboardHeader />
+        <DashboardHeader
+          onRefresh={refetch}
+          lastFetch={lastFetch}
+          loading={dashboardLoading}
+        />
+
+        <PerformanceMonitor
+          cacheInfo={cacheInfo}
+          loading={dashboardLoading}
+          lastFetch={lastFetch}
+        />
+
+        {/* Cache Status Indicator */}
+        {isCacheValid && isCacheValid() && !dashboardLoading && (
+          <div className="mb-4 p-2 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-sm text-green-700">
+              ⚡ Data loaded from cache for faster performance
+            </p>
+          </div>
+        )}
 
         {/* Stats Cards */}
         {dashboardLoading ? (

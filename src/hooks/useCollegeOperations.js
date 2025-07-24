@@ -1,7 +1,12 @@
 import { useState, useCallback } from "react";
 import { showLoadingToast, updateToast } from "@/utils/toast";
 
-export const useCollegeOperations = (dashboardData, createCollege) => {
+export const useCollegeOperations = (
+  dashboardData,
+  createCollege,
+  updateCollege,
+  deleteCollege
+) => {
   // Initialize with proper structure to avoid the map error
   const [collegesData, setCollegesDataState] = useState({
     "CSU-MAIN": [],
@@ -39,38 +44,6 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
         return;
       }
 
-      // Optimistic update
-      const tempCollegeId = `temp-${Date.now()}`;
-      const tempCollege = {
-        id: tempCollegeId,
-        name: newCollege.name,
-        shortName: newCollege.shortName,
-        undergraduate_programs: 0,
-        graduate_programs: 0,
-        programs: 0,
-        files: 0,
-        logo_url: newCollege.logoPreview,
-      };
-
-      // Update UI optimistically based on campus acronym
-      setCollegesData((prevData) => {
-        const updatedData = { ...prevData };
-
-        if (selectedCampus.acronym === "CSU-MAIN") {
-          updatedData["CSU-MAIN"] = [
-            ...(updatedData["CSU-MAIN"] || []),
-            tempCollege,
-          ];
-        } else if (selectedCampus.acronym === "CSU-CC") {
-          updatedData["CSU-CC"] = [
-            ...(updatedData["CSU-CC"] || []),
-            tempCollege,
-          ];
-        }
-
-        return updatedData;
-      });
-
       // Create FormData and make API call
       const formData = new FormData();
       formData.append("name", newCollege.name);
@@ -89,8 +62,6 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
           "success"
         );
       } else {
-        // Revert optimistic update
-        revertOptimisticUpdate(tempCollegeId, selectedCampus);
         updateToast(
           loadingToastId,
           `Failed to add college: ${result.error}`,
@@ -98,7 +69,6 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
         );
       }
     } catch (error) {
-      // Handle error and revert changes
       updateToast(
         loadingToastId,
         `An unexpected error occurred: ${error.message}`,
@@ -108,30 +78,95 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
     }
   };
 
-  const revertOptimisticUpdate = useCallback(
-    (tempCollegeId, selectedCampus) => {
-      setCollegesDataState((prevData) => {
-        const updatedData = { ...prevData };
+  // Handle updating a college
+  const handleUpdateCollege = async (collegeId, updatedData) => {
+    const loadingToastId = showLoadingToast("Updating college...");
 
-        if (selectedCampus.acronym === "CSU-MAIN") {
-          updatedData["CSU-MAIN"] = (updatedData["CSU-MAIN"] || []).filter(
-            (c) => c.id !== tempCollegeId
-          );
-        } else if (selectedCampus.acronym === "CSU-CC") {
-          updatedData["CSU-CC"] = (updatedData["CSU-CC"] || []).filter(
-            (c) => c.id !== tempCollegeId
-          );
-        }
+    try {
+      let formData;
 
-        return updatedData;
-      });
-    },
-    []
-  );
+      if (updatedData.logo) {
+        // If there's a logo, use FormData
+        formData = new FormData();
+        formData.append("name", updatedData.name);
+        formData.append("acronym", updatedData.shortName);
+        formData.append("campus_id", updatedData.campus_id);
+        formData.append("logo", updatedData.logo);
+      } else {
+        // If no logo, use regular object
+        formData = {
+          name: updatedData.name,
+          acronym: updatedData.shortName,
+          campus_id: updatedData.campus_id,
+        };
+      }
+
+      const result = await updateCollege(collegeId, formData);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `College "${updatedData.name}" has been updated successfully!`,
+          "success"
+        );
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update college: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating college:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Handle deleting a college
+  const handleDeleteCollege = async (collegeId, collegeName) => {
+    const loadingToastId = showLoadingToast("Deleting college...");
+
+    try {
+      const result = await deleteCollege(collegeId);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `College "${collegeName}" has been deleted successfully!`,
+          "success"
+        );
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete college: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting college:", error);
+      return { success: false, error: error.message };
+    }
+  };
 
   return {
     collegesData,
     setCollegesData,
     handleAddCollege,
+    handleUpdateCollege,
+    handleDeleteCollege,
   };
 };
