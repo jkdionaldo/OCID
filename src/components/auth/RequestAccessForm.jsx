@@ -1,7 +1,9 @@
 const RequestAccessForm = ({ onBack }) => (
-  <div className="w-full max-w-md mx-auto py-10">
-    <h2 className="text-2xl font-bold mb-4 text-center">Want to Register?</h2>
-    <p className="font-poppins text-center font-medium">
+  <div className="w-full max-w-xs mx-auto py-10">
+    <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
+      Want to Register?
+    </h2>
+    <p className="font-poppins text-center font-medium text-gray-600">
       To register an account, please contact us at{" "}
       <a className="text-[#2356f6]">ocid@carsu.edu.ph</a> or visit the{" "}
       <a className="text-[#2356f6]">
