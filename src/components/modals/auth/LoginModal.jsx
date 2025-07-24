@@ -59,29 +59,29 @@ export default function LoginModal() {
   return (
     <>
       <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button variant="outline">Login</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[435px]  pt-12 lg:pb-24">
-            <DialogHeader>
-              <div className="flex items-center justify-center ">
-                <img
-                  src="/images/ocid_logo.png"
-                  alt="OCID Logo"
-                  className="h-8 sm:h-12 lg:h-16 object-contain "
-                />
-                <img
-                  src="/images/logo_text_2.png"
-                  alt="OCID Logo Text"
-                  className="h-10 sm:h-14 lg:h-16 w-auto object-contain ml-1 sm:ml-2"
-                />
-              </div>
-              {/* <DialogTitle>Edit profile</DialogTitle> */}
-            </DialogHeader>
-            <DialogDescription>
-              <div className="relative">
-                <div className="w-full relative overflow-hidden">
+        <DialogTrigger asChild>
+          <Button variant="outline">Login</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[435px]  pt-12 lg:pb-18">
+          <DialogHeader>
+            <div className="flex items-center justify-center ">
+              <img
+                src="/images/ocid_logo.png"
+                alt="OCID Logo"
+                className="h-8 sm:h-12 lg:h-16 object-contain "
+              />
+              <img
+                src="/images/logo_text_2.png"
+                alt="OCID Logo Text"
+                className="h-10 sm:h-14 lg:h-16 w-auto object-contain ml-1 sm:ml-2"
+              />
+            </div>
+            {/* <DialogTitle>Edit profile</DialogTitle> */}
+          </DialogHeader>
+          <DialogDescription>
+            <form>
+              <div className="relative ">
+                <div className="w-full relative min-h-[504px] overflow-hidden">
                   <AnimatePresence mode="sync" custom={direction}>
                     {showForgotPassword ? (
                       <motion.div
@@ -91,7 +91,7 @@ export default function LoginModal() {
                         animate={{ x: 0 }}
                         exit={{ x: direction === 1 ? "100%" : "-100%" }}
                         transition={{ duration: 0.2 }}
-                        className="w-full  top-0 left-0"
+                        className="w-full absolute top-0 left-0"
                       >
                         <ForgotPassword
                           onBack={() => setShowForgotPassword(false)}
@@ -105,7 +105,7 @@ export default function LoginModal() {
                         animate={{ x: 0 }}
                         exit={{ x: direction === 1 ? "100%" : "100%" }}
                         transition={{ duration: 0.2 }}
-                        className="w-full   top-0 left-0"
+                        className="w-full absolute top-0 left-0"
                       >
                         <RequestAccessForm
                           onBack={() => {
@@ -122,7 +122,7 @@ export default function LoginModal() {
                         animate={{ x: 0 }}
                         exit={{ x: direction === 1 ? "100%" : "-100%" }}
                         transition={{ duration: 0.2 }}
-                        className="w-full top-0 left-0"
+                        className="w-full absolute top-0 left-0 pt-5"
                       >
                         <LoginForm
                           onRequestAccess={() => {
@@ -136,9 +136,9 @@ export default function LoginModal() {
                   </AnimatePresence>
                 </div>
               </div>
-            </DialogDescription>
-          </DialogContent>
-        </form>
+            </form>
+          </DialogDescription>
+        </DialogContent>
       </Dialog>
     </>
   );
