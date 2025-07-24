@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "react-router-dom";
-
+import Chatbot from "../../components/chatbot/Chatbox";
 
 const Undergrad = () => {
   const collegeLogos = [
@@ -41,7 +41,7 @@ const Undergrad = () => {
       logo: "/images/cmns-logo.png",
     },
   ];
-  
+
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* Tab Navigation */}
@@ -100,6 +100,8 @@ const Undergrad = () => {
           </div>
         ))}
       </div>
+      {/* Floating Chatbot */}
+      <Chatbot />
     </div>
   );
 };

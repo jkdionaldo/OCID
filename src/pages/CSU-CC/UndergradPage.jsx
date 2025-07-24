@@ -24,7 +24,6 @@ const Undergrad = () => {
       color: "#3E7B31",
       logo: "/images/csu-cc/CTHM-logo.png",
     },
-   
   ];
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "react-router-dom";
+import BackToTop from "../../components/ui/BackToTop";
 
 const GraduateSchools = () => {
   // Only include the 6 specified colleges for graduate programs
@@ -36,7 +37,7 @@ const GraduateSchools = () => {
       logo: "/images/chass-logo.png",
     },
   ];
-  
+
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* start Tab Navigation */}
@@ -50,7 +51,9 @@ const GraduateSchools = () => {
           </div>
           <button
             className="text-gray-500 text-xl sm:text-2xl px-0 hover:text-green-700 transition-colors duration-200"
-            onClick={() => (window.location.href = "/colleges_undergraduate_main")}
+            onClick={() =>
+              (window.location.href = "/colleges_undergraduate_main")
+            }
           >
             Undergraduate
           </button>

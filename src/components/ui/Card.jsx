@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ children }) => {
+const Card = ({ children, small }) => {
   return (
-    <StyledWrapper>
-      <div className="card">{children}</div>
+    <StyledWrapper small={small}>
+      <div className={`card${small ? ' card-small' : ''}`}>{children}</div>
     </StyledWrapper>
   );
 };
@@ -14,11 +14,10 @@ const StyledWrapper = styled.div`
   .card {
     box-sizing: border-box;
     width: 100%;
-    min-width: 220px;
-    max-width: 350px;
-    min-height: 220px;
-    height: 320px;
-    /*height: 254px;*/
+    min-width: 180px;
+    max-width: 300px;
+    min-height: 160px;
+    height: 220px;
     background: rgba(255, 255, 255, 0.58);
     border: 1px solid white;
     box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
@@ -37,7 +36,14 @@ const StyledWrapper = styled.div`
     padding: 1rem;
     border: 1px solid #003800;
   }
-
+  .card-small {
+    min-width: 120px;
+    max-width: 220px;
+    min-height: 120px;
+    height: 160px;
+    border-radius: 10px;
+    padding: 0.5rem;
+  }
   .card:hover {
     transform: scale(1.05);
   }

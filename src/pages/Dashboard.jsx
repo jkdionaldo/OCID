@@ -3,6 +3,8 @@ import Status from "./Dashboard Components/status";
 import Search from "./Dashboard Components/Search";
 import FileComponent from "./Dashboard Components/file";
 import CollegesAndForms from "./Dashboard Components/colleges";
+import BackToTop from "../components/ui/BackToTop";
+
 import {
   File,
   FileText,
@@ -361,6 +363,8 @@ const Dashboard = () => {
           getStatusIcon={getStatusIcon}
         />
       </div>
+      {/* Back to Top Button */}
+      <backToTop />
     </div>
   );
 };
