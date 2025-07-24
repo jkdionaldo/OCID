@@ -75,6 +75,13 @@ module.exports = {
           700: "#0047AB",
           800: "#003D91",
         },
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -83,9 +90,5 @@ module.exports = {
       },
     },
   },
-  plugins: 
-  [
-    require('tailwindcss-animate'),
-    require('daisyui')
-  ],
+  plugins: [require("tailwindcss-animate")],
 };

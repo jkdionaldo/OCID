@@ -3,6 +3,8 @@ import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ProfileSettings from "@/pages/ProfileSettings";
+import Procedurals from "@/pages/Procedurals";
+import About from "@/pages/About";
 // Import route collections
 // ccGraduateRoutes,
 
@@ -36,8 +38,9 @@ const Router = () => {
       <Route
         path="/dashboard"
         element={
-      
+          <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
         }
       />
       {/* Profile Settings Route */}
@@ -45,15 +48,18 @@ const Router = () => {
         path="/profile-settings"
         element={
           // <ProtectedRoute>
-            <ProfileSettings />
+          <ProfileSettings />
           /* </ProtectedRoute> */
         }
       />
-
+      {/* About Page */}
+      <Route path="/about" element={<About />} />
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
 
+      {/* Procedurals Page */}
+      <Route path="/procedurals" element={<Procedurals />} />
       {/*csu-main */}
       <Route
         path="/colleges_graduate_main"

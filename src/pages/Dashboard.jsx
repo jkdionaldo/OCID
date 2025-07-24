@@ -1,365 +1,368 @@
-import React, { useState, useRef } from "react";
-import Status from "./Dashboard Components/status";
-import Search from "./Dashboard Components/Search";
-import FileComponent from "./Dashboard Components/file";
-import CollegesAndForms from "./Dashboard Components/colleges";
-import {
-  File,
-  FileText,
-  Image,
-  Video,
-  Archive,
-  Edit3,
-  FileEdit,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-} from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
+import { useDashboardData } from "@/hooks/useDashboardData";
+import { useDashboardState } from "@/hooks/useDashboardState";
+import { useFileOperations } from "@/hooks/useFileOperations";
+import { useCollegeOperations } from "@/hooks/useCollegeOperations";
+import { useFileActions } from "@/hooks/useFileActions";
+import { useDashboardFilters } from "@/hooks/useDashboardFilters";
+
+import StatusCards from "@/components/dashboard/StatusCards";
+import FilesTab from "@/components/dashboard/FilesTab";
+import CollegesTab from "@/components/dashboard/CollegesTab";
+import ProgramsTab from "@/components/dashboard/ProgramsTab";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import DashboardLoading from "@/components/dashboard/DashboardLoading";
+import DashboardError from "@/components/dashboard/DashboardError";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { showLoadingToast, updateToast } from "@/utils/toast";
+import { Search, Building, BookOpen, GraduationCap } from "lucide-react";
 
 const Dashboard = () => {
-  const [files, setFiles] = useState([
-    {
-      id: 1,
-      name: "BSA_Agronomy_Curriculum_2023.pdf",
-      type: "pdf",
-      size: "2.4 MB",
-      uploadDate: "2024-01-15",
-      category: "Curriculum",
-      college: "CAA",
-      program: "BSA Agronomy",
-      year: "2023",
-      status: "active",
-      lastModified: "2024-01-15",
-      uploadedBy: "Admin",
-    },
-    {
-      id: 2,
-      name: "BSIT_Syllabus_2023.pdf",
-      type: "pdf",
-      size: "1.8 MB",
-      uploadDate: "2024-01-10",
-      category: "Syllabus",
-      college: "CCIS",
-      program: "BSIT",
-      year: "2023",
-      status: "active",
-      lastModified: "2024-01-10",
-      uploadedBy: "Dean CCIS",
-    },
-    {
-      id: 3,
-      name: "CED_Building_Photo.jpg",
-      type: "jpg",
-      size: "5.2 MB",
-      uploadDate: "2024-01-08",
-      category: "Images",
-      college: "CED",
-      program: "General",
-      year: "2024",
-      status: "active",
-      lastModified: "2024-01-08",
-      uploadedBy: "Photography Team",
-    },
-    {
-      id: 4,
-      name: "BSBA_Marketing_Requirements.docx",
-      type: "docx",
-      size: "856 KB",
-      uploadDate: "2024-01-05",
-      category: "Documents",
-      college: "CBA",
-      program: "BSBA Marketing",
-      year: "2023",
-      status: "draft",
-      lastModified: "2024-01-12",
-      uploadedBy: "Program Coordinator",
-    },
+  const [activeTab, setActiveTab] = useState("files");
+
+  // Data hooks
+  const {
+    data: dashboardData,
+    loading: dashboardLoading,
+    error: dashboardError,
+    colleges,
+    files,
+    createCollege,
+    createProgram,
+    updateProgram,
+    deleteProgram,
+  } = useDashboardData();
+
+  const memoizedFiles = useMemo(() => files, [files.length]);
+
+  const { state, setters } = useDashboardState();
+
+  // File operations
+  const {
+    getFileIcon,
+    getStatusIcon,
+    handleFileUpload,
+    handleDownload,
+    handleDelete,
+  } = useFileOperations();
+
+  // College operations
+  const { collegesData, setCollegesData, handleAddCollege } =
+    useCollegeOperations(dashboardData, createCollege);
+
+  // Handle adding a new program
+  const handleAddProgram = async (newProgram) => {
+    const loadingToastId = showLoadingToast("Creating new program...");
+
+    try {
+      const result = await createProgram(newProgram);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `Program "${newProgram.program_name}" has been added successfully!`,
+          "success"
+        );
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to add program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error adding program:", error);
+    }
+  };
+
+  // Handle updating a program
+  const handleUpdateProgram = async (programId, programData, programType) => {
+    const loadingToastId = showLoadingToast("Updating program...");
+
+    try {
+      const result = await updateProgram(programId, programData, programType);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Program updated successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating program:", error);
+    }
+  };
+
+  // Handle deleting a program
+  const handleDeleteProgram = async (programId, programType) => {
+    const loadingToastId = showLoadingToast("Deleting program...");
+
+    try {
+      const result = await deleteProgram(programId, programType);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Program deleted successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting program:", error);
+    }
+  };
+
+  // File actions
+  const {
+    handleBulkDownload,
+    handleBulkDelete,
+    handleUpdateStatus,
+    handleFileSelect,
+    handleSelectAll,
+  } = useFileActions(files, handleDelete, handleDownload);
+
+  // Filter operations
+  const { filteredFiles, sortedFiles } = useDashboardFilters(files, state);
+
+  // College filter options
+  const collegeFilterOptions = [
+    "all",
+    ...Array.from(new Set(colleges.map((college) => college.acronym))),
+  ];
+
+  // Update colleges data when real data is loaded
+  useEffect(() => {
+    if (colleges.length > 0 && dashboardData.campuses.length > 0) {
+      const transformedData = {
+        "CSU-MAIN": [],
+        "CSU-CC": [],
+      };
+
+      const csuMainCampus = dashboardData.campuses.find(
+        (campus) => campus.acronym === "CSU-MAIN"
+      );
+      const csuCcCampus = dashboardData.campuses.find(
+        (campus) => campus.acronym === "CSU-CC"
+      );
+
+      colleges.forEach((college) => {
+        const undergradPrograms = dashboardData.undergrads.filter(
+          (p) => p.college_id === college.id
+        );
+        const graduatePrograms = dashboardData.graduates.filter(
+          (p) => p.college_id === college.id
+        );
+        const collegeFiles = memoizedFiles.filter(
+          (f) => f.college === college.acronym
+        );
+
+        const collegeInfo = {
+          id: college.id,
+          name: college.name,
+          shortName: college.acronym,
+          undergraduate_programs: undergradPrograms.length,
+          graduate_programs: graduatePrograms.length,
+          programs: undergradPrograms.length + graduatePrograms.length,
+          files: collegeFiles.length,
+          logo_url: college.logo_url,
+          campus_id: college.campus_id,
+        };
+
+        if (college.campus_id === csuMainCampus?.id) {
+          transformedData["CSU-MAIN"].push(collegeInfo);
+        } else if (college.campus_id === csuCcCampus?.id) {
+          transformedData["CSU-CC"].push(collegeInfo);
+        }
+      });
+
+      setCollegesData(transformedData);
+    }
+  }, [
+    colleges,
+    dashboardData.campuses,
+    dashboardData.undergrads,
+    dashboardData.graduates,
+    memoizedFiles,
+    setCollegesData,
   ]);
 
-  const [viewMode, setViewMode] = useState("grid");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedCollege, setSelectedCollege] = useState("all");
-  const [selectedStatus, setSelectedStatus] = useState("all");
-  const [isDragging, setIsDragging] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showBulkActions, setShowBulkActions] = useState(false);
-  const [sortBy, setSortBy] = useState("uploadDate");
-  const [sortOrder, setSortOrder] = useState("desc");
-  const fileInputRef = useRef(null);
+  // Show error state
+  if (dashboardError) {
+    return <DashboardError error={dashboardError} />;
+  }
 
-  const categories = [
-    "all",
-    "Curriculum",
-    "Syllabus",
-    "Documents",
-    "Images",
-    "Videos",
-    "Others",
+  const tabs = [
+    {
+      id: "files",
+      label: "Files & Documents",
+      icon: Search,
+      description: "Manage all files, curricula, and documents",
+    },
+    {
+      id: "colleges",
+      label: "Colleges",
+      icon: Building,
+      description: "Manage colleges and their information",
+    },
+    {
+      id: "programs",
+      label: "Programs",
+      icon: BookOpen,
+      description: "Manage undergraduate and graduate programs",
+    },
   ];
-  const colleges = [
-    "all",
-    "CAA",
-    "CBA",
-    "CCIS",
-    "CED",
-    "CEGS",
-    "CEIT",
-    "CITTE",
-    "CMNS",
-    "CHASS",
-  ];
-  const statuses = ["all", "active", "draft", "archived", "pending"];
-
-  const getFileIcon = (type) => {
-    switch (type) {
-      case "pdf":
-        return <FileText className="w-8 h-8 text-red-500" />;
-      case "doc":
-      case "docx":
-        return <FileEdit className="w-8 h-8 text-blue-500" />;
-      case "jpg":
-      case "jpeg":
-      case "png":
-      case "gif":
-        return <Image className="w-8 h-8 text-green-500" />;
-      case "mp4":
-      case "avi":
-      case "mov":
-        return <Video className="w-8 h-8 text-purple-500" />;
-      case "xlsx":
-      case "xls":
-        return <File className="w-8 h-8 text-green-600" />;
-      default:
-        return <File className="w-8 h-8 text-gray-500" />;
-    }
-  };
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "active":
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case "draft":
-        return <Edit3 className="w-4 h-4 text-yellow-500" />;
-      case "archived":
-        return <Archive className="w-4 h-4 text-gray-500" />;
-      case "pending":
-        return <Clock className="w-4 h-4 text-blue-500" />;
-      default:
-        return <AlertCircle className="w-4 h-4 text-red-500" />;
-    }
-  };
-
-  const handleFileUpload = (uploadedFiles) => {
-    const newFiles = Array.from(uploadedFiles).map((file, index) => ({
-      id: files.length + index + 1,
-      name: file.name,
-      type: file.name.split(".").pop().toLowerCase(),
-      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      uploadDate: new Date().toISOString().split("T")[0],
-      category: determineCategory(file.type),
-      college: "General",
-      program: "General",
-      year: new Date().getFullYear().toString(),
-      status: "draft",
-      lastModified: new Date().toISOString().split("T")[0],
-      uploadedBy: "Current User",
-    }));
-
-    setFiles([...files, ...newFiles]);
-  };
-
-  const determineCategory = (fileType) => {
-    if (fileType.startsWith("image/")) return "Images";
-    if (fileType.startsWith("video/")) return "Videos";
-    if (fileType.includes("pdf")) return "Documents";
-    if (fileType.includes("document")) return "Documents";
-    if (fileType.includes("sheet") || fileType.includes("excel"))
-      return "Documents";
-    return "Others";
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const droppedFiles = e.dataTransfer.files;
-    handleFileUpload(droppedFiles);
-  };
-
-  const filteredFiles = files.filter((file) => {
-    const matchesSearch =
-      file.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      file.program.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      file.college.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || file.category === selectedCategory;
-    const matchesCollege =
-      selectedCollege === "all" || file.college === selectedCollege;
-    const matchesStatus =
-      selectedStatus === "all" || file.status === selectedStatus;
-    return matchesSearch && matchesCategory && matchesCollege && matchesStatus;
-  });
-
-  const sortedFiles = [...filteredFiles].sort((a, b) => {
-    const aValue = a[sortBy];
-    const bValue = b[sortBy];
-
-    if (sortOrder === "asc") {
-      return aValue > bValue ? 1 : -1;
-    } else {
-      return aValue < bValue ? 1 : -1;
-    }
-  });
-
-  const handleDownload = (file) => {
-    // Simulate download with actual file URL if available
-    const link = document.createElement("a");
-    link.href = file.url || "#";
-    link.download = file.name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleBulkDownload = () => {
-    selectedFiles.forEach((fileId) => {
-      const file = files.find((f) => f.id === fileId);
-      if (file) handleDownload(file);
-    });
-    setSelectedFiles([]);
-    setShowBulkActions(false);
-  };
-
-  const handleDelete = (fileId) => {
-    if (window.confirm("Are you sure you want to delete this file?")) {
-      setFiles(files.filter((file) => file.id !== fileId));
-    }
-  };
-
-  const handleBulkDelete = () => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${selectedFiles.length} files?`
-      )
-    ) {
-      setFiles(files.filter((file) => !selectedFiles.includes(file.id)));
-      setSelectedFiles([]);
-      setShowBulkActions(false);
-    }
-  };
-
-  const handleUpdateStatus = (fileId, newStatus) => {
-    setFiles(
-      files.map((file) =>
-        file.id === fileId
-          ? {
-              ...file,
-              status: newStatus,
-              lastModified: new Date().toISOString().split("T")[0],
-            }
-          : file
-      )
-    );
-  };
-
-  const handleFileSelect = (fileId) => {
-    setSelectedFiles((prev) => {
-      const newSelection = prev.includes(fileId)
-        ? prev.filter((id) => id !== fileId)
-        : [...prev, fileId];
-      setShowBulkActions(newSelection.length > 0);
-      return newSelection;
-    });
-  };
-
-  const handleSelectAll = () => {
-    if (selectedFiles.length === sortedFiles.length) {
-      setSelectedFiles([]);
-      setShowBulkActions(false);
-    } else {
-      setSelectedFiles(sortedFiles.map((file) => file.id));
-      setShowBulkActions(true);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        <DashboardHeader />
+
+        {/* Stats Cards */}
+        {dashboardLoading ? (
+          <DashboardLoading type="stats" />
+        ) : (
+          <StatusCards files={files} />
+        )}
+
+        {/* Modern Tab Switcher */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            File Management Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Manage all college files, curricula, syllabi, and documents
-          </p>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            {/* Tab Navigation */}
+            <div className="border-b border-gray-200">
+              <nav className="flex space-x-8 px-6" aria-label="Tabs">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`py-4 px-1 border-b-2 font-medium text-sm transition-all duration-200 ${
+                        activeTab === tab.id
+                          ? "border-blue-500 text-blue-600 bg-blue-50/50"
+                          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Icon className="w-5 h-5" />
+                        <span>{tab.label}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Tab Description */}
+            <div className="px-6 py-3 bg-gray-50/50 border-b border-gray-100">
+              <p className="text-sm text-gray-600">
+                {tabs.find((tab) => tab.id === activeTab)?.description}
+              </p>
+            </div>
+
+            {/* Tab Content */}
+            <div className="p-6">
+              {activeTab === "files" && (
+                <FilesTab
+                  files={files}
+                  sortedFiles={sortedFiles}
+                  selectedFiles={state.selectedFiles}
+                  showBulkActions={state.showBulkActions}
+                  viewMode={state.viewMode}
+                  statuses={state.statuses}
+                  categories={state.categories}
+                  colleges={collegeFilterOptions}
+                  searchTerm={state.searchTerm}
+                  selectedCategory={state.selectedCategory}
+                  selectedCollege={state.selectedCollege}
+                  selectedStatus={state.selectedStatus}
+                  sortBy={state.sortBy}
+                  sortOrder={state.sortOrder}
+                  setSearchTerm={setters.setSearchTerm}
+                  setSelectedCategory={setters.setSelectedCategory}
+                  setSelectedCollege={setters.setSelectedCollege}
+                  setSelectedStatus={setters.setSelectedStatus}
+                  setSortBy={setters.setSortBy}
+                  setSortOrder={setters.setSortOrder}
+                  setViewMode={setters.setViewMode}
+                  handleDownload={handleDownload}
+                  handleBulkDownload={() =>
+                    handleBulkDownload(state.selectedFiles)
+                  }
+                  handleBulkDelete={() => handleBulkDelete(state.selectedFiles)}
+                  handleDelete={(fileId) => handleDelete(fileId, files)}
+                  handleUpdateStatus={handleUpdateStatus}
+                  handleFileSelect={(fileId) =>
+                    handleFileSelect(
+                      fileId,
+                      state.selectedFiles,
+                      setters.setSelectedFiles,
+                      setters.setShowBulkActions
+                    )
+                  }
+                  handleSelectAll={() =>
+                    handleSelectAll(
+                      sortedFiles,
+                      state.selectedFiles,
+                      setters.setSelectedFiles,
+                      setters.setShowBulkActions
+                    )
+                  }
+                  setSelectedFiles={setters.setSelectedFiles}
+                  setShowBulkActions={setters.setShowBulkActions}
+                  getFileIcon={getFileIcon}
+                  getStatusIcon={getStatusIcon}
+                  loading={dashboardLoading}
+                />
+              )}
+
+              {activeTab === "colleges" && (
+                <CollegesTab
+                  colleges={collegesData}
+                  campuses={dashboardData.campuses}
+                  onAddCollege={handleAddCollege}
+                  loading={dashboardLoading}
+                />
+              )}
+
+              {activeTab === "programs" && (
+                <ProgramsTab
+                  undergrads={dashboardData.undergrads}
+                  graduates={dashboardData.graduates}
+                  colleges={colleges}
+                  campuses={dashboardData.campuses}
+                  onAddProgram={handleAddProgram}
+                  onUpdateProgram={handleUpdateProgram}
+                  onDeleteProgram={handleDeleteProgram}
+                  loading={dashboardLoading}
+                />
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Stats Cards - Now using the Status component */}
-        <Status files={files} />
-
-        {/* Colleges & Upload Forms */}
-        <CollegesAndForms
-          files={files}
-          isDragging={isDragging}
-          setIsDragging={setIsDragging}
-          handleFileUpload={handleFileUpload}
-          handleDragOver={handleDragOver}
-          handleDragLeave={handleDragLeave}
-          handleDrop={handleDrop}
-        />
-
-        {/* Search Component */}
-        <Search
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedCollege={selectedCollege}
-          setSelectedCollege={setSelectedCollege}
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          sortOrder={sortOrder}
-          setSortOrder={setSortOrder}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          categories={categories}
-          colleges={colleges}
-          statuses={statuses}
-        />
-
-        {/* File Component */}
-        <FileComponent
-          files={files}
-          sortedFiles={sortedFiles}
-          selectedFiles={selectedFiles}
-          showBulkActions={showBulkActions}
-          viewMode={viewMode}
-          statuses={statuses}
-          handleDownload={handleDownload}
-          handleBulkDownload={handleBulkDownload}
-          handleBulkDelete={handleBulkDelete}
-          handleDelete={handleDelete}
-          handleUpdateStatus={handleUpdateStatus}
-          handleFileSelect={handleFileSelect}
-          handleSelectAll={handleSelectAll}
-          setSelectedFiles={setSelectedFiles}
-          setShowBulkActions={setShowBulkActions}
-          getFileIcon={getFileIcon}
-          getStatusIcon={getStatusIcon}
-        />
+        <ToastContainer />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
@@ -177,14 +177,16 @@ const Navbar = (props) => {
             )}
           </div>
 
-          <a
-            href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200"
-          >
-            ABOUT OCID
-          </a>
+         <Link 
+         to="/about"
+          className={`font-semibold uppercase xl:text-sm ${
+              isActive("/about")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+         >
+         ABOUT OCID
+         </Link>
 
           <Link
             to="/downloadables"
@@ -196,7 +198,19 @@ const Navbar = (props) => {
           >
             DOWNLOAD
           </Link>
+          
+          <Link
+            to="/procedurals"
+            className={`font-semibold uppercase xl:text-sm ${
+              isActive("/procedurals")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+          >
+            PROCEDURALS
+          </Link>
         </div>
+
 
         {/* Desktop User */}
         <div className="hidden xl:block">
@@ -260,7 +274,7 @@ const Navbar = (props) => {
               )}
             </div>
           ) : (
-            <button className="btn" onClick={props.onOpenModal}>Login</button>
+            <LoginModal />
           )}
         </div>
       </div>
@@ -388,7 +402,7 @@ const Navbar = (props) => {
               </button>
             </div>
           ) : (
-            <button className="btn w-full" onClick={props.onOpenModal}>Login</button>
+            <LoginModal />
           )}
         </div>
       </div>
