@@ -13,7 +13,6 @@ import AddProgramModal from "@/components/modals/dashboard/AddProgramModal";
 import EditProgramModal from "@/components/modals/dashboard/EditProgramModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
-import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 export default function ProgramsTab({
   undergrads,
@@ -53,7 +52,6 @@ export default function ProgramsTab({
     if (!selectedProgram || !onDeleteProgram) return;
 
     setIsDeleting(true);
-    const loadingToastId = showLoadingToast("Deleting program...");
 
     try {
       const result = await onDeleteProgram(
@@ -61,27 +59,12 @@ export default function ProgramsTab({
         selectedProgram.program_type
       );
 
+      // Only handle UI state - let Dashboard handle toasts
       if (result?.success !== false) {
-        updateToast(
-          loadingToastId,
-          `Program "${selectedProgram.program_name}" has been deleted successfully!`,
-          "success"
-        );
         setShowDeleteModal(false);
         setSelectedProgram(null);
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to delete program: ${result?.error || "Unknown error"}`,
-          "error"
-        );
       }
     } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
       console.error("Error deleting program:", error);
     } finally {
       setIsDeleting(false);
@@ -432,7 +415,7 @@ export default function ProgramsTab({
             ? "Graduate Program"
             : "Undergraduate Program"
         }
-        warningMessage="Deleting this program will also remove all associated curriculum files, syllabi, and student data. This action cannot be undone."
+        warningMessage="Deleting this program will also remove all associated curriculum files, syllabi, and other data."
         additionalInfo={`College: ${
           selectedProgram ? getCollegeInfo(selectedProgram.college_id).name : ""
         } | Acronym: ${selectedProgram?.acronym || "N/A"}`}
