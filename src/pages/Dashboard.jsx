@@ -1,23 +1,27 @@
-import { useEffect, useState, useMemo } from "react";
-import { useDashboardData } from "@/hooks/useDashboardData";
-import { useDashboardState } from "@/hooks/useDashboardState";
-import { useFileOperations } from "@/hooks/useFileOperations";
-import { useCollegeOperations } from "@/hooks/useCollegeOperations";
-import { useFileActions } from "@/hooks/useFileActions";
-import { useDashboardFilters } from "@/hooks/useDashboardFilters";
-import { collegeApi } from "../services/api/dashboardApi";
+import React, { useState, useEffect, useMemo } from "react";
+import { Search, Building, BookOpen } from "lucide-react";
 
+// Import hooks and components
+import { useDashboardData } from "@/hooks/useDashboardData";
+import { useFileOperations } from "@/hooks/useFileOperations";
+import { useFileActions } from "@/hooks/useFileActions";
+import { useDashboardState } from "@/hooks/useDashboardState";
+import { useDashboardFilters } from "@/hooks/useDashboardFilters";
+import { useCollegeOperations } from "@/hooks/useCollegeOperations";
+
+// Import components
 import StatusCards from "@/components/dashboard/StatusCards";
+import SearchFilters from "@/components/dashboard/SearchFilters";
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
 import ProgramsTab from "@/components/dashboard/ProgramsTab";
-import PerformanceMonitor from "@/components/dashboard/PerformanceMonitor";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import DashboardLoading from "@/components/dashboard/DashboardLoading";
 import DashboardError from "@/components/dashboard/DashboardError";
+import DashboardLoading from "@/components/dashboard/DashboardLoading";
+import PerformanceMonitor from "@/components/dashboard/PerformanceMonitor";
 
+// Import toast utilities
 import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
-import { Search, Building, BookOpen, GraduationCap } from "lucide-react";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("files");
@@ -32,6 +36,8 @@ const Dashboard = () => {
     colleges,
     files,
     createCollege,
+    updateCollege,
+    deleteCollege,
     createProgram,
     updateProgram,
     deleteProgram,
@@ -138,22 +144,74 @@ const Dashboard = () => {
     }
   };
 
+  // Handle updating a college
+  const handleUpdateCollege = async (collegeId, updatedData) => {
+    const loadingToastId = showLoadingToast("Updating college...");
+
+    try {
+      let formData;
+
+      if (updatedData.logo) {
+        // If there's a logo, use FormData
+        formData = new FormData();
+        formData.append("name", updatedData.name);
+        formData.append("acronym", updatedData.shortName);
+        formData.append("campus_id", updatedData.campus_id);
+        formData.append("logo", updatedData.logo);
+      } else {
+        // If no logo, use regular object
+        formData = {
+          name: updatedData.name,
+          acronym: updatedData.shortName,
+          campus_id: updatedData.campus_id,
+        };
+      }
+
+      const result = await updateCollege(collegeId, formData);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `College "${updatedData.name}" has been updated successfully!`,
+          "success"
+        );
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update college: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating college:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Handle deleting a college
   const handleDeleteCollege = async (collegeId, campus) => {
     const loadingToastId = showLoadingToast("Deleting college...");
 
     try {
-      const response = await collegeApi.delete(collegeId);
+      const result = await deleteCollege(collegeId);
 
-      if (response.data.success !== false) {
+      if (result.success) {
         updateToast(loadingToastId, `College deleted successfully!`, "success");
         return { success: true };
       } else {
         updateToast(
           loadingToastId,
-          `Failed to delete college: ${response.data.message}`,
+          `Failed to delete college: ${result.error}`,
           "error"
         );
-        return { success: false, error: response.data.message };
+        return { success: false, error: result.error };
       }
     } catch (error) {
       updateToast(
@@ -184,61 +242,105 @@ const Dashboard = () => {
     ...Array.from(new Set(colleges.map((college) => college.acronym))),
   ];
 
-  // Update colleges data when real data is loaded
-  useEffect(() => {
-    if (colleges.length > 0 && dashboardData.campuses.length > 0) {
-      const transformedData = {
+  // Transform college data for the colleges tab - using live data
+  const transformedCollegesData = useMemo(() => {
+    console.log("Transforming college data:", {
+      collegesCount: colleges.length,
+      campusesCount: dashboardData.campuses.length,
+    });
+
+    if (colleges.length === 0 || dashboardData.campuses.length === 0) {
+      return {
         "CSU-MAIN": [],
         "CSU-CC": [],
       };
-
-      const csuMainCampus = dashboardData.campuses.find(
-        (campus) => campus.acronym === "CSU-MAIN"
-      );
-      const csuCcCampus = dashboardData.campuses.find(
-        (campus) => campus.acronym === "CSU-CC"
-      );
-
-      colleges.forEach((college) => {
-        const undergradPrograms = dashboardData.undergrads.filter(
-          (p) => p.college_id === college.id
-        );
-        const graduatePrograms = dashboardData.graduates.filter(
-          (p) => p.college_id === college.id
-        );
-        const collegeFiles = memoizedFiles.filter(
-          (f) => f.college === college.acronym
-        );
-
-        const collegeInfo = {
-          id: college.id,
-          name: college.name,
-          shortName: college.acronym,
-          undergraduate_programs: undergradPrograms.length,
-          graduate_programs: graduatePrograms.length,
-          programs: undergradPrograms.length + graduatePrograms.length,
-          files: collegeFiles.length,
-          logo_url: college.logo_url,
-          campus_id: college.campus_id,
-        };
-
-        if (college.campus_id === csuMainCampus?.id) {
-          transformedData["CSU-MAIN"].push(collegeInfo);
-        } else if (college.campus_id === csuCcCampus?.id) {
-          transformedData["CSU-CC"].push(collegeInfo);
-        }
-      });
-
-      setCollegesData(transformedData);
     }
+
+    const transformedData = {
+      "CSU-MAIN": [],
+      "CSU-CC": [],
+    };
+
+    const csuMainCampus = dashboardData.campuses.find(
+      (campus) => campus.acronym === "CSU-MAIN"
+    );
+    const csuCcCampus = dashboardData.campuses.find(
+      (campus) => campus.acronym === "CSU-CC"
+    );
+
+    colleges.forEach((college) => {
+      // Handle temporary colleges during optimistic updates
+      if (college.id.toString().startsWith("temp-")) {
+        // For temp colleges, find campus by campus_id instead of acronym
+        const tempCampus = dashboardData.campuses.find(
+          (campus) => campus.id === college.campus_id
+        );
+
+        if (tempCampus) {
+          const transformedCollege = {
+            ...college,
+            shortName: college.acronym,
+            undergraduate_programs: college.undergraduate_programs || 0,
+            graduate_programs: college.graduate_programs || 0,
+            programs: college.programs || 0,
+            files: college.files || 0,
+          };
+
+          if (tempCampus.acronym === "CSU-MAIN") {
+            transformedData["CSU-MAIN"].push(transformedCollege);
+          } else if (tempCampus.acronym === "CSU-CC") {
+            transformedData["CSU-CC"].push(transformedCollege);
+          }
+        }
+        return; // Continue to next college
+      }
+
+      // Count programs for this college
+      const undergradCount = dashboardData.undergrads.filter(
+        (program) => program.college_id === college.id
+      ).length;
+
+      const graduateCount = dashboardData.graduates.filter(
+        (program) => program.college_id === college.id
+      ).length;
+
+      // Count files for this college
+      const collegeFiles = memoizedFiles.filter(
+        (file) => file.college === college.acronym
+      ).length;
+
+      const transformedCollege = {
+        ...college,
+        shortName: college.acronym,
+        undergraduate_programs: undergradCount,
+        graduate_programs: graduateCount,
+        programs: undergradCount + graduateCount,
+        files: collegeFiles,
+      };
+
+      // Add to appropriate campus
+      if (csuMainCampus && college.campus_id === csuMainCampus.id) {
+        transformedData["CSU-MAIN"].push(transformedCollege);
+      } else if (csuCcCampus && college.campus_id === csuCcCampus.id) {
+        transformedData["CSU-CC"].push(transformedCollege);
+      }
+    });
+
+    console.log("Transformed college data:", transformedData);
+    return transformedData;
   }, [
     colleges,
     dashboardData.campuses,
     dashboardData.undergrads,
     dashboardData.graduates,
     memoizedFiles,
-    setCollegesData,
   ]);
+
+  // Update colleges data when transformed data changes
+  useEffect(() => {
+    console.log("Setting colleges data:", transformedCollegesData);
+    setCollegesData(transformedCollegesData);
+  }, [transformedCollegesData, setCollegesData]);
 
   // Show error state
   if (dashboardError) {
@@ -313,7 +415,7 @@ const Dashboard = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`py-4 px-1 border-b-2 font-medium text-sm transition-all duration-200 ${
                         activeTab === tab.id
-                          ? "border-blue-500 text-blue-600 bg-blue-50/50"
+                          ? "border-green-500 text-green-600 bg-green-50/50"
                           : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                       }`}
                     >
@@ -392,9 +494,10 @@ const Dashboard = () => {
 
               {activeTab === "colleges" && (
                 <CollegesTab
-                  colleges={collegesData}
+                  colleges={transformedCollegesData}
                   campuses={dashboardData.campuses}
                   onAddCollege={handleAddCollege}
+                  onUpdateCollege={handleUpdateCollege}
                   onDeleteCollege={handleDeleteCollege}
                   loading={dashboardLoading}
                 />

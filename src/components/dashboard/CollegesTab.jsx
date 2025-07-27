@@ -18,6 +18,7 @@ export default function CollegesTab({
   colleges,
   campuses,
   onAddCollege,
+  onUpdateCollege,
   onDeleteCollege,
   loading,
 }) {
@@ -307,10 +308,7 @@ export default function CollegesTab({
         onClose={() => setShowEditModal(false)}
         college={selectedCollege}
         campuses={campuses}
-        onUpdateCollege={(updatedCollege) => {
-          // Handle college update
-          console.log("Update college:", updatedCollege);
-        }}
+        onUpdateCollege={onUpdateCollege}
       />
 
       <DeleteConfirmationModal
