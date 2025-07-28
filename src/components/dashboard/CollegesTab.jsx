@@ -13,12 +13,12 @@ import AddCollegeModal from "@/components/modals/dashboard/AddCollegeModal";
 import EditCollegeModal from "@/components/modals/dashboard/EditCollegeModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
-import { showLoadingToast, updateToast } from "@/utils/toast";
 
 export default function CollegesTab({
   colleges,
   campuses,
   onAddCollege,
+  onUpdateCollege,
   onDeleteCollege,
   loading,
 }) {
@@ -48,7 +48,6 @@ export default function CollegesTab({
     if (!selectedCollege || !onDeleteCollege) return;
 
     setIsDeleting(true);
-    const loadingToastId = showLoadingToast("Deleting college...");
 
     try {
       const result = await onDeleteCollege(
@@ -56,27 +55,12 @@ export default function CollegesTab({
         selectedCollege.campus
       );
 
+      // Only handle UI state - let Dashboard handle toasts
       if (result?.success !== false) {
-        updateToast(
-          loadingToastId,
-          `College "${selectedCollege.name}" has been deleted successfully!`,
-          "success"
-        );
         setShowDeleteModal(false);
         setSelectedCollege(null);
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to delete college: ${result?.error || "Unknown error"}`,
-          "error"
-        );
       }
     } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
       console.error("Error deleting college:", error);
     } finally {
       setIsDeleting(false);
@@ -324,10 +308,7 @@ export default function CollegesTab({
         onClose={() => setShowEditModal(false)}
         college={selectedCollege}
         campuses={campuses}
-        onUpdateCollege={(updatedCollege) => {
-          // Handle college update
-          console.log("Update college:", updatedCollege);
-        }}
+        onUpdateCollege={onUpdateCollege}
       />
 
       <DeleteConfirmationModal
