@@ -32,7 +32,6 @@ const CollegesTab = ({
     searchTerm,
     selectedCampus,
     sortBy,
-    isRefreshing,
     error,
     // Modal states
     showAddModal,
@@ -50,7 +49,6 @@ const CollegesTab = ({
     setShowEditModal,
     setShowDeleteModal,
     clearFilters,
-    refreshData,
     handleAddCollege,
     handleEditCollege,
     handleDeleteCollege,
@@ -81,8 +79,6 @@ const CollegesTab = ({
       <Card>
         <CollegesHeader
           filteredColleges={safeFilteredColleges}
-          isRefreshing={isRefreshing}
-          onRefresh={refreshData}
           onAddCollege={() => setShowAddModal(true)}
         />
 
@@ -102,7 +98,6 @@ const CollegesTab = ({
               searchTerm || selectedCampus !== "all" || sortBy !== "name"
             }
             error={error}
-            onRetryError={refreshData}
           />
 
           {/* Colleges Display */}

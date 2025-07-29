@@ -17,6 +17,12 @@ const CollegesGrid = ({
   onEdit,
   onDelete,
 }) => {
+  const handleDropdownItemClick = (e, action) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {colleges.map((college) => (
@@ -50,28 +56,36 @@ const CollegesGrid = ({
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+              <DropdownMenuContent align="start" className="w-48">
                 <DropdownMenuItem
-                  onClick={() =>
-                    onViewDetails(
-                      college,
-                      college.campus?.acronym ||
-                        college.campus_acronym ||
-                        campuses?.find((c) => c.id === college.campus_id)
-                          ?.acronym
+                  onClick={(e) =>
+                    handleDropdownItemClick(e, () =>
+                      onViewDetails(
+                        college,
+                        college.campus?.acronym ||
+                          college.campus_acronym ||
+                          campuses?.find((c) => c.id === college.campus_id)
+                            ?.acronym
+                      )
                     )
                   }
                 >
                   <Eye className="h-4 w-4 mr-2" />
                   View Details
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onEdit(college)}>
+                <DropdownMenuItem
+                  onClick={(e) =>
+                    handleDropdownItemClick(e, () => onEdit(college))
+                  }
+                >
                   <Edit className="h-4 w-4 mr-2" />
                   Edit College
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={() => onDelete(college)}
+                  onClick={(e) =>
+                    handleDropdownItemClick(e, () => onDelete(college))
+                  }
                   className="text-red-600 hover:text-red-800"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />

@@ -1,15 +1,10 @@
 import React from "react";
-import { Plus, RefreshCw } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CardHeader } from "@/components/ui/card";
 
-const CollegesHeader = ({
-  filteredColleges = [], // Default to empty array
-  isRefreshing,
-  onRefresh,
-  onAddCollege,
-}) => {
+const CollegesHeader = ({ filteredColleges = [], onAddCollege }) => {
   const collegeCount = filteredColleges.length || 0;
 
   return (
@@ -20,24 +15,11 @@ const CollegesHeader = ({
             Colleges Management
           </h2>
           <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-            {collegeCount} {collegeCount === 1 ? "college" : "colleges"}
+            {collegeCount}
           </Badge>
         </div>
 
         <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onRefresh}
-            disabled={isRefreshing}
-            className="hover:bg-gray-50"
-          >
-            <RefreshCw
-              className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
-            />
-            Refresh
-          </Button>
-
           <Button
             onClick={onAddCollege}
             className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-sm hover:shadow-md transition-all duration-200"

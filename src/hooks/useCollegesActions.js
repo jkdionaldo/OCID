@@ -1,6 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
 import { toast } from "sonner";
-import { dashboardService } from "@/services/dashboardService";
 
 export const useCollegesActions = ({
   colleges,
@@ -14,7 +13,6 @@ export const useCollegesActions = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCampus, setSelectedCampus] = useState("all");
   const [sortBy, setSortBy] = useState("name");
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
 
   // Modal states
@@ -77,20 +75,6 @@ export const useCollegesActions = ({
     setSearchTerm("");
     setSelectedCampus("all");
     setSortBy("name");
-  }, []);
-
-  const refreshData = useCallback(async () => {
-    setIsRefreshing(true);
-    setError(null);
-    try {
-      await dashboardService.getDashboardData(true);
-      toast.success("Colleges data refreshed successfully");
-    } catch (error) {
-      setError("Failed to refresh colleges data");
-      toast.error("Failed to refresh data");
-    } finally {
-      setIsRefreshing(false);
-    }
   }, []);
 
   const handleAddCollege = useCallback(
@@ -168,7 +152,6 @@ export const useCollegesActions = ({
     searchTerm,
     selectedCampus,
     sortBy,
-    isRefreshing,
     error,
     // Modal states
     showAddModal,
@@ -186,7 +169,6 @@ export const useCollegesActions = ({
     setShowEditModal,
     setShowDeleteModal,
     clearFilters,
-    refreshData,
     handleAddCollege,
     handleEditCollege,
     handleDeleteCollege,

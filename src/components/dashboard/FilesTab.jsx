@@ -101,12 +101,17 @@ export default function FilesTab({
                 value={selectedCollege}
                 onChange={(e) => setSelectedCollege(e.target.value)}
                 className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                disabled={loading} // Add this line
               >
                 {colleges.map((college) => (
                   <option key={college} value={college}>
                     {college === "all" ? "All Colleges" : college}
                   </option>
                 ))}
+                {/* Show loading indicator if needed */}
+                {loading && colleges.length === 1 && (
+                  <option disabled>Loading colleges...</option>
+                )}
               </select>
             </div>
 
