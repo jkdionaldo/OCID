@@ -23,10 +23,10 @@ import CHASSUndergrad from "@/pages/colleges/csu-main/chass/CHASS-Undergrad";
 import CEGSUndergrad from "@/pages/colleges/csu-main/cegs/CEGS-Undergrad";
 import CMNSUndergrad from "@/pages/colleges/csu-main/cmns/CMNS-Undergrad";
 // CSU CC College Routes - Fixed paths
-import CBAUndergrad from "@/pages/colleges/csu_cc/cba/CBA-undergrad";
-import CEITUndergrad from "@/pages/colleges/csu_cc/ceit/CEIT-undergrad";
-import CITTEUndergrad from "@/pages/colleges/csu_cc/citte/CITTE-undergrad";
-import CTHMUndergrad from "@/pages/colleges/csu_cc/cthm/CTHM-undergrad";
+import CBAUndergrad from "@/pages/colleges/csu_cc/cba/CBA-Undergrad";
+import CEITUndergrad from "@/pages/colleges/csu_cc/ceit/CEIT-Undergrad";
+import CITTEUndergrad from "@/pages/colleges/csu_cc/citte/CITTE-Undergrad";
+import CTHMUndergrad from "@/pages/colleges/csu_cc/cthm/CTHM-Undergrad";
 
 // Graduate college routes
 export const graduateRoutes = [
