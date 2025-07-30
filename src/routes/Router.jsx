@@ -35,7 +35,6 @@ const Router = () => {
       <Route path="/" element={<Home />} />
 
       {/* Protected Dashboard Route */}
-<<<<<<< HEAD
       <Route
         path="/dashboard"
         element={
@@ -55,9 +54,6 @@ const Router = () => {
       />
       {/* About Page */}
       <Route path="/about" element={<About />} />
-=======
-      <Route path="/dashboard" element={<Dashboard />} />
->>>>>>> c58d993a52abdc2b83ae8f1043a61c68a4ceb31a
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
