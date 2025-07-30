@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Search, Building, BookOpen } from "lucide-react";
+import {
+  Search,
+  Building,
+  BookOpen,
+  RefreshCw,
+  Files,
+  Info,
+} from "lucide-react";
 
 // Import hooks and components
 import { useDashboardData } from "@/hooks/useDashboardData";
@@ -10,21 +17,22 @@ import { useDashboardFilters } from "@/hooks/useDashboardFilters";
 import { useCollegeOperations } from "@/hooks/useCollegeOperations";
 
 // Import components
-import StatusCards from "@/components/dashboard/StatusCards";
-import SearchFilters from "@/components/dashboard/SearchFilters";
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
 import ProgramsTab from "@/components/dashboard/ProgramsTab";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardError from "@/components/dashboard/DashboardError";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
-import PerformanceMonitor from "@/components/dashboard/PerformanceMonitor";
+import PerformanceInfoPopover from "@/components/dashboard/PerformanceInfoPopover";
+
+// Import UI components
+import { Button } from "@/components/ui/button";
 
 // Import toast utilities
 import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("files");
+  const [activeTab, setActiveTab] = useState("colleges");
 
   // Data hooks with optimized caching
   const {
@@ -237,10 +245,17 @@ const Dashboard = () => {
   const { filteredFiles, sortedFiles } = useDashboardFilters(files, state);
 
   // College filter options
-  const collegeFilterOptions = [
-    "all",
-    ...Array.from(new Set(colleges.map((college) => college.acronym))),
-  ];
+  const collegeFilterOptions = useMemo(() => {
+    // Don't generate options if data is still loading or colleges is empty
+    if (dashboardLoading || !colleges || colleges.length === 0) {
+      return ["all"]; // Return minimal options during loading
+    }
+
+    return [
+      "all",
+      ...Array.from(new Set(colleges.map((college) => college.acronym))),
+    ];
+  }, [colleges, dashboardLoading]);
 
   // Transform college data for the colleges tab - using live data
   const transformedCollegesData = useMemo(() => {
@@ -351,12 +366,6 @@ const Dashboard = () => {
 
   const tabs = [
     {
-      id: "files",
-      label: "Files & Documents",
-      icon: Search,
-      description: "Manage all files, curricula, and documents",
-    },
-    {
       id: "colleges",
       label: "Colleges",
       icon: Building,
@@ -368,10 +377,16 @@ const Dashboard = () => {
       icon: BookOpen,
       description: "Manage undergraduate and graduate programs",
     },
+    {
+      id: "files",
+      label: "Files & Documents",
+      icon: Files,
+      description: "Manage all files, curricula, and documents",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-8">
+    <div className="min-h-screen bg-gray-50 pt-8 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <DashboardHeader
           onRefresh={refetch}
@@ -379,61 +394,70 @@ const Dashboard = () => {
           loading={dashboardLoading}
         />
 
-        <PerformanceMonitor
-          cacheInfo={cacheInfo}
-          loading={dashboardLoading}
-          lastFetch={lastFetch}
-        />
-
-        {/* Cache Status Indicator */}
-        {isCacheValid && isCacheValid() && !dashboardLoading && (
-          <div className="mb-4 p-2 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-sm text-green-700">
-              ⚡ Data loaded from cache for faster performance
-            </p>
-          </div>
-        )}
-
-        {/* Stats Cards */}
-        {dashboardLoading ? (
-          <DashboardLoading type="stats" />
-        ) : (
-          <StatusCards files={files} />
-        )}
-
         {/* Modern Tab Switcher */}
-        <div className="mb-8">
+        <div className="mb-8 mt-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             {/* Tab Navigation */}
             <div className="border-b border-gray-200">
-              <nav className="flex space-x-8 px-6" aria-label="Tabs">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`py-4 px-1 border-b-2 font-medium text-sm transition-all duration-200 ${
-                        activeTab === tab.id
-                          ? "border-green-500 text-green-600 bg-green-50/50"
-                          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2">
-                        <Icon className="w-5 h-5" />
-                        <span>{tab.label}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </nav>
-            </div>
+              <div className="flex items-center justify-between px-6">
+                <nav className="flex space-x-8" aria-label="Tabs">
+                  {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm transition-all duration-200 ${
+                          activeTab === tab.id
+                            ? "border-green-500 text-green-600 bg-green-50/50"
+                            : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <Icon className="w-5 h-5" />
+                          <span>{tab.label}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </nav>
 
-            {/* Tab Description */}
-            <div className="px-6 py-3 bg-gray-50/50 border-b border-gray-100">
-              <p className="text-sm text-gray-600">
-                {tabs.find((tab) => tab.id === activeTab)?.description}
-              </p>
+                {/* Action Buttons */}
+                <div className="flex items-center space-x-2">
+                  {/* Performance Info Popover */}
+                  <PerformanceInfoPopover
+                    cacheInfo={cacheInfo}
+                    loading={dashboardLoading}
+                    lastFetch={lastFetch}
+                    isCacheValid={isCacheValid}
+                  />
+
+                  {/* Refresh Button */}
+                  <Button
+                    onClick={() => refetch?.(true)}
+                    disabled={dashboardLoading}
+                    className={`
+                      group inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm
+                      bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-sm hover:shadow-md
+                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-sm
+                      transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100
+                      border border-green-700/20
+                    `}
+                    title="Refresh data"
+                  >
+                    <RefreshCw
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        dashboardLoading
+                          ? "animate-spin"
+                          : "group-hover:rotate-180"
+                      }`}
+                    />
+                    <span className="hidden sm:inline">
+                      {dashboardLoading ? "Refreshing..." : "Refresh"}
+                    </span>
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Tab Content */}
@@ -499,6 +523,7 @@ const Dashboard = () => {
                   onAddCollege={handleAddCollege}
                   onUpdateCollege={handleUpdateCollege}
                   onDeleteCollege={handleDeleteCollege}
+                  onRefresh={refetch}
                   loading={dashboardLoading}
                 />
               )}
