@@ -1,6 +1,12 @@
 import React from "react";
 import { CircleAlert, AlertTriangle, Trash2 } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 const DeleteConfirmationModal = ({
@@ -14,6 +20,13 @@ const DeleteConfirmationModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[420px] p-6">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Delete Confirmation</DialogTitle>
+          <DialogDescription>
+            Confirm deletion of {itemType.toLowerCase()}
+          </DialogDescription>
+        </DialogHeader>
+
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className="flex-shrink-0 w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
