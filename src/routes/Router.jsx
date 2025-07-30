@@ -19,8 +19,8 @@ import Home from "@/pages/HomePage";
 import Downloadables from "@/pages/Downloadables";
 
 // CSU main page
-import Colleges_Graduate_Main from "@/pages/CSU-Main/GraduateSchoolPage";
-import Colleges_Undergraduate_Main from "@/pages/CSU-Main/UndergradPage";
+import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
+import Colleges_Undergraduate_Main from "@/pages/CSU-MAIN/UndergradPage";
 
 //  CSU-CC main pages
 // import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
@@ -33,6 +33,7 @@ const Router = () => {
       <Route path="/" element={<Home />} />
 
       {/* Protected Dashboard Route */}
+<<<<<<< HEAD
       <Route
         path="/dashboard"
         element={
@@ -50,6 +51,9 @@ const Router = () => {
         }
       />
 
+=======
+      <Route path="/dashboard" element={<Dashboard />} />
+>>>>>>> a13138d278ec6ad5ad4c14bf5482c79b8eda2928
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />

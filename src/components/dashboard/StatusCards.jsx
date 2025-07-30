@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  File,
-  BookOpen,
-  GraduationCap,
-  FileText,
-  Archive,
-} from "lucide-react";
+import { File, BookOpen, GraduationCap, FileText, Archive } from "lucide-react";
 
 export default function Status({ files }) {
   // Calculate statistics
@@ -39,7 +33,9 @@ export default function Status({ files }) {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Curriculum</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.curriculum}</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {stats.curriculum}
+            </p>
           </div>
           <BookOpen className="w-8 h-8 text-green-500" />
         </div>
@@ -59,7 +55,9 @@ export default function Status({ files }) {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Documents</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.documents}</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {stats.documents}
+            </p>
           </div>
           <FileText className="w-8 h-8 text-red-500" />
         </div>
@@ -69,7 +67,9 @@ export default function Status({ files }) {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Storage</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.totalSize} MB</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {stats.totalSize} MB
+            </p>
           </div>
           <Archive className="w-8 h-8 text-orange-500" />
         </div>

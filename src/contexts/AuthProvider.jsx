@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import SecureStorage from "@/utils/secureStorage";
+import DevToolsDetection from "@/utils/devToolsDetection";
 
 // Axios configuration
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -127,13 +128,24 @@ const storeAuthData = async (token, userData, expiresAt) => {
   }
 };
 
+const checksumCache = new Map();
+
 // Generate checksum for integrity verification
 const generateChecksum = async (data) => {
+  if (checksumCache.has(data)) {
+    return checksumCache.get(data);
+  }
+
   const encoder = new TextEncoder();
   const dataBuffer = encoder.encode(data);
   const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const checksum = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  checksumCache.set(data, checksum);
+  return checksum;
 };
 
 // Function to retrieve stored authentication data
@@ -173,60 +185,95 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        if (import.meta.env.DEV) {
+          DevToolsDetection.addDevToolsWarning();
+        }
+
         const authData = await getStoredAuthData();
 
         if (authData?.token && authData?.user) {
-          // Check if token is expired
+          // Set user immediately for faster UI response
+          setUser(authData.user);
+          setIsAuthenticated(true);
+          setIsLoading(false); // Show UI immediately
+
+          // Check token expiration in background
           const now = new Date();
           const expiry = new Date(authData.expires_at);
 
           if (now >= expiry) {
-            // Token expired, try refresh
-            const refreshResult = await tryRefreshToken();
-            if (!refreshResult.success) {
-              await clearAuthData();
-              setIsLoading(false);
-              return;
+            // Token expired, try refresh in background
+            tryRefreshToken().then((refreshResult) => {
+              if (!refreshResult.success) {
+                clearAuthData();
+                setUser(null);
+                setIsAuthenticated(false);
+              }
+            });
+          } else {
+            // Only do background verification if token is close to expiring
+            const timeUntilExpiry = expiry - now;
+            const oneHourInMs = 60 * 60 * 1000;
+
+            if (timeUntilExpiry < oneHourInMs) {
+              // Verify token validity in background (non-blocking)
+              setTimeout(async () => {
+                try {
+                  const response = await axios.get("/auth/user");
+                  const freshUser = response.data.user;
+
+                  // Update if user data changed
+                  if (
+                    JSON.stringify(authData.user) !== JSON.stringify(freshUser)
+                  ) {
+                    const safeUserData = {
+                      id: freshUser.id,
+                      name: freshUser.name,
+                      email: freshUser.email,
+                      avatar: freshUser.avatar,
+                      email_verified_at: freshUser.email_verified_at,
+                    };
+
+                    const updatedAuthData = {
+                      ...authData,
+                      user: safeUserData,
+                      checksum: await generateChecksum(
+                        authData.token + freshUser.id
+                      ),
+                    };
+                    await SecureStorage.setItem(
+                      "auth_session",
+                      updatedAuthData
+                    );
+                    setUser(safeUserData);
+                  }
+                } catch (error) {
+                  // Token invalid, clear storage
+                  console.warn("Background token validation failed:", error);
+                  clearAuthData();
+                  setUser(null);
+                  setIsAuthenticated(false);
+                }
+              }, 500); // Small delay to not block UI
             }
           }
-
-          // Use stored user data first (faster loading)
-          setUser(authData.user);
-          setIsAuthenticated(true);
-
-          // Verify token is still valid in background
-          try {
-            const response = await axios.get("/auth/user");
-            const freshUser = response.data.user;
-
-            // Update if user data changed (but only store safe data)
-            if (JSON.stringify(authData.user) !== JSON.stringify(freshUser)) {
-              const updatedAuthData = {
-                ...authData,
-                user: {
-                  id: freshUser.id,
-                  name: freshUser.name,
-                  email: freshUser.email,
-                  avatar: freshUser.avatar,
-                  email_verified_at: freshUser.email_verified_at,
-                },
-                checksum: await generateChecksum(authData.token + freshUser.id),
-              };
-              await SecureStorage.setItem("auth_session", updatedAuthData);
-              setUser(updatedAuthData.user);
-            }
-          } catch (error) {
-            // Token invalid, clear storage
-            await clearAuthData();
-            setUser(null);
-            setIsAuthenticated(false);
-          }
+        } else {
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Auth check failed:", error);
-        await clearAuthData();
+
+        // Don't automatically clear auth data if DevTools might be the cause
+        if (!DevToolsDetection.isDevToolsOpen()) {
+          await clearAuthData();
+        } else {
+          console.warn(
+            "Auth check failed, but DevTools is open. Keeping session."
+          );
+        }
+
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     checkAuth();
@@ -241,7 +288,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error("Token refresh timer failed:", error);
       }
-    }, 5 * 60 * 1000); // Check every 5 minutes
+    }, 15 * 60 * 1000); // Check every 15 minutes
 
     return () => clearInterval(refreshInterval);
   }, []);

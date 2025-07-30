@@ -1,5 +1,10 @@
 import React from "react";
 import {
+  Search as SearchIcon,
+  Filter,
+  Building,
+  Grid,
+  List,
   Download,
   Eye,
   Edit3,
@@ -14,14 +19,30 @@ import {
   Clock,
   AlertCircle,
 } from "lucide-react";
+import DashboardLoading from "@/components/dashboard/DashboardLoading";
 
-export default function FileComponent({
+export default function FilesTab({
   files,
   sortedFiles,
   selectedFiles,
   showBulkActions,
   viewMode,
   statuses,
+  categories,
+  colleges,
+  searchTerm,
+  selectedCategory,
+  selectedCollege,
+  selectedStatus,
+  sortBy,
+  sortOrder,
+  setSearchTerm,
+  setSelectedCategory,
+  setSelectedCollege,
+  setSelectedStatus,
+  setSortBy,
+  setSortOrder,
+  setViewMode,
   handleDownload,
   handleBulkDownload,
   handleBulkDelete,
@@ -33,12 +54,128 @@ export default function FileComponent({
   setShowBulkActions,
   getFileIcon,
   getStatusIcon,
+  loading,
 }) {
+  if (loading) {
+    return <DashboardLoading type="files" />;
+  }
+
   return (
-    <div>
+    <div className="space-y-6">
+      {/* Search and Filters */}
+      <div className="bg-gray-50 rounded-lg p-4 space-y-4">
+        <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+          {/* Search */}
+          <div className="relative flex-1 max-w-md">
+            <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search files, programs, colleges..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Category Filter */}
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* College Filter */}
+            <div className="flex items-center gap-2">
+              <Building className="w-4 h-4 text-gray-400" />
+              <select
+                value={selectedCollege}
+                onChange={(e) => setSelectedCollege(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                disabled={loading} // Add this line
+              >
+                {colleges.map((college) => (
+                  <option key={college} value={college}>
+                    {college === "all" ? "All Colleges" : college}
+                  </option>
+                ))}
+                {/* Show loading indicator if needed */}
+                {loading && colleges.length === 1 && (
+                  <option disabled>Loading colleges...</option>
+                )}
+              </select>
+            </div>
+
+            {/* Status Filter */}
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            >
+              {statuses.map((status) => (
+                <option key={status} value={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </option>
+              ))}
+            </select>
+
+            {/* Sort Options */}
+            <select
+              value={`${sortBy}-${sortOrder}`}
+              onChange={(e) => {
+                const [field, order] = e.target.value.split("-");
+                setSortBy(field);
+                setSortOrder(order);
+              }}
+              className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            >
+              <option value="uploadDate-desc">Newest First</option>
+              <option value="uploadDate-asc">Oldest First</option>
+              <option value="name-asc">Name A-Z</option>
+              <option value="name-desc">Name Z-A</option>
+              <option value="size-desc">Largest First</option>
+              <option value="size-asc">Smallest First</option>
+            </select>
+
+            {/* View Mode Toggle */}
+            <div className="flex border border-gray-300 rounded-md overflow-hidden">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-2 ${
+                  viewMode === "grid"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                <Grid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-2 ${
+                  viewMode === "list"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Bulk Actions Bar */}
       {showBulkActions && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Users className="w-5 h-5 text-blue-600 mr-2" />
@@ -93,7 +230,7 @@ export default function FileComponent({
               </h3>
               <button
                 onClick={handleSelectAll}
-                className="text-sm text-green-600 hover:text-green-800"
+                className="text-sm text-blue-600 hover:text-blue-800"
               >
                 {selectedFiles.length === sortedFiles.length
                   ? "Deselect All"
@@ -106,7 +243,7 @@ export default function FileComponent({
                   key={file.id}
                   className={`border rounded-lg p-4 hover:shadow-md transition-shadow duration-200 ${
                     selectedFiles.includes(file.id)
-                      ? "border-green-500 bg-green-50"
+                      ? "border-blue-500 bg-blue-50"
                       : "border-gray-200"
                   }`}
                 >
@@ -116,7 +253,7 @@ export default function FileComponent({
                         type="checkbox"
                         checked={selectedFiles.includes(file.id)}
                         onChange={() => handleFileSelect(file.id)}
-                        className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <div className="flex items-center">
                         {getStatusIcon(file.status)}
@@ -131,9 +268,7 @@ export default function FileComponent({
                       <h3 className="font-medium text-gray-900 mt-3 mb-1 truncate w-full text-sm">
                         {file.name}
                       </h3>
-                      <p className="text-xs text-gray-500 mb-1">
-                        {file.size}
-                      </p>
+                      <p className="text-xs text-gray-500 mb-1">{file.size}</p>
                       <div className="text-xs text-gray-400 mb-2">
                         <p>
                           {file.college} - {file.program}
@@ -190,7 +325,7 @@ export default function FileComponent({
                         sortedFiles.length > 0
                       }
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -218,7 +353,7 @@ export default function FileComponent({
                         type="checkbox"
                         checked={selectedFiles.includes(file.id)}
                         onChange={() => handleFileSelect(file.id)}
-                        className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
