@@ -15,7 +15,7 @@ const CollegesStats = ({ stats }) => {
                   {stats.total}
                 </p>
               </div>
-              <Building className="h-8 w-8 text-blue-600" />
+              <Building className="h-8 w-8 text-yellow-600" />
             </div>
           </CardContent>
         </Card>
@@ -25,9 +25,7 @@ const CollegesStats = ({ stats }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">CSU-MAIN Colleges</p>
-                <p className="text-2xl font-bold text-green-600">
-                  {stats.csuMain || 0}
-                </p>
+                <p className="text-2xl font-bold">{stats.csuMain || 0}</p>
               </div>
               <School className="h-8 w-8 text-green-600" />
             </div>
@@ -39,11 +37,9 @@ const CollegesStats = ({ stats }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">CSU-CC Colleges</p>
-                <p className="text-2xl font-bold text-orange-600">
-                  {stats.csuCC || 0}
-                </p>
+                <p className="text-2xl font-bold">{stats.csuCC || 0}</p>
               </div>
-              <University className="h-8 w-8 text-orange-600" />
+              <University className="h-8 w-8 text-blue-600" />
             </div>
           </CardContent>
         </Card>
