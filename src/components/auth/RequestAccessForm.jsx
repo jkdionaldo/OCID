@@ -10,7 +10,7 @@ const RequestAccessForm = ({ onBack }) => (
         Office of Curriculum and Instruction Development (OCID)
       </a>{" "}
       Located at Caraga State University Library 2nd Floor Right Wing and Look
-      for <b> Ms. Angelica F. Plantado</b>
+      for <b> Ms. Angelica C. Plantado</b>
     </p>
     {/* Fields will go here */}
     <button
