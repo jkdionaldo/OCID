@@ -137,8 +137,8 @@ const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="w-full max-w-xs mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* General Error Message */}
         {errors.general && (
           <div className="flex items-center p-4 text-sm text-red-800 bg-red-50 border border-red-200 rounded-lg">
@@ -148,7 +148,7 @@ const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
         )}
 
         {/* Email Field */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label
             htmlFor="email"
             className="block text-sm font-semibold text-gray-700 text-left"
@@ -184,7 +184,7 @@ const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
         </div>
 
         {/* Password Field */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label
             htmlFor="password"
             className="block text-sm font-semibold text-gray-700 text-left"
