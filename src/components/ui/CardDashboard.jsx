@@ -123,17 +123,17 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
 
           {/* Graduate Programs */}
           <div
-            className={`relative p-4 rounded-xl border-2 border-purple-100 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
+            className={`relative p-4 rounded-xl border-2 border-yellow-100 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
           >
             <div className="flex flex-col items-center text-center space-y-2">
-              <div className="p-2 bg-purple-500 rounded-lg shadow-sm">
+              <div className="p-2 bg-yellow-500 rounded-lg shadow-sm">
                 <GraduationCap className="w-4 h-4 text-white" />
               </div>
               <div>
-                <div className="text-lg font-bold text-purple-900">
+                <div className="text-lg font-bold text-yellow-900">
                   {graduateCount}
                 </div>
-                <div className="text-xs font-medium text-purple-700">
+                <div className="text-xs font-medium text-yellow-700">
                   Graduate
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
           }`}
         >
           <div className="flex items-center justify-center space-x-2">
-            <span>Explore Programs</span>
+            <span>View Details</span>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-75"></div>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-50"></div>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-25"></div>
