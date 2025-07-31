@@ -17,6 +17,45 @@ const CollegesModals = ({
   onUpdateCollege,
   onDeleteCollege,
 }) => {
+  // Check if college has associated data that prevents deletion
+  const hasAssociatedData =
+    selectedCollege &&
+    (selectedCollege.programs > 0 ||
+      selectedCollege.files > 0 ||
+      selectedCollege.undergraduate_programs > 0 ||
+      selectedCollege.graduate_programs > 0);
+
+  const canDelete = !hasAssociatedData;
+
+  // Generate blocking message
+  const generateBlockingMessage = () => {
+    if (!selectedCollege || canDelete) return null;
+
+    const parts = [];
+
+    if (
+      selectedCollege.programs > 0 ||
+      selectedCollege.undergraduate_programs > 0 ||
+      selectedCollege.graduate_programs > 0
+    ) {
+      const totalPrograms =
+        selectedCollege.programs ||
+        selectedCollege.undergraduate_programs +
+          selectedCollege.graduate_programs;
+      parts.push(`${totalPrograms} program${totalPrograms > 1 ? "s" : ""}`);
+    }
+
+    if (selectedCollege.files > 0) {
+      parts.push(
+        `${selectedCollege.files} file${selectedCollege.files > 1 ? "s" : ""}`
+      );
+    }
+
+    return `This college has ${parts.join(
+      " and "
+    )} associated with it. Please remove all associated data before attempting to delete this college.`;
+  };
+
   return (
     <>
       <AddCollegeModal
@@ -42,11 +81,16 @@ const CollegesModals = ({
         onConfirm={onDeleteCollege}
         isDeleting={isSubmitting}
         itemType="College"
+        itemName={selectedCollege?.name}
+        canDelete={canDelete}
         warningMessage={
-          selectedCollege?.programs > 0
-            ? `This college has ${selectedCollege.programs} associated programs. Deleting it will also remove all associated data.`
+          canDelete &&
+          selectedCollege?.programs === 0 &&
+          selectedCollege?.files === 0
+            ? "Deleting this college will permanently remove all its information from the system."
             : undefined
         }
+        blockingMessage={generateBlockingMessage()}
       />
     </>
   );

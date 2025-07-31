@@ -110,6 +110,22 @@ export const useCollegesActions = ({
 
   const handleDeleteCollege = useCallback(async () => {
     if (!selectedCollege) return;
+
+    // Check if college has associated data
+    const hasAssociatedData =
+      selectedCollege.programs > 0 ||
+      selectedCollege.files > 0 ||
+      selectedCollege.undergraduate_programs > 0 ||
+      selectedCollege.graduate_programs > 0;
+
+    if (hasAssociatedData) {
+      toast.error("Cannot delete college", {
+        description:
+          "This college has associated programs or files. Please remove them first.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await onDeleteCollege(selectedCollege.id, selectedCollege.campus);
