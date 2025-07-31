@@ -23,15 +23,19 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
   const campusTheme = {
     "CSU-MAIN": {
       primary: "emerald",
-      gradient: "from-emerald-500 to-teal-600",
-      badge: "bg-emerald-500",
+      gradient: "from-emerald-500 to-green-600", // Enhanced green gradient
+      badge: "bg-emerald-700",
       accent: "bg-emerald-50 border-emerald-100",
+      button:
+        "from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700",
     },
     "CSU-CC": {
       primary: "blue",
-      gradient: "from-blue-500 to-indigo-600",
-      badge: "bg-blue-500",
+      gradient: "from-blue-500 to-indigo-600", // Enhanced blue gradient
+      badge: "bg-blue-700",
       accent: "bg-blue-50 border-blue-100",
+      button:
+        "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700",
     },
   };
 
@@ -119,17 +123,17 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
 
           {/* Graduate Programs */}
           <div
-            className={`relative p-4 rounded-xl border-2 border-purple-100 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
+            className={`relative p-4 rounded-xl border-2 border-yellow-100 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
           >
             <div className="flex flex-col items-center text-center space-y-2">
-              <div className="p-2 bg-purple-500 rounded-lg shadow-sm">
+              <div className="p-2 bg-yellow-500 rounded-lg shadow-sm">
                 <GraduationCap className="w-4 h-4 text-white" />
               </div>
               <div>
-                <div className="text-lg font-bold text-purple-900">
+                <div className="text-lg font-bold text-yellow-900">
                   {graduateCount}
                 </div>
-                <div className="text-xs font-medium text-purple-700">
+                <div className="text-xs font-medium text-yellow-700">
                   Graduate
                 </div>
               </div>
@@ -159,10 +163,16 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
         {/* Action Button */}
         <button
           onClick={() => onViewDetails(college, campus)}
-          className={`w-full mt-6 bg-gradient-to-r ${theme.gradient} hover:shadow-xl text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-200`}
+          className={`w-full mt-6 bg-gradient-to-r ${
+            theme.button
+          } text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+            campus === "CSU-MAIN"
+              ? "focus:ring-emerald-300"
+              : "focus:ring-blue-300"
+          }`}
         >
           <div className="flex items-center justify-center space-x-2">
-            <span>Explore Programs</span>
+            <span>View Details</span>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-75"></div>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-50"></div>
             <div className="w-1.5 h-1.5 bg-white rounded-full opacity-25"></div>
