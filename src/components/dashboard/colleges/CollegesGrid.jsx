@@ -46,7 +46,7 @@ const CollegesGrid = ({
                   onEdit(college);
                 }}
                 size="sm"
-                className="h-10 w-10 rounded-full p-0 bg-white/90 backdrop-blur-sm border border-emerald-200 text-emerald-600 shadow-lg hover:shadow-xl hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 transform hover:scale-110 focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50"
+                className="h-10 w-10 rounded-full p-0 bg-white/90 backdrop-blur-sm border border-blue-200 text-blue-600 shadow-lg hover:shadow-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 transform hover:scale-110 focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
                 title="Edit College"
               >
                 <Edit className="h-4 w-4" />

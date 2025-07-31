@@ -149,8 +149,8 @@ const EditCollegeModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col p-0 gap-0">
-        {/* Fixed Header */}
-        <div className="flex-shrink-0 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 px-6 py-4 rounded-t-lg">
+        {/* Fixed Header - Keep unchanged */}
+        <div className="flex-shrink-0 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 px-6 py-4 rounded-t-lg">
           <DialogHeader className="space-y-0">
             <DialogTitle className="flex items-center gap-3 text-white text-xl font-semibold">
               <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -158,7 +158,7 @@ const EditCollegeModal = ({
               </div>
               Edit College
             </DialogTitle>
-            <DialogDescription className="text-orange-50">
+            <DialogDescription className="text-blue-50">
               Update college information and settings. Changes will be applied
               immediately.
             </DialogDescription>
@@ -169,26 +169,26 @@ const EditCollegeModal = ({
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Current College Info Card */}
-              <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+              {/* Current College Info Card - Changed to blue */}
+              <Card className="bg-gradient-to-br from-blue-50 to-sky-50 border-blue-200">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-4">
                     {logoPreview ? (
                       <img
                         src={logoPreview}
                         alt="Current logo"
-                        className="h-12 w-12 object-contain rounded-lg border border-orange-200 bg-white p-1"
+                        className="h-12 w-12 object-contain rounded-lg border border-blue-200 bg-white p-1"
                       />
                     ) : (
-                      <div className="h-12 w-12 bg-orange-200 rounded-lg flex items-center justify-center">
-                        <Building className="h-6 w-6 text-orange-600" />
+                      <div className="h-12 w-12 bg-blue-200 rounded-lg flex items-center justify-center">
+                        <Building className="h-6 w-6 text-blue-600" />
                       </div>
                     )}
                     <div>
-                      <p className="font-medium text-orange-900">
+                      <p className="font-medium text-blue-900">
                         Editing: {college.name}
                       </p>
-                      <p className="text-sm text-orange-700">
+                      <p className="text-sm text-blue-700">
                         {college.shortName || college.acronym} •{" "}
                         {college.campus} Campus
                       </p>
@@ -197,7 +197,7 @@ const EditCollegeModal = ({
                 </CardContent>
               </Card>
 
-              {/* Campus Selection */}
+              {/* Campus Selection - Changed to blue */}
               <FormField
                 control={form.control}
                 name="campus"
@@ -208,7 +208,7 @@ const EditCollegeModal = ({
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-orange-400 focus:ring-orange-400/20">
+                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20">
                           <SelectValue placeholder="Select Campus" />
                         </SelectTrigger>
                       </FormControl>
@@ -216,7 +216,7 @@ const EditCollegeModal = ({
                         {campuses.map((campus) => (
                           <SelectItem key={campus.id} value={campus.acronym}>
                             <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                               {campus.name} ({campus.acronym})
                             </div>
                           </SelectItem>
@@ -228,7 +228,7 @@ const EditCollegeModal = ({
                 )}
               />
 
-              {/* College Name */}
+              {/* College Name - Changed to blue */}
               <FormField
                 control={form.control}
                 name="name"
@@ -239,7 +239,7 @@ const EditCollegeModal = ({
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-orange-400 focus:ring-orange-400/20"
+                        className="h-12 border-2 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20"
                         placeholder="e.g. College of Computing and Information Sciences"
                         {...field}
                       />
@@ -249,7 +249,7 @@ const EditCollegeModal = ({
                 )}
               />
 
-              {/* College Acronym */}
+              {/* College Acronym - Changed to blue */}
               <FormField
                 control={form.control}
                 name="shortName"
@@ -260,7 +260,7 @@ const EditCollegeModal = ({
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-orange-400 focus:ring-orange-400/20"
+                        className="h-12 border-2 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20"
                         placeholder="e.g. CCIS"
                         maxLength={10}
                         {...field}
@@ -275,17 +275,17 @@ const EditCollegeModal = ({
                 )}
               />
 
-              {/* Logo Upload */}
+              {/* Logo Upload - Changed to blue */}
               <div className="space-y-3">
                 <label className="text-base font-medium text-gray-700">
                   College Logo (Optional)
                 </label>
 
                 {!logoPreview ? (
-                  <Card className="border-2 border-dashed border-orange-300 hover:border-orange-400 transition-colors bg-gradient-to-br from-orange-50 to-amber-50">
+                  <Card className="border-2 border-dashed border-blue-300 hover:border-blue-400 transition-colors bg-gradient-to-br from-blue-50 to-sky-50">
                     <CardContent className="flex flex-col items-center justify-center p-8">
-                      <div className="p-3 bg-orange-100 rounded-full mb-4">
-                        <Upload className="h-8 w-8 text-orange-600" />
+                      <div className="p-3 bg-blue-100 rounded-full mb-4">
+                        <Upload className="h-8 w-8 text-blue-600" />
                       </div>
                       <p className="text-gray-700 font-medium mb-2">
                         Upload New College Logo
@@ -296,7 +296,7 @@ const EditCollegeModal = ({
                       <Button
                         type="button"
                         variant="outline"
-                        className="border-orange-300 text-orange-600 hover:bg-orange-50"
+                        className="border-blue-300 text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-sky-50 hover:border-blue-400 transition-all duration-200"
                         asChild
                       >
                         <label htmlFor="logoInput" className="cursor-pointer">
@@ -317,13 +317,13 @@ const EditCollegeModal = ({
                     </CardContent>
                   </Card>
                 ) : (
-                  <Card className="border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-white">
+                  <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white">
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-4">
                         <img
                           src={logoPreview}
                           alt="Logo preview"
-                          className="h-20 w-20 object-contain rounded-xl border-2 border-orange-200 bg-white p-2"
+                          className="h-20 w-20 object-contain rounded-xl border-2 border-blue-200 bg-white p-2"
                         />
                         <div className="flex-1">
                           <p className="text-sm font-medium text-gray-900">
@@ -358,16 +358,6 @@ const EditCollegeModal = ({
                 )}
               </div>
 
-              {/* Warning Alert */}
-              <Alert className="border-amber-200 bg-amber-50">
-                <Edit className="h-4 w-4" />
-                <AlertDescription className="text-amber-800">
-                  <strong>Important:</strong> Changes will be applied
-                  immediately and may affect related programs and files
-                  associated with this college.
-                </AlertDescription>
-              </Alert>
-
               {/* Root Error */}
               {form.formState.errors.root && (
                 <Alert variant="destructive">
@@ -388,7 +378,7 @@ const EditCollegeModal = ({
               variant="outline"
               onClick={onClose}
               disabled={isSubmitting}
-              className="border-gray-300 hover:bg-gray-100"
+              className="border-gray-300 hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200 transition-all duration-200"
             >
               Cancel
             </Button>
@@ -396,7 +386,7 @@ const EditCollegeModal = ({
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
