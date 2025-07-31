@@ -14,7 +14,7 @@ const CollegesHeader = ({ filteredColleges = [], onAddCollege }) => {
           <h2 className="text-lg font-semibold text-gray-900">
             Colleges Management
           </h2>
-          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+          <Badge variant="secondary" className="bg-green-100 text-green-800">
             {collegeCount}
           </Badge>
         </div>
