@@ -1,4 +1,7 @@
+import React from "react";
 import Card from "../components/ui/HomeCard";
+// import Chatbot from "../components/chatbot/Chatbox";
+import BackToTop from "../components/ui/BackToTop";
 
 const Home = () => {
   return (
