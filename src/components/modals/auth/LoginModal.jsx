@@ -44,7 +44,7 @@ export default function LoginModal() {
           className="modal-open"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              setIsOpen(false);
+              setIsOpen(true);
             }
           }}
         >
