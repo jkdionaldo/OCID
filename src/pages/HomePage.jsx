@@ -2,7 +2,7 @@ import Card from "../components/ui/HomeCard";
 
 const Home = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="min-h-screen  flex flex-col w-full">
       {/* Hero Section with Responsive OCID Banner */}
       <div className="relative w-full">
         {/* Desktop Banner (hidden on small screens) */}
@@ -210,7 +210,7 @@ const Home = () => {
         </div>
       </div>
       {/*Educational Philosophy*/}
-      <div className="w-full bg-csuGreen py-12 px-4 md:px-16 flex flex-col md:flex-row items-center md:items-center justify-center">
+      <div className=" w-full bg-csuGreen py-12 px-4 md:px-16 flex flex-col md:flex-row items-center md:items-center justify-center">
         {/* Left: Headings */}
         <div className="flex-1 flex flex-col items-center md:items-start justify-center mb-8 md:mb-0 md:px-16">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-poppins text-white text-center md:text-left leading-tight">
