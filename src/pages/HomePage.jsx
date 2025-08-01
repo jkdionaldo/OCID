@@ -5,7 +5,7 @@ import BackToTop from "../components/ui/BackToTop";
 
 const Home = () => {
   return (
-    <div className="min-h-screen  flex flex-col w-full">
+    <div className="min-h-screen flex flex-col w-full">
       {/* Hero Section with Responsive OCID Banner */}
       <div className="container mx-auto relative max-w-fit">
         {/* Desktop Banner (hidden on small screens) */}
