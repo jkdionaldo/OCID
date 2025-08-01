@@ -2,14 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-<<<<<<< HEAD
 import ProfileSettings from "@/pages/ProfileSettings";
 import Procedurals from "@/pages/Procedurals";
 import About from "@/pages/About";
-=======
 import NotFound from "@/pages/NotFound";
 
->>>>>>> bb50d0ca7f4360fc412af1db14e1604ebdca43b8
 // Import route collections
 // ccGraduateRoutes,
 
