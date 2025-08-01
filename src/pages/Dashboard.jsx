@@ -14,7 +14,6 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
 import DashboardError from "@/components/dashboard/DashboardError";
 
-import "react-toastify/dist/ReactToastify.css";
 import { showLoadingToast, updateToast } from "@/utils/toast";
 import { Search, Building, BookOpen, GraduationCap } from "lucide-react";
 
