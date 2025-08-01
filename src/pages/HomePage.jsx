@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div className="min-h-screen  flex flex-col w-full">
       {/* Hero Section with Responsive OCID Banner */}
-      <div className="relative w-full">
+      <div className="container mx-auto relative max-w-fit">
         {/* Desktop Banner (hidden on small screens) */}
         <img
           src="/images/ocid-banner1.png"
@@ -129,7 +129,7 @@ const Home = () => {
         </div>
 
         {/*For Insitutional Outcomes*/}
-        <div className="flex flex-col md:flex-row gap-10 items-center justify-center max-w-8xl mx-auto md:py-11 mb-12 ">
+        <div className="flex flex-col md:flex-row gap-10 items-center justify-center md:items-start max-w-8xl mx-auto md:py-11 mb-12 ">
           <img
             src="/images/institutional_outcome.svg"
             className="w-full max-w-md sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-2xl h-auto rounded-lg"
