@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = ({onRequestAccess}) => {
+const LoginForm = ({ onRequestAccess, onForgotPassword }) => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuth();
   const recaptchaRef = useRef(null);
@@ -137,8 +137,8 @@ const LoginForm = ({onRequestAccess}) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="w-full max-w-xs mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* General Error Message */}
         {errors.general && (
           <div className="flex items-center p-4 text-sm text-red-800 bg-red-50 border border-red-200 rounded-lg">
@@ -148,7 +148,7 @@ const LoginForm = ({onRequestAccess}) => {
         )}
 
         {/* Email Field */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label
             htmlFor="email"
             className="block text-sm font-semibold text-gray-700 text-left"
@@ -184,7 +184,7 @@ const LoginForm = ({onRequestAccess}) => {
         </div>
 
         {/* Password Field */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <label
             htmlFor="password"
             className="block text-sm font-semibold text-gray-700 text-left"
@@ -271,12 +271,18 @@ const LoginForm = ({onRequestAccess}) => {
               Remember me
             </label>
           </div>
-          <Link
-            to="/forgot-password"
-            className="text-sm font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
-          >
-            Forgot your password?
-          </Link>
+          {/* Forgot Password */}
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              <button
+                type="button"
+                onClick={onForgotPassword}
+                className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
+              >
+                Forgot Your Password?
+              </button>
+            </p>
+          </div>
         </div>
 
         {/* Submit Button */}
