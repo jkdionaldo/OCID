@@ -15,8 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function LoginModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,28 +23,6 @@ export default function LoginModal() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const scrollPosition = useRef(0);
 
-  useEffect(() => {
-    if (isOpen) {
-      scrollPosition.current = window.scrollY;
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollPosition.current}px`;
-      document.body.style.width = "100%";
-    } else {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      window.scrollTo(0, scrollPosition.current);
-    }
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-    };
-  }, [isOpen]);
-
   const openModal = () => {
     setDirection(-1);
     setIsOpen(true);
@@ -54,15 +30,24 @@ export default function LoginModal() {
   const closeModal = () => {
     setIsOpen(false);
     setShowRegister(false);
+    setShowForgotPassword(false);
   };
 
   return (
     <>
-      <Dialog>
+      <Dialog modal={false} open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button variant="outline">Login</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[435px]  pt-12 lg:pb-18">
+           {isOpen && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+        )}
+        <DialogContent 
+          className="sm:max-w-[435px] pt-12 lg:pb-18 z-50"
+          onInteractOutside={(e) => {
+            e.preventDefault();
+          }}
+        >
           <DialogHeader>
             <div className="flex items-center justify-center ">
               <img
