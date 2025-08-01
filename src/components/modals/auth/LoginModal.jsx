@@ -11,7 +11,15 @@ export default function LoginModal() {
   const [showRegister, setShowRegister] = useState(false);
   const [direction, setDirection] = useState(1);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -33,7 +41,7 @@ export default function LoginModal() {
       {/* Pure CSS Modal */}
       {isOpen && (
         <div 
-          className="modal-button"
+          className="modal-open"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setIsOpen(false);
@@ -43,7 +51,7 @@ export default function LoginModal() {
           <div 
             className="bg-white rounded-lg shadow-2xl relative"
             style={{
-              animation: 'slideIn 0.3s ease-out',
+              animation: isClosing ? 'slideOut 0.2s ease-in' : 'slideIn 0.2s ease-out',
               width: '100%',
               maxWidth: '435px',
               maxHeight: 'calc(100vh - 2rem)',
@@ -53,7 +61,7 @@ export default function LoginModal() {
           >
             {/* Close Button */}
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={closeModal}
               className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full z-10"
               style={{ fontSize: '18px' }}
             >
@@ -141,6 +149,11 @@ export default function LoginModal() {
           from { opacity: 0; }
           to { opacity: 1; }
         }
+
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
         
         @keyframes slideIn {
           from { 
@@ -150,6 +163,17 @@ export default function LoginModal() {
           to { 
             opacity: 1;
             transform: scale(1) translateY(0);
+          }
+        }
+        
+        @keyframes slideOut {
+          from {
+            opacity: 1; 
+            transform: scale(1) translateY(0); 
+          }
+          to {
+            opacity: 0;
+            transform: scale(0.95) translateY(-20px);
           }
         }
       `}</style>
