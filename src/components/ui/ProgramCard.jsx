@@ -1,7 +1,7 @@
 import React from "react";
 import { BookOpen, GraduationCap, Building, Sparkles } from "lucide-react";
 
-const ProgramCard = ({ program, type, colleges, campuses }) => {
+const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
   // Get college info for a program
   const getCollegeInfo = (collegeId) => {
     const college = colleges?.find((c) => c.id === collegeId);
@@ -132,6 +132,25 @@ const ProgramCard = ({ program, type, colleges, campuses }) => {
             </div>
           </div>
         </div>
+
+        {/* View Details Button - Same design as CollegeCard */}
+        <button
+          onClick={() => onViewDetails && onViewDetails(program, type)}
+          className={`w-full mt-6 bg-gradient-to-r ${
+            currentTheme.button
+          } text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+            type === "graduate"
+              ? "focus:ring-purple-300"
+              : "focus:ring-blue-300"
+          }`}
+        >
+          <div className="flex items-center justify-center space-x-2">
+            <span>View Details</span>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-75"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-50"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-25"></div>
+          </div>
+        </button>
       </div>
 
       {/* Hover Effect Overlay */}

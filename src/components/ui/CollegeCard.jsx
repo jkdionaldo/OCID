@@ -17,23 +17,24 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
   // Calculate program counts
   const undergradCount = college.undergraduate_programs || 0;
   const graduateCount = college.graduate_programs || 0;
-  const totalPrograms = undergradCount + graduateCount;
 
   // Dynamic color scheme based on campus
   const campusTheme = {
     "CSU-MAIN": {
       primary: "emerald",
-      gradient: "from-emerald-500 to-green-600", // Enhanced green gradient
+      gradient: "from-emerald-500 to-green-600",
       badge: "bg-emerald-700",
       accent: "bg-emerald-50 border-emerald-100",
+      border: "border-emerald-200 hover:border-emerald-300",
       button:
         "from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700",
     },
     "CSU-CC": {
       primary: "blue",
-      gradient: "from-blue-500 to-indigo-600", // Enhanced blue gradient
+      gradient: "from-blue-500 to-indigo-600",
       badge: "bg-blue-700",
       accent: "bg-blue-50 border-blue-100",
+      border: "border-blue-200 hover:border-blue-300",
       button:
         "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700",
     },
@@ -42,7 +43,9 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
   const theme = campusTheme[campus] || campusTheme["CSU-MAIN"];
 
   return (
-    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+    <div
+      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${theme.border} overflow-hidden transform hover:-translate-y-2`}
+    >
       {/* Floating Campus Badge */}
       <div className="absolute top-4 right-4 z-10">
         <div
@@ -95,8 +98,14 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
           <h3 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-gray-700 transition-colors">
             {college.name}
           </h3>
-          <p className="text-sm font-medium text-gray-500 bg-gray-50 px-3 py-1 rounded-full inline-block">
-            {college.shortName || college.acronym}
+          <p
+            className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
+              campus === "CSU-MAIN"
+                ? "text-emerald-700 bg-emerald-50 border border-emerald-200"
+                : "text-blue-700 bg-blue-50 border border-blue-200"
+            }`}
+          >
+            {college.acronym}
           </p>
         </div>
 
@@ -138,25 +147,6 @@ export default function CollegeCard({ college, campus, onViewDetails }) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Quick Overview Stats */}
-        <div className="flex items-center justify-around p-4 bg-gray-50 rounded-xl border border-gray-100">
-          <div className="text-center">
-            <div className="text-lg font-bold text-gray-900">
-              {totalPrograms}
-            </div>
-            <div className="text-xs text-gray-600 font-medium">
-              Total Programs
-            </div>
-          </div>
-          <div className="w-px h-8 bg-gray-300"></div>
-          <div className="text-center">
-            <div className="text-lg font-bold text-gray-900">
-              {college.files || 0}
-            </div>
-            <div className="text-xs text-gray-600 font-medium">Files</div>
           </div>
         </div>
 

@@ -136,7 +136,7 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col p-0 gap-0">
         {/* Fixed Header */}
-        <div className="flex-shrink-0 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 px-6 py-4 rounded-t-lg">
+        <div className="flex-shrink-0 bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 rounded-t-lg">
           <DialogHeader className="space-y-0">
             <DialogTitle className="flex items-center gap-3 text-white text-xl font-semibold">
               <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -144,7 +144,7 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
               </div>
               Add New College
             </DialogTitle>
-            <DialogDescription className="text-green-50">
+            <DialogDescription className="text-green-50 pt-2">
               Create a new college and assign it to a campus. This college will
               be available for program assignments.
             </DialogDescription>
@@ -162,11 +162,11 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Campus *
+                      Campus
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-green-400 focus:ring-green-400/20">
+                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20">
                           <SelectValue placeholder="Select Campus" />
                         </SelectTrigger>
                       </FormControl>
@@ -193,11 +193,11 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      College Name *
+                      College Name
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-green-400 focus:ring-green-400/20"
+                        className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20 focus-visible:outline-none focus-visible:ring-green-600 "
                         placeholder="e.g. College of Computing and Information Sciences"
                         {...field}
                       />
@@ -214,20 +214,16 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      College Acronym *
+                      College Acronym
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-green-400 focus:ring-green-400/20"
+                        className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20 focus-visible:outline-none focus-visible:ring-green-600 "
                         placeholder="e.g. CCIS"
                         maxLength={10}
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Maximum 10 characters. This will be used for
-                      identification.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -236,7 +232,7 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
               {/* Logo Upload */}
               <div className="space-y-3">
                 <label className="text-base font-medium text-gray-700">
-                  College Logo (Optional)
+                  College Logo
                 </label>
 
                 {!logoPreview ? (
@@ -254,7 +250,7 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
                       <Button
                         type="button"
                         variant="outline"
-                        className="border-green-300 text-green-600 hover:bg-green-50"
+                        className="border-green-600 text-green-600 hover:bg-green-50"
                         asChild
                       >
                         <label htmlFor="logoInput" className="cursor-pointer">
@@ -313,26 +309,6 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
                 )}
               </div>
 
-              {/* Info Card */}
-              <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
-                <CardContent className="p-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="p-2 bg-green-100 rounded-lg">
-                      <Building className="h-5 w-5 text-green-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-green-800">
-                        Creating New College
-                      </p>
-                      <p className="text-xs text-green-600 mt-1">
-                        This college will be added to the selected campus and
-                        will be available for program assignments.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Root Error */}
               {form.formState.errors.root && (
                 <Alert variant="destructive">
@@ -361,7 +337,7 @@ const AddCollegeModal = ({ isOpen, onClose, onAddCollege, campuses }) => {
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
             >
               {isSubmitting ? (
                 <>

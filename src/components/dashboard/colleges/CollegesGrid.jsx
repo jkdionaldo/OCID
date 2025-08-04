@@ -1,7 +1,7 @@
 import React from "react";
 import { Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CollegeCard from "@/components/ui/CardDashboard";
+import CollegeCard from "@/components/ui/CollegeCard";
 
 const CollegesGrid = ({
   colleges,
