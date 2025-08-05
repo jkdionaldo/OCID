@@ -2,8 +2,19 @@ import React from "react";
 import { BookOpen, GraduationCap, Building, Sparkles } from "lucide-react";
 
 const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
-  // Get college info for a program
+  // Enhanced getCollegeInfo function to handle embedded college data
   const getCollegeInfo = (collegeId) => {
+    // First check if college info is embedded in the program
+    if (program.college) {
+      const campus = campuses?.find((c) => c.id === program.college.campus_id);
+      return {
+        name: program.college.name,
+        acronym: program.college.acronym,
+        campus: campus?.acronym || "Unknown",
+      };
+    }
+
+    // Fallback to looking up in colleges array
     const college = colleges?.find((c) => c.id === collegeId);
     if (!college) return { name: "Unknown", acronym: "N/A", campus: "Unknown" };
 

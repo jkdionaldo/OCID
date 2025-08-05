@@ -17,9 +17,20 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
     ...programs.graduate.map((p) => ({ ...p, type: "graduate" })),
   ];
 
-  // Get college info for a program
-  const getCollegeInfo = (collegeId) => {
-    const college = colleges?.find((c) => c.id === collegeId);
+  // Enhanced getCollegeInfo function to handle embedded college data
+  const getCollegeInfo = (program) => {
+    // First check if college info is embedded in the program
+    if (program.college) {
+      const campus = campuses?.find((c) => c.id === program.college.campus_id);
+      return {
+        name: program.college.name,
+        acronym: program.college.acronym,
+        campus: campus?.acronym || "Unknown",
+      };
+    }
+
+    // Fallback to looking up in colleges array
+    const college = colleges?.find((c) => c.id === program.college_id);
     if (!college) return { name: "Unknown", acronym: "N/A", campus: "Unknown" };
 
     const campus = campuses?.find((c) => c.id === college.campus_id);
@@ -33,7 +44,7 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
   return (
     <div className="space-y-4">
       {allPrograms.map((program) => {
-        const collegeInfo = getCollegeInfo(program.college_id);
+        const collegeInfo = getCollegeInfo(program);
         const Icon = program.type === "graduate" ? GraduationCap : BookOpen;
         const colorScheme = program.type === "graduate" ? "yellow" : "blue";
 
