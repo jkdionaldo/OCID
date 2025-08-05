@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BookOpen, GraduationCap, Plus, Save } from "lucide-react";
+import { BookOpen, GraduationCap, Plus, Save, Upload, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -45,6 +45,8 @@ const formSchema = z.object({
 
 const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [logoFile, setLogoFile] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
   const { data: dashboardData } = useDashboardData();
 
   const form = useForm({
@@ -61,6 +63,8 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
   useEffect(() => {
     if (isOpen) {
       form.reset();
+      setLogoFile(null);
+      setLogoPreview(null);
     }
   }, [isOpen, form]);
 
@@ -68,7 +72,13 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
     setIsSubmitting(true);
 
     try {
-      await onAddProgram(values);
+      const programFormData = {
+        ...values,
+        logo: logoFile,
+        logoPreview: logoPreview,
+      };
+
+      await onAddProgram(programFormData);
       onClose();
     } catch (error) {
       console.error("Error adding program:", error);
@@ -78,6 +88,51 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      const validTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/svg+xml",
+      ];
+
+      if (!validTypes.includes(file.type)) {
+        form.setError("logo", {
+          message: "Please select a valid image file (JPEG, PNG, GIF, SVG)",
+        });
+        return;
+      }
+
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        form.setError("logo", {
+          message: "File size must be less than 5MB",
+        });
+        return;
+      }
+
+      setLogoFile(file);
+      form.clearErrors("logo");
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLogoPreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeLogo = () => {
+    setLogoFile(null);
+    setLogoPreview(null);
+    form.clearErrors("logo");
   };
 
   const selectedProgramType = form.watch("program_type");
@@ -100,13 +155,7 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] flex flex-col p-0 gap-0">
         {/* Fixed Header */}
-        <div
-          className={`flex-shrink-0 bg-gradient-to-r ${
-            isGraduate
-              ? "from-purple-500 via-indigo-500 to-blue-500"
-              : "from-blue-500 via-cyan-500 to-teal-500"
-          } px-6 py-4 rounded-t-lg`}
-        >
+        <div className="flex-shrink-0 bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 rounded-t-lg">
           <DialogHeader className="space-y-0">
             <DialogTitle className="flex items-center gap-3 text-white text-xl font-semibold">
               <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -114,9 +163,7 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
               </div>
               Add New Program
             </DialogTitle>
-            <DialogDescription
-              className={`${isGraduate ? "text-purple-50" : "text-blue-50"}`}
-            >
+            <DialogDescription className="text-green-50 pt-2">
               Create a new academic program and assign it to a college. This
               will be available for curriculum management.
             </DialogDescription>
@@ -134,17 +181,11 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Program Type *
+                      Program Type
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger
-                          className={`h-12 border-2 border-gray-200 ${
-                            isGraduate
-                              ? "focus:border-purple-400 focus:ring-purple-400/20"
-                              : "focus:border-blue-400 focus:ring-blue-400/20"
-                          }`}
-                        >
+                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20">
                           <SelectValue placeholder="Select program type" />
                         </SelectTrigger>
                       </FormControl>
@@ -157,7 +198,7 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                         </SelectItem>
                         <SelectItem value="graduate">
                           <div className="flex items-center gap-2">
-                            <GraduationCap className="h-4 w-4 text-purple-600" />
+                            <GraduationCap className="h-4 w-4 text-yellow-600" />
                             Graduate
                           </div>
                         </SelectItem>
@@ -175,17 +216,11 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      College *
+                      College
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger
-                          className={`h-12 border-2 border-gray-200 ${
-                            isGraduate
-                              ? "focus:border-purple-400 focus:ring-purple-400/20"
-                              : "focus:border-blue-400 focus:ring-blue-400/20"
-                          }`}
-                        >
+                        <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20">
                           <SelectValue placeholder="Select college" />
                         </SelectTrigger>
                       </FormControl>
@@ -246,15 +281,11 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Program Name *
+                      Program Name
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`h-12 border-2 border-gray-200 ${
-                          isGraduate
-                            ? "focus:border-purple-400 focus:ring-purple-400/20"
-                            : "focus:border-blue-400 focus:ring-blue-400/20"
-                        }`}
+                        className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20 focus-visible:outline-none focus-visible:ring-green-600 "
                         placeholder={
                           isGraduate
                             ? "e.g. Master of Science in Computer Science"
@@ -275,72 +306,100 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Program Acronym (Optional)
+                      Program Acronym
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`h-12 border-2 border-gray-200 ${
-                          isGraduate
-                            ? "focus:border-purple-400 focus:ring-purple-400/20"
-                            : "focus:border-blue-400 focus:ring-blue-400/20"
-                        }`}
+                        className="h-12 border-2 border-gray-200 focus:border-green-600 focus:ring-green-600/20 focus-visible:outline-none focus-visible:ring-green-600 "
                         placeholder={isGraduate ? "e.g. MSCS" : "e.g. BSCS"}
                         maxLength={10}
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Short abbreviation for the program (max 10 characters).
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Program Type Info Card */}
-              <Card
-                className={
-                  isGraduate
-                    ? "bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200"
-                    : "bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200"
-                }
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start space-x-3">
-                    <div
-                      className={`p-2 rounded-lg ${
-                        isGraduate ? "bg-purple-100" : "bg-blue-100"
-                      }`}
-                    >
-                      {isGraduate ? (
-                        <GraduationCap className="h-5 w-5 text-purple-600" />
-                      ) : (
-                        <BookOpen className="h-5 w-5 text-blue-600" />
-                      )}
-                    </div>
-                    <div>
-                      <p
-                        className={`text-sm font-medium ${
-                          isGraduate ? "text-purple-800" : "text-blue-800"
-                        }`}
-                      >
-                        {isGraduate
-                          ? "Graduate Program"
-                          : "Undergraduate Program"}
+              {/* Logo Upload */}
+              <div className="space-y-3">
+                <label className="text-base font-medium text-gray-700">
+                  Program Logo
+                </label>
+
+                {!logoPreview ? (
+                  <Card className="border-2 border-dashed border-green-300 hover:border-green-400 transition-colors bg-gradient-to-br from-green-50 to-emerald-50">
+                    <CardContent className="flex flex-col items-center justify-center p-8">
+                      <div className="p-3 bg-green-100 rounded-full mb-4">
+                        <Upload className="h-8 w-8 text-green-600" />
+                      </div>
+                      <p className="text-gray-700 font-medium mb-2">
+                        Upload Program Logo
                       </p>
-                      <p
-                        className={`text-xs mt-1 ${
-                          isGraduate ? "text-purple-600" : "text-blue-600"
-                        }`}
-                      >
-                        This program will be added to the selected college and
-                        will be available for curriculum and syllabus
-                        management.
+                      <p className="text-gray-500 text-sm mb-4 text-center">
+                        Drag and drop or click to browse
                       </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-green-600 text-green-600 hover:bg-green-50"
+                        asChild
+                      >
+                        <label htmlFor="logoInput" className="cursor-pointer">
+                          <Upload className="h-4 w-4 mr-2" />
+                          Browse Files
+                        </label>
+                      </Button>
+                      <input
+                        type="file"
+                        id="logoInput"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleLogoChange}
+                      />
+                      <p className="mt-3 text-xs text-gray-500">
+                        Supported: JPEG, PNG, GIF, SVG (max 5MB)
+                      </p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card className="border-2 border-green-200 bg-gradient-to-br from-green-50 to-white">
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={logoPreview}
+                          alt="Logo preview"
+                          className="h-20 w-20 object-contain rounded-xl border-2 border-green-200 bg-white p-2"
+                        />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-gray-900">
+                            {logoFile?.name}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {logoFile &&
+                              `${(logoFile.size / 1024 / 1024).toFixed(2)} MB`}
+                          </p>
+                          <Badge
+                            variant="secondary"
+                            className="mt-2 bg-green-100 text-green-800"
+                          >
+                            Ready to upload
+                          </Badge>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={removeLogo}
+                          className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
 
               {/* Root Error */}
               {form.formState.errors.root && (
@@ -370,11 +429,7 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className={`${
-                isGraduate
-                  ? "bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
-                  : "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
-              } text-white shadow-lg hover:shadow-xl transition-all duration-200`}
+              className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
             >
               {isSubmitting ? (
                 <>
