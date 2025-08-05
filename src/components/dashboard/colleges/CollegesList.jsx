@@ -20,17 +20,22 @@ const CollegesList = ({
   onEdit,
   onDelete,
 }) => {
+  // Helper function to get campus info
+  const getCampusInfo = (campusId) => {
+    const campus = campuses?.find((c) => c.id === campusId);
+    return {
+      name: campus?.name || "Unknown Campus",
+      acronym: campus?.acronym || "Unknown",
+    };
+  };
+
   return (
     <div className="space-y-4">
       {colleges.map((college) => {
         const undergradCount = college.undergraduate_programs || 0;
         const graduateCount = college.graduate_programs || 0;
         const totalPrograms = undergradCount + graduateCount;
-        const campusAcronym =
-          college.campus?.acronym ||
-          college.campus_acronym ||
-          campuses?.find((c) => c.id === college.campus_id)?.acronym ||
-          "Unknown";
+        const campusInfo = getCampusInfo(college.campus_id);
 
         // Dynamic theme based on campus
         const campusTheme = {
@@ -50,7 +55,8 @@ const CollegesList = ({
           },
         };
 
-        const theme = campusTheme[campusAcronym] || campusTheme["CSU-MAIN"];
+        const theme =
+          campusTheme[campusInfo.acronym] || campusTheme["CSU-MAIN"];
 
         return (
           <Card
@@ -63,7 +69,7 @@ const CollegesList = ({
                 <Badge
                   className={`${theme.badge} text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm`}
                 >
-                  {campusAcronym}
+                  {campusInfo.acronym}
                 </Badge>
               </div>
 
@@ -72,7 +78,7 @@ const CollegesList = ({
 
               <div
                 className="flex items-center p-6 cursor-pointer relative"
-                onClick={() => onViewDetails(college, campusAcronym)}
+                onClick={() => onViewDetails(college, campusInfo.acronym)}
               >
                 {/* Logo Section */}
                 <div className="flex-shrink-0 mr-6">
@@ -115,22 +121,18 @@ const CollegesList = ({
                         <div className="flex items-center gap-2">
                           <div
                             className={`w-2 h-2 rounded-full ${
-                              campusAcronym === "CSU-MAIN"
+                              campusInfo.acronym === "CSU-MAIN"
                                 ? "bg-emerald-500"
                                 : "bg-blue-500"
                             }`}
                           ></div>
                           <span className="text-sm font-medium text-gray-600">
-                            {college.acronym || college.shortName}
+                            {college.acronym}
                           </span>
                         </div>
                         <span className="text-gray-300">•</span>
                         <span className="text-sm text-gray-600">
-                          {college.campus?.name ||
-                            college.campus_name ||
-                            campuses?.find((c) => c.id === college.campus_id)
-                              ?.name ||
-                            "Unknown Campus"}
+                          {campusInfo.name}
                         </span>
                       </div>
 
@@ -158,8 +160,8 @@ const CollegesList = ({
                     </div>
 
                     {/* Stats Summary - Right Side */}
-                    <div className="flex-shrink-0 mt-4 lg:mt-8">
-                      <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/50 shadow-sm">
+                    <div className="flex-shrink-0 mt-4 lg:mt-0">
+                      <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/50 shadow-sm p-4">
                         <div className="text-center">
                           <div className="text-2xl font-bold text-gray-900 mb-1">
                             {totalPrograms}
@@ -180,7 +182,7 @@ const CollegesList = ({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    onViewDetails(college, campusAcronym);
+                    onViewDetails(college, campusInfo.acronym);
                   }}
                   size="sm"
                   className="h-11 w-11 rounded-full p-0 bg-white/95 backdrop-blur-sm border-2 border-amber-200 text-amber-600 shadow-lg hover:shadow-xl hover:bg-amber-50 hover:border-amber-300 hover:scale-110 transition-all duration-200 focus:ring-2 focus:ring-amber-300 focus:ring-opacity-50"
@@ -218,10 +220,10 @@ const CollegesList = ({
                 </Button>
               </div>
 
-              {/* Enhanced Gradient Shadow Overlay for Action Buttons Area */}
+              {/* Gradient Shadow Overlay */}
               <div className="absolute inset-y-0 right-0 w-64 bg-gradient-to-l from-black/30 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10"></div>
 
-              {/* Original Hover Effect Overlay */}
+              {/* Hover Effect Overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </CardContent>
           </Card>

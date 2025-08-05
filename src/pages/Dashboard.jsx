@@ -284,7 +284,7 @@ const Dashboard = () => {
     );
 
     colleges.forEach((college) => {
-      // Handle temporary colleges during optimistic updates
+      // Handle temp colleges during optimistic updates
       if (college.id.toString().startsWith("temp-")) {
         // For temp colleges, find campus by campus_id instead of acronym
         const tempCampus = dashboardData.campuses.find(
@@ -518,7 +518,7 @@ const Dashboard = () => {
 
               {activeTab === "colleges" && (
                 <CollegesTab
-                  colleges={transformedCollegesData}
+                  colleges={colleges} // Use raw colleges array directly
                   campuses={dashboardData.campuses}
                   onAddCollege={handleAddCollege}
                   onUpdateCollege={handleUpdateCollege}
