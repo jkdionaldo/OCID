@@ -24,7 +24,7 @@ const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
     yellow: {
       primary: "yellow",
       gradient: "from-yellow-500 to-amber-600",
-      badge: "bg-yellow-600",
+      badge: "bg-yellow-700",
       accent: "bg-yellow-50 border-yellow-100",
       button:
         "from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700",
