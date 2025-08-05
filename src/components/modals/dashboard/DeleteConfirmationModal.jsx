@@ -49,7 +49,7 @@ const DeleteConfirmationModal = ({
           {/* Main message */}
           <p className="text-lg text-gray-900 text-center">
             {canDelete
-              ? `Are you sure you want to delete this ${itemType.toLowerCase()}? This action cannot be undone.`
+              ? `Are you sure you want to delete this ${itemType.toLowerCase()}?`
               : `This ${itemType.toLowerCase()} cannot be deleted.`}
           </p>
 
