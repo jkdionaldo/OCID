@@ -20,9 +20,18 @@ const CollegesList = ({
   onEdit,
   onDelete,
 }) => {
-  // Helper function to get campus info
-  const getCampusInfo = (campusId) => {
-    const campus = campuses?.find((c) => c.id === campusId);
+  // Enhanced helper function to get campus info with embedded data support
+  const getCampusInfo = (college) => {
+    // First check if campus info is embedded in the college (from optimistic updates)
+    if (college.campus) {
+      return {
+        name: college.campus.name,
+        acronym: college.campus.acronym,
+      };
+    }
+
+    // Fallback to looking up in campuses array
+    const campus = campuses?.find((c) => c.id === college.campus_id);
     return {
       name: campus?.name || "Unknown Campus",
       acronym: campus?.acronym || "Unknown",
@@ -35,7 +44,7 @@ const CollegesList = ({
         const undergradCount = college.undergraduate_programs || 0;
         const graduateCount = college.graduate_programs || 0;
         const totalPrograms = undergradCount + graduateCount;
-        const campusInfo = getCampusInfo(college.campus_id);
+        const campusInfo = getCampusInfo(college);
 
         // Dynamic theme based on campus
         const campusTheme = {
