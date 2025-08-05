@@ -17,18 +17,18 @@ const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
 
   const collegeInfo = getCollegeInfo(program.college_id);
   const Icon = type === "graduate" ? GraduationCap : BookOpen;
-  const colorScheme = type === "graduate" ? "purple" : "blue";
+  const colorScheme = type === "graduate" ? "yellow" : "blue";
 
   // Dynamic color scheme
   const theme = {
-    purple: {
-      primary: "purple",
-      gradient: "from-purple-500 to-violet-600",
-      badge: "bg-purple-700",
-      accent: "bg-purple-50 border-purple-100",
+    yellow: {
+      primary: "yellow",
+      gradient: "from-yellow-500 to-amber-600",
+      badge: "bg-yellow-600",
+      accent: "bg-yellow-50 border-yellow-100",
       button:
-        "from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700",
-      border: "border-purple-200 hover:border-purple-300",
+        "from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700",
+      border: "border-yellow-200 hover:border-yellow-300",
     },
     blue: {
       primary: "blue",
@@ -86,61 +86,57 @@ const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
           <h3 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-gray-700 transition-colors">
             {program.program_name}
           </h3>
-          {program.acronym && (
-            <p
-              className={`text-sm font-medium text-${colorScheme}-600 bg-${colorScheme}-50 px-3 py-1 rounded-full inline-block`}
-            >
-              {program.acronym}
-            </p>
-          )}
-        </div>
 
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            {program.acronym && (
+              <p
+                className={`text-sm font-medium text-${colorScheme}-600 bg-${colorScheme}-50 px-3 py-1 border border-${colorScheme}-200 rounded-full inline-block`}
+              >
+                {program.acronym}
+              </p>
+            )}
+
+            <p
+              className={`text-sm font-medium px-3 py-1 border rounded-full inline-block ${
+                collegeInfo.campus === "CSU-MAIN"
+                  ? "text-green-600 bg-green-50 border-green-200"
+                  : "text-blue-600 bg-blue-50 border-blue-200"
+              }`}
+            >
+              {collegeInfo.campus}
+            </p>
+          </div>
+        </div>
         {/* College Info */}
         <div
           className={`p-4 rounded-xl border-2 ${currentTheme.accent} hover:shadow-md transition-all duration-300`}
         >
-          <div className="flex items-center text-sm text-gray-600 justify-center">
-            <Building className="w-4 h-4 mr-2" />
-            <span className="font-medium">{collegeInfo.name}</span>
-          </div>
-          <div className="flex items-center justify-center mt-2">
-            <span
-              className={`px-2 py-1 text-xs font-medium ${
-                collegeInfo.campus === "CSU-MAIN"
-                  ? "bg-green-100 text-green-800"
-                  : "bg-blue-100 text-blue-800"
-              } rounded-full`}
+          <div className="flex items-center text-left space-x-3">
+            {/* Icon Container */}
+            <div
+              className={`p-2 ${
+                type === "graduate" ? "bg-yellow-500" : "bg-blue-500"
+              } rounded-lg shadow-sm flex-shrink-0`}
             >
-              {collegeInfo.campus}
-            </span>
-          </div>
-        </div>
-
-        {/* Quick Info */}
-        <div className="flex items-center justify-around p-4 bg-gray-50 rounded-xl border border-gray-100">
-          <div className="text-center">
-            <div className="text-sm font-medium text-gray-600">College</div>
-            <div className="text-xs text-gray-500 font-medium">
-              {collegeInfo.acronym}
+              <Building className="w-5 h-5 text-white" />
             </div>
-          </div>
-          <div className="w-px h-8 bg-gray-300"></div>
-          <div className="text-center">
-            <div className="text-sm font-medium text-gray-600">Type</div>
-            <div className="text-xs text-gray-500 font-medium">
-              {type === "graduate" ? "Grad" : "Undergrad"}
+
+            <div className="flex-1 text-center">
+              <span className="text-sm font-medium text-gray-800 block">
+                {collegeInfo.name}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* View Details Button - Same design as CollegeCard */}
+        {/* View Details Button */}
         <button
           onClick={() => onViewDetails && onViewDetails(program, type)}
           className={`w-full mt-6 bg-gradient-to-r ${
             currentTheme.button
           } text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
             type === "graduate"
-              ? "focus:ring-purple-300"
+              ? "focus:ring-yellow-300"
               : "focus:ring-blue-300"
           }`}
         >

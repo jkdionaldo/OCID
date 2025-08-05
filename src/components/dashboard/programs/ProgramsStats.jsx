@@ -8,18 +8,18 @@ const ProgramsStats = ({ stats }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full">
         {/* Total Programs */}
         <Card className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 to-indigo-600 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-400 to-green-600 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
           <CardContent className="p-6 relative z-10">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">
                   Total Programs
                 </p>
-                <p className="text-3xl font-extrabold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">
+                <p className="text-3xl font-extrabold text-gray-900 group-hover:text-green-600 transition-colors duration-300">
                   {stats.total}
                 </p>
               </div>
-              <Building className="h-10 w-10 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-300" />
+              <Building className="h-10 w-10 text-green-500 group-hover:text-green-600 transition-colors duration-300" />
             </div>
           </CardContent>
         </Card>
@@ -44,16 +44,16 @@ const ProgramsStats = ({ stats }) => {
 
         {/* Graduate Programs */}
         <Card className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-600 opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
           <CardContent className="p-6 relative z-10">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Graduate</p>
-                <p className="text-3xl font-extrabold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                <p className="text-3xl font-extrabold text-gray-900 group-hover:text-yellow-600 transition-colors duration-300">
                   {stats.graduate || 0}
                 </p>
               </div>
-              <GraduationCap className="h-10 w-10 text-purple-500 group-hover:text-purple-600 transition-colors duration-300" />
+              <GraduationCap className="h-10 w-10 text-yellow-500 group-hover:text-yellow-600 transition-colors duration-300" />
             </div>
           </CardContent>
         </Card>

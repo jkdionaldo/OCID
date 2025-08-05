@@ -35,7 +35,7 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
       {allPrograms.map((program) => {
         const collegeInfo = getCollegeInfo(program.college_id);
         const Icon = program.type === "graduate" ? GraduationCap : BookOpen;
-        const colorScheme = program.type === "graduate" ? "purple" : "blue";
+        const colorScheme = program.type === "graduate" ? "yellow" : "blue";
 
         // Dynamic theme based on type
         const programTheme = {
@@ -47,11 +47,11 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
             hover: "hover:border-blue-300 hover:shadow-blue-100/50",
           },
           graduate: {
-            gradient: "from-purple-500/10 to-violet-500/5",
-            border: "border-purple-200",
-            badge: "bg-purple-600",
-            accent: "group-hover:text-purple-600",
-            hover: "hover:border-purple-300 hover:shadow-purple-100/50",
+            gradient: "from-yellow-500/10 to-amber-500/5",
+            border: "border-yellow-200",
+            badge: "bg-yellow-600",
+            accent: "group-hover:text-yellow-600",
+            hover: "hover:border-yellow-300 hover:shadow-yellow-100/50",
           },
         };
 
@@ -104,7 +104,7 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
                             <div
                               className={`w-2 h-2 rounded-full ${
                                 program.type === "graduate"
-                                  ? "bg-purple-500"
+                                  ? "bg-yellow-500"
                                   : "bg-blue-500"
                               }`}
                             ></div>
@@ -154,7 +154,7 @@ const ProgramsList = ({ programs, colleges, campuses, onEdit, onDelete }) => {
                           <div
                             className={`text-lg font-bold ${
                               program.type === "graduate"
-                                ? "text-purple-700"
+                                ? "text-yellow-700"
                                 : "text-blue-700"
                             } mb-1`}
                           >
