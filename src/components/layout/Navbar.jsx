@@ -222,7 +222,7 @@ const Navbar = () => {
             {(isDesktopDropdownOpen || isDesktopDropdownClosing) && (
               <div
                 ref={dropdownRef}
-                className={`absolute left-0 rounded-lg bg-white shadow-2xl flex flex-col w-48 border border-black-50 ${
+                className={`absolute left-0 rounded-lg bg-white shadow-2xl flex flex-col w-48 overflow-hidden ${
                   isDesktopDropdownClosing ? 'dropdown-exit' : 'dropdown-enter'
                 }`}
                 style={{
@@ -232,13 +232,13 @@ const Navbar = () => {
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-t-lg text-start"
+                  className="block px-6 py-2 text-gray-800 hover:text-white hover:bg-csuGreen text-sm font-medium transition-colors duration-200 text-start first:rounded-t-lg"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-b-lg text-start"
+                  className="block px-6 py-2 text-gray-800 hover:text-white hover:bg-csuGreen text-sm font-medium transition-colors duration-200 text-start last:rounded-b-lg"
                 >
                   CSU-CC
                 </Link>
