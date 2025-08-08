@@ -5,6 +5,7 @@ import {
   BookOpen,
   RefreshCw,
   Files,
+  FileText,
   Info,
 } from "lucide-react";
 
@@ -32,7 +33,7 @@ import { Button } from "@/components/ui/button";
 import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("colleges");
+  const [activeTab, setActiveTab] = useState("forms");
 
   // Data hooks with optimized caching
   const {
@@ -366,22 +367,24 @@ const Dashboard = () => {
 
   const tabs = [
     {
+      id: "forms",
+      label: "Forms",
+      icon: FileText,
+    },
+    {
       id: "colleges",
       label: "Colleges",
       icon: Building,
-      description: "Manage colleges and their information",
     },
     {
       id: "programs",
       label: "Programs",
       icon: BookOpen,
-      description: "Manage undergraduate and graduate programs",
     },
     {
       id: "files",
       label: "Files & Documents",
       icon: Files,
-      description: "Manage all files, curricula, and documents",
     },
   ];
 
