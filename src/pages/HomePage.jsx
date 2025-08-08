@@ -4,9 +4,9 @@ import Card from "../components/ui/HomeCard";
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col w-full">
+    <div className="min-h-screen flex flex-col w-full ">
       {/* Hero Section with Responsive OCID Banner */}
-      <div className="container mx-auto relative max-w-fit">
+      <div className="relative w-full">
         {/* Desktop Banner (hidden on small screens) */}
         <img
           src="/images/ocid-banner1.png"
