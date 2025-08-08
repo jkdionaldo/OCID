@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import LoginForm from "@/components/auth/LoginForm";
 import RequestAccessForm from "@/components/auth/RequestAccessForm";
 import ForgotPassword from "../../auth/ForgotPassword";
-import { X, LogIn } from "lucide-react";
+import { X, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+
 
 export default function LoginModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +49,7 @@ export default function LoginModal() {
     <>
       <Button variant="outline" onClick={() => setIsOpen(true)}>
         Login
+                <UsersRound />
       </Button>
 
       {/* Pure CSS Modal */}

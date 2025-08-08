@@ -14,7 +14,9 @@ const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
+  const [isDesktopDropdownClosing, setIsDesktopDropdownClosing] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
+  const [isMobileCollegesClosing, setIsMobileCollegesClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -22,17 +24,42 @@ const Navbar = () => {
 
   const { isAuthenticated, logout, user } = useAuth();
 
+  // Desktop dropdown close handler
+  const closeDesktopDropdown = () => {
+    setIsDesktopDropdownClosing(true);
+    setTimeout(() => {
+      setIsDesktopDropdownOpen(false);
+      setIsDesktopDropdownClosing(false);
+    }, 60);
+  };
+
+  // Mobile colleges dropdown close handler
+  const closeMobileColleges = () => {
+    setIsMobileCollegesClosing(true);
+    setTimeout(() => {
+      setIsMobileCollegesOpen(false);
+      setIsMobileCollegesClosing(false);
+    }, 60);
+  };
+
   // Close mobile menu on scroll and handle outside clicks
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       setIsMenuOpen(false);
-      // Reset mobile colleges dropdown when menu closes
-      setIsMobileCollegesOpen(false);
+      // Close dropdowns with animation when scrolling
+      if (isDesktopDropdownOpen) {
+        closeDesktopDropdown();
+      }
+      if (isMobileCollegesOpen) {
+        closeMobileColleges();
+      }
     };
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDesktopDropdownOpen(false);
+        if (isDesktopDropdownOpen) {
+          closeDesktopDropdown();
+        }
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -46,7 +73,9 @@ const Navbar = () => {
   // Reset mobile colleges dropdown when mobile menu closes
   useEffect(() => {
     if (!isMenuOpen) {
-      setIsMobileCollegesOpen(false);
+      if (isMobileCollegesOpen) {
+        closeMobileColleges();
+      }
     }
   }, [isMenuOpen]);
 
@@ -154,8 +183,15 @@ const Navbar = () => {
 
           <div
             className="relative"
-            onMouseEnter={() => setIsDesktopDropdownOpen(true)}
-            onMouseLeave={() => setIsDesktopDropdownOpen(false)}
+            onMouseEnter={() => {
+              setIsDesktopDropdownClosing(false);
+              setIsDesktopDropdownOpen(true);
+            }}
+            onMouseLeave={() => {
+              if (isDesktopDropdownOpen) {
+                closeDesktopDropdown();
+              }
+            }}
           >
             <div
               className={`font-semibold uppercase text-sm flex cursor-pointer ${
@@ -167,10 +203,15 @@ const Navbar = () => {
               Colleges <ChevronDown size={20} className="ml-1" />
             </div>
 
-            {isDesktopDropdownOpen && (
+            {(isDesktopDropdownOpen || isDesktopDropdownClosing) && (
               <div
                 ref={dropdownRef}
-                className="absolute left-0 rounded-xl bg-white shadow-2xl flex flex-col w-48 outline outline-1 outline-gray-400"
+                className={`absolute left-0 rounded-xl bg-white shadow-2xl flex flex-col w-48 outline outline-1 outline-gray-400 ${
+                  isDesktopDropdownClosing ? 'dropdown-exit' : 'dropdown-enter'
+                }`}
+                style={{
+                  transformOrigin: 'top'
+                }}
               >
                 <Link
                   to="/colleges_graduate_main"
@@ -343,7 +384,14 @@ const Navbar = () => {
           </Link>
 
           <button
-            onClick={() => setIsMobileCollegesOpen(!isMobileCollegesOpen)}
+            onClick={() => {
+              if (isMobileCollegesOpen) {
+                closeMobileColleges();
+              } else {
+                setIsMobileCollegesClosing(false);
+                setIsMobileCollegesOpen(true);
+              }
+            }}
             className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
           >
             Colleges
@@ -354,8 +402,15 @@ const Navbar = () => {
             />
           </button>
 
-          {isMobileCollegesOpen && (
-            <div className="flex flex-col space-y-2 pl-4 text-sm text-gray-700">
+          {(isMobileCollegesOpen || isMobileCollegesClosing) && (
+            <div 
+              className={`flex flex-col space-y-2 pl-4 text-sm text-gray-700 ${
+                isMobileCollegesClosing ? 'dropdown-exit' : 'dropdown-enter'
+              }`}
+              style={{
+                transformOrigin: 'top'
+              }}
+            >
               <Link
                 to="/colleges_graduate_main"
                 onClick={() => {
@@ -448,3 +503,46 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// Add CSS for dropdown animations
+const styles = `
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.8);
+    }
+  }
+
+  .dropdown-enter {
+    animation: slideDown 0.08s ease-out forwards;
+  }
+
+  .dropdown-exit {
+    animation: slideUp 0.06s ease-in forwards;
+  }
+`;
+
+// Inject styles into document head
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  if (!document.head.querySelector('style[data-colleges-dropdown]')) {
+    styleElement.setAttribute('data-colleges-dropdown', 'true');
+    document.head.appendChild(styleElement);
+  }
+}
