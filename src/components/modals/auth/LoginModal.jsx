@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import LoginForm from "@/components/auth/LoginForm";
 import RequestAccessForm from "@/components/auth/RequestAccessForm";
@@ -39,7 +40,7 @@ export default function LoginModal() {
       </Button>
 
       {/* Pure CSS Modal */}
-      {isOpen && (
+      {isOpen && createPortal(
         <div 
           className="modal-open"
           onClick={(e) => {
@@ -140,7 +141,8 @@ export default function LoginModal() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* CSS Animations */}

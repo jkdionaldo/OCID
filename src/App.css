@@ -202,11 +202,17 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
     position: fixed;
-    z-index: 9999;
+    z-index: 99999 !important;
+}
+
+.modal-open > div {
+    z-index: 100000 !important;
+    position: relative;
 }

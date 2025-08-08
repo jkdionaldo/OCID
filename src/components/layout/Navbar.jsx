@@ -21,6 +21,7 @@ const Navbar = () => {
 
   const { isAuthenticated, logout, user } = useAuth();
 
+  // Close mobile menu on scroll and handle outside clicks
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -268,16 +269,34 @@ const Navbar = () => {
       {/* BACKDROP */}
       {isMenuOpen && (
         <div
-          className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="xl:hidden fixed inset-0 bg-black/60"
+          style={{ 
+            zIndex: 55,
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh'
+          }}
           onClick={() => setIsMenuOpen(false)}
         />
       )}
 
       {/* MOBILE SIDEBAR */}
       <div
-        className={`xl:hidden fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white z-50 shadow-md transform transition-transform duration-300 ${
+        className={`xl:hidden fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white shadow-md transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
+        style={{ 
+          zIndex: 60,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '100vh',
+          backgroundColor: 'white'
+        }}
       >
         <div className="flex justify-end p-4">
           <button onClick={() => setIsMenuOpen(false)}>
