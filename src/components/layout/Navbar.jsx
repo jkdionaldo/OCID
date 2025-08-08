@@ -30,7 +30,7 @@ const Navbar = () => {
     setTimeout(() => {
       setIsDesktopDropdownOpen(false);
       setIsDesktopDropdownClosing(false);
-    }, 60);
+    }, 100);
   };
 
   // Mobile colleges dropdown close handler
@@ -39,8 +39,8 @@ const Navbar = () => {
     setTimeout(() => {
       setIsMobileCollegesOpen(false);
       setIsMobileCollegesClosing(false);
-    }, 60);
-  };
+    }, 100);
+  }
 
   // Close mobile menu on scroll and handle outside clicks
   useEffect(() => {
@@ -169,16 +169,21 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Nav */}
-        <div className="hidden xl:flex items-center justify-center space-x-8 xl:space-x-12">
+        <div className="hidden xl:flex items-baseline justify-center space-x-8 xl:space-x-12">
           <Link
             to="/"
-            className={`font-semibold uppercase xl:text-sm ${
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
               isActive("/")
-                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                ? "text-green-700 font-bold"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             HOME
+            <span 
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
           </Link>
 
           <div
@@ -194,34 +199,46 @@ const Navbar = () => {
             }}
           >
             <div
-              className={`font-semibold uppercase text-sm flex cursor-pointer ${
+              className={`font-semibold uppercase text-sm flex cursor-pointer pb-1 relative ${
                 isCollegeActive()
-                  ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                  ? "text-green-700 font-bold"
                   : "text-green-950 hover:text-green-700"
               } transition-colors duration-200`}
             >
               Colleges <ChevronDown size={20} className="ml-1" />
+              <span 
+                className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                  isCollegeActive() ? "w-8 opacity-100" : "w-0 opacity-0"
+                }`}
+              ></span>
             </div>
+
+            {/* Invisible hover bridge */}
+            <div 
+              className="absolute left-0 right-0 h-3 top-full"
+              style={{ pointerEvents: 'auto' }}
+            ></div>
 
             {(isDesktopDropdownOpen || isDesktopDropdownClosing) && (
               <div
                 ref={dropdownRef}
-                className={`absolute left-0 rounded-xl bg-white shadow-2xl flex flex-col w-48 outline outline-1 outline-gray-400 ${
+                className={`absolute left-0 rounded-lg bg-white shadow-2xl flex flex-col w-48 border border-black-50 ${
                   isDesktopDropdownClosing ? 'dropdown-exit' : 'dropdown-enter'
                 }`}
                 style={{
-                  transformOrigin: 'top'
+                  transformOrigin: 'top',
+                  top: 'calc(100% + 12px)' // this matches the bridge height
                 }}
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-t-xl"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-t-lg text-start"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-b-xl"
+                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-b-lg text-start"
                 >
                   CSU-CC
                 </Link>
@@ -233,20 +250,25 @@ const Navbar = () => {
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200"
+            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200 border-b-2 border-transparent pb-1"
           >
             ABOUT OCID
           </a>
 
           <Link
             to="/downloadables"
-            className={`font-semibold uppercase xl:text-sm ${
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
               isActive("/downloadables")
-                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                ? "text-green-700 font-bold"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             DOWNLOAD
+            <span 
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/downloadables") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
           </Link>
         </div>
 
@@ -377,7 +399,7 @@ const Navbar = () => {
               setIsMenuOpen(false);
               setIsMobileCollegesOpen(false);
             }}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Home
             <ChevronRight className="w-4 h-4 text-green-600" />
@@ -392,7 +414,7 @@ const Navbar = () => {
                 setIsMobileCollegesOpen(true);
               }
             }}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Colleges
             <ChevronRight
@@ -438,7 +460,7 @@ const Navbar = () => {
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             About OCID
             <ChevronRight className="w-4 h-4 text-green-600" />
@@ -450,7 +472,7 @@ const Navbar = () => {
               setIsMenuOpen(false);
               setIsMobileCollegesOpen(false);
             }}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Download
             <ChevronRight className="w-4 h-4 text-green-600" />
@@ -529,11 +551,11 @@ const styles = `
   }
 
   .dropdown-enter {
-    animation: slideDown 0.08s ease-out forwards;
+    animation: slideDown 0.15s ease-out forwards;
   }
 
   .dropdown-exit {
-    animation: slideUp 0.06s ease-in forwards;
+    animation: slideUp 0.1s ease-in forwards;
   }
 `;
 
