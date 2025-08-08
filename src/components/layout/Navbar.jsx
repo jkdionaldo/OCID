@@ -27,6 +27,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       setIsMenuOpen(false);
+      // Reset mobile colleges dropdown when menu closes
+      setIsMobileCollegesOpen(false);
     };
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -40,6 +42,13 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDesktopDropdownOpen]);
+
+  // Reset mobile colleges dropdown when mobile menu closes
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setIsMobileCollegesOpen(false);
+    }
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -300,7 +309,10 @@ const Navbar = () => {
         }}
       >
         <div className="flex justify-end p-4">
-          <button onClick={() => setIsMenuOpen(false)}>
+          <button onClick={() => {
+            setIsMenuOpen(false);
+            setIsMobileCollegesOpen(false);
+          }}>
             <svg
               className="w-6 h-6 text-green-700"
               fill="none"
@@ -320,7 +332,10 @@ const Navbar = () => {
         <nav className="flex flex-col px-6 space-y-4">
           <Link
             to="/"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
             className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
           >
             Home
@@ -343,14 +358,20 @@ const Navbar = () => {
             <div className="flex flex-col space-y-2 pl-4 text-sm text-gray-700">
               <Link
                 to="/colleges_graduate_main"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center"
               >
                 CSU-MAIN <ChevronRight className="w-4 h-4 text-green-500" />
               </Link>
               <Link
                 to="/colleges_undergraduate_cc"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center"
               >
                 CSU-CC <ChevronRight className="w-4 h-4 text-green-500" />
@@ -370,7 +391,10 @@ const Navbar = () => {
 
           <Link
             to="/downloadables"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
             className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
           >
             Download
@@ -385,14 +409,20 @@ const Navbar = () => {
               <p className="text-sm font-medium">{user?.name}</p>
               <Link
                 to="/dashboard"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center text-green-700"
               >
                 Dashboard <ChevronRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/profile"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center text-green-700"
               >
                 Profile Settings <ChevronRight className="w-4 h-4" />
@@ -401,6 +431,7 @@ const Navbar = () => {
                 onClick={() => {
                   logout();
                   setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
                 }}
                 className="flex justify-between items-center text-red-600 w-full"
               >
