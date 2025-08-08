@@ -21,6 +21,7 @@ import { useCollegeOperations } from "@/hooks/useCollegeOperations";
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
 import ProgramsTab from "@/components/dashboard/ProgramsTab";
+import FormsTab from "@/components/dashboard/FormsTab";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardError from "@/components/dashboard/DashboardError";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
@@ -34,6 +35,90 @@ import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("forms");
+
+  const handleAddForm = async (formData) => {
+    const loadingToastId = showLoadingToast("Creating new form...");
+
+    try {
+      // Add your form creation API call here
+      const result = await createForm(formData); // You'll need to implement this
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `Form has been added successfully!`,
+          "success"
+        );
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to add form: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error adding form:", error);
+    }
+  };
+
+  // Handle updating a form
+  const handleUpdateForm = async (formId, formData) => {
+    const loadingToastId = showLoadingToast("Updating form...");
+
+    try {
+      // Add your form update API call here
+      const result = await updateForm(formId, formData); // You'll need to implement this
+
+      if (result.success) {
+        updateToast(loadingToastId, `Form updated successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update form: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating form:", error);
+    }
+  };
+
+  // Handle deleting a form
+  const handleDeleteForm = async (formId) => {
+    const loadingToastId = showLoadingToast("Deleting form...");
+
+    try {
+      // Add your form delete API call here
+      const result = await deleteForm(formId); // You'll need to implement this
+
+      if (result.success) {
+        updateToast(loadingToastId, `Form deleted successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete form: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting form:", error);
+    }
+  };
 
   // Data hooks with optimized caching
   const {
@@ -465,6 +550,15 @@ const Dashboard = () => {
 
             {/* Tab Content */}
             <div className="p-6">
+              {activeTab === "forms" && (
+                <FormsTab
+                  forms={dashboardData.forms || []}
+                  onUpdateForm={handleUpdateForm}
+                  onDeleteForm={handleDeleteForm}
+                  loading={dashboardLoading}
+                />
+              )}
+
               {activeTab === "files" && (
                 <FilesTab
                   files={files}
