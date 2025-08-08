@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -29,16 +30,16 @@ const Navbar = () => {
     };
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
+        setIsDesktopDropdownOpen(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
-    if (isMenuOpen) document.addEventListener("mousedown", handleClickOutside);
+    if (isDesktopDropdownOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen]);
+  }, [isDesktopDropdownOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -144,8 +145,8 @@ const Navbar = () => {
 
           <div
             className="relative"
-            onMouseEnter={() => setIsMenuOpen(true)}
-            onMouseLeave={() => setIsMenuOpen(false)}
+            onMouseEnter={() => setIsDesktopDropdownOpen(true)}
+            onMouseLeave={() => setIsDesktopDropdownOpen(false)}
           >
             <div
               className={`font-semibold uppercase text-sm flex cursor-pointer ${
@@ -157,7 +158,7 @@ const Navbar = () => {
               Colleges <ChevronDown size={20} className="ml-1" />
             </div>
 
-            {isMenuOpen && (
+            {isDesktopDropdownOpen && (
               <div
                 ref={dropdownRef}
                 className="absolute left-0 rounded-xl bg-white shadow-2xl flex flex-col w-48 outline outline-1 outline-gray-400"
