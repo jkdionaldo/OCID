@@ -123,10 +123,16 @@ const FormDetailsModal = ({ isOpen, onClose, form }) => {
               </Badge>
 
               {form.file_type && (
-                <Badge className={`border ${getFileTypeColor(form.file_type)}`}>
+                <Badge
+                  className={`border ${getFileTypeColor(
+                    form.file_type
+                  )} hover:${getFileTypeColor(form.file_type)}`}
+                >
                   <div className="flex items-center gap-1">
                     {getFileIcon(form.file_type)}
-                    {form.file_type.toUpperCase()}
+                    <span className="hover:text-inherit">
+                      {form.file_type.toUpperCase()}
+                    </span>
                   </div>
                 </Badge>
               )}
@@ -205,7 +211,6 @@ const FormDetailsModal = ({ isOpen, onClose, form }) => {
                           File Name
                         </label>
                         <p className="text-gray-900 bg-white px-3 py-2 rounded-md border flex items-center gap-2">
-                          {getFileIcon(form.file_type)}
                           {form.file_name}
                         </p>
                       </div>
@@ -259,23 +264,6 @@ const FormDetailsModal = ({ isOpen, onClose, form }) => {
               </div>
             </CardContent>
           </Card>
-
-          {/* External Link */}
-          {form.link && (
-            <Card className="border-2 border-orange-100 bg-gradient-to-br from-orange-50 to-amber-50">
-              <CardContent className="p-5 space-y-4">
-                <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                  <Link className="w-4 h-4 text-orange-600" />
-                  External Link
-                </h3>
-                <div className="bg-white p-4 rounded-lg border">
-                  <p className="text-blue-600 hover:text-blue-700 break-all font-mono text-sm">
-                    {form.link}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Metadata */}
           <Card className="border-2 border-gray-100 bg-gradient-to-br from-gray-50 to-slate-50">

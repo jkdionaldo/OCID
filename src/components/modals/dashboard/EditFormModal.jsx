@@ -39,6 +39,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formFile, setFormFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
+  const [removeExistingFile, setRemoveExistingFile] = useState(false); // Track if user wants to remove existing file
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -63,7 +64,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
       });
 
       // Set existing file preview if available
-      if (formData.file_name) {
+      if (formData.file_name && !removeExistingFile) {
         setFilePreview({
           name: formData.file_name,
           size: formData.file_size,
@@ -75,8 +76,9 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
       }
 
       setFormFile(null);
+      setRemoveExistingFile(false);
     }
-  }, [isOpen, formData, form]);
+  }, [isOpen, formData, form, removeExistingFile]);
 
   const onSubmit = async (values) => {
     setIsSubmitting(true);
@@ -91,9 +93,13 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
       if (values.link) updateData.append("link", values.link);
       if (values.revision) updateData.append("revision", values.revision);
 
-      // Add new file if present
+      // Handle file operations
       if (formFile) {
+        // New file is being uploaded
         updateData.append("file", formFile);
+      } else if (removeExistingFile) {
+        // User wants to remove existing file without replacement
+        updateData.append("remove_file", "true");
       }
 
       await onUpdateForm(formData.id, updateData);
@@ -139,23 +145,43 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
         type: file.type,
         existing: false,
       });
+      setRemoveExistingFile(false); // Reset remove flag when new file is selected
       form.clearErrors("root");
     }
   };
 
   const removeFile = () => {
     setFormFile(null);
+
     if (formData?.file_name) {
-      // If there was an existing file, restore its preview
+      // If there was an existing file, user is choosing to remove it
+      setRemoveExistingFile(true);
+      setFilePreview(null);
+    } else {
+      setFilePreview(null);
+    }
+
+    // Clear the file input
+    const fileInput = document.getElementById("file-upload-edit");
+    if (fileInput) {
+      fileInput.value = "";
+    }
+  };
+
+  const restoreExistingFile = () => {
+    setFormFile(null);
+    setRemoveExistingFile(false);
+
+    if (formData?.file_name) {
       setFilePreview({
         name: formData.file_name,
         size: formData.file_size,
         type: formData.file_type,
         existing: true,
       });
-    } else {
-      setFilePreview(null);
     }
+
+    // Clear the file input
     const fileInput = document.getElementById("file-upload-edit");
     if (fileInput) {
       fileInput.value = "";
@@ -317,7 +343,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                   Form File
                 </FormLabel>
 
-                {!filePreview ? (
+                {!filePreview && !removeExistingFile ? (
                   <Card className="border-2 border-dashed border-blue-300 hover:border-blue-400 transition-colors bg-gradient-to-br from-blue-50 to-sky-50">
                     <CardContent className="flex flex-col items-center justify-center p-8">
                       <div className="p-3 bg-blue-100 rounded-full mb-4">
@@ -356,6 +382,47 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </p>
                     </CardContent>
                   </Card>
+                ) : removeExistingFile ? (
+                  // Show when user removed existing file
+                  <Card className="border-2 border-yellow-200 bg-gradient-to-br from-yellow-50 to-white">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-yellow-700 font-medium mb-3">
+                        Current file will be removed when you save
+                      </p>
+                      <div className="flex justify-center space-x-3">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={restoreExistingFile}
+                          className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                        >
+                          Keep Current File
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                          asChild
+                        >
+                          <label
+                            htmlFor="file-upload-edit"
+                            className="cursor-pointer"
+                          >
+                            <Upload className="h-4 w-4 mr-2" />
+                            Upload New File
+                          </label>
+                        </Button>
+                        <input
+                          id="file-upload-edit"
+                          name="file-upload-edit"
+                          type="file"
+                          className="hidden"
+                          accept=".pdf,.doc,.docx,.xls,.xlsx"
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
                 ) : (
                   <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white">
                     <CardContent className="p-4">
@@ -375,23 +442,41 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                             className={`mt-2 ${
                               filePreview.existing
                                 ? "bg-blue-100 text-blue-800"
-                                : "bg-blue-100 text-blue-800"
+                                : "bg-green-100 text-green-800"
                             }`}
                           >
                             {filePreview.existing
                               ? "Current file"
-                              : "Ready to upload"}
+                              : "New file selected"}
                           </Badge>
                         </div>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={removeFile}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
+                        <div className="flex flex-col space-y-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={removeFile}
+                            className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                          {!filePreview.existing && (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="text-blue-600 hover:bg-blue-50"
+                              asChild
+                            >
+                              <label
+                                htmlFor="file-upload-edit"
+                                className="cursor-pointer"
+                              >
+                                <Upload className="h-4 w-4" />
+                              </label>
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

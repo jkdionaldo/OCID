@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  FileText,
-  Download,
-  ExternalLink,
-  Sparkles,
-  File,
-  Eye,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText, Sparkles, File } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const FormCard = ({ form, onViewDetails }) => {
@@ -29,36 +21,17 @@ const FormCard = ({ form, onViewDetails }) => {
   const getFileTypeColor = (fileType) => {
     switch (fileType?.toLowerCase()) {
       case "pdf":
-        return "bg-red-50 text-red-700 border-red-200";
+        return "bg-red-50 text-red-700 border-red-200 hover:bg-red-50 hover:text-red-700";
       case "docx":
       case "doc":
-        return "bg-blue-50 text-blue-700 border-blue-200";
+        return "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50 hover:text-blue-700";
       case "xlsx":
       case "xls":
-        return "bg-green-50 text-green-700 border-green-200";
+        return "bg-green-50 text-green-700 border-green-200 hover:bg-green-50 hover:text-green-700";
       default:
-        return "bg-gray-50 text-gray-700 border-gray-200";
+        return "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-50 hover:text-gray-700";
     }
   };
-
-  const handleQuickDownload = (e) => {
-    e.stopPropagation();
-    if (form.file_url || form.file_path) {
-      const downloadUrl = form.file_url || form.file_path;
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.download = form.file_name || `${form.title}.${form.file_type}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  const handleQuickLink = (e) => {
-    e.stopPropagation();
-    window.open(form.link, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <div
       className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-green-200 hover:border-green-300 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
@@ -109,7 +82,9 @@ const FormCard = ({ form, onViewDetails }) => {
               >
                 <div className="flex items-center gap-1">
                   {getFileIcon(form.file_type)}
-                  {form.file_type.toUpperCase()}
+                  <span className="hover:text-inherit">
+                    {form.file_type.toUpperCase()}
+                  </span>
                 </div>
               </Badge>
             )}
@@ -119,7 +94,7 @@ const FormCard = ({ form, onViewDetails }) => {
                 variant="outline"
                 className="text-xs font-medium text-green-600 bg-green-50 border-green-200"
               >
-                Rev {form.revision}
+                {form.revision}
               </Badge>
             )}
           </div>
