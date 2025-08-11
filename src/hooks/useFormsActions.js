@@ -83,11 +83,17 @@ export const useFormsActions = ({
     async (formData) => {
       try {
         setError(null);
-        await onAddForm(formData);
-        setShowAddModal(false);
+        const result = await onAddForm(formData);
+
+        if (result?.success !== false) {
+          setShowAddModal(false);
+        }
+
+        return result;
       } catch (error) {
         console.error("Error adding form:", error);
         setError("Failed to add form");
+        return { success: false, error: "Failed to add form" };
       }
     },
     [onAddForm]
@@ -97,12 +103,18 @@ export const useFormsActions = ({
     async (formId, formData) => {
       try {
         setError(null);
-        await onUpdateForm(formId, formData);
-        setShowEditModal(false);
-        setSelectedForm(null);
+        const result = await onUpdateForm(formId, formData);
+
+        if (result?.success !== false) {
+          setShowEditModal(false);
+          setSelectedForm(null);
+        }
+
+        return result;
       } catch (error) {
         console.error("Error updating form:", error);
         setError("Failed to update form");
+        return { success: false, error: "Failed to update form" };
       }
     },
     [onUpdateForm]
@@ -120,9 +132,12 @@ export const useFormsActions = ({
         setShowDeleteModal(false);
         setSelectedForm(null);
       }
+
+      return result;
     } catch (error) {
       console.error("Error deleting form:", error);
       setError("Failed to delete form");
+      return { success: false, error: "Failed to delete form" };
     } finally {
       setIsDeleting(false);
     }

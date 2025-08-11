@@ -17,9 +17,6 @@ import { useDashboardState } from "@/hooks/useDashboardState";
 import { useDashboardFilters } from "@/hooks/useDashboardFilters";
 import { useCollegeOperations } from "@/hooks/useCollegeOperations";
 
-// Import API services
-import { formService } from "@/services/formService";
-
 // Import components
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
@@ -37,100 +34,14 @@ import { Button } from "@/components/ui/button";
 import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 const Dashboard = () => {
+  // ================================
+  // STATE MANAGEMENT
+  // ================================
   const [activeTab, setActiveTab] = useState("forms");
 
-  const handleAddForm = async (formData) => {
-    const loadingToastId = showLoadingToast("Creating new form...");
-
-    try {
-      const newForm = await formService.createForm(formData);
-
-      updateToast(
-        loadingToastId,
-        `Form "${newForm.title}" has been added successfully!`,
-        "success"
-      );
-
-      // Refresh dashboard data to include new form
-      await refetch();
-
-      return { success: true, data: newForm };
-    } catch (error) {
-      console.error("Error adding form:", error);
-
-      let errorMessage = "An unexpected error occurred";
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.data?.errors) {
-        const errors = Object.values(error.response.data.errors).flat();
-        errorMessage = errors.join(", ");
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
-      updateToast(loadingToastId, errorMessage, "error");
-      return { success: false, error: errorMessage };
-    }
-  };
-
-  const handleUpdateForm = async (formId, formData) => {
-    const loadingToastId = showLoadingToast("Updating form...");
-
-    try {
-      const updatedForm = await formService.updateForm(formId, formData);
-
-      updateToast(loadingToastId, `Form updated successfully!`, "success");
-
-      // Refresh dashboard data to reflect changes
-      await refetch();
-
-      return { success: true, data: updatedForm };
-    } catch (error) {
-      console.error("Error updating form:", error);
-
-      let errorMessage = "An unexpected error occurred";
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.data?.errors) {
-        const errors = Object.values(error.response.data.errors).flat();
-        errorMessage = errors.join(", ");
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
-      updateToast(loadingToastId, errorMessage, "error");
-      return { success: false, error: errorMessage };
-    }
-  };
-
-  const handleDeleteForm = async (formId) => {
-    const loadingToastId = showLoadingToast("Deleting form...");
-
-    try {
-      await formService.deleteForm(formId);
-
-      updateToast(loadingToastId, `Form deleted successfully!`, "success");
-
-      // Refresh dashboard data to reflect deletion
-      await refetch();
-
-      return { success: true };
-    } catch (error) {
-      console.error("Error deleting form:", error);
-
-      let errorMessage = "An unexpected error occurred";
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
-      updateToast(loadingToastId, errorMessage, "error");
-      return { success: false, error: errorMessage };
-    }
-  };
-
-  // Data hooks with optimized caching
+  // ================================
+  // DATA HOOKS
+  // ================================
   const {
     data: dashboardData,
     loading: dashboardLoading,
@@ -139,6 +50,9 @@ const Dashboard = () => {
     cacheInfo,
     colleges,
     files,
+    createForm,
+    updateForm,
+    deleteForm,
     createCollege,
     updateCollege,
     deleteCollege,
@@ -149,11 +63,11 @@ const Dashboard = () => {
     isCacheValid,
   } = useDashboardData();
 
-  const memoizedFiles = useMemo(() => files, [files.length]);
-
   const { state, setters } = useDashboardState();
 
-  // File operations
+  // ================================
+  // OPERATION HOOKS
+  // ================================
   const {
     getFileIcon,
     getStatusIcon,
@@ -162,173 +76,9 @@ const Dashboard = () => {
     handleDelete,
   } = useFileOperations();
 
-  // College operations
   const { collegesData, setCollegesData, handleAddCollege } =
     useCollegeOperations(dashboardData, createCollege);
 
-  // Handle adding a new program
-  const handleAddProgram = async (newProgram) => {
-    const loadingToastId = showLoadingToast("Creating new program...");
-
-    try {
-      const result = await createProgram(newProgram);
-
-      if (result.success) {
-        updateToast(
-          loadingToastId,
-          `Program "${newProgram.program_name}" has been added successfully!`,
-          "success"
-        );
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to add program: ${result.error}`,
-          "error"
-        );
-      }
-    } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
-      console.error("Error adding program:", error);
-    }
-  };
-
-  // Handle updating a program
-  const handleUpdateProgram = async (programId, programData, programType) => {
-    const loadingToastId = showLoadingToast("Updating program...");
-
-    try {
-      const result = await updateProgram(programId, programData, programType);
-
-      if (result.success) {
-        updateToast(loadingToastId, `Program updated successfully!`, "success");
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to update program: ${result.error}`,
-          "error"
-        );
-      }
-    } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
-      console.error("Error updating program:", error);
-    }
-  };
-
-  // Handle deleting a program
-  const handleDeleteProgram = async (programId, programType) => {
-    const loadingToastId = showLoadingToast("Deleting program...");
-
-    try {
-      const result = await deleteProgram(programId, programType);
-
-      if (result.success) {
-        updateToast(loadingToastId, `Program deleted successfully!`, "success");
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to delete program: ${result.error}`,
-          "error"
-        );
-      }
-    } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
-      console.error("Error deleting program:", error);
-    }
-  };
-
-  // Handle updating a college
-  const handleUpdateCollege = async (collegeId, updatedData) => {
-    const loadingToastId = showLoadingToast("Updating college...");
-
-    try {
-      let formData;
-
-      if (updatedData.logo) {
-        // If there's a logo, use FormData
-        formData = new FormData();
-        formData.append("name", updatedData.name);
-        formData.append("acronym", updatedData.shortName);
-        formData.append("campus_id", updatedData.campus_id);
-        formData.append("logo", updatedData.logo);
-      } else {
-        // If no logo, use regular object
-        formData = {
-          name: updatedData.name,
-          acronym: updatedData.shortName,
-          campus_id: updatedData.campus_id,
-        };
-      }
-
-      const result = await updateCollege(collegeId, formData);
-
-      if (result.success) {
-        updateToast(
-          loadingToastId,
-          `College "${updatedData.name}" has been updated successfully!`,
-          "success"
-        );
-        return result;
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to update college: ${result.error}`,
-          "error"
-        );
-        return result;
-      }
-    } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
-      console.error("Error updating college:", error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  // Handle deleting a college
-  const handleDeleteCollege = async (collegeId, campus) => {
-    const loadingToastId = showLoadingToast("Deleting college...");
-
-    try {
-      const result = await deleteCollege(collegeId);
-
-      if (result.success) {
-        updateToast(loadingToastId, `College deleted successfully!`, "success");
-        return { success: true };
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to delete college: ${result.error}`,
-          "error"
-        );
-        return { success: false, error: result.error };
-      }
-    } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
-      console.error("Error deleting college:", error);
-      return { success: false, error: error.message };
-    }
-  };
-
-  // File actions
   const {
     handleBulkDownload,
     handleBulkDelete,
@@ -337,23 +87,23 @@ const Dashboard = () => {
     handleSelectAll,
   } = useFileActions(files, handleDelete, handleDownload);
 
-  // Filter operations
   const { filteredFiles, sortedFiles } = useDashboardFilters(files, state);
 
-  // College filter options
-  const collegeFilterOptions = useMemo(() => {
-    // Don't generate options if data is still loading or colleges is empty
-    if (dashboardLoading || !colleges || colleges.length === 0) {
-      return ["all"]; // Return minimal options during loading
-    }
+  // ================================
+  // MEMOIZED VALUES
+  // ================================
+  const memoizedFiles = useMemo(() => files, [files.length]);
 
+  const collegeFilterOptions = useMemo(() => {
+    if (dashboardLoading || !colleges || colleges.length === 0) {
+      return ["all"];
+    }
     return [
       "all",
       ...Array.from(new Set(colleges.map((college) => college.acronym))),
     ];
   }, [colleges, dashboardLoading]);
 
-  // Transform college data for the colleges tab - using live data
   const transformedCollegesData = useMemo(() => {
     console.log("Transforming college data:", {
       collegesCount: colleges.length,
@@ -382,7 +132,6 @@ const Dashboard = () => {
     colleges.forEach((college) => {
       // Handle temp colleges during optimistic updates
       if (college.id.toString().startsWith("temp-")) {
-        // For temp colleges, find campus by campus_id instead of acronym
         const tempCampus = dashboardData.campuses.find(
           (campus) => campus.id === college.campus_id
         );
@@ -403,7 +152,7 @@ const Dashboard = () => {
             transformedData["CSU-CC"].push(transformedCollege);
           }
         }
-        return; // Continue to next college
+        return;
       }
 
       // Count programs for this college
@@ -447,19 +196,269 @@ const Dashboard = () => {
     memoizedFiles,
   ]);
 
-  // Update colleges data when transformed data changes
+  // ================================
+  // FORM HANDLERS
+  // ================================
+  const handleAddForm = async (formData) => {
+    const loadingToastId = showLoadingToast("Creating new form...");
+
+    try {
+      const result = await createForm(formData);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `Form "${formData.title}" has been added successfully!`,
+          "success"
+        );
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to add form: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error adding form:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  const handleUpdateForm = async (formId, formData) => {
+    const loadingToastId = showLoadingToast("Updating form...");
+
+    try {
+      const result = await updateForm(formId, formData);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Form updated successfully!`, "success");
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update form: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating form:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  const handleDeleteForm = async (formId) => {
+    const loadingToastId = showLoadingToast("Deleting form...");
+
+    try {
+      const result = await deleteForm(formId);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Form deleted successfully!`, "success");
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete form: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting form:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // ================================
+  // PROGRAM HANDLERS
+  // ================================
+  const handleAddProgram = async (newProgram) => {
+    const loadingToastId = showLoadingToast("Creating new program...");
+
+    try {
+      const result = await createProgram(newProgram);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `Program "${newProgram.program_name}" has been added successfully!`,
+          "success"
+        );
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to add program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error adding program:", error);
+    }
+  };
+
+  const handleUpdateProgram = async (programId, programData, programType) => {
+    const loadingToastId = showLoadingToast("Updating program...");
+
+    try {
+      const result = await updateProgram(programId, programData, programType);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Program updated successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating program:", error);
+    }
+  };
+
+  const handleDeleteProgram = async (programId, programType) => {
+    const loadingToastId = showLoadingToast("Deleting program...");
+
+    try {
+      const result = await deleteProgram(programId, programType);
+
+      if (result.success) {
+        updateToast(loadingToastId, `Program deleted successfully!`, "success");
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete program: ${result.error}`,
+          "error"
+        );
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting program:", error);
+    }
+  };
+
+  // ================================
+  // COLLEGE HANDLERS
+  // ================================
+  const handleUpdateCollege = async (collegeId, updatedData) => {
+    const loadingToastId = showLoadingToast("Updating college...");
+
+    try {
+      let formData;
+
+      if (updatedData.logo) {
+        formData = new FormData();
+        formData.append("name", updatedData.name);
+        formData.append("acronym", updatedData.shortName);
+        formData.append("campus_id", updatedData.campus_id);
+        formData.append("logo", updatedData.logo);
+      } else {
+        formData = {
+          name: updatedData.name,
+          acronym: updatedData.shortName,
+          campus_id: updatedData.campus_id,
+        };
+      }
+
+      const result = await updateCollege(collegeId, formData);
+
+      if (result.success) {
+        updateToast(
+          loadingToastId,
+          `College "${updatedData.name}" has been updated successfully!`,
+          "success"
+        );
+        return result;
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to update college: ${result.error}`,
+          "error"
+        );
+        return result;
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error updating college:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  const handleDeleteCollege = async (collegeId, campus) => {
+    const loadingToastId = showLoadingToast("Deleting college...");
+
+    try {
+      const result = await deleteCollege(collegeId);
+
+      if (result.success) {
+        updateToast(loadingToastId, `College deleted successfully!`, "success");
+        return { success: true };
+      } else {
+        updateToast(
+          loadingToastId,
+          `Failed to delete college: ${result.error}`,
+          "error"
+        );
+        return { success: false, error: result.error };
+      }
+    } catch (error) {
+      updateToast(
+        loadingToastId,
+        `An unexpected error occurred: ${error.message}`,
+        "error"
+      );
+      console.error("Error deleting college:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // ================================
+  // EFFECTS
+  // ================================
   useEffect(() => {
     console.log("Setting colleges data:", transformedCollegesData);
     setCollegesData(transformedCollegesData);
   }, [transformedCollegesData, setCollegesData]);
 
-  // Show error state
-  if (dashboardError) {
-    return (
-      <DashboardError error={dashboardError} onRetry={() => refetch(true)} />
-    );
-  }
-
+  // ================================
+  // CONSTANTS
+  // ================================
   const tabs = [
     {
       id: "forms",
@@ -483,16 +482,29 @@ const Dashboard = () => {
     },
   ];
 
+  // ================================
+  // ERROR HANDLING
+  // ================================
+  if (dashboardError) {
+    return (
+      <DashboardError error={dashboardError} onRetry={() => refetch(true)} />
+    );
+  }
+
+  // ================================
+  // RENDER
+  // ================================
   return (
     <div className="min-h-screen bg-gray-50 pt-8 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
         <DashboardHeader
           onRefresh={refetch}
           lastFetch={lastFetch}
           loading={dashboardLoading}
         />
 
-        {/* Modern Tab Switcher */}
+        {/* Tab Container */}
         <div className="mb-8 mt-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             {/* Tab Navigation */}
@@ -522,7 +534,6 @@ const Dashboard = () => {
 
                 {/* Action Buttons */}
                 <div className="flex items-center space-x-2">
-                  {/* Performance Info Popover */}
                   <PerformanceInfoPopover
                     cacheInfo={cacheInfo}
                     loading={dashboardLoading}
@@ -530,7 +541,6 @@ const Dashboard = () => {
                     isCacheValid={isCacheValid}
                   />
 
-                  {/* Refresh Button */}
                   <Button
                     onClick={() => refetch?.(true)}
                     disabled={dashboardLoading}
@@ -626,7 +636,7 @@ const Dashboard = () => {
 
               {activeTab === "colleges" && (
                 <CollegesTab
-                  colleges={colleges} // Use raw colleges array directly
+                  colleges={colleges}
                   campuses={dashboardData.campuses}
                   onAddCollege={handleAddCollege}
                   onUpdateCollege={handleUpdateCollege}
