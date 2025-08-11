@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { FileText, Upload, X, Edit, Save, AlertCircle } from "lucide-react";
+import {
+  FileText,
+  Upload,
+  Trash2,
+  Edit,
+  Save,
+  AlertCircle,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -39,7 +46,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formFile, setFormFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
-  const [removeExistingFile, setRemoveExistingFile] = useState(false); // Track if user wants to remove existing file
+  const [removeExistingFile, setRemoveExistingFile] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -52,7 +59,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
     },
   });
 
-  // Update form when formData or modal opens
+  // Update form when formData or modal opens - FIXED
   useEffect(() => {
     if (isOpen && formData) {
       form.reset({
@@ -63,8 +70,12 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
         revision: formData.revision || "",
       });
 
+      // Reset states when modal opens
+      setFormFile(null);
+      setRemoveExistingFile(false);
+
       // Set existing file preview if available
-      if (formData.file_name && !removeExistingFile) {
+      if (formData.file_name) {
         setFilePreview({
           name: formData.file_name,
           size: formData.file_size,
@@ -74,11 +85,8 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
       } else {
         setFilePreview(null);
       }
-
-      setFormFile(null);
-      setRemoveExistingFile(false);
     }
-  }, [isOpen, formData, form, removeExistingFile]);
+  }, [isOpen, formData, form]); // REMOVED removeExistingFile from dependencies
 
   const onSubmit = async (values) => {
     setIsSubmitting(true);
@@ -197,6 +205,12 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
 
   if (!formData) return null;
 
+  // IMPROVED CONDITION LOGIC
+  const shouldShowRemovalState =
+    removeExistingFile && formData?.file_name && !formFile;
+  const shouldShowFilePreview = filePreview && !removeExistingFile;
+  const shouldShowUploadArea = !filePreview && !removeExistingFile;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0 gap-0">
@@ -288,7 +302,6 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
 
               {/* Link and Revision in a row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Link */}
                 <FormField
                   control={form.control}
                   name="link"
@@ -312,7 +325,6 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                   )}
                 />
 
-                {/* Revision */}
                 <FormField
                   control={form.control}
                   name="revision"
@@ -337,13 +349,13 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                 />
               </div>
 
-              {/* File Upload */}
+              {/* File Upload - IMPROVED LOGIC */}
               <div className="space-y-3">
                 <FormLabel className="text-base font-medium text-gray-700">
                   Form File
                 </FormLabel>
 
-                {!filePreview && !removeExistingFile ? (
+                {shouldShowUploadArea ? (
                   <Card className="border-2 border-dashed border-blue-300 hover:border-blue-400 transition-colors bg-gradient-to-br from-blue-50 to-sky-50">
                     <CardContent className="flex flex-col items-center justify-center p-8">
                       <div className="p-3 bg-blue-100 rounded-full mb-4">
@@ -382,12 +394,13 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </p>
                     </CardContent>
                   </Card>
-                ) : removeExistingFile ? (
-                  // Show when user removed existing file
+                ) : shouldShowRemovalState ? (
+                  // Show when user removed existing file - STABLE STATE
                   <Card className="border-2 border-yellow-200 bg-gradient-to-br from-yellow-50 to-white">
                     <CardContent className="p-4 text-center">
                       <p className="text-yellow-700 font-medium mb-3">
-                        Current file will be removed when you save
+                        Current file "{formData.file_name}" will be removed when
+                        you save
                       </p>
                       <div className="flex justify-center space-x-3">
                         <Button
@@ -423,7 +436,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </div>
                     </CardContent>
                   </Card>
-                ) : (
+                ) : shouldShowFilePreview ? (
                   <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white">
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-4">
@@ -456,9 +469,9 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                             variant="ghost"
                             size="sm"
                             onClick={removeFile}
-                            className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                            className="text-red-600 hover:text-red-500 hover:bg-red-50"
                           >
-                            <X className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                           {!filePreview.existing && (
                             <Button
@@ -480,7 +493,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </div>
                     </CardContent>
                   </Card>
-                )}
+                ) : null}
               </div>
 
               {/* Root Error */}
