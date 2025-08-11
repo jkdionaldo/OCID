@@ -175,7 +175,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0 gap-0">
         {/* Fixed Header */}
-        <div className="flex-shrink-0 bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 px-6 py-4 rounded-t-lg">
+        <div className="flex-shrink-0 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 rounded-t-lg">
           <DialogHeader className="space-y-0">
             <DialogTitle className="flex items-center gap-3 text-white text-xl font-semibold">
               <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -183,7 +183,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
               </div>
               Edit Form
             </DialogTitle>
-            <DialogDescription className="text-purple-50 pt-2">
+            <DialogDescription className="text-blue-50 pt-2">
               Update form information and settings. Changes will be applied
               immediately.
             </DialogDescription>
@@ -205,7 +205,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-purple-600 focus:ring-purple-600/20 focus-visible:outline-none focus-visible:ring-purple-600"
+                        className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
                         placeholder="e.g. FORM-001, CSU-ADM-01"
                         {...field}
                       />
@@ -229,7 +229,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-12 border-2 border-gray-200 focus:border-purple-600 focus:ring-purple-600/20 focus-visible:outline-none focus-visible:ring-purple-600"
+                        className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
                         placeholder="e.g. Student Registration Form"
                         {...field}
                       />
@@ -250,7 +250,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="min-h-[100px] border-2 border-gray-200 focus:border-purple-600 focus:ring-purple-600/20 focus-visible:outline-none focus-visible:ring-purple-600"
+                        className="min-h-[100px] border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
                         placeholder="Describe the purpose and use of this form..."
                         {...field}
                       />
@@ -273,7 +273,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-12 border-2 border-gray-200 focus:border-purple-600 focus:ring-purple-600/20 focus-visible:outline-none focus-visible:ring-purple-600"
+                          className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
                           placeholder="https://example.com/form"
                           {...field}
                         />
@@ -297,7 +297,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="h-12 border-2 border-gray-200 focus:border-purple-600 focus:ring-purple-600/20 focus-visible:outline-none focus-visible:ring-purple-600"
+                          className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
                           placeholder="v1.0, Rev A"
                           {...field}
                         />
@@ -318,58 +318,70 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                 </FormLabel>
 
                 {!filePreview ? (
-                  <div className="border-2 border-dashed border-gray-300 hover:border-purple-400 transition-colors rounded-lg p-6">
-                    <div className="text-center">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <div className="mt-4">
+                  <Card className="border-2 border-dashed border-blue-300 hover:border-blue-400 transition-colors bg-gradient-to-br from-blue-50 to-sky-50">
+                    <CardContent className="flex flex-col items-center justify-center p-8">
+                      <div className="p-3 bg-blue-100 rounded-full mb-4">
+                        <Upload className="h-8 w-8 text-blue-600" />
+                      </div>
+                      <p className="text-gray-700 font-medium mb-2">
+                        Upload Form File
+                      </p>
+                      <p className="text-gray-500 text-sm mb-4 text-center">
+                        Drag and drop or click to browse
+                      </p>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                        asChild
+                      >
                         <label
                           htmlFor="file-upload-edit"
                           className="cursor-pointer"
                         >
-                          <span className="mt-2 block text-sm font-medium text-gray-900">
-                            Upload a file or drag and drop
-                          </span>
-                          <span className="mt-1 block text-sm text-gray-500">
-                            PDF, Word, Excel up to 10MB
-                          </span>
+                          <Upload className="h-4 w-4 mr-2" />
+                          Browse Files
                         </label>
-                        <input
-                          id="file-upload-edit"
-                          name="file-upload-edit"
-                          type="file"
-                          className="sr-only"
-                          accept=".pdf,.doc,.docx,.xls,.xlsx"
-                          onChange={handleFileChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                      </Button>
+                      <input
+                        id="file-upload-edit"
+                        name="file-upload-edit"
+                        type="file"
+                        className="hidden"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx"
+                        onChange={handleFileChange}
+                      />
+                      <p className="mt-3 text-xs text-gray-500">
+                        Supported: PDF, Word, Excel (max 10MB)
+                      </p>
+                    </CardContent>
+                  </Card>
                 ) : (
-                  <Card className="border-purple-200">
+                  <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white">
                     <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <FileText className="h-8 w-8 text-purple-600" />
-                          <div>
-                            <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                              {filePreview.name}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              {formatFileSize(filePreview.size)}
-                            </p>
-                            <Badge
-                              variant="secondary"
-                              className={`mt-2 ${
-                                filePreview.existing
-                                  ? "bg-blue-100 text-blue-800"
-                                  : "bg-purple-100 text-purple-800"
-                              }`}
-                            >
-                              {filePreview.existing
-                                ? "Current file"
-                                : "Ready to upload"}
-                            </Badge>
-                          </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="h-20 w-20 flex items-center justify-center rounded-xl border-2 border-blue-200 bg-white p-2">
+                          <FileText className="h-10 w-10 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                            {filePreview.name}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatFileSize(filePreview.size)}
+                          </p>
+                          <Badge
+                            variant="secondary"
+                            className={`mt-2 ${
+                              filePreview.existing
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
+                          >
+                            {filePreview.existing
+                              ? "Current file"
+                              : "Ready to upload"}
+                          </Badge>
                         </div>
                         <Button
                           type="button"
@@ -415,7 +427,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
             >
               {isSubmitting ? (
                 <>

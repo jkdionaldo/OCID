@@ -14,7 +14,7 @@ const FormsHeader = ({ filteredForms = [], onAddForm }) => {
           <h2 className="text-lg font-semibold text-gray-900">
             Forms Management
           </h2>
-          <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+          <Badge variant="secondary" className="bg-green-100 text-green-800">
             {formCount}
           </Badge>
         </div>
@@ -22,7 +22,7 @@ const FormsHeader = ({ filteredForms = [], onAddForm }) => {
         <div className="flex items-center space-x-2">
           <Button
             onClick={onAddForm}
-            className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-sm hover:shadow-md transition-all duration-200"
+            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-sm hover:shadow-md transition-all duration-200"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Form

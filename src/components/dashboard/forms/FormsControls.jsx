@@ -32,7 +32,7 @@ const FormsControls = ({
         <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 flex-1">
           {/* Enhanced Search Input */}
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-purple-600 z-10 pointer-events-none" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-green-600 z-10 pointer-events-none" />
             <Input
               placeholder="Search forms by number, title, purpose..."
               value={searchTerm}
@@ -44,16 +44,16 @@ const FormsControls = ({
                 bg-white/90 backdrop-blur-sm
                 text-gray-900 placeholder:text-gray-500
                 shadow-sm hover:shadow-md
-                focus:border-purple-400 focus:ring-4 focus:ring-purple-100 focus:bg-white
-                focus-visible:outline-none focus-visible:ring-purple-400 focus-visible:ring-offset-0
+                focus:border-green-400 focus:ring-4 focus:ring-green-100 focus:bg-white
+                focus-visible:outline-none focus-visible:ring-green-400 focus-visible:ring-offset-0
                 transition-all duration-300
                 font-medium
               "
             />
             {searchTerm && (
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 z-10">
-                <div className="h-5 w-5 rounded-full bg-purple-100 flex items-center justify-center">
-                  <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                <div className="h-5 w-5 rounded-full bg-green-100 flex items-center justify-center">
+                  <div className="h-2 w-2 rounded-full bg-green-500"></div>
                 </div>
               </div>
             )}
@@ -68,7 +68,7 @@ const FormsControls = ({
               rounded-xl
               bg-white/70 backdrop-blur-sm
               shadow-sm hover:shadow-md
-              focus:border-purple-400 focus:ring-4 focus:ring-purple-100 focus:bg-white
+              focus:border-green-400 focus:ring-4 focus:ring-green-100 focus:bg-white
               transition-all duration-300
               font-medium text-gray-900
             "
@@ -78,7 +78,7 @@ const FormsControls = ({
             <SelectContent className="rounded-lg border-gray-200 shadow-lg">
               <SelectItem
                 value="all"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-gray-400"></div>
@@ -87,7 +87,7 @@ const FormsControls = ({
               </SelectItem>
               <SelectItem
                 value="pdf"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
@@ -96,7 +96,7 @@ const FormsControls = ({
               </SelectItem>
               <SelectItem
                 value="docx"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500"></div>
@@ -105,7 +105,7 @@ const FormsControls = ({
               </SelectItem>
               <SelectItem
                 value="xlsx"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -114,7 +114,7 @@ const FormsControls = ({
               </SelectItem>
               <SelectItem
                 value="no-file"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
@@ -133,7 +133,7 @@ const FormsControls = ({
               rounded-xl
               bg-white/70 backdrop-blur-sm
               shadow-sm hover:shadow-md
-              focus:border-purple-400 focus:ring-4 focus:ring-purple-100 focus:bg-white
+              focus:border-green-400 focus:ring-4 focus:ring-green-100 focus:bg-white
               transition-all duration-300
               font-medium text-gray-900
             "
@@ -143,25 +143,25 @@ const FormsControls = ({
             <SelectContent className="rounded-lg border-gray-200 shadow-lg">
               <SelectItem
                 value="form_number"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 Form Number
               </SelectItem>
               <SelectItem
                 value="title"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 Title
               </SelectItem>
               <SelectItem
                 value="revision"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 Revision
               </SelectItem>
               <SelectItem
                 value="created"
-                className="rounded-md hover:bg-purple-50 focus:bg-purple-50"
+                className="rounded-md hover:bg-green-50 focus:bg-green-50"
               >
                 Created Date
               </SelectItem>
@@ -178,9 +178,9 @@ const FormsControls = ({
               onClick={onClearFilters}
               className="
                 h-10 px-4
-                text-gray-600 hover:text-purple-700
-                bg-gray-100/70 hover:bg-purple-50
-                border border-gray-200 hover:border-purple-200
+                text-gray-600 hover:text-green-700
+                bg-gray-100/70 hover:bg-green-50
+                border border-gray-200 hover:border-green-200
                 rounded-lg
                 font-medium
                 transition-all duration-200
@@ -202,8 +202,8 @@ const FormsControls = ({
                 h-9 w-9 p-0 rounded-lg transition-all duration-200
                 ${
                   viewMode === "grid"
-                    ? "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
-                    : "text-gray-600 hover:text-purple-700 hover:bg-purple-50"
+                    ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    : "text-gray-600 hover:text-green-700 hover:bg-green-50"
                 }
               `}
             >
@@ -217,8 +217,8 @@ const FormsControls = ({
                 h-9 w-9 p-0 rounded-lg transition-all duration-200
                 ${
                   viewMode === "list"
-                    ? "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
-                    : "text-gray-600 hover:text-purple-700 hover:bg-purple-50"
+                    ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    : "text-gray-600 hover:text-green-700 hover:bg-green-50"
                 }
               `}
             >

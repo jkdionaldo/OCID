@@ -58,17 +58,17 @@ const FormCard = ({ form, onViewDetails }) => {
   };
 
   return (
-    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-purple-200 hover:border-purple-300 overflow-hidden transform hover:-translate-y-2">
+    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-green-200 hover:border-green-300 overflow-hidden transform hover:-translate-y-2">
       {/* Form Number Badge */}
       <div className="absolute top-4 right-4 z-10">
-        <div className="bg-purple-700 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg backdrop-blur-sm bg-opacity-90">
+        <div className="bg-emerald-700 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg backdrop-blur-sm bg-opacity-90">
           {form.form_number}
         </div>
       </div>
 
       {/* Header Section with Gradient */}
       <div className="relative">
-        <div className="h-36 bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center p-6 relative overflow-hidden">
+        <div className="h-36 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center p-6 relative overflow-hidden">
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm">
             <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-white/5 -translate-x-16 -translate-y-16"></div>
@@ -112,7 +112,7 @@ const FormCard = ({ form, onViewDetails }) => {
             {form.revision && (
               <Badge
                 variant="outline"
-                className="text-sm font-medium text-purple-600 bg-purple-50 border-purple-200"
+                className="text-sm font-medium text-green-600 bg-green-50 border-green-200"
               >
                 {form.revision}
               </Badge>
@@ -121,7 +121,7 @@ const FormCard = ({ form, onViewDetails }) => {
         </div>
 
         {/* Purpose */}
-        <div className="p-4 rounded-xl border-2 bg-purple-50 border-purple-100 hover:shadow-md transition-all duration-300">
+        <div className="p-4 rounded-xl border-2 bg-green-50 border-green-100 hover:shadow-md transition-all duration-300">
           <p className="text-sm text-gray-700 text-center line-clamp-3">
             {form.purpose}
           </p>
@@ -153,7 +153,7 @@ const FormCard = ({ form, onViewDetails }) => {
           {(form.file_url || form.file_path) && (
             <Button
               onClick={handleDownload}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl"
             >
               <Download className="w-4 h-4 mr-2" />
               Download Form
@@ -164,7 +164,7 @@ const FormCard = ({ form, onViewDetails }) => {
             <Button
               onClick={handleOpenLink}
               variant="outline"
-              className="w-full border-2 border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
+              className="w-full border-2 border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
             >
               <ExternalLink className="w-4 h-4 mr-2" />
               Open Link

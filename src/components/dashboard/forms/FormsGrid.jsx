@@ -20,7 +20,7 @@ const FormsGrid = ({ forms, onEdit, onDelete }) => {
                   onEdit(form);
                 }}
                 size="sm"
-                className="h-10 w-10 rounded-full p-0 bg-white/90 backdrop-blur-sm border border-purple-200 text-purple-600 shadow-lg hover:shadow-xl hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 transform hover:scale-110"
+                className="h-10 w-10 rounded-full p-0 bg-white/90 backdrop-blur-sm border border-blue-200 text-blue-600 shadow-lg hover:shadow-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 transform hover:scale-110"
                 title="Edit Form"
               >
                 <Edit className="h-4 w-4" />

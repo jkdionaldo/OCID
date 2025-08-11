@@ -23,13 +23,18 @@ export const formService = {
     return response.data.data;
   },
 
-  // Update form
+  // Update form - Fixed to handle multipart data properly
   updateForm: async (id, formData) => {
-    const response = await apiClient.put(`/forms/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    // Use POST with _method=PUT for file uploads
+    const response = await apiClient.post(
+      `/forms/${id}?_method=PUT`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data.data;
   },
 
