@@ -46,22 +46,22 @@ const FormCard = ({ form, onViewDetails }) => {
 
       {/* Header Section with Gradient */}
       <div className="relative">
-        <div className="h-28 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="h-36 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center p-6 relative overflow-hidden">
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm">
-            <div className="absolute top-0 left-0 w-20 h-20 rounded-full bg-white/5 -translate-x-10 -translate-y-10"></div>
-            <div className="absolute bottom-0 right-0 w-16 h-16 rounded-full bg-white/5 translate-x-8 translate-y-8"></div>
+            <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-white/5 -translate-x-16 -translate-y-16"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-white/5 translate-x-12 translate-y-12"></div>
           </div>
 
           {/* Icon Container */}
           <div className="relative z-10">
-            <div className="h-16 w-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-lg">
+            <div className="h-20 w-20 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-lg">
               <FileText className="h-8 w-8 text-white" />
             </div>
           </div>
 
           {/* Sparkle Effect */}
-          <Sparkles className="absolute top-4 left-4 h-3 w-3 text-white/60 animate-pulse" />
+          <Sparkles className="absolute top-6 left-6 h-4 w-4 text-white/60 animate-pulse" />
         </div>
       </div>
 
@@ -76,7 +76,7 @@ const FormCard = ({ form, onViewDetails }) => {
           <div className="flex items-center justify-center gap-2 flex-wrap">
             {form.file_type && (
               <Badge
-                className={`text-xs font-medium border ${getFileTypeColor(
+                className={`text-xs px-3 py-1 font-medium border rounded-full ${getFileTypeColor(
                   form.file_type
                 )}`}
               >
@@ -92,7 +92,7 @@ const FormCard = ({ form, onViewDetails }) => {
             {form.revision && (
               <Badge
                 variant="outline"
-                className="text-xs font-medium text-green-600 bg-green-50 border-green-200"
+                className="text-xs px-3 py-1 font-medium rounded-full text-green-600 bg-green-50 border border-green-200"
               >
                 {form.revision}
               </Badge>
