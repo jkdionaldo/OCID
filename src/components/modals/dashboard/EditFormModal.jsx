@@ -227,12 +227,12 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Form Number *
+                      Form Number
                     </FormLabel>
                     <FormControl>
                       <Input
                         className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
-                        placeholder="e.g. FORM-001, CSU-ADM-01"
+                        placeholder="e.g. F-CID-001"
                         {...field}
                       />
                     </FormControl>
@@ -251,12 +251,12 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Form Title *
+                      Form Title
                     </FormLabel>
                     <FormControl>
                       <Input
                         className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
-                        placeholder="e.g. Student Registration Form"
+                        placeholder="e.g. Request for Evaluation"
                         {...field}
                       />
                     </FormControl>
@@ -272,7 +272,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-gray-700">
-                      Purpose *
+                      Purpose
                     </FormLabel>
                     <FormControl>
                       <Textarea
@@ -324,7 +324,7 @@ const EditFormModal = ({ isOpen, onClose, form: formData, onUpdateForm }) => {
                       <FormControl>
                         <Input
                           className="h-12 border-2 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 focus-visible:outline-none focus-visible:ring-blue-600"
-                          placeholder="v1.0, Rev A"
+                          placeholder="e.g. Rev. 2"
                           {...field}
                         />
                       </FormControl>
