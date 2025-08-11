@@ -17,6 +17,9 @@ import { useDashboardState } from "@/hooks/useDashboardState";
 import { useDashboardFilters } from "@/hooks/useDashboardFilters";
 import { useCollegeOperations } from "@/hooks/useCollegeOperations";
 
+// Import API services
+import { formService } from "@/services/formService";
+
 // Import components
 import FilesTab from "@/components/dashboard/FilesTab";
 import CollegesTab from "@/components/dashboard/CollegesTab";
@@ -40,83 +43,90 @@ const Dashboard = () => {
     const loadingToastId = showLoadingToast("Creating new form...");
 
     try {
-      // Add your form creation API call here
-      const result = await createForm(formData); // You'll need to implement this
+      const newForm = await formService.createForm(formData);
 
-      if (result.success) {
-        updateToast(
-          loadingToastId,
-          `Form has been added successfully!`,
-          "success"
-        );
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to add form: ${result.error}`,
-          "error"
-        );
-      }
-    } catch (error) {
       updateToast(
         loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
+        `Form "${newForm.title}" has been added successfully!`,
+        "success"
       );
+
+      // Refresh dashboard data to include new form
+      await refetch();
+
+      return { success: true, data: newForm };
+    } catch (error) {
       console.error("Error adding form:", error);
+
+      let errorMessage = "An unexpected error occurred";
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.errors) {
+        const errors = Object.values(error.response.data.errors).flat();
+        errorMessage = errors.join(", ");
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      updateToast(loadingToastId, errorMessage, "error");
+      return { success: false, error: errorMessage };
     }
   };
 
-  // Handle updating a form
   const handleUpdateForm = async (formId, formData) => {
     const loadingToastId = showLoadingToast("Updating form...");
 
     try {
-      // Add your form update API call here
-      const result = await updateForm(formId, formData); // You'll need to implement this
+      const updatedForm = await formService.updateForm(formId, formData);
 
-      if (result.success) {
-        updateToast(loadingToastId, `Form updated successfully!`, "success");
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to update form: ${result.error}`,
-          "error"
-        );
-      }
+      updateToast(loadingToastId, `Form updated successfully!`, "success");
+
+      // Refresh dashboard data to reflect changes
+      await refetch();
+
+      return { success: true, data: updatedForm };
     } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
       console.error("Error updating form:", error);
+
+      let errorMessage = "An unexpected error occurred";
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.errors) {
+        const errors = Object.values(error.response.data.errors).flat();
+        errorMessage = errors.join(", ");
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      updateToast(loadingToastId, errorMessage, "error");
+      return { success: false, error: errorMessage };
     }
   };
 
-  // Handle deleting a form
   const handleDeleteForm = async (formId) => {
     const loadingToastId = showLoadingToast("Deleting form...");
 
     try {
-      // Add your form delete API call here
-      const result = await deleteForm(formId); // You'll need to implement this
+      await formService.deleteForm(formId);
 
-      if (result.success) {
-        updateToast(loadingToastId, `Form deleted successfully!`, "success");
-      } else {
-        updateToast(
-          loadingToastId,
-          `Failed to delete form: ${result.error}`,
-          "error"
-        );
-      }
+      updateToast(loadingToastId, `Form deleted successfully!`, "success");
+
+      // Refresh dashboard data to reflect deletion
+      await refetch();
+
+      return { success: true };
     } catch (error) {
-      updateToast(
-        loadingToastId,
-        `An unexpected error occurred: ${error.message}`,
-        "error"
-      );
       console.error("Error deleting form:", error);
+
+      let errorMessage = "An unexpected error occurred";
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      updateToast(loadingToastId, errorMessage, "error");
+      return { success: false, error: errorMessage };
     }
   };
 
@@ -553,6 +563,7 @@ const Dashboard = () => {
               {activeTab === "forms" && (
                 <FormsTab
                   forms={dashboardData.forms || []}
+                  onAddForm={handleAddForm}
                   onUpdateForm={handleUpdateForm}
                   onDeleteForm={handleDeleteForm}
                   loading={dashboardLoading}

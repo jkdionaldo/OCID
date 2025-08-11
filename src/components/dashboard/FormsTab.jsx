@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FileText } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,8 +21,18 @@ export default function FormsTab({
   onDeleteForm,
   loading: parentLoading,
 }) {
+  // Debug: Log forms data when it changes
+  useEffect(() => {
+    console.log("FormsTab received forms:", forms);
+    console.log("Forms length:", forms?.length);
+    console.log("Sample form:", forms?.[0]);
+  }, [forms]);
+
+  // Ensure forms is always an array
+  const safeForms = Array.isArray(forms) ? forms : [];
+
   // Custom hooks for data and actions
-  const { stats } = useFormsData(forms);
+  const { stats } = useFormsData(safeForms);
 
   const {
     // State
@@ -54,7 +64,7 @@ export default function FormsTab({
     handleDeleteClick,
     confirmDeleteForm,
   } = useFormsActions({
-    forms,
+    forms: safeForms,
     onAddForm,
     onUpdateForm,
     onDeleteForm,
@@ -63,7 +73,12 @@ export default function FormsTab({
   // Safety check for filteredForms
   const safeFilteredForms = filteredForms || [];
 
-  if (parentLoading && (!forms || forms.length === 0)) {
+  // Debug: Log filtered forms
+  useEffect(() => {
+    console.log("Filtered forms:", safeFilteredForms);
+  }, [safeFilteredForms]);
+
+  if (parentLoading && (!safeForms || safeForms.length === 0)) {
     return <DashboardLoading type="forms" />;
   }
 
@@ -111,6 +126,12 @@ export default function FormsTab({
                   ? "Try adjusting your search criteria"
                   : "Start by adding your first form to the system"}
               </p>
+              {/* Debug info for empty state */}
+              {process.env.NODE_ENV === "development" && (
+                <div className="mt-4 text-xs text-gray-400">
+                  Raw forms count: {safeForms.length}
+                </div>
+              )}
             </div>
           ) : viewMode === "grid" ? (
             <FormsGrid

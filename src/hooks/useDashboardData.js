@@ -107,6 +107,7 @@ export const useDashboardData = () => {
           syllabus: dashboardData.syllabus || [],
           undergrads: dashboardData.undergrads || [],
           graduates: dashboardData.graduates || [],
+          forms: dashboardData.forms || [],
         };
 
         setData(normalizedData);

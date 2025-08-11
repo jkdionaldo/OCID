@@ -114,7 +114,7 @@ const FormCard = ({ form, onViewDetails }) => {
                 variant="outline"
                 className="text-sm font-medium text-purple-600 bg-purple-50 border-purple-200"
               >
-                Rev {form.revision}
+                {form.revision}
               </Badge>
             )}
           </div>
