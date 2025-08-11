@@ -194,7 +194,7 @@ const Navbar = () => {
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
-            DOWNLOAD
+            DOWNLOADABLES
           </Link>
         </div>
 
