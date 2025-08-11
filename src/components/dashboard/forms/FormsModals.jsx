@@ -2,16 +2,19 @@ import React from "react";
 import AddFormModal from "@/components/modals/dashboard/AddFormModal";
 import EditFormModal from "@/components/modals/dashboard/EditFormModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
+import FormDetailsModal from "@/components/modals/dashboard/FormDetailsModal";
 
 const FormsModals = ({
   showAddModal,
   showEditModal,
   showDeleteModal,
+  showDetailsModal,
   selectedForm,
   isDeleting,
   onCloseAdd,
   onCloseEdit,
   onCloseDelete,
+  onCloseDetails,
   onAddForm,
   onUpdateForm,
   onDeleteForm,
@@ -44,6 +47,12 @@ const FormsModals = ({
         additionalInfo={
           selectedForm ? `Form Number: ${selectedForm.form_number}` : ""
         }
+      />
+
+      <FormDetailsModal
+        isOpen={showDetailsModal}
+        onClose={onCloseDetails}
+        form={selectedForm}
       />
     </>
   );

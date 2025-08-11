@@ -3,12 +3,12 @@ import { Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FormCard from "@/components/ui/FormCard";
 
-const FormsGrid = ({ forms, onEdit, onDelete }) => {
+const FormsGrid = ({ forms, onEdit, onDelete, onViewDetails }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {forms.map((form) => (
         <div key={form.id} className="relative group">
-          <FormCard form={form} />
+          <FormCard form={form} onViewDetails={onViewDetails} />
 
           {/* Hover Action Buttons */}
           <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-20">

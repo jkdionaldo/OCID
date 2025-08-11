@@ -45,6 +45,7 @@ export default function FormsTab({
     showAddModal,
     showEditModal,
     showDeleteModal,
+    showDetailsModal,
     selectedForm,
     isDeleting,
     filteredForms,
@@ -56,12 +57,15 @@ export default function FormsTab({
     setShowAddModal,
     setShowEditModal,
     setShowDeleteModal,
+    setShowDetailsModal,
+    setSelectedForm,
     clearFilters,
     handleAddForm,
     handleEditForm,
     handleDeleteForm,
     handleEditClick,
     handleDeleteClick,
+    handleViewDetails,
     confirmDeleteForm,
   } = useFormsActions({
     forms: safeForms,
@@ -138,12 +142,14 @@ export default function FormsTab({
               forms={safeFilteredForms}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onViewDetails={handleViewDetails}
             />
           ) : (
             <FormsList
               forms={safeFilteredForms}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onViewDetails={handleViewDetails}
             />
           )}
         </CardContent>
@@ -154,12 +160,17 @@ export default function FormsTab({
         showAddModal={showAddModal}
         showEditModal={showEditModal}
         showDeleteModal={showDeleteModal}
+        showDetailsModal={showDetailsModal}
         selectedForm={selectedForm}
         isDeleting={isDeleting}
         onCloseAdd={() => setShowAddModal(false)}
         onCloseEdit={() => setShowEditModal(false)}
         onCloseDelete={() => {
           setShowDeleteModal(false);
+        }}
+        onCloseDetails={() => {
+          setShowDetailsModal(false);
+          setSelectedForm?.(null);
         }}
         onAddForm={handleAddForm}
         onUpdateForm={handleEditForm}

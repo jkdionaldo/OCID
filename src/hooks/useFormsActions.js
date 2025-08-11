@@ -17,6 +17,7 @@ export const useFormsActions = ({
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedForm, setSelectedForm] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -153,6 +154,11 @@ export const useFormsActions = ({
     setShowDeleteModal(true);
   }, []);
 
+  const handleViewDetails = useCallback((form) => {
+    setSelectedForm(form);
+    setShowDetailsModal(true);
+  }, []);
+
   return {
     // State
     viewMode,
@@ -164,6 +170,7 @@ export const useFormsActions = ({
     showAddModal,
     showEditModal,
     showDeleteModal,
+    showDetailsModal,
     selectedForm,
     isDeleting,
     filteredForms,
@@ -175,12 +182,14 @@ export const useFormsActions = ({
     setShowAddModal,
     setShowEditModal,
     setShowDeleteModal,
+    setShowDetailsModal,
     clearFilters,
     handleAddForm,
     handleEditForm,
     handleDeleteForm: confirmDeleteForm,
     handleEditClick,
     handleDeleteClick,
+    handleViewDetails,
     confirmDeleteForm,
   };
 };

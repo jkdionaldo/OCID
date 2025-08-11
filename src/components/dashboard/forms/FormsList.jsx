@@ -6,11 +6,12 @@ import {
   ExternalLink,
   FileText,
   File,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const FormsList = ({ forms, onEdit, onDelete }) => {
+const FormsList = ({ forms, onEdit, onDelete, onViewDetails }) => {
   const getFileIcon = (fileType) => {
     switch (fileType?.toLowerCase()) {
       case "pdf":
@@ -41,14 +42,8 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
     }
   };
 
-  const formatFileSize = (bytes) => {
-    if (!bytes) return "N/A";
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + " " + sizes[i];
-  };
-
-  const handleDownload = (form) => {
+  const handleQuickDownload = (form, e) => {
+    e.stopPropagation();
     if (form.file_url || form.file_path) {
       const downloadUrl = form.file_url || form.file_path;
       const link = document.createElement("a");
@@ -60,7 +55,8 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
     }
   };
 
-  const handleOpenLink = (link) => {
+  const handleQuickLink = (link, e) => {
+    e.stopPropagation();
     window.open(link, "_blank", "noopener,noreferrer");
   };
 
@@ -69,7 +65,8 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
       {forms.map((form) => (
         <div
           key={form.id}
-          className="group relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-purple-200 hover:border-purple-300 overflow-hidden"
+          className="group relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-green-300 overflow-hidden cursor-pointer"
+          onClick={() => onViewDetails?.(form)}
         >
           <div className="p-6">
             <div className="flex items-start justify-between">
@@ -77,7 +74,7 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-3 mb-3">
                   {/* Form Number Badge */}
-                  <div className="bg-purple-700 text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+                  <div className="bg-green-700 text-white px-3 py-1.5 rounded-full text-xs font-semibold">
                     {form.form_number}
                   </div>
 
@@ -92,48 +89,44 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
                       </div>
                     </Badge>
                   )}
+
+                  {form.revision && (
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 bg-green-50 border-green-200"
+                    >
+                      {form.revision}
+                    </Badge>
+                  )}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-purple-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-green-600 transition-colors">
                   {form.title}
                 </h3>
 
-                {/* Purpose */}
+                {/* Brief Purpose */}
                 <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                   {form.purpose}
                 </p>
 
-                {/* File Info and Links */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                  {form.file_name && (
-                    <div className="flex items-center gap-1">
-                      <FileText className="w-4 h-4" />
-                      <span>{form.file_name}</span>
-                    </div>
-                  )}
+                {/* Quick Action Links */}
+                <div className="flex items-center gap-3">
+                  <Button
+                    onClick={() => onViewDetails?.(form)}
+                    size="sm"
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Details
+                  </Button>
 
-                  {form.file_size && (
-                    <div className="flex items-center gap-1">
-                      <span>Size: {formatFileSize(form.file_size)}</span>
-                    </div>
-                  )}
-
-                  {form.revision && (
-                    <div className="flex items-center gap-1">
-                      <span>Rev: {form.revision}</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Action Links */}
-                <div className="flex items-center gap-3 mt-4">
                   {(form.file_url || form.file_path) && (
                     <Button
-                      onClick={() => handleDownload(form)}
+                      onClick={(e) => handleQuickDownload(form, e)}
                       size="sm"
                       variant="outline"
-                      className="text-purple-600 border-purple-200 hover:bg-purple-50 hover:border-purple-300"
+                      className="text-green-600 border-green-200 hover:bg-green-50 hover:border-green-300"
                     >
                       <Download className="w-4 h-4 mr-1" />
                       Download
@@ -142,13 +135,13 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
 
                   {form.link && (
                     <Button
-                      onClick={() => handleOpenLink(form.link)}
+                      onClick={(e) => handleQuickLink(form.link, e)}
                       size="sm"
                       variant="outline"
                       className="text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300"
                     >
                       <ExternalLink className="w-4 h-4 mr-1" />
-                      Open Link
+                      Link
                     </Button>
                   )}
                 </div>
@@ -157,17 +150,23 @@ const FormsList = ({ forms, onEdit, onDelete }) => {
               {/* Right Actions */}
               <div className="flex items-center space-x-2 ml-4">
                 <Button
-                  onClick={() => onEdit(form)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(form);
+                  }}
                   size="sm"
                   variant="ghost"
-                  className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                  className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                   title="Edit Form"
                 >
                   <Edit className="h-4 w-4" />
                 </Button>
 
                 <Button
-                  onClick={() => onDelete(form)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(form);
+                  }}
                   size="sm"
                   variant="ghost"
                   className="text-red-600 hover:text-red-700 hover:bg-red-50"
