@@ -3,7 +3,14 @@ import { Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProgramCard from "@/components/ui/ProgramCard";
 
-const ProgramsGrid = ({ programs, colleges, campuses, onEdit, onDelete }) => {
+const ProgramsGrid = ({
+  programs,
+  colleges,
+  campuses,
+  onEdit,
+  onDelete,
+  onViewDetails,
+}) => {
   const allPrograms = [
     ...programs.undergraduate.map((p) => ({ ...p, type: "undergraduate" })),
     ...programs.graduate.map((p) => ({ ...p, type: "graduate" })),
@@ -18,6 +25,7 @@ const ProgramsGrid = ({ programs, colleges, campuses, onEdit, onDelete }) => {
             type={program.type}
             colleges={colleges}
             campuses={campuses}
+            onViewDetails={onViewDetails}
           />
 
           {/* Hover Action Buttons */}

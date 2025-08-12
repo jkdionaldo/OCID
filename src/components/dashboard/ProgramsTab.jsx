@@ -39,6 +39,7 @@ export default function ProgramsTab({
     showAddModal,
     showEditModal,
     showDeleteModal,
+    showDetailsModal,
     selectedProgram,
     isDeleting,
     filteredPrograms,
@@ -51,12 +52,14 @@ export default function ProgramsTab({
     setShowAddModal,
     setShowEditModal,
     setShowDeleteModal,
+    setShowDetailsModal,
     clearFilters,
     handleAddProgram,
     handleEditProgram,
     handleDeleteProgram,
     handleEditClick,
     handleDeleteClick,
+    handleViewDetails,
     confirmDeleteProgram,
   } = useProgramsActions({
     programs,
@@ -136,6 +139,7 @@ export default function ProgramsTab({
               campuses={campuses}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onViewDetails={handleViewDetails}
             />
           ) : (
             <ProgramsList
@@ -144,6 +148,7 @@ export default function ProgramsTab({
               campuses={campuses}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onViewDetails={handleViewDetails}
             />
           )}
         </CardContent>
@@ -154,6 +159,7 @@ export default function ProgramsTab({
         showAddModal={showAddModal}
         showEditModal={showEditModal}
         showDeleteModal={showDeleteModal}
+        showDetailsModal={showDetailsModal}
         selectedProgram={selectedProgram}
         colleges={colleges}
         campuses={campuses}
@@ -162,6 +168,10 @@ export default function ProgramsTab({
         onCloseEdit={() => setShowEditModal(false)}
         onCloseDelete={() => {
           setShowDeleteModal(false);
+        }}
+        onCloseDetails={() => {
+          setShowDetailsModal(false);
+          setSelectedProgram(null);
         }}
         onAddProgram={handleAddProgram}
         onUpdateProgram={handleEditProgram}

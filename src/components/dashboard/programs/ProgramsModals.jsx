@@ -2,11 +2,13 @@ import React from "react";
 import AddProgramModal from "@/components/modals/dashboard/AddProgramModal";
 import EditProgramModal from "@/components/modals/dashboard/EditProgramModal";
 import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
+import ProgramDetailsModal from "@/components/modals/dashboard/ProgramDetailsModal";
 
 const ProgramsModals = ({
   showAddModal,
   showEditModal,
   showDeleteModal,
+  showDetailsModal,
   selectedProgram,
   colleges,
   campuses,
@@ -14,6 +16,7 @@ const ProgramsModals = ({
   onCloseAdd,
   onCloseEdit,
   onCloseDelete,
+  onCloseDetails,
   onAddProgram,
   onUpdateProgram,
   onDeleteProgram,
@@ -65,6 +68,14 @@ const ProgramsModals = ({
         additionalInfo={`College: ${
           selectedProgram ? getCollegeInfo(selectedProgram.college_id).name : ""
         } | Acronym: ${selectedProgram?.acronym || "N/A"}`}
+      />
+
+      <ProgramDetailsModal
+        isOpen={showDetailsModal}
+        onClose={onCloseDetails}
+        program={selectedProgram}
+        colleges={colleges}
+        campuses={campuses}
       />
     </>
   );
