@@ -211,6 +211,7 @@ export const useProgramsActions = ({
     setShowEditModal,
     setShowDeleteModal,
     setShowDetailsModal,
+    setSelectedProgram,
     clearFilters,
     handleAddProgram,
     handleEditProgram,

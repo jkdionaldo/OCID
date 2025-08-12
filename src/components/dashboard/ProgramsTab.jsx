@@ -53,6 +53,7 @@ export default function ProgramsTab({
     setShowEditModal,
     setShowDeleteModal,
     setShowDetailsModal,
+    setSelectedProgram, // Add this missing destructured function
     clearFilters,
     handleAddProgram,
     handleEditProgram,
