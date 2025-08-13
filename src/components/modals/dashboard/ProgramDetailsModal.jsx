@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   BookOpen,
   GraduationCap,
   Building,
   Hash,
-  Target,
   Calendar,
   Clock,
   Edit3,
   AlertCircle,
-  X,
-  ExternalLink,
+  FileText,
+  Download,
+  Trash2,
+  Plus,
 } from "lucide-react";
 import {
   Dialog,
@@ -23,6 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useProgramFiles } from "@/hooks/useProgramFiles";
+import { toast } from "sonner";
 
 const ProgramDetailsModal = ({
   isOpen,
@@ -31,9 +34,19 @@ const ProgramDetailsModal = ({
   colleges,
   campuses,
 }) => {
-  if (!program) return null;
+  // Always call hooks unconditionally - pass null when no program
+  const {
+    curriculum,
+    syllabus,
+    loading: filesLoading,
+    error: filesError,
+    uploadFile,
+    updateFile,
+    deleteFile,
+    refetch,
+  } = useProgramFiles(program || null);
 
-  const formatDate = (dateString) => {
+  const formatDate = useCallback((dateString) => {
     if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -42,10 +55,28 @@ const ProgramDetailsModal = ({
       hour: "2-digit",
       minute: "2-digit",
     });
-  };
+  }, []);
 
-  // Enhanced getCollegeInfo function to handle embedded college data
-  const getCollegeInfo = () => {
+  const formatFileSize = useCallback((bytes) => {
+    if (!bytes) return "N/A";
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  }, []);
+
+  // Memoize college info to prevent unnecessary recalculations
+  const collegeInfo = useMemo(() => {
+    if (!program) {
+      return {
+        name: "Unknown",
+        acronym: "N/A",
+        campus: "Unknown",
+        campusName: "Unknown Campus",
+      };
+    }
+
     // First check if college info is embedded in the program
     if (program.college) {
       const campus = campuses?.find((c) => c.id === program.college.campus_id);
@@ -74,39 +105,289 @@ const ProgramDetailsModal = ({
       campus: campus?.acronym || "Unknown",
       campusName: campus?.name || "Unknown Campus",
     };
-  };
+  }, [program, colleges, campuses]);
 
-  const collegeInfo = getCollegeInfo();
-  const isGraduate =
-    program.program_type === "graduate" || program.type === "graduate";
+  const isGraduate = useMemo(() => {
+    if (!program) return false;
+    return program.program_type === "graduate" || program.type === "graduate";
+  }, [program]);
+
   const Icon = isGraduate ? GraduationCap : BookOpen;
 
-  // Dynamic color scheme
-  const theme = {
-    graduate: {
-      primary: "yellow",
-      gradient: "from-yellow-500 to-amber-600",
-      accent: "yellow",
-      headerGradient: "from-yellow-600 to-yellow-700",
-    },
-    undergraduate: {
-      primary: "blue",
-      gradient: "from-blue-500 to-indigo-600",
-      accent: "blue",
-      headerGradient: "from-blue-600 to-blue-700",
-    },
-  };
+  // Memoize theme object
+  const currentTheme = useMemo(() => {
+    const theme = {
+      graduate: {
+        primary: "yellow",
+        gradient: "from-yellow-500 to-amber-600",
+        accent: "yellow",
+        headerGradient: "from-yellow-600 to-yellow-700",
+      },
+      undergraduate: {
+        primary: "blue",
+        gradient: "from-blue-500 to-indigo-600",
+        accent: "blue",
+        headerGradient: "from-blue-600 to-blue-700",
+      },
+    };
+    return theme[isGraduate ? "graduate" : "undergraduate"];
+  }, [isGraduate]);
 
-  const currentTheme = theme[isGraduate ? "graduate" : "undergraduate"];
-
-  const handleViewCollege = () => {
-    // This could navigate to college details or open college modal
+  const handleViewCollege = useCallback(() => {
     console.log("View college details:", collegeInfo);
-  };
+  }, [collegeInfo]);
+
+  const handleFileUpload = useCallback(
+    async (fileType, file) => {
+      if (!program) return { success: false };
+
+      try {
+        const result = await uploadFile(file, fileType);
+        if (result.success) {
+          toast.success(`${fileType} uploaded successfully`);
+          await refetch();
+        }
+      } catch (error) {
+        console.error(`Error uploading ${fileType}:`, error);
+        toast.error(`Failed to upload ${fileType}`);
+      }
+    },
+    [program, uploadFile, refetch]
+  );
+
+  const handleFileUpdate = useCallback(
+    async (fileType, file) => {
+      if (!program) return { success: false };
+
+      try {
+        const result = await updateFile(file, fileType);
+        if (result.success) {
+          toast.success(`${fileType} updated successfully`);
+          await refetch();
+        }
+      } catch (error) {
+        console.error(`Error updating ${fileType}:`, error);
+        toast.error(`Failed to update ${fileType}`);
+      }
+    },
+    [program, updateFile, refetch]
+  );
+
+  const handleFileDelete = useCallback(
+    async (fileType) => {
+      if (!program) return { success: false };
+
+      try {
+        const result = await deleteFile(fileType);
+        if (result.success) {
+          toast.success(`${fileType} deleted successfully`);
+          await refetch();
+        }
+      } catch (error) {
+        console.error(`Error deleting ${fileType}:`, error);
+        toast.error(`Failed to delete ${fileType}`);
+      }
+    },
+    [program, deleteFile, refetch]
+  );
+
+  const handleFileDownload = useCallback((fileUrl, fileName) => {
+    if (fileUrl) {
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = fileName || "download";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }, []);
+
+  // Move component definitions outside render but inside component
+  const FileUploadInput = useCallback(
+    ({ fileType, onFileSelect }) => (
+      <input
+        key={`${fileType}-upload-input`}
+        type="file"
+        id={`${fileType}-upload`}
+        className="hidden"
+        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            onFileSelect(file);
+          }
+        }}
+      />
+    ),
+    []
+  );
+
+  const FileCard = useCallback(
+    ({ fileType, fileData, displayName }) => {
+      const hasFile = fileData && (fileData.file_url || fileData.file_path);
+
+      return (
+        <Card
+          key={`file-card-${fileType}`}
+          className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
+        >
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className={`p-2.5 bg-gradient-to-br ${
+                  fileType === "curriculum"
+                    ? "from-purple-500 to-purple-600"
+                    : "from-indigo-500 to-indigo-600"
+                } rounded-xl shadow-lg`}
+              >
+                <FileText className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">{displayName}</h3>
+            </div>
+
+            {hasFile ? (
+              <div className="space-y-4">
+                {/* File Info */}
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                      File Name
+                    </label>
+                    <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
+                      <p className="text-gray-900 text-sm font-medium">
+                        {fileData.file_name ||
+                          fileData.original_name ||
+                          "Unknown"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {fileData.file_size && (
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        File Size
+                      </label>
+                      <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
+                        <p className="text-gray-900 text-sm">
+                          {formatFileSize(fileData.file_size)}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {fileData.created_at && (
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Uploaded Date
+                      </label>
+                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
+                        <p className="text-green-900 text-sm">
+                          {formatDate(fileData.created_at)}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* File Actions */}
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    onClick={() =>
+                      handleFileDownload(
+                        fileData.file_url || fileData.file_path,
+                        fileData.file_name || fileData.original_name
+                      )
+                    }
+                    size="sm"
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+
+                  <Button
+                    onClick={() =>
+                      document.getElementById(`${fileType}-upload`).click()
+                    }
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50"
+                  >
+                    <Edit3 className="w-4 h-4 mr-2" />
+                    Update
+                  </Button>
+
+                  <Button
+                    onClick={() => handleFileDelete(fileType)}
+                    size="sm"
+                    variant="outline"
+                    className="border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                <FileUploadInput
+                  fileType={fileType}
+                  onFileSelect={(file) => handleFileUpdate(fileType, file)}
+                />
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {/* Empty State */}
+                <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
+                  <FileText className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                  <p className="text-gray-600 text-sm mb-2">
+                    No {fileType} file uploaded
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    Upload a {fileType} file for this program
+                  </p>
+                </div>
+
+                {/* Upload Button */}
+                <Button
+                  onClick={() =>
+                    document.getElementById(`${fileType}-upload`).click()
+                  }
+                  className={`w-full bg-gradient-to-r ${
+                    fileType === "curriculum"
+                      ? "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
+                      : "from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700"
+                  } text-white`}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Upload {displayName}
+                </Button>
+
+                <FileUploadInput
+                  fileType={fileType}
+                  onFileSelect={(file) => handleFileUpload(fileType, file)}
+                />
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      );
+    },
+    [
+      formatFileSize,
+      formatDate,
+      handleFileDownload,
+      handleFileDelete,
+      handleFileUpdate,
+      handleFileUpload,
+    ]
+  );
+
+  // Early return after all hooks are called
+  if (!program) {
+    return null;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] flex flex-col p-0 gap-0">
+      <DialogContent className="sm:max-w-[1000px] max-h-[90vh] flex flex-col p-0 gap-0">
         {/* Fixed Header */}
         <div
           className={`flex-shrink-0 bg-gradient-to-r ${currentTheme.headerGradient} px-6 py-4 rounded-t-lg`}
@@ -125,7 +406,7 @@ const ProgramDetailsModal = ({
             >
               Complete information about this{" "}
               {isGraduate ? "graduate" : "undergraduate"} program including
-              college details and metadata.
+              college details, files, and metadata.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -271,6 +552,39 @@ const ProgramDetailsModal = ({
               </CardContent>
             </Card>
           </div>
+
+          {/* Program Files Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <FileCard
+              fileType="curriculum"
+              fileData={curriculum}
+              displayName="Curriculum"
+            />
+            <FileCard
+              fileType="syllabus"
+              fileData={syllabus}
+              displayName="Syllabus"
+            />
+          </div>
+
+          {/* Show loading/error states for files */}
+          {filesLoading && (
+            <div className="text-center py-4">
+              <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                <span className="text-blue-700 text-sm">Loading files...</span>
+              </div>
+            </div>
+          )}
+
+          {filesError && (
+            <div className="text-center py-4">
+              <div className="inline-flex items-center px-4 py-2 bg-red-50 rounded-lg border border-red-200">
+                <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
+                <span className="text-red-700 text-sm">{filesError}</span>
+              </div>
+            </div>
+          )}
 
           {/* Metadata - Full Width */}
           <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
