@@ -5,11 +5,19 @@ const ForgotPassword = ({ onBack }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors] = useState({});
   return (
+<<<<<<< HEAD
     <div className="w-full h-full max-h-md max-w-md mx-auto py-10">
       <h2 className="text-2xl font-bold mb-4 text-center font-poppins">
         Forgot your password?
       </h2>
       <p className="text-center font-poppins">
+=======
+    <div className="w-full max-w-xs mx-auto py-10">
+      <h2 className="text-2xl font-bold mb-4 text-center font-poppins text-gray-700">
+        Forgot your password?
+      </h2>
+      <p className="text-center font-poppins text-gray-600">
+>>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
         Enter your CarSU email address and we'll send you a code to reset your
         password
       </p>
@@ -54,12 +62,23 @@ const ForgotPassword = ({ onBack }) => {
         {" "}
         Send Reset Code
       </button>
+<<<<<<< HEAD
       <small>
         Already have an account? {""}{" "}
         <button className="underline" type="button" onClick={onBack}>
           Sign in
         </button>
       </small>
+=======
+      <div className="pt-2 text-gray-500">
+        <small>
+          Already have an account? {""}{" "}
+          <button className="underline" type="button" onClick={onBack}>
+            Sign in
+          </button>
+        </small>
+      </div>
+>>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
     </div>
   );
 };

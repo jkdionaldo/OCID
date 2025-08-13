@@ -1,14 +1,26 @@
-import { useState } from "react";
-import { showLoadingToast, updateToast } from "@/utils/toast";
+import { useState, useCallback } from "react";
+import { showLoadingToast, updateToast } from "@/utils/toast.jsx";
 
 export const useCollegeOperations = (dashboardData, createCollege) => {
   // Initialize with proper structure to avoid the map error
-  const [collegesData, setCollegesData] = useState({
+  const [collegesData, setCollegesDataState] = useState({
     "CSU-MAIN": [],
     "CSU-CC": [],
   });
 
-  // Handle adding a new college
+  // ✅ Memoize the setCollegesData function to prevent unnecessary re-renders
+  const setCollegesData = useCallback((data) => {
+    // Only update if the data has actually changed
+    setCollegesDataState((prevData) => {
+      // Simple deep comparison for the structure we're dealing with
+      if (JSON.stringify(prevData) === JSON.stringify(data)) {
+        return prevData;
+      }
+      console.log("Updating colleges data:", data);
+      return data;
+    });
+  }, []);
+
   const handleAddCollege = async (newCollege) => {
     const loadingToastId = showLoadingToast("Creating new college...");
 
@@ -24,40 +36,11 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
           `Campus "${newCollege.campus}" not found`,
           "error"
         );
-        return;
+        return {
+          success: false,
+          error: `Campus "${newCollege.campus}" not found`,
+        };
       }
-
-      // Optimistic update
-      const tempCollegeId = `temp-${Date.now()}`;
-      const tempCollege = {
-        id: tempCollegeId,
-        name: newCollege.name,
-        shortName: newCollege.shortName,
-        undergraduate_programs: 0,
-        graduate_programs: 0,
-        programs: 0,
-        files: 0,
-        logo_url: newCollege.logoPreview,
-      };
-
-      // Update UI optimistically based on campus acronym
-      setCollegesData((prevData) => {
-        const updatedData = { ...prevData };
-
-        if (selectedCampus.acronym === "CSU-MAIN") {
-          updatedData["CSU-MAIN"] = [
-            ...(updatedData["CSU-MAIN"] || []),
-            tempCollege,
-          ];
-        } else if (selectedCampus.acronym === "CSU-CC") {
-          updatedData["CSU-CC"] = [
-            ...(updatedData["CSU-CC"] || []),
-            tempCollege,
-          ];
-        }
-
-        return updatedData;
-      });
 
       // Create FormData and make API call
       const formData = new FormData();
@@ -68,6 +51,13 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
         formData.append("logo", newCollege.logo);
       }
 
+      console.log("Sending college data:", {
+        name: newCollege.name,
+        acronym: newCollege.shortName,
+        campus_id: selectedCampus.id,
+        hasLogo: !!newCollege.logo,
+      });
+
       const result = await createCollege(formData);
 
       if (result.success) {
@@ -76,42 +66,24 @@ export const useCollegeOperations = (dashboardData, createCollege) => {
           `College "${newCollege.name}" has been added successfully!`,
           "success"
         );
+        return result;
       } else {
-        // Revert optimistic update
-        revertOptimisticUpdate(tempCollegeId, selectedCampus);
         updateToast(
           loadingToastId,
           `Failed to add college: ${result.error}`,
           "error"
         );
+        return result;
       }
     } catch (error) {
-      // Handle error and revert changes
       updateToast(
         loadingToastId,
         `An unexpected error occurred: ${error.message}`,
         "error"
       );
       console.error("Error adding college:", error);
+      return { success: false, error: error.message };
     }
-  };
-
-  const revertOptimisticUpdate = (tempCollegeId, selectedCampus) => {
-    setCollegesData((prevData) => {
-      const updatedData = { ...prevData };
-
-      if (selectedCampus.acronym === "CSU-MAIN") {
-        updatedData["CSU-MAIN"] = (updatedData["CSU-MAIN"] || []).filter(
-          (c) => c.id !== tempCollegeId
-        );
-      } else if (selectedCampus.acronym === "CSU-CC") {
-        updatedData["CSU-CC"] = (updatedData["CSU-CC"] || []).filter(
-          (c) => c.id !== tempCollegeId
-        );
-      }
-
-      return updatedData;
-    });
   };
 
   return {

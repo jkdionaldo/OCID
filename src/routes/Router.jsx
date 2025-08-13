@@ -2,8 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+<<<<<<< HEAD
 import ProfileSettings from "@/pages/ProfileSettings";
 import Procedurals from "@/pages/Procedurals";
+=======
+import NotFound from "@/pages/NotFound";
+
+>>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
 // Import route collections
 // ccGraduateRoutes,
 
@@ -20,8 +25,8 @@ import Home from "@/pages/HomePage";
 import Downloadables from "@/pages/Downloadables";
 
 // CSU main page
-import Colleges_Graduate_Main from "@/pages/CSU-Main/GraduateSchoolPage";
-import Colleges_Undergraduate_Main from "@/pages/CSU-Main/UndergradPage";
+import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
+import Colleges_Undergraduate_Main from "@/pages/CSU-MAIN/UndergradPage";
 
 //  CSU-CC main pages
 // import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
@@ -34,6 +39,7 @@ const Router = () => {
       <Route path="/" element={<Home />} />
 
       {/* Protected Dashboard Route */}
+<<<<<<< HEAD
       <Route
         path="/dashboard"
         element={
@@ -52,6 +58,9 @@ const Router = () => {
         }
       />
 
+=======
+      <Route path="/dashboard" element={<Dashboard />} />
+>>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
@@ -93,7 +102,7 @@ const Router = () => {
       ))}
 
       {/* Fallback route */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

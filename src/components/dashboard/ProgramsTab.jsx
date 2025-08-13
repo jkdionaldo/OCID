@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import AddProgramModal from "@/components/modals/dashboard/AddProgramModal";
 import EditProgramModal from "@/components/modals/dashboard/EditProgramModal";
+import DeleteConfirmationModal from "@/components/modals/dashboard/DeleteConfirmationModal";
 import DashboardLoading from "@/components/dashboard/DashboardLoading";
 
 export default function ProgramsTab({
@@ -25,11 +26,13 @@ export default function ProgramsTab({
 }) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterCollege, setFilterCollege] = useState("all");
   const [activeTab, setActiveTab] = useState("undergraduate");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   if (loading) {
     return <DashboardLoading type="files" />;
@@ -40,9 +43,31 @@ export default function ProgramsTab({
     setShowEditModal(true);
   };
 
-  const handleDeleteProgram = async (programId, programType, programName) => {
-    if (confirm(`Are you sure you want to delete "${programName}"?`)) {
-      await onDeleteProgram(programId, programType);
+  const handleDeleteProgram = (program, type) => {
+    setSelectedProgram({ ...program, program_type: type });
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteProgram = async () => {
+    if (!selectedProgram || !onDeleteProgram) return;
+
+    setIsDeleting(true);
+
+    try {
+      const result = await onDeleteProgram(
+        selectedProgram.id,
+        selectedProgram.program_type
+      );
+
+      // Only handle UI state - let Dashboard handle toasts
+      if (result?.success !== false) {
+        setShowDeleteModal(false);
+        setSelectedProgram(null);
+      }
+    } catch (error) {
+      console.error("Error deleting program:", error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -63,14 +88,13 @@ export default function ProgramsTab({
   const filterPrograms = (programs, type) => {
     return programs.filter((program) => {
       const collegeInfo = getCollegeInfo(program.college_id);
-
       const matchesSearch =
         program.program_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (program.acronym &&
-          program.acronym.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (program.acronym || "")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
         collegeInfo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         collegeInfo.acronym.toLowerCase().includes(searchTerm.toLowerCase());
-
       const matchesType = filterType === "all" || filterType === type;
       const matchesCollege =
         filterCollege === "all" || collegeInfo.acronym === filterCollege;
@@ -89,7 +113,7 @@ export default function ProgramsTab({
 
     return (
       <div
-        className={`bg-white rounded-lg border-2 border-${colorScheme}-100 hover:border-${colorScheme}-300 transition-all duration-200 shadow-sm hover:shadow-md`}
+        className={`bg-white rounded-lg border-2 border-${colorScheme}-100 hover:border-${colorScheme}-300 transition-all duration-200 shadow-sm hover:shadow-md group`}
       >
         <div className="p-6">
           {/* Header */}
@@ -97,19 +121,17 @@ export default function ProgramsTab({
             <div className={`p-3 bg-${colorScheme}-100 rounded-lg`}>
               <Icon className={`w-6 h-6 text-${colorScheme}-600`} />
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <button
                 onClick={() => handleEditProgram(program, type)}
-                className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
                 title="Edit Program"
               >
                 <Edit className="w-4 h-4" />
               </button>
               <button
-                onClick={() =>
-                  handleDeleteProgram(program.id, type, program.program_name)
-                }
-                className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                onClick={() => handleDeleteProgram(program, type)}
+                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                 title="Delete Program"
               >
                 <Trash2 className="w-4 h-4" />
@@ -316,7 +338,7 @@ export default function ProgramsTab({
         </div>
       </div>
 
-      {/* Summary Statistics */}
+      {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 shadow-md border border-blue-100">
           <div className="flex items-center justify-between mb-4">
@@ -375,6 +397,28 @@ export default function ProgramsTab({
         onUpdateProgram={(programId, programData, programType) =>
           onUpdateProgram(programId, programData, programType)
         }
+      />
+
+      <DeleteConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setSelectedProgram(null);
+        }}
+        onConfirm={confirmDeleteProgram}
+        isDeleting={isDeleting}
+        title="Delete Program"
+        description="This will permanently remove the program and all its associated data."
+        itemName={selectedProgram?.program_name || ""}
+        itemType={
+          selectedProgram?.program_type === "graduate"
+            ? "Graduate Program"
+            : "Undergraduate Program"
+        }
+        warningMessage="Deleting this program will also remove all associated curriculum files, syllabi, and other data."
+        additionalInfo={`College: ${
+          selectedProgram ? getCollegeInfo(selectedProgram.college_id).name : ""
+        } | Acronym: ${selectedProgram?.acronym || "N/A"}`}
       />
     </div>
   );

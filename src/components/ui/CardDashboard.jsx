@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   GraduationCap,
   BookOpen,
@@ -6,176 +6,182 @@ import {
   FileText,
   ChevronDown,
   ChevronUp,
+  Building2,
+  Sparkles,
 } from "lucide-react";
 
 export default function CollegeCard({ college, campus, onViewDetails }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const logoSrc =
-    college.logo_url || college.logo || "/images/default-college-logo.png";
+    college.logo_url || college.logo || "/images/default-logo.png";
 
   // Calculate program counts
   const undergradCount = college.undergraduate_programs || 0;
   const graduateCount = college.graduate_programs || 0;
   const totalPrograms = undergradCount + graduateCount;
 
-  return (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-      {/* Header Section */}
-      <div className="relative">
-        <div className="h-32 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-4">
-          {college.logo_url || college.logo ? (
-            <img
-              src={logoSrc}
-              alt={`${college.name} logo`}
-              className="h-20 w-20 object-contain"
-              onError={(e) => {
-                e.target.src = "/images/default-college-logo.png";
-              }}
-            />
-          ) : (
-            <div className="h-20 w-20 bg-gray-200 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500 text-xs font-medium text-center">
-                {college.shortName || college.acronym || "No Logo"}
-              </span>
-            </div>
-          )}
-        </div>
+  // Dynamic color scheme based on campus
+  const campusTheme = {
+    "CSU-MAIN": {
+      primary: "emerald",
+      gradient: "from-emerald-500 to-green-600", // Enhanced green gradient
+      badge: "bg-emerald-700",
+      accent: "bg-emerald-50 border-emerald-100",
+      button:
+        "from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700",
+    },
+    "CSU-CC": {
+      primary: "blue",
+      gradient: "from-blue-500 to-indigo-600", // Enhanced blue gradient
+      badge: "bg-blue-700",
+      accent: "bg-blue-50 border-blue-100",
+      button:
+        "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700",
+    },
+  };
 
-        {/* Campus Badge */}
-        <div className="absolute top-3 right-3">
-          <div
-            className={`px-2 py-1 rounded-full text-xs font-medium shadow-sm ${
-              campus === "CSU-MAIN"
-                ? "bg-green-500 text-white"
-                : "bg-blue-500 text-white"
-            }`}
-          >
-            {campus}
+  const theme = campusTheme[campus] || campusTheme["CSU-MAIN"];
+
+  return (
+    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+      {/* Floating Campus Badge */}
+      <div className="absolute top-4 right-4 z-10">
+        <div
+          className={`${theme.badge} text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg backdrop-blur-sm bg-opacity-90`}
+        >
+          {campus}
+        </div>
+      </div>
+
+      {/* Header Section with Gradient */}
+      <div className="relative">
+        <div
+          className={`h-36 bg-gradient-to-br ${theme.gradient} flex items-center justify-center p-6 relative overflow-hidden`}
+        >
+          {/* Background Pattern */}
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm">
+            <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-white/5 -translate-x-16 -translate-y-16"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-white/5 translate-x-12 translate-y-12"></div>
           </div>
+
+          {/* Logo Container */}
+          <div className="relative z-10">
+            {college.logo_url || college.logo ? (
+              <div className="h-20 w-20 bg-white/20 backdrop-blur-sm rounded-2xl p-3 shadow-lg border border-white/30">
+                <img
+                  src={logoSrc}
+                  alt={`${college.name} logo`}
+                  className="h-full w-full object-contain"
+                  onError={(e) => {
+                    e.target.src = "/images/default-college-logo.png";
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="h-20 w-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
+                <Building2 className="h-10 w-10 text-white" />
+              </div>
+            )}
+          </div>
+
+          {/* Sparkle Effect */}
+          <Sparkles className="absolute top-6 left-6 h-4 w-4 text-white/60 animate-pulse" />
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="p-6">
+      <div className="p-6 space-y-5">
         {/* College Info */}
-        <div className="mb-4">
-          <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2">
+        <div className="text-center space-y-2">
+          <h3 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-gray-700 transition-colors">
             {college.name}
           </h3>
-          <p className="text-sm text-gray-600 font-medium">
+          <p className="text-sm font-medium text-gray-500 bg-gray-50 px-3 py-1 rounded-full inline-block">
             {college.shortName || college.acronym}
           </p>
         </div>
 
-        {/* Program Type Cards */}
-        <div className="space-y-3 mb-4">
+        {/* Program Stats Cards */}
+        <div className="grid grid-cols-2 gap-3">
           {/* Undergraduate Programs */}
-          <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
-            <div className="flex items-center">
-              <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
+          <div
+            className={`relative p-4 rounded-xl border-2 border-blue-100 bg-gradient-to-br from-blue-50 to-blue-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
+          >
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="p-2 bg-blue-500 rounded-lg shadow-sm">
+                <BookOpen className="w-4 h-4 text-white" />
+              </div>
               <div>
-                <div className="text-sm font-semibold text-blue-900">
+                <div className="text-lg font-bold text-blue-900">
+                  {undergradCount}
+                </div>
+                <div className="text-xs font-medium text-blue-700">
                   Undergraduate
                 </div>
-                <div className="text-xs text-blue-700">
-                  {undergradCount} programs
-                </div>
               </div>
-            </div>
-            <div className="text-xl font-bold text-blue-600">
-              {undergradCount}
             </div>
           </div>
 
           {/* Graduate Programs */}
-          <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100">
-            <div className="flex items-center">
-              <GraduationCap className="w-5 h-5 text-purple-600 mr-2" />
+          <div
+            className={`relative p-4 rounded-xl border-2 border-yellow-100 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-md transition-all duration-300 hover:scale-105`}
+          >
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="p-2 bg-yellow-500 rounded-lg shadow-sm">
+                <GraduationCap className="w-4 h-4 text-white" />
+              </div>
               <div>
-                <div className="text-sm font-semibold text-purple-900">
+                <div className="text-lg font-bold text-yellow-900">
+                  {graduateCount}
+                </div>
+                <div className="text-xs font-medium text-yellow-700">
                   Graduate
                 </div>
-                <div className="text-xs text-purple-700">
-                  {graduateCount} programs
-                </div>
               </div>
-            </div>
-            <div className="text-xl font-bold text-purple-600">
-              {graduateCount}
             </div>
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="text-center p-2 bg-gray-50 rounded-lg">
+        {/* Quick Overview Stats */}
+        <div className="flex items-center justify-around p-4 bg-gray-50 rounded-xl border border-gray-100">
+          <div className="text-center">
             <div className="text-lg font-bold text-gray-900">
               {totalPrograms}
             </div>
-            <div className="text-xs text-gray-600">Total Programs</div>
+            <div className="text-xs text-gray-600 font-medium">
+              Total Programs
+            </div>
           </div>
-          <div className="text-center p-2 bg-gray-50 rounded-lg">
+          <div className="w-px h-8 bg-gray-300"></div>
+          <div className="text-center">
             <div className="text-lg font-bold text-gray-900">
               {college.files || 0}
             </div>
-            <div className="text-xs text-gray-600">Files</div>
+            <div className="text-xs text-gray-600 font-medium">Files</div>
           </div>
         </div>
-
-        {/* Expandable Program Details */}
-        {(undergradCount > 0 || graduateCount > 0) && (
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full flex items-center justify-between p-2 text-sm text-gray-600 hover:text-gray-800 transition-colors border-t border-gray-100"
-          >
-            <span>Program Details</span>
-            {isExpanded ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
-          </button>
-        )}
-
-        {/* Expanded Program List */}
-        {isExpanded && (
-          <div className="mt-3 space-y-2 border-t border-gray-100 pt-3">
-            {undergradCount > 0 && (
-              <div className="text-xs">
-                <div className="font-semibold text-blue-700 mb-1">
-                  Undergraduate Programs:
-                </div>
-                <div className="text-gray-600 pl-2">
-                  {/* You can list specific programs here if available */}
-                  {undergradCount} program{undergradCount !== 1 ? "s" : ""}{" "}
-                  available
-                </div>
-              </div>
-            )}
-            {graduateCount > 0 && (
-              <div className="text-xs">
-                <div className="font-semibold text-purple-700 mb-1">
-                  Graduate Programs:
-                </div>
-                <div className="text-gray-600 pl-2">
-                  {/* You can list specific programs here if available */}
-                  {graduateCount} program{graduateCount !== 1 ? "s" : ""}{" "}
-                  available
-                </div>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Action Button */}
         <button
           onClick={() => onViewDetails(college, campus)}
-          className="w-full mt-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md"
+          className={`w-full mt-6 bg-gradient-to-r ${
+            theme.button
+          } text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+            campus === "CSU-MAIN"
+              ? "focus:ring-emerald-300"
+              : "focus:ring-blue-300"
+          }`}
         >
-          Explore Programs
+          <div className="flex items-center justify-center space-x-2">
+            <span>View Details</span>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-75"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-50"></div>
+            <div className="w-1.5 h-1.5 bg-white rounded-full opacity-25"></div>
+          </div>
         </button>
       </div>
+
+      {/* Hover Effect Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
     </div>
   );
 }

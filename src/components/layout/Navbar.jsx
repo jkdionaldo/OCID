@@ -13,7 +13,10 @@ import { useAuth } from "@/hooks/useAuth";
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
+  const [isDesktopDropdownClosing, setIsDesktopDropdownClosing] = useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
+  const [isMobileCollegesClosing, setIsMobileCollegesClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -21,22 +24,59 @@ const Navbar = () => {
 
   const { isAuthenticated, logout, user } = useAuth();
 
+  // Desktop dropdown close handler
+  const closeDesktopDropdown = () => {
+    setIsDesktopDropdownClosing(true);
+    setTimeout(() => {
+      setIsDesktopDropdownOpen(false);
+      setIsDesktopDropdownClosing(false);
+    }, 100);
+  };
+
+  // Mobile colleges dropdown close handler
+  const closeMobileColleges = () => {
+    setIsMobileCollegesClosing(true);
+    setTimeout(() => {
+      setIsMobileCollegesOpen(false);
+      setIsMobileCollegesClosing(false);
+    }, 100);
+  }
+
+  // Close mobile menu on scroll and handle outside clicks
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       setIsMenuOpen(false);
+      // Close dropdowns with animation when scrolling
+      if (isDesktopDropdownOpen) {
+        closeDesktopDropdown();
+      }
+      if (isMobileCollegesOpen) {
+        closeMobileColleges();
+      }
     };
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
+        if (isDesktopDropdownOpen) {
+          closeDesktopDropdown();
+        }
       }
     };
     window.addEventListener("scroll", handleScroll);
-    if (isMenuOpen) document.addEventListener("mousedown", handleClickOutside);
+    if (isDesktopDropdownOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [isDesktopDropdownOpen]);
+
+  // Reset mobile colleges dropdown when mobile menu closes
+  useEffect(() => {
+    if (!isMenuOpen) {
+      if (isMobileCollegesOpen) {
+        closeMobileColleges();
+      }
+    }
   }, [isMenuOpen]);
 
   useEffect(() => {
@@ -129,47 +169,76 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Nav */}
-        <div className="hidden xl:flex items-center justify-center space-x-8 xl:space-x-12">
+        <div className="hidden xl:flex items-baseline justify-center space-x-8 xl:space-x-12">
           <Link
             to="/"
-            className={`font-semibold uppercase xl:text-sm ${
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
               isActive("/")
-                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                ? "text-green-700 font-bold"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             HOME
+            <span 
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
           </Link>
 
           <div
             className="relative"
-            onMouseEnter={() => setIsMenuOpen(true)}
-            onMouseLeave={() => setIsMenuOpen(false)}
+            onMouseEnter={() => {
+              setIsDesktopDropdownClosing(false);
+              setIsDesktopDropdownOpen(true);
+            }}
+            onMouseLeave={() => {
+              if (isDesktopDropdownOpen) {
+                closeDesktopDropdown();
+              }
+            }}
           >
             <div
-              className={`font-semibold uppercase text-sm flex cursor-pointer ${
+              className={`font-semibold uppercase text-sm flex cursor-pointer pb-1 relative ${
                 isCollegeActive()
-                  ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                  ? "text-green-700 font-bold"
                   : "text-green-950 hover:text-green-700"
               } transition-colors duration-200`}
             >
               Colleges <ChevronDown size={20} className="ml-1" />
+              <span 
+                className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                  isCollegeActive() ? "w-8 opacity-100" : "w-0 opacity-0"
+                }`}
+              ></span>
             </div>
 
-            {isMenuOpen && (
+            {/* Invisible hover bridge */}
+            <div 
+              className="absolute left-0 right-0 h-3 top-full"
+              style={{ pointerEvents: 'auto' }}
+            ></div>
+
+            {(isDesktopDropdownOpen || isDesktopDropdownClosing) && (
               <div
                 ref={dropdownRef}
-                className="absolute left-0 rounded-xl bg-white shadow-2xl flex flex-col w-48 outline outline-1 outline-gray-400"
+                className={`absolute left-0 rounded-lg bg-white shadow-2xl flex flex-col w-48 overflow-hidden ${
+                  isDesktopDropdownClosing ? 'dropdown-exit' : 'dropdown-enter'
+                }`}
+                style={{
+                  transformOrigin: 'top',
+                  top: 'calc(100% + 12px)' // this matches the bridge height
+                }}
               >
                 <Link
                   to="/colleges_graduate_main"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-t-xl"
+                  className="block px-6 py-2 text-gray-800 hover:text-white hover:bg-csuGreen text-sm font-medium transition-colors duration-200 text-start first:rounded-t-lg"
                 >
                   CSU-MAIN
                 </Link>
                 <Link
                   to="/colleges_undergraduate_cc"
-                  className="block px-6 py-2 text-gray-800 hover:text-green-700 hover:bg-gray-100 text-sm font-medium rounded-b-xl"
+                  className="block px-6 py-2 text-gray-800 hover:text-white hover:bg-csuGreen text-sm font-medium transition-colors duration-200 text-start last:rounded-b-lg"
                 >
                   CSU-CC
                 </Link>
@@ -181,20 +250,25 @@ const Navbar = () => {
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200"
+            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200 border-b-2 border-transparent pb-1"
           >
             ABOUT OCID
           </a>
 
           <Link
             to="/downloadables"
-            className={`font-semibold uppercase xl:text-sm ${
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
               isActive("/downloadables")
-                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                ? "text-green-700 font-bold"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
             DOWNLOAD
+            <span 
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/downloadables") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
           </Link>
           
           <Link
@@ -280,19 +354,40 @@ const Navbar = () => {
       {/* BACKDROP */}
       {isMenuOpen && (
         <div
-          className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="xl:hidden fixed inset-0 bg-black/60"
+          style={{ 
+            zIndex: 55,
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh'
+          }}
           onClick={() => setIsMenuOpen(false)}
         />
       )}
 
       {/* MOBILE SIDEBAR */}
       <div
-        className={`xl:hidden fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white z-50 shadow-md transform transition-transform duration-300 ${
+        className={`xl:hidden fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white shadow-md transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
+        style={{ 
+          zIndex: 60,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '100vh',
+          backgroundColor: 'white'
+        }}
       >
         <div className="flex justify-end p-4">
-          <button onClick={() => setIsMenuOpen(false)}>
+          <button onClick={() => {
+            setIsMenuOpen(false);
+            setIsMobileCollegesOpen(false);
+          }}>
             <svg
               className="w-6 h-6 text-green-700"
               fill="none"
@@ -312,16 +407,26 @@ const Navbar = () => {
         <nav className="flex flex-col px-6 space-y-4">
           <Link
             to="/"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Home
             <ChevronRight className="w-4 h-4 text-green-600" />
           </Link>
 
           <button
-            onClick={() => setIsMobileCollegesOpen(!isMobileCollegesOpen)}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            onClick={() => {
+              if (isMobileCollegesOpen) {
+                closeMobileColleges();
+              } else {
+                setIsMobileCollegesClosing(false);
+                setIsMobileCollegesOpen(true);
+              }
+            }}
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Colleges
             <ChevronRight
@@ -331,18 +436,31 @@ const Navbar = () => {
             />
           </button>
 
-          {isMobileCollegesOpen && (
-            <div className="flex flex-col space-y-2 pl-4 text-sm text-gray-700">
+          {(isMobileCollegesOpen || isMobileCollegesClosing) && (
+            <div 
+              className={`flex flex-col space-y-2 pl-4 text-sm text-gray-700 ${
+                isMobileCollegesClosing ? 'dropdown-exit' : 'dropdown-enter'
+              }`}
+              style={{
+                transformOrigin: 'top'
+              }}
+            >
               <Link
                 to="/colleges_graduate_main"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center"
               >
                 CSU-MAIN <ChevronRight className="w-4 h-4 text-green-500" />
               </Link>
               <Link
                 to="/colleges_undergraduate_cc"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center"
               >
                 CSU-CC <ChevronRight className="w-4 h-4 text-green-500" />
@@ -354,7 +472,7 @@ const Navbar = () => {
             href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             About OCID
             <ChevronRight className="w-4 h-4 text-green-600" />
@@ -362,8 +480,11 @@ const Navbar = () => {
 
           <Link
             to="/downloadables"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b"
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
+            className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
             Download
             <ChevronRight className="w-4 h-4 text-green-600" />
@@ -377,14 +498,20 @@ const Navbar = () => {
               <p className="text-sm font-medium">{user?.name}</p>
               <Link
                 to="/dashboard"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center text-green-700"
               >
                 Dashboard <ChevronRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/profile"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
+                }}
                 className="flex justify-between items-center text-green-700"
               >
                 Profile Settings <ChevronRight className="w-4 h-4" />
@@ -393,6 +520,7 @@ const Navbar = () => {
                 onClick={() => {
                   logout();
                   setIsMenuOpen(false);
+                  setIsMobileCollegesOpen(false);
                 }}
                 className="flex justify-between items-center text-red-600 w-full"
               >
@@ -409,3 +537,46 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// Add CSS for dropdown animations
+const styles = `
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.8);
+    }
+  }
+
+  .dropdown-enter {
+    animation: slideDown 0.15s ease-out forwards;
+  }
+
+  .dropdown-exit {
+    animation: slideUp 0.1s ease-in forwards;
+  }
+`;
+
+// Inject styles into document head
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = styles;
+  if (!document.head.querySelector('style[data-colleges-dropdown]')) {
+    styleElement.setAttribute('data-colleges-dropdown', 'true');
+    document.head.appendChild(styleElement);
+  }
+}

@@ -14,7 +14,6 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   transition: ease-in-out;
-  margin-top: 60px;
 }
 
 .navbar {
@@ -186,4 +185,33 @@ body {
 
 .Toastify__progress-bar--error {
   background: #991b1b;
+}
+
+/* For shadcn customization */
+.dialog-content {
+  min-height: 650px;
+  background: rgb(255, 255, 255) !important;
+  padding: 30px;
+  border-radius: 4px;
+}
+
+/* Modal Button */
+.modal-open {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: fixed;
+    z-index: 99999 !important;
+}
+
+.modal-open > div {
+    z-index: 100000 !important;
+    position: relative;
 }
