@@ -13,7 +13,7 @@ export const useCollegesActions = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCampus, setSelectedCampus] = useState("all");
   const [sortBy, setSortBy] = useState("name");
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
 
   // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
@@ -22,7 +22,19 @@ export const useCollegesActions = ({
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Filtered colleges with safety checks
+  // Get campus info for a college
+  const getCampusInfo = useCallback(
+    (campusId) => {
+      const campus = campuses?.find((c) => c.id === campusId);
+      return {
+        name: campus?.name || "Unknown Campus",
+        acronym: campus?.acronym || "Unknown",
+      };
+    },
+    [campuses]
+  );
+
+  // Filtered colleges with safety checks - works with raw data
   const filteredColleges = useMemo(() => {
     // Safety check: ensure colleges is an array
     if (!colleges || !Array.isArray(colleges)) {
@@ -33,18 +45,16 @@ export const useCollegesActions = ({
       // Safety checks for college properties
       if (!college) return false;
 
+      const campusInfo = getCampusInfo(college.campus_id);
+
       const matchesSearch =
         (college.name &&
           college.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (college.acronym &&
-          college.acronym.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (college.shortName &&
-          college.shortName.toLowerCase().includes(searchTerm.toLowerCase()));
+          college.acronym.toLowerCase().includes(searchTerm.toLowerCase()));
 
       const matchesCampus =
-        selectedCampus === "all" ||
-        college.campus?.acronym === selectedCampus ||
-        college.campus_acronym === selectedCampus;
+        selectedCampus === "all" || campusInfo.acronym === selectedCampus;
 
       return matchesSearch && matchesCampus;
     });
@@ -68,7 +78,7 @@ export const useCollegesActions = ({
     });
 
     return filtered;
-  }, [colleges, searchTerm, selectedCampus, sortBy]);
+  }, [colleges, searchTerm, selectedCampus, sortBy, getCampusInfo]);
 
   // Actions
   const clearFilters = useCallback(() => {
@@ -128,7 +138,8 @@ export const useCollegesActions = ({
 
     setIsSubmitting(true);
     try {
-      await onDeleteCollege(selectedCollege.id, selectedCollege.campus);
+      const campusInfo = getCampusInfo(selectedCollege.campus_id);
+      await onDeleteCollege(selectedCollege.id, campusInfo.acronym);
       setShowDeleteModal(false);
       setSelectedCollege(null);
     } catch (error) {
@@ -136,21 +147,19 @@ export const useCollegesActions = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [selectedCollege, onDeleteCollege]);
+  }, [selectedCollege, onDeleteCollege, getCampusInfo]);
 
   const handleEditClick = useCallback(
     (college) => {
+      const campusInfo = getCampusInfo(college.campus_id);
       const transformedCollege = {
         ...college,
-        campus:
-          college.campus?.acronym ||
-          campuses?.find((c) => c.id === college.campus_id)?.acronym ||
-          "Unknown",
+        campus: campusInfo.acronym,
       };
       setSelectedCollege(transformedCollege);
       setShowEditModal(true);
     },
-    [campuses]
+    [getCampusInfo]
   );
 
   const handleDeleteClick = useCallback((college) => {
@@ -158,9 +167,13 @@ export const useCollegesActions = ({
     setShowDeleteModal(true);
   }, []);
 
-  const handleViewDetails = useCallback((college, campus) => {
-    console.log("Viewing details for:", college, campus);
-  }, []);
+  const handleViewDetails = useCallback(
+    (college) => {
+      const campusInfo = getCampusInfo(college.campus_id);
+      console.log("Viewing details for:", college, campusInfo.acronym);
+    },
+    [getCampusInfo]
+  );
 
   return {
     // State
