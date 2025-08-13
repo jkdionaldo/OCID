@@ -54,9 +54,16 @@ const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
 
   const currentTheme = theme[colorScheme];
 
+  const handleViewDetails = () => {
+    if (onViewDetails) {
+      onViewDetails(program, type);
+    }
+  };
+
   return (
     <div
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${currentTheme.border} overflow-hidden transform hover:-translate-y-2`}
+      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border ${currentTheme.border} overflow-hidden transform hover:-translate-y-2 cursor-pointer`}
+      onClick={handleViewDetails}
     >
       {/* Program Type Badge */}
       <div className="absolute top-4 right-4 z-10">
@@ -142,7 +149,10 @@ const ProgramCard = ({ program, type, colleges, campuses, onViewDetails }) => {
 
         {/* View Details Button */}
         <button
-          onClick={() => onViewDetails && onViewDetails(program, type)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleViewDetails();
+          }}
           className={`w-full mt-6 bg-gradient-to-r ${
             currentTheme.button
           } text-white font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${

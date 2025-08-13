@@ -14,7 +14,8 @@ const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
-  const [isDesktopDropdownClosing, setIsDesktopDropdownClosing] = useState(false);
+  const [isDesktopDropdownClosing, setIsDesktopDropdownClosing] =
+    useState(false);
   const [isMobileCollegesOpen, setIsMobileCollegesOpen] = useState(false);
   const [isMobileCollegesClosing, setIsMobileCollegesClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,7 +41,7 @@ const Navbar = () => {
       setIsMobileCollegesOpen(false);
       setIsMobileCollegesClosing(false);
     }, 100);
-  }
+  };
 
   // Close mobile menu on scroll and handle outside clicks
   useEffect(() => {
@@ -63,12 +64,13 @@ const Navbar = () => {
       }
     };
     window.addEventListener("scroll", handleScroll);
-    if (isDesktopDropdownOpen) document.addEventListener("mousedown", handleClickOutside);
+    if (isDesktopDropdownOpen)
+      document.addEventListener("mousedown", handleClickOutside);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDesktopDropdownOpen]);
+  }, [isDesktopDropdownOpen, isMobileCollegesOpen]);
 
   // Reset mobile colleges dropdown when mobile menu closes
   useEffect(() => {
@@ -77,7 +79,7 @@ const Navbar = () => {
         closeMobileColleges();
       }
     }
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isMobileCollegesOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -179,7 +181,7 @@ const Navbar = () => {
             } transition-colors duration-200`}
           >
             HOME
-            <span 
+            <span
               className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
                 isActive("/") ? "w-8 opacity-100" : "w-0 opacity-0"
               }`}
@@ -206,7 +208,7 @@ const Navbar = () => {
               } transition-colors duration-200`}
             >
               Colleges <ChevronDown size={20} className="ml-1" />
-              <span 
+              <span
                 className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
                   isCollegeActive() ? "w-8 opacity-100" : "w-0 opacity-0"
                 }`}
@@ -214,20 +216,20 @@ const Navbar = () => {
             </div>
 
             {/* Invisible hover bridge */}
-            <div 
+            <div
               className="absolute left-0 right-0 h-3 top-full"
-              style={{ pointerEvents: 'auto' }}
+              style={{ pointerEvents: "auto" }}
             ></div>
 
             {(isDesktopDropdownOpen || isDesktopDropdownClosing) && (
               <div
                 ref={dropdownRef}
                 className={`absolute left-0 rounded-lg bg-white shadow-2xl flex flex-col w-48 overflow-hidden ${
-                  isDesktopDropdownClosing ? 'dropdown-exit' : 'dropdown-enter'
+                  isDesktopDropdownClosing ? "dropdown-exit" : "dropdown-enter"
                 }`}
                 style={{
-                  transformOrigin: 'top',
-                  top: 'calc(100% + 12px)' // this matches the bridge height
+                  transformOrigin: "top",
+                  top: "calc(100% + 12px)", // this matches the bridge height
                 }}
               >
                 <Link
@@ -263,8 +265,8 @@ const Navbar = () => {
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
-            DOWNLOAD
-            <span 
+            DOWNLOADABLES
+            <span
               className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
                 isActive("/downloadables") ? "w-8 opacity-100" : "w-0 opacity-0"
               }`}
@@ -343,15 +345,15 @@ const Navbar = () => {
       {isMenuOpen && (
         <div
           className="xl:hidden fixed inset-0 bg-black/60"
-          style={{ 
+          style={{
             zIndex: 55,
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            width: '100vw',
-            height: '100vh'
+            width: "100vw",
+            height: "100vh",
           }}
           onClick={() => setIsMenuOpen(false)}
         />
@@ -362,20 +364,22 @@ const Navbar = () => {
         className={`xl:hidden fixed top-0 left-0 h-full w-[80%] max-w-xs bg-white shadow-md transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
-        style={{ 
+        style={{
           zIndex: 60,
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
-          height: '100vh',
-          backgroundColor: 'white'
+          height: "100vh",
+          backgroundColor: "white",
         }}
       >
         <div className="flex justify-end p-4">
-          <button onClick={() => {
-            setIsMenuOpen(false);
-            setIsMobileCollegesOpen(false);
-          }}>
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
+          >
             <svg
               className="w-6 h-6 text-green-700"
               fill="none"
@@ -425,12 +429,12 @@ const Navbar = () => {
           </button>
 
           {(isMobileCollegesOpen || isMobileCollegesClosing) && (
-            <div 
+            <div
               className={`flex flex-col space-y-2 pl-4 text-sm text-gray-700 ${
-                isMobileCollegesClosing ? 'dropdown-exit' : 'dropdown-enter'
+                isMobileCollegesClosing ? "dropdown-exit" : "dropdown-enter"
               }`}
               style={{
-                transformOrigin: 'top'
+                transformOrigin: "top",
               }}
             >
               <Link
@@ -560,11 +564,11 @@ const styles = `
 `;
 
 // Inject styles into document head
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
+if (typeof document !== "undefined") {
+  const styleElement = document.createElement("style");
   styleElement.textContent = styles;
-  if (!document.head.querySelector('style[data-colleges-dropdown]')) {
-    styleElement.setAttribute('data-colleges-dropdown', 'true');
+  if (!document.head.querySelector("style[data-colleges-dropdown]")) {
+    styleElement.setAttribute("data-colleges-dropdown", "true");
     document.head.appendChild(styleElement);
   }
 }

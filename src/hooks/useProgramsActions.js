@@ -20,6 +20,7 @@ export const useProgramsActions = ({
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -111,7 +112,7 @@ export const useProgramsActions = ({
     return result;
   }, [programs, filterPrograms, sortBy, getCollegeInfo]);
 
-  // Rest of the actions remain the same...
+  // Actions
   const clearFilters = useCallback(() => {
     setSearchTerm("");
     setFilterType("all");
@@ -179,6 +180,11 @@ export const useProgramsActions = ({
     setShowDeleteModal(true);
   }, []);
 
+  const handleViewDetails = useCallback((program, type) => {
+    setSelectedProgram({ ...program, program_type: type, type: type });
+    setShowDetailsModal(true);
+  }, []);
+
   return {
     // State
     viewMode,
@@ -191,6 +197,7 @@ export const useProgramsActions = ({
     showAddModal,
     showEditModal,
     showDeleteModal,
+    showDetailsModal,
     selectedProgram,
     isDeleting,
     filteredPrograms,
@@ -203,12 +210,15 @@ export const useProgramsActions = ({
     setShowAddModal,
     setShowEditModal,
     setShowDeleteModal,
+    setShowDetailsModal,
+    setSelectedProgram,
     clearFilters,
     handleAddProgram,
     handleEditProgram,
     handleDeleteProgram: confirmDeleteProgram,
     handleEditClick,
     handleDeleteClick,
+    handleViewDetails,
     confirmDeleteProgram,
   };
 };

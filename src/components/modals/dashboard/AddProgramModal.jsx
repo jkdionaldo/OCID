@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BookOpen, GraduationCap, Plus, Save, Upload, X } from "lucide-react";
+import { BookOpen, GraduationCap, Plus, Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -29,7 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useDashboardData } from "@/hooks/useDashboardData";
@@ -45,8 +44,6 @@ const formSchema = z.object({
 
 const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [logoFile, setLogoFile] = useState(null);
-  const [logoPreview, setLogoPreview] = useState(null);
   const { data: dashboardData } = useDashboardData();
 
   const form = useForm({
@@ -63,8 +60,6 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
   useEffect(() => {
     if (isOpen) {
       form.reset();
-      setLogoFile(null);
-      setLogoPreview(null);
     }
   }, [isOpen, form]);
 
@@ -72,13 +67,7 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
     setIsSubmitting(true);
 
     try {
-      const programFormData = {
-        ...values,
-        logo: logoFile,
-        logoPreview: logoPreview,
-      };
-
-      await onAddProgram(programFormData);
+      await onAddProgram(values);
       onClose();
     } catch (error) {
       console.error("Error adding program:", error);
@@ -88,51 +77,6 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Validate file type
-      const validTypes = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "image/gif",
-        "image/svg+xml",
-      ];
-
-      if (!validTypes.includes(file.type)) {
-        form.setError("logo", {
-          message: "Please select a valid image file (JPEG, PNG, GIF, SVG)",
-        });
-        return;
-      }
-
-      // Validate file size (5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        form.setError("logo", {
-          message: "File size must be less than 5MB",
-        });
-        return;
-      }
-
-      setLogoFile(file);
-      form.clearErrors("logo");
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setLogoPreview(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const removeLogo = () => {
-    setLogoFile(null);
-    setLogoPreview(null);
-    form.clearErrors("logo");
   };
 
   const selectedProgramType = form.watch("program_type");
@@ -320,86 +264,6 @@ const AddProgramModal = ({ isOpen, onClose, onAddProgram }) => {
                   </FormItem>
                 )}
               />
-
-              {/* Logo Upload */}
-              <div className="space-y-3">
-                <label className="text-base font-medium text-gray-700">
-                  Program Logo
-                </label>
-
-                {!logoPreview ? (
-                  <Card className="border-2 border-dashed border-green-300 hover:border-green-400 transition-colors bg-gradient-to-br from-green-50 to-emerald-50">
-                    <CardContent className="flex flex-col items-center justify-center p-8">
-                      <div className="p-3 bg-green-100 rounded-full mb-4">
-                        <Upload className="h-8 w-8 text-green-600" />
-                      </div>
-                      <p className="text-gray-700 font-medium mb-2">
-                        Upload Program Logo
-                      </p>
-                      <p className="text-gray-500 text-sm mb-4 text-center">
-                        Drag and drop or click to browse
-                      </p>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="border-green-600 text-green-600 hover:bg-green-50"
-                        asChild
-                      >
-                        <label htmlFor="logoInput" className="cursor-pointer">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Browse Files
-                        </label>
-                      </Button>
-                      <input
-                        type="file"
-                        id="logoInput"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={handleLogoChange}
-                      />
-                      <p className="mt-3 text-xs text-gray-500">
-                        Supported: JPEG, PNG, GIF, SVG (max 5MB)
-                      </p>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <Card className="border-2 border-green-200 bg-gradient-to-br from-green-50 to-white">
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src={logoPreview}
-                          alt="Logo preview"
-                          className="h-20 w-20 object-contain rounded-xl border-2 border-green-200 bg-white p-2"
-                        />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">
-                            {logoFile?.name}
-                          </p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {logoFile &&
-                              `${(logoFile.size / 1024 / 1024).toFixed(2)} MB`}
-                          </p>
-                          <Badge
-                            variant="secondary"
-                            className="mt-2 bg-green-100 text-green-800"
-                          >
-                            Ready to upload
-                          </Badge>
-                        </div>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={removeLogo}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
 
               {/* Root Error */}
               {form.formState.errors.root && (

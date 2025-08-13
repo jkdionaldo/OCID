@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { dashboardApi } from "../services/api/dashboardApi";
 import { DashboardCache } from "../utils/dashboardCache";
+import { useFormManagement } from "./useFormManagement";
 import { useCollegeManagement } from "./useCollegeManagement";
 import { useProgramManagement } from "./useProgramManagement";
 import { useFileManagement } from "./useFileManagement";
@@ -107,6 +108,7 @@ export const useDashboardData = () => {
           syllabus: dashboardData.syllabus || [],
           undergrads: dashboardData.undergrads || [],
           graduates: dashboardData.graduates || [],
+          forms: dashboardData.forms || [],
         };
 
         setData(normalizedData);
@@ -195,6 +197,7 @@ export const useDashboardData = () => {
     updateDataOptimistically,
     setError
   );
+  const formManagement = useFormManagement(updateDataOptimistically, setError);
   const fileManagement = useFileManagement(updateDataOptimistically, setError);
 
   // Transform data for easy consumption
@@ -259,6 +262,10 @@ export const useDashboardData = () => {
     // Computed/transformed data
     colleges: data.colleges,
     files: transformedFiles,
+    // Form management functions
+    createForm: formManagement.createForm,
+    updateForm: formManagement.updateForm,
+    deleteForm: formManagement.deleteForm,
     // College management functions
     createCollege: collegeManagement.createCollege,
     updateCollege: collegeManagement.updateCollege,
