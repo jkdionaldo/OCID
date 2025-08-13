@@ -7,14 +7,38 @@ export const useProgramManagement = (updateDataOptimistically, setError) => {
       try {
         setError(null);
 
-        // Optimistic update
+        // Get the full dashboard data to resolve college info
+        const currentData = await new Promise((resolve) => {
+          updateDataOptimistically((prevData) => {
+            resolve(prevData);
+            return prevData;
+          });
+        });
+
+        // Find the college information
+        const college = currentData.colleges.find(
+          (c) => c.id.toString() === programData.college_id.toString()
+        );
+
+        if (!college) {
+          throw new Error("College not found");
+        }
+
+        // Optimistic update with complete college information
         const tempId = `temp-${Date.now()}`;
         const tempProgram = {
           id: tempId,
           program_name: programData.program_name,
           acronym: programData.acronym || undefined,
-          college_id: programData.college_id,
+          college_id: parseInt(programData.college_id),
           created_at: new Date().toISOString(),
+          // Include complete college information for immediate display
+          college: {
+            id: college.id,
+            name: college.name,
+            acronym: college.acronym,
+            campus_id: college.campus_id,
+          },
         };
 
         const targetArray =
@@ -59,11 +83,17 @@ export const useProgramManagement = (updateDataOptimistically, setError) => {
 
         const newProgram = response.data.data || response.data;
 
-        // Replace temp program with real one
+        // Replace temp program with real one, ensuring college info is preserved
         updateDataOptimistically((prevData) => ({
           ...prevData,
           [targetArray]: prevData[targetArray].map((program) =>
-            program.id === tempId ? newProgram : program
+            program.id === tempId
+              ? {
+                  ...newProgram,
+                  // Ensure college info is available even if not returned by API
+                  college: newProgram.college || college,
+                }
+              : program
           ),
         }));
 
@@ -122,12 +152,28 @@ export const useProgramManagement = (updateDataOptimistically, setError) => {
         const targetArray =
           programType === "graduate" ? "graduates" : "undergrads";
 
-        // Optimistic update
+        // Get current data to resolve college info for updates
+        let currentCollege = null;
+        updateDataOptimistically((prevData) => {
+          if (programData.college_id) {
+            currentCollege = prevData.colleges.find(
+              (c) => c.id.toString() === programData.college_id.toString()
+            );
+          }
+          return prevData;
+        });
+
+        // Optimistic update with college information
         updateDataOptimistically((prevData) => ({
           ...prevData,
           [targetArray]: prevData[targetArray].map((program) =>
             program.id.toString() === id.toString()
-              ? { ...program, ...programData }
+              ? {
+                  ...program,
+                  ...programData,
+                  // Preserve or update college info
+                  college: currentCollege || program.college,
+                }
               : program
           ),
         }));
@@ -141,11 +187,17 @@ export const useProgramManagement = (updateDataOptimistically, setError) => {
 
         const updatedProgram = response.data.data || response.data;
 
-        // Update with server response
+        // Update with server response, ensuring college info is preserved
         updateDataOptimistically((prevData) => ({
           ...prevData,
           [targetArray]: prevData[targetArray].map((program) =>
-            program.id.toString() === id.toString() ? updatedProgram : program
+            program.id.toString() === id.toString()
+              ? {
+                  ...updatedProgram,
+                  college:
+                    updatedProgram.college || currentCollege || program.college,
+                }
+              : program
           ),
         }));
 
@@ -163,11 +215,12 @@ export const useProgramManagement = (updateDataOptimistically, setError) => {
 
   const deleteProgram = useCallback(
     async (id, programType) => {
+      const targetArray =
+        programType === "graduate" ? "graduates" : "undergrads";
+      let deletedProgram;
+
       try {
         setError(null);
-        const targetArray =
-          programType === "graduate" ? "graduates" : "undergrads";
-        let deletedProgram;
 
         // Optimistic update
         updateDataOptimistically((prevData) => {

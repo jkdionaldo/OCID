@@ -1,32 +1,48 @@
 import { useCallback } from "react";
 import { collegeApi } from "../services/api/dashboardApi";
-import axios from "axios"; // Add this import
 
 export const useCollegeManagement = (updateDataOptimistically, setError) => {
   const createCollege = useCallback(
     async (collegeData) => {
-      // Declare tempId outside try-catch block so it's accessible in both
-      const tempId = `temp-${Date.now()}`;
-
       try {
         setError(null);
 
-        // Get campus info for proper structure
-        const campusId = parseInt(collegeData.get("campus_id"));
+        // Find the campus information
+        const currentData = await new Promise((resolve) => {
+          updateDataOptimistically((prevData) => {
+            resolve(prevData);
+            return prevData;
+          });
+        });
 
-        // Optimistic update - add temporary college with proper structure
+        const campus = currentData.campuses.find(
+          (c) => c.acronym === collegeData.campus
+        );
+
+        if (!campus) {
+          throw new Error("Campus not found");
+        }
+
+        // Optimistic update with complete college information
+        const tempId = `temp-${Date.now()}`;
         const tempCollege = {
           id: tempId,
-          name: collegeData.get("name"),
-          acronym: collegeData.get("acronym"),
-          campus_id: campusId,
-          logo_url: null,
+          name: collegeData.name,
+          acronym: collegeData.shortName,
+          campus_id: campus.id,
+          logo_url: collegeData.logo_url || null,
+          created_at: new Date().toISOString(),
+          // Initialize program counts
           undergraduate_programs: 0,
           graduate_programs: 0,
           programs: 0,
           files: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          // Include campus info for immediate display
+          campus: {
+            id: campus.id,
+            name: campus.name,
+            acronym: campus.acronym,
+          },
         };
 
         updateDataOptimistically((prevData) => ({
@@ -35,54 +51,44 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
         }));
 
         // Make API call
-        const response = await collegeApi.create(collegeData);
+        const response = await collegeApi.create({
+          name: collegeData.name,
+          acronym: collegeData.shortName,
+          campus_id: campus.id,
+          logo_url: collegeData.logo_url || null,
+        });
+
         const newCollege = response.data.data || response.data;
 
-        // Replace temporary college with real one from backend
+        // Replace temp college with real one
         updateDataOptimistically((prevData) => ({
           ...prevData,
-          colleges: prevData.colleges.map((college) => {
-            // Check if this is our temporary college
-            if (college.id === tempId) {
-              return {
-                // Use all data from the backend response
-                ...newCollege,
-                // Ensure computed fields exist with proper defaults
-                undergraduate_programs:
-                  newCollege.undergraduate_programs ||
-                  newCollege.undergraduate_programs_count ||
-                  0,
-                graduate_programs:
-                  newCollege.graduate_programs ||
-                  newCollege.graduate_programs_count ||
-                  0,
-                programs:
-                  (newCollege.undergraduate_programs ||
-                    newCollege.undergraduate_programs_count ||
-                    0) +
-                  (newCollege.graduate_programs ||
-                    newCollege.graduate_programs_count ||
-                    0),
-                files: newCollege.files || 0,
-                // Ensure the ID is properly set from backend
-                id: newCollege.id,
-                // Keep the campus_id for proper transformation
-                campus_id: newCollege.campus_id || college.campus_id,
-              };
-            }
-            return college;
-          }),
+          colleges: prevData.colleges.map((college) =>
+            college.id === tempId
+              ? {
+                  ...newCollege,
+                  // Ensure campus info is available
+                  campus: newCollege.campus || campus,
+                  // Initialize counts if not provided
+                  undergraduate_programs:
+                    newCollege.undergraduate_programs || 0,
+                  graduate_programs: newCollege.graduate_programs || 0,
+                  programs: newCollege.programs || 0,
+                  files: newCollege.files || 0,
+                }
+              : college
+          ),
         }));
 
         return { success: true, data: newCollege };
       } catch (err) {
         console.error("Error creating college:", err);
 
-        // Revert optimistic update - now tempId is accessible
+        // Revert optimistic update
         updateDataOptimistically((prevData) => ({
           ...prevData,
           colleges: prevData.colleges.filter(
-            (college) => college.id !== tempId
+            (college) => !college.id.toString().startsWith("temp-")
           ),
         }));
 
@@ -91,9 +97,8 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
           message = err.response.data.message;
         } else if (err.response?.data?.errors) {
           const errors = err.response.data.errors;
-          message = Object.values(errors).flat().join(", ");
-        } else if (err.message) {
-          message = err.message;
+          const firstErrorKey = Object.keys(errors)[0];
+          message = errors[firstErrorKey]?.[0] || message;
         }
 
         setError(message);
@@ -107,47 +112,42 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
     async (id, collegeData) => {
       try {
         setError(null);
-        let originalCollege; // Move this declaration to proper scope
 
-        // Optimistic update
+        // Get current data to resolve campus info
+        let currentCampus = null;
         updateDataOptimistically((prevData) => {
-          originalCollege = prevData.colleges.find(
-            (c) => c.id.toString() === id.toString()
-          );
-
-          // Merge the update data properly
-          const updateData =
-            collegeData instanceof FormData
-              ? {
-                  name: collegeData.get("name"),
-                  acronym: collegeData.get("acronym"),
-                  campus_id: parseInt(collegeData.get("campus_id")),
-                  // Keep existing logo_url if no new logo provided
-                  logo_url: collegeData.get("logo")
-                    ? null
-                    : originalCollege?.logo_url,
-                }
-              : collegeData;
-
-          return {
-            ...prevData,
-            colleges: prevData.colleges.map((college) =>
-              college.id.toString() === id.toString()
-                ? { ...college, ...updateData }
-                : college
-            ),
-          };
+          if (collegeData.campus) {
+            currentCampus = prevData.campuses.find(
+              (c) => c.acronym === collegeData.campus
+            );
+          }
+          return prevData;
         });
 
-        let response;
-        if (collegeData instanceof FormData) {
-          response = await collegeApi.update(id, collegeData);
-        } else {
-          response = await axios.put(
-            `${import.meta.env.VITE_API_BASE_URL}/colleges/${id}`,
-            collegeData
-          );
-        }
+        // Optimistic update
+        updateDataOptimistically((prevData) => ({
+          ...prevData,
+          colleges: prevData.colleges.map((college) =>
+            college.id.toString() === id.toString()
+              ? {
+                  ...college,
+                  name: collegeData.name || college.name,
+                  acronym: collegeData.shortName || college.acronym,
+                  campus_id: currentCampus?.id || college.campus_id,
+                  logo_url: collegeData.logo_url || college.logo_url,
+                  // Update campus info if changed
+                  campus: currentCampus || college.campus,
+                }
+              : college
+          ),
+        }));
+
+        const response = await collegeApi.update(id, {
+          name: collegeData.name,
+          acronym: collegeData.shortName,
+          campus_id: currentCampus?.id,
+          logo_url: collegeData.logo_url,
+        });
 
         const updatedCollege = response.data.data || response.data;
 
@@ -158,22 +158,8 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
             college.id.toString() === id.toString()
               ? {
                   ...updatedCollege,
-                  undergraduate_programs:
-                    updatedCollege.undergraduate_programs ||
-                    college.undergraduate_programs ||
-                    0,
-                  graduate_programs:
-                    updatedCollege.graduate_programs ||
-                    college.graduate_programs ||
-                    0,
-                  programs:
-                    (updatedCollege.undergraduate_programs ||
-                      college.undergraduate_programs ||
-                      0) +
-                    (updatedCollege.graduate_programs ||
-                      college.graduate_programs ||
-                      0),
-                  files: updatedCollege.files || college.files || 0,
+                  campus:
+                    updatedCollege.campus || currentCampus || college.campus,
                 }
               : college
           ),
@@ -182,19 +168,6 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
         return { success: true, data: updatedCollege };
       } catch (err) {
         console.error("Error updating college:", err);
-
-        // Revert optimistic update
-        if (originalCollege) {
-          updateDataOptimistically((prevData) => ({
-            ...prevData,
-            colleges: prevData.colleges.map((college) =>
-              college.id.toString() === id.toString()
-                ? originalCollege
-                : college
-            ),
-          }));
-        }
-
         const message =
           err.response?.data?.message || "Failed to update college";
         setError(message);
@@ -205,10 +178,11 @@ export const useCollegeManagement = (updateDataOptimistically, setError) => {
   );
 
   const deleteCollege = useCallback(
-    async (id) => {
+    async (id, campusAcronym) => {
+      let deletedCollege;
+
       try {
         setError(null);
-        let deletedCollege;
 
         // Optimistic update
         updateDataOptimistically((prevData) => {

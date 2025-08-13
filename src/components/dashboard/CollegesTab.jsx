@@ -16,15 +16,27 @@ import { useCollegesData } from "@/hooks/useCollegesData";
 import { useCollegesActions } from "@/hooks/useCollegesActions";
 
 const CollegesTab = ({
-  colleges: collegesData,
+  colleges: rawColleges, // Use raw colleges array directly
   campuses,
   onAddCollege,
   onUpdateCollege,
   onDeleteCollege,
   loading: parentLoading,
 }) => {
-  // Custom hooks for data and actions with error boundaries
-  const { colleges, stats } = useCollegesData(collegesData);
+  // Calculate stats directly from raw data
+  const stats = {
+    total: rawColleges?.length || 0,
+    csuMain:
+      rawColleges?.filter((college) => {
+        const campus = campuses?.find((c) => c.id === college.campus_id);
+        return campus?.acronym === "CSU-MAIN";
+      }).length || 0,
+    csuCC:
+      rawColleges?.filter((college) => {
+        const campus = campuses?.find((c) => c.id === college.campus_id);
+        return campus?.acronym === "CSU-CC";
+      }).length || 0,
+  };
 
   const {
     // State
@@ -39,7 +51,7 @@ const CollegesTab = ({
     showDeleteModal,
     selectedCollege,
     isSubmitting,
-    filteredColleges, // This should now be properly defined
+    filteredColleges,
     // Actions
     setViewMode,
     setSearchTerm,
@@ -56,7 +68,7 @@ const CollegesTab = ({
     handleDeleteClick,
     handleViewDetails,
   } = useCollegesActions({
-    colleges,
+    colleges: rawColleges, // Pass raw colleges directly
     campuses,
     onAddCollege,
     onUpdateCollege,
@@ -66,7 +78,7 @@ const CollegesTab = ({
   // Safety check for filteredColleges
   const safeFilteredColleges = filteredColleges || [];
 
-  if (parentLoading && colleges.length === 0) {
+  if (parentLoading && (!rawColleges || rawColleges.length === 0)) {
     return <DashboardLoading type="colleges" />;
   }
 

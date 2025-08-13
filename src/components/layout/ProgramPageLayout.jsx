@@ -14,7 +14,6 @@ import FileViewerModal from "@/components/modals/FileViewerModal";
 import { ArrowLeft } from "lucide-react";
 
 const ProgramPageTemplate = ({
-  title,
   description,
   programs,
   themeColor,
@@ -23,14 +22,14 @@ const ProgramPageTemplate = ({
   collegeName,
 }) => {
   const navigate = useNavigate();
-  const [programsState, setProgramsState] = useState(programs);
+  const [programsState] = useState(programs);
   const [showCurriculumUpload, setShowCurriculumUpload] = useState(false);
   const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [showCurriculumViewer, setShowCurriculumViewer] = useState(false);
   const [showSyllabusViewer, setShowSyllabusViewer] = useState(false);
-  const [fileToUpload, setFileToUpload] = useState(null);
+  const [setFileToUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [showProgramDetails, setShowProgramDetails] = useState(false);
 
