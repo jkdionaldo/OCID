@@ -2,21 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-<<<<<<< HEAD
 import ProfileSettings from "@/pages/ProfileSettings";
 import Procedurals from "@/pages/Procedurals";
 import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
 
-=======
-<<<<<<< HEAD
-import ProfileSettings from "@/pages/ProfileSettings";
-import Procedurals from "@/pages/Procedurals";
-=======
-import NotFound from "@/pages/NotFound";
-
->>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
 // Import route collections
 // ccGraduateRoutes,
 
@@ -47,10 +37,6 @@ const Router = () => {
       <Route path="/" element={<Home />} />
 
       {/* Protected Dashboard Route */}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
       <Route
         path="/dashboard"
         element={
@@ -68,15 +54,8 @@ const Router = () => {
           /* </ProtectedRoute> */
         }
       />
-<<<<<<< HEAD
-      {/* About Page */}
-      <Route path="/about" element={<About />} />
-=======
 
-=======
       <Route path="/dashboard" element={<Dashboard />} />
->>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
