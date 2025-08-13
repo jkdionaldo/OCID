@@ -1,10 +1,6 @@
 import React from "react";
 import Card from "../components/ui/HomeCard";
 // import Chatbot from "../components/chatbot/Chatbox";
-<<<<<<< HEAD
-import BackToTop from "../components/ui/BackToTop";
-=======
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
 
 const Home = () => {
   return (

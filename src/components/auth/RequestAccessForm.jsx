@@ -1,28 +1,16 @@
 const RequestAccessForm = ({ onBack }) => (
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  <div className="w-full max-w-md mx-auto py-10">
-    <h2 className="text-2xl font-bold mb-4 text-center">Want to Register?</h2>
-    <p className="font-poppins text-center font-medium">
-=======
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
   <div className="w-full max-w-xs mx-auto py-10">
     <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
       Want to Register?
     </h2>
     <p className="font-poppins text-center font-medium text-gray-600">
-<<<<<<< HEAD
-=======
->>>>>>> fe89cc14470d9421cfab4454c3f199f457f4a877
->>>>>>> 6ab14ffdc42b60b15e60a50290a75dced6673e75
       To register an account, please contact us at{" "}
       <a className="text-[#2356f6]">ocid@carsu.edu.ph</a> or visit the{" "}
       <a className="text-[#2356f6]">
         Office of Curriculum and Instruction Development (OCID)
       </a>{" "}
       Located at Caraga State University Library 2nd Floor Right Wing and Look
-      for <b> Ms. Angelica C. Plantado</b>
+      for <b> Ms. Angelica F. Plantado</b>
     </p>
     {/* Fields will go here */}
     <button

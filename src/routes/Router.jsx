@@ -2,9 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import ProfileSettings from "@/pages/ProfileSettings";
-import Procedurals from "@/pages/Procedurals";
-import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
 
 // Import route collections
@@ -37,31 +34,11 @@ const Router = () => {
       <Route path="/" element={<Home />} />
 
       {/* Protected Dashboard Route */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/* Profile Settings Route */}
-      <Route
-        path="/profile-settings"
-        element={
-          // <ProtectedRoute>
-          <ProfileSettings />
-          /* </ProtectedRoute> */
-        }
-      />
-
       <Route path="/dashboard" element={<Dashboard />} />
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
 
-      {/* Procedurals Page */}
-      <Route path="/procedurals" element={<Procedurals />} />
       {/*csu-main */}
       <Route
         path="/colleges_graduate_main"
