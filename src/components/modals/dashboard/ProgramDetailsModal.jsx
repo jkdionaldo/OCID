@@ -299,7 +299,7 @@ const ProgramDetailsModal = ({
                       )
                     }
                     size="sm"
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Download
@@ -311,7 +311,7 @@ const ProgramDetailsModal = ({
                     }
                     size="sm"
                     variant="outline"
-                    className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50"
+                    className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
                   >
                     <Edit3 className="w-4 h-4 mr-2" />
                     Update
@@ -321,7 +321,7 @@ const ProgramDetailsModal = ({
                     onClick={() => handleFileDelete(fileType)}
                     size="sm"
                     variant="outline"
-                    className="border-red-200 text-red-600 hover:bg-red-50"
+                    className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -387,7 +387,7 @@ const ProgramDetailsModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[1000px] max-h-[90vh] flex flex-col p-0 gap-0">
+      <DialogContent className="sm:max-w-[850px] max-h-[90vh] flex flex-col p-0 gap-0">
         {/* Fixed Header */}
         <div
           className={`flex-shrink-0 bg-gradient-to-r ${currentTheme.headerGradient} px-6 py-4 rounded-t-lg`}

@@ -1,12 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
-import { curriculumApi, syllabusApi } from "@/services/api/dashboardApi";
-import { toast } from "sonner";
+import { useState, useCallback, useEffect } from "react";
+import { curriculumApi, syllabusApi } from "../services/api/dashboardApi";
 
 export const useProgramFiles = (program) => {
   const [curriculum, setCurriculum] = useState(null);
   const [syllabus, setSyllabus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Helper function to normalize program type for comparison
+  const normalizeProgramType = useCallback((type) => {
+    if (!type) return null;
+    // Convert "undergraduate" to "undergrad" and "graduate" stays "graduate"
+    return type === "undergraduate" ? "undergrad" : type;
+  }, []);
 
   const fetchProgramFiles = useCallback(async () => {
     // Early return if no program - don't fetch anything
@@ -18,35 +24,96 @@ export const useProgramFiles = (program) => {
       return;
     }
 
+    console.log("Fetching files for program:", program);
+
     setLoading(true);
     setError(null);
 
-    try {
-      // Fetch curriculum
-      const curriculumResponse = await curriculumApi.getAll();
-      const programCurriculum = curriculumResponse.data.data?.find(
-        (curr) =>
-          curr.program_id === program.id &&
-          curr.program_type === (program.program_type || program.type)
-      );
-      setCurriculum(programCurriculum || null);
+    // Normalize the program type for database comparison
+    const programTypeForDB = normalizeProgramType(
+      program.program_type || program.type
+    );
 
-      // Fetch syllabus
-      const syllabusResponse = await syllabusApi.getAll();
-      const programSyllabus = syllabusResponse.data.data?.find(
-        (syll) =>
-          syll.program_id === program.id &&
-          syll.program_type === (program.program_type || program.type)
-      );
-      setSyllabus(programSyllabus || null);
+    console.log("Program type for DB comparison:", programTypeForDB);
+
+    try {
+      // Fetch curriculum with better error handling
+      try {
+        const curriculumResponse = await curriculumApi.getAll();
+        console.log("Curriculum API response:", curriculumResponse);
+
+        const curriculumData =
+          curriculumResponse.data?.data || curriculumResponse.data || [];
+        console.log("Curriculum data:", curriculumData);
+
+        const programCurriculum = curriculumData.find((curr) => {
+          const matches =
+            curr.program_id === program.id &&
+            curr.program_type === programTypeForDB;
+          console.log(
+            `Checking curriculum ${curr.id}: program_id=${
+              curr.program_id
+            } (${typeof curr.program_id}) vs ${
+              program.id
+            } (${typeof program.id}), program_type=${
+              curr.program_type
+            } vs ${programTypeForDB}, matches=${matches}`
+          );
+          return matches;
+        });
+
+        console.log("Found curriculum for program:", programCurriculum);
+        setCurriculum(programCurriculum || null);
+      } catch (currError) {
+        console.error("Error fetching curriculum:", currError);
+        const errorMessage = `Failed to load curriculum: ${
+          currError.response?.data?.message || currError.message
+        }`;
+        setError(errorMessage);
+      }
+
+      // Fetch syllabus with better error handling
+      try {
+        const syllabusResponse = await syllabusApi.getAll();
+        console.log("Syllabus API response:", syllabusResponse);
+
+        const syllabusData =
+          syllabusResponse.data?.data || syllabusResponse.data || [];
+        console.log("Syllabus data:", syllabusData);
+
+        const programSyllabus = syllabusData.find((syll) => {
+          const matches =
+            syll.program_id === program.id &&
+            syll.program_type === programTypeForDB;
+          console.log(
+            `Checking syllabus ${syll.id}: program_id=${
+              syll.program_id
+            } (${typeof syll.program_id}) vs ${
+              program.id
+            } (${typeof program.id}), program_type=${
+              syll.program_type
+            } vs ${programTypeForDB}, matches=${matches}`
+          );
+          return matches;
+        });
+
+        console.log("Found syllabus for program:", programSyllabus);
+        setSyllabus(programSyllabus || null);
+      } catch (syllError) {
+        console.error("Error fetching syllabus:", syllError);
+        const errorMessage = `Failed to load syllabus: ${
+          syllError.response?.data?.message || syllError.message
+        }`;
+        setError(errorMessage);
+      }
     } catch (err) {
-      console.error("Error fetching program files:", err);
-      setError("Failed to load program files");
-      toast.error("Failed to load program files");
+      console.error("General error fetching program files:", err);
+      const errorMessage = "Failed to load program files";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  }, [program]);
+  }, [program, normalizeProgramType]);
 
   const uploadFile = useCallback(
     async (file, type) => {
@@ -56,29 +123,42 @@ export const useProgramFiles = (program) => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("program_id", program.id);
-        formData.append("program_type", program.program_type || program.type);
+        // Use normalized program type for database
+        formData.append(
+          "program_type",
+          normalizeProgramType(program.program_type || program.type)
+        );
+
+        console.log("Uploading file:", {
+          type,
+          programId: program.id,
+          programType: normalizeProgramType(
+            program.program_type || program.type
+          ),
+        });
 
         let response;
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
+
         if (type === "curriculum") {
           response = await curriculumApi.create(formData);
-          setCurriculum(response.data.data);
-          toast.success("Curriculum uploaded successfully");
         } else if (type === "syllabus") {
           response = await syllabusApi.create(formData);
-          setSyllabus(response.data.data);
-          toast.success("Syllabus uploaded successfully");
         }
 
-        return { success: true, data: response.data.data };
+        // Remove toast calls from here - let the component handle them
+        return { success: true, data: response.data.data || response.data };
       } catch (error) {
         console.error(`Error uploading ${type}:`, error);
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
         const message =
           error.response?.data?.message || `Failed to upload ${type}`;
-        toast.error(message);
+
+        // Remove toast calls from here - let the component handle them
         return { success: false, error: message };
       }
     },
-    [program]
+    [program, normalizeProgramType]
   );
 
   const updateFile = useCallback(
@@ -91,22 +171,23 @@ export const useProgramFiles = (program) => {
         formData.append("file", file);
 
         let response;
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
+
         if (type === "curriculum") {
           response = await curriculumApi.update(currentFile.id, formData);
-          setCurriculum(response.data.data);
-          toast.success("Curriculum updated successfully");
         } else if (type === "syllabus") {
           response = await syllabusApi.update(currentFile.id, formData);
-          setSyllabus(response.data.data);
-          toast.success("Syllabus updated successfully");
         }
 
-        return { success: true, data: response.data.data };
+        // Remove toast calls from here - let the component handle them
+        return { success: true, data: response.data.data || response.data };
       } catch (error) {
         console.error(`Error updating ${type}:`, error);
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
         const message =
           error.response?.data?.message || `Failed to update ${type}`;
-        toast.error(message);
+
+        // Remove toast calls from here - let the component handle them
         return { success: false, error: message };
       }
     },
@@ -119,22 +200,23 @@ export const useProgramFiles = (program) => {
       if (!file || !program) return { success: false };
 
       try {
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
+
         if (type === "curriculum") {
           await curriculumApi.delete(file.id);
-          setCurriculum(null);
-          toast.success("Curriculum deleted successfully");
         } else if (type === "syllabus") {
           await syllabusApi.delete(file.id);
-          setSyllabus(null);
-          toast.success("Syllabus deleted successfully");
         }
 
+        // Remove toast calls from here - let the component handle them
         return { success: true };
       } catch (error) {
         console.error(`Error deleting ${type}:`, error);
+        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
         const message =
           error.response?.data?.message || `Failed to delete ${type}`;
-        toast.error(message);
+
+        // Remove toast calls from here - let the component handle them
         return { success: false, error: message };
       }
     },
