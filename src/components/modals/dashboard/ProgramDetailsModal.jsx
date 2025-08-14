@@ -26,7 +26,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useProgramFiles } from "@/hooks/useProgramFiles";
-import { toast } from "sonner";
+import { showLoadingToast, updateToast } from "@/utils/toast";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 const ProgramDetailsModal = ({
   isOpen,
@@ -46,6 +47,11 @@ const ProgramDetailsModal = ({
     deleteFile,
     refetch,
   } = useProgramFiles(program || null);
+
+  const [deleteConfirmation, setDeleteConfirmation] = useState({
+    isOpen: false,
+    fileType: null,
+  });
 
   const formatDate = useCallback((dateString) => {
     if (!dateString) return "N/A";
@@ -186,45 +192,82 @@ const ProgramDetailsModal = ({
 
   const handleFileUpdate = useCallback(
     async (fileType, file) => {
-      if (!program) return { success: false };
+      if (!program || !file) return;
 
-      setFileLoading(fileType, "updating", true);
+      const toastId = showLoadingToast(`Updating ${fileType}...`);
+
       try {
         const result = await updateFile(file, fileType);
+
         if (result.success) {
-          toast.success(`${fileType} updated successfully`);
+          updateToast(
+            toastId,
+            `${
+              fileType.charAt(0).toUpperCase() + fileType.slice(1)
+            } updated successfully!`,
+            "success"
+          );
           await refetch();
+        } else {
+          updateToast(
+            toastId,
+            result.error || `Failed to update ${fileType}`,
+            "error"
+          );
         }
       } catch (error) {
         console.error(`Error updating ${fileType}:`, error);
-        toast.error(`Failed to update ${fileType}`);
-      } finally {
-        setFileLoading(fileType, "updating", false);
+        updateToast(toastId, `Failed to update ${fileType}`, "error");
       }
     },
-    [program, updateFile, refetch, setFileLoading]
+    [program, updateFile, refetch]
   );
 
   const handleFileDelete = useCallback(
     async (fileType) => {
-      if (!program) return { success: false };
+      if (!program) return;
 
-      setFileLoading(fileType, "deleting", true);
+      // Close delete confirmation modal
+      setDeleteConfirmation({ isOpen: false, fileType: null });
+
+      const toastId = showLoadingToast(`Deleting ${fileType}...`);
+
       try {
         const result = await deleteFile(fileType);
+
         if (result.success) {
-          toast.success(`${fileType} deleted successfully`);
+          updateToast(
+            toastId,
+            `${
+              fileType.charAt(0).toUpperCase() + fileType.slice(1)
+            } deleted successfully!`,
+            "success"
+          );
           await refetch();
+        } else {
+          updateToast(
+            toastId,
+            result.error || `Failed to delete ${fileType}`,
+            "error"
+          );
         }
       } catch (error) {
         console.error(`Error deleting ${fileType}:`, error);
-        toast.error(`Failed to delete ${fileType}`);
-      } finally {
-        setFileLoading(fileType, "deleting", false);
+        updateToast(toastId, `Failed to delete ${fileType}`, "error");
       }
     },
-    [program, deleteFile, refetch, setFileLoading]
+    [program, deleteFile, refetch]
   );
+
+  // New function to open delete confirmation modal
+  const handleDeleteConfirmation = useCallback((fileType) => {
+    setDeleteConfirmation({ isOpen: true, fileType });
+  }, []);
+
+  // New function to close delete confirmation modal
+  const handleCancelDelete = useCallback(() => {
+    setDeleteConfirmation({ isOpen: false, fileType: null });
+  }, []);
 
   const handleFileDownload = useCallback(
     (fileUrl, fileName, fileType) => {
@@ -400,7 +443,7 @@ const ProgramDetailsModal = ({
                   </Button>
 
                   <Button
-                    onClick={() => handleFileDelete(fileType)}
+                    onClick={() => handleDeleteConfirmation(fileType)}
                     size="sm"
                     variant="outline"
                     className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
@@ -471,7 +514,7 @@ const ProgramDetailsModal = ({
       formatFileSize,
       formatDate,
       handleFileDownload,
-      handleFileDelete,
+      handleDeleteConfirmation,
       handleFileUpdate,
       handleFileUpload,
       fileOperationLoading,
@@ -484,275 +527,289 @@ const ProgramDetailsModal = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[850px] max-h-[90vh] flex flex-col p-0 gap-0">
-        {/* Fixed Header */}
-        <div
-          className={`flex-shrink-0 bg-gradient-to-r ${currentTheme.headerGradient} px-6 py-4 rounded-t-lg`}
-        >
-          <DialogHeader className="space-y-0">
-            <DialogTitle className="flex items-center gap-3 text-white text-lg font-semibold">
-              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                <Icon className="h-4 w-4" />
-              </div>
-              Program Details
-            </DialogTitle>
-            <DialogDescription
-              className={`${
-                isGraduate ? "text-yellow-50" : "text-blue-50"
-              } text-sm pt-1`}
-            >
-              Complete information about this{" "}
-              {isGraduate ? "graduate" : "undergraduate"} program including
-              college details, files, and metadata.
-            </DialogDescription>
-          </DialogHeader>
-        </div>
-
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 bg-gradient-to-br from-slate-50 to-gray-100">
-          {/* Program Header Info */}
-          <div className="space-y-4">
-            {/* Title */}
-            <div className="bg-white rounded-2xl p-5 shadow-xl border border-white/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gray-900 leading-tight bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                {program.program_name}
-              </h3>
-              {program.acronym && (
-                <p
-                  className={`text-sm font-medium mt-2 px-3 py-1 rounded-full inline-block ${
-                    isGraduate
-                      ? "text-yellow-700 bg-yellow-50 border border-yellow-200"
-                      : "text-blue-700 bg-blue-50 border border-blue-200"
-                  }`}
-                >
-                  {program.acronym}
-                </p>
-              )}
-            </div>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[850px] max-h-[90vh] flex flex-col p-0 gap-0">
+          {/* Fixed Header */}
+          <div
+            className={`flex-shrink-0 bg-gradient-to-r ${currentTheme.headerGradient} px-6 py-4 rounded-t-lg`}
+          >
+            <DialogHeader className="space-y-0">
+              <DialogTitle className="flex items-center gap-3 text-white text-lg font-semibold">
+                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <Icon className="h-4 w-4" />
+                </div>
+                Program Details
+              </DialogTitle>
+              <DialogDescription
+                className={`${
+                  isGraduate ? "text-yellow-50" : "text-blue-50"
+                } text-sm pt-1`}
+              >
+                Complete information about this{" "}
+                {isGraduate ? "graduate" : "undergraduate"} program including
+                college details, files, and metadata.
+              </DialogDescription>
+            </DialogHeader>
           </div>
 
-          {/* Program Details Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {/* Basic Information */}
-            <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-              <CardContent className="p-6 space-y-5">
-                <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className={`p-2.5 bg-gradient-to-br ${currentTheme.gradient} rounded-xl shadow-lg`}
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 bg-gradient-to-br from-slate-50 to-gray-100">
+            {/* Program Header Info */}
+            <div className="space-y-4">
+              {/* Title */}
+              <div className="bg-white rounded-2xl p-5 shadow-xl border border-white/20 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-gray-900 leading-tight bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  {program.program_name}
+                </h3>
+                {program.acronym && (
+                  <p
+                    className={`text-sm font-medium mt-2 px-3 py-1 rounded-full inline-block ${
+                      isGraduate
+                        ? "text-yellow-700 bg-yellow-50 border border-yellow-200"
+                        : "text-blue-700 bg-blue-50 border border-blue-200"
+                    }`}
                   >
-                    <Hash className="w-4 h-4 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    Program Information
-                  </h3>
-                </div>
+                    {program.acronym}
+                  </p>
+                )}
+              </div>
+            </div>
 
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      Program Type
-                    </label>
-                    <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                      <div className="flex items-center justify-center gap-2">
-                        <Icon
-                          className={`w-4 h-4 ${
-                            isGraduate ? "text-yellow-600" : "text-blue-600"
-                          }`}
-                        />
-                        <p className="text-gray-900 text-sm font-medium">
-                          {isGraduate
-                            ? "Graduate Program"
-                            : "Undergraduate Program"}
-                        </p>
-                      </div>
+            {/* Program Details Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {/* Basic Information */}
+              <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
+                <CardContent className="p-6 space-y-5">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                      className={`p-2.5 bg-gradient-to-br ${currentTheme.gradient} rounded-xl shadow-lg`}
+                    >
+                      <Hash className="w-4 h-4 text-white" />
                     </div>
+                    <h3 className="text-lg font-bold text-gray-900">
+                      Program Information
+                    </h3>
                   </div>
 
-                  {program.acronym && (
+                  <div className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Program Acronym
+                        Program Type
                       </label>
                       <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                        <p className="text-gray-900 font-mono text-sm">
-                          {program.acronym}
+                        <div className="flex items-center justify-center gap-2">
+                          <Icon
+                            className={`w-4 h-4 ${
+                              isGraduate ? "text-yellow-600" : "text-blue-600"
+                            }`}
+                          />
+                          <p className="text-gray-900 text-sm font-medium">
+                            {isGraduate
+                              ? "Graduate Program"
+                              : "Undergraduate Program"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {program.acronym && (
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          Program Acronym
+                        </label>
+                        <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
+                          <p className="text-gray-900 font-mono text-sm">
+                            {program.acronym}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* College Information */}
+              <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
+                <CardContent className="p-6 space-y-5">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                      className={`p-2.5 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg`}
+                    >
+                      <Building className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900">
+                      College Information
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        College Name
+                      </label>
+                      <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
+                        <p className="text-gray-900 text-sm leading-relaxed">
+                          {collegeInfo.name}
                         </p>
                       </div>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* College Information */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          Acronym
+                        </label>
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
+                          <p className="text-green-900 text-sm font-medium">
+                            {collegeInfo.acronym}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          Campus
+                        </label>
+                        <div
+                          className={`px-3 py-2.5 rounded-xl border shadow-sm ${
+                            collegeInfo.campus === "CSU-MAIN"
+                              ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
+                              : "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
+                          }`}
+                        >
+                          <p
+                            className={`text-sm font-medium ${
+                              collegeInfo.campus === "CSU-MAIN"
+                                ? "text-emerald-900"
+                                : "text-blue-900"
+                            }`}
+                          >
+                            {collegeInfo.campus}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Show loading/error states for files */}
+            {filesLoading && (
+              <div className="text-center py-4">
+                <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                  <span className="text-blue-700 text-sm">
+                    Loading files...
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Program Files Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <FileCard
+                fileType="curriculum"
+                fileData={curriculum}
+                displayName="Curriculum"
+              />
+              <FileCard
+                fileType="syllabus"
+                fileData={syllabus}
+                displayName="Syllabus"
+              />
+            </div>
+
+            {filesError && (
+              <div className="text-center py-4">
+                <div className="inline-flex items-center px-4 py-2 bg-red-50 rounded-lg border border-red-200">
+                  <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
+                  <span className="text-red-700 text-sm">{filesError}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Metadata - Full Width */}
             <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
               <CardContent className="p-6 space-y-5">
                 <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className={`p-2.5 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg`}
-                  >
-                    <Building className="w-4 h-4 text-white" />
+                  <div className="p-2.5 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl shadow-lg">
+                    <Calendar className="w-4 h-4 text-white" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-900">
-                    College Information
+                    Timeline & Metadata
                   </h3>
                 </div>
 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      College Name
+                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
+                      <Clock className="w-3 h-3" />
+                      Created Date
                     </label>
-                    <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                      <p className="text-gray-900 text-sm leading-relaxed">
-                        {collegeInfo.name}
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
+                      <p className="text-green-900 text-sm font-medium">
+                        {formatDate(program.created_at)}
                       </p>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Acronym
-                      </label>
-                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
-                        <p className="text-green-900 text-sm font-medium">
-                          {collegeInfo.acronym}
-                        </p>
+                  {program.updated_at &&
+                    program.updated_at !== program.created_at && (
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
+                          <Edit3 className="w-3 h-3" />
+                          Last Updated
+                        </label>
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2.5 rounded-xl border border-blue-200 shadow-sm">
+                          <p className="text-blue-900 text-sm font-medium">
+                            {formatDate(program.updated_at)}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Campus
-                      </label>
-                      <div
-                        className={`px-3 py-2.5 rounded-xl border shadow-sm ${
-                          collegeInfo.campus === "CSU-MAIN"
-                            ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
-                            : "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
-                        }`}
-                      >
-                        <p
-                          className={`text-sm font-medium ${
-                            collegeInfo.campus === "CSU-MAIN"
-                              ? "text-emerald-900"
-                              : "text-blue-900"
-                          }`}
-                        >
-                          {collegeInfo.campus}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    )}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Show loading/error states for files */}
-          {filesLoading && (
-            <div className="text-center py-4">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                <span className="text-blue-700 text-sm">Loading files...</span>
-              </div>
-            </div>
-          )}
-
-          {/* Program Files Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <FileCard
-              fileType="curriculum"
-              fileData={curriculum}
-              displayName="Curriculum"
-            />
-            <FileCard
-              fileType="syllabus"
-              fileData={syllabus}
-              displayName="Syllabus"
-            />
-          </div>
-
-          {filesError && (
-            <div className="text-center py-4">
-              <div className="inline-flex items-center px-4 py-2 bg-red-50 rounded-lg border border-red-200">
-                <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
-                <span className="text-red-700 text-sm">{filesError}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Metadata - Full Width */}
-          <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-            <CardContent className="p-6 space-y-5">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl shadow-lg">
-                  <Calendar className="w-4 h-4 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900">
-                  Timeline & Metadata
-                </h3>
+          {/* Fixed Footer */}
+          <div className="flex-shrink-0 bg-gray-50 border-t border-gray-200 px-6 py-4 rounded-b-lg">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-3">
+                <Button
+                  onClick={handleViewCollege}
+                  className={`bg-gradient-to-r ${currentTheme.gradient} hover:shadow-md text-white shadow-sm transition-all duration-200 text-sm`}
+                >
+                  <Building className="h-4 w-4 mr-2" />
+                  View College Details
+                </Button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
-                    <Clock className="w-3 h-3" />
-                    Created Date
-                  </label>
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
-                    <p className="text-green-900 text-sm font-medium">
-                      {formatDate(program.created_at)}
-                    </p>
-                  </div>
-                </div>
-
-                {program.updated_at &&
-                  program.updated_at !== program.created_at && (
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
-                        <Edit3 className="w-3 h-3" />
-                        Last Updated
-                      </label>
-                      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2.5 rounded-xl border border-blue-200 shadow-sm">
-                        <p className="text-blue-900 text-sm font-medium">
-                          {formatDate(program.updated_at)}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Fixed Footer */}
-        <div className="flex-shrink-0 bg-gray-50 border-t border-gray-200 px-6 py-4 rounded-b-lg">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
               <Button
-                onClick={handleViewCollege}
-                className={`bg-gradient-to-r ${currentTheme.gradient} hover:shadow-md text-white shadow-sm transition-all duration-200 text-sm`}
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                className="border-gray-300 hover:bg-gray-100 text-sm"
               >
-                <Building className="h-4 w-4 mr-2" />
-                View College Details
+                Close
               </Button>
             </div>
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              className="border-gray-300 hover:bg-gray-100 text-sm"
-            >
-              Close
-            </Button>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmation.isOpen}
+        onClose={handleCancelDelete}
+        onConfirm={() => handleFileDelete(deleteConfirmation.fileType)}
+        isDeleting={fileOperationLoading[deleteConfirmation.fileType]?.deleting}
+        itemType={`${deleteConfirmation.fileType} file`}
+        warningMessage={`This will permanently remove the ${deleteConfirmation.fileType} file from the system. This action cannot be undone.`}
+        canDelete={true}
+      />
+    </>
   );
 };
 

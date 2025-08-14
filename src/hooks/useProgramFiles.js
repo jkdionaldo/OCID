@@ -170,6 +170,15 @@ export const useProgramFiles = (program) => {
         const formData = new FormData();
         formData.append("file", file);
 
+        console.log("Updating file:", {
+          type,
+          fileId: currentFile.id,
+          programId: program.id,
+          programType: normalizeProgramType(
+            program.program_type || program.type
+          ),
+        });
+
         let response;
         const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
@@ -179,19 +188,26 @@ export const useProgramFiles = (program) => {
           response = await syllabusApi.update(currentFile.id, formData);
         }
 
-        // Remove toast calls from here - let the component handle them
         return { success: true, data: response.data.data || response.data };
       } catch (error) {
         console.error(`Error updating ${type}:`, error);
         const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
-        const message =
-          error.response?.data?.message || `Failed to update ${type}`;
 
-        // Remove toast calls from here - let the component handle them
+        // Better error message extraction
+        let message = `Failed to update ${type}`;
+        if (error.response?.data?.message) {
+          message = error.response.data.message;
+        } else if (error.response?.data?.errors) {
+          const errors = Object.values(error.response.data.errors).flat();
+          message = errors.join(", ");
+        } else if (error.message) {
+          message = error.message;
+        }
+
         return { success: false, error: message };
       }
     },
-    [curriculum, syllabus, program]
+    [curriculum, syllabus, program, normalizeProgramType]
   );
 
   const deleteFile = useCallback(
@@ -200,6 +216,12 @@ export const useProgramFiles = (program) => {
       if (!file || !program) return { success: false };
 
       try {
+        console.log("Deleting file:", {
+          type,
+          fileId: file.id,
+          programId: program.id,
+        });
+
         const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
         if (type === "curriculum") {
@@ -208,15 +230,22 @@ export const useProgramFiles = (program) => {
           await syllabusApi.delete(file.id);
         }
 
-        // Remove toast calls from here - let the component handle them
         return { success: true };
       } catch (error) {
         console.error(`Error deleting ${type}:`, error);
         const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
-        const message =
-          error.response?.data?.message || `Failed to delete ${type}`;
 
-        // Remove toast calls from here - let the component handle them
+        // Better error message extraction
+        let message = `Failed to delete ${type}`;
+        if (error.response?.data?.message) {
+          message = error.response.data.message;
+        } else if (error.response?.data?.errors) {
+          const errors = Object.values(error.response.data.errors).flat();
+          message = errors.join(", ");
+        } else if (error.message) {
+          message = error.message;
+        }
+
         return { success: false, error: message };
       }
     },
