@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   BookOpen,
   GraduationCap,
@@ -12,6 +12,7 @@ import {
   Download,
   Trash2,
   Plus,
+  Loader2,
 } from "lucide-react";
 import {
   Dialog,
@@ -64,6 +65,31 @@ const ProgramDetailsModal = ({
     const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  }, []);
+
+  const [fileOperationLoading, setFileOperationLoading] = useState({
+    curriculum: {
+      uploading: false,
+      updating: false,
+      deleting: false,
+      downloading: false,
+    },
+    syllabus: {
+      uploading: false,
+      updating: false,
+      deleting: false,
+      downloading: false,
+    },
+  });
+
+  const setFileLoading = useCallback((fileType, operation, loading) => {
+    setFileOperationLoading((prev) => ({
+      ...prev,
+      [fileType]: {
+        ...prev[fileType],
+        [operation]: loading,
+      },
+    }));
   }, []);
 
   // Memoize college info to prevent unnecessary recalculations
@@ -141,6 +167,7 @@ const ProgramDetailsModal = ({
     async (fileType, file) => {
       if (!program) return { success: false };
 
+      setFileLoading(fileType, "uploading", true);
       try {
         const result = await uploadFile(file, fileType);
         if (result.success) {
@@ -150,15 +177,18 @@ const ProgramDetailsModal = ({
       } catch (error) {
         console.error(`Error uploading ${fileType}:`, error);
         toast.error(`Failed to upload ${fileType}`);
+      } finally {
+        setFileLoading(fileType, "uploading", false);
       }
     },
-    [program, uploadFile, refetch]
+    [program, uploadFile, refetch, setFileLoading]
   );
 
   const handleFileUpdate = useCallback(
     async (fileType, file) => {
       if (!program) return { success: false };
 
+      setFileLoading(fileType, "updating", true);
       try {
         const result = await updateFile(file, fileType);
         if (result.success) {
@@ -168,15 +198,18 @@ const ProgramDetailsModal = ({
       } catch (error) {
         console.error(`Error updating ${fileType}:`, error);
         toast.error(`Failed to update ${fileType}`);
+      } finally {
+        setFileLoading(fileType, "updating", false);
       }
     },
-    [program, updateFile, refetch]
+    [program, updateFile, refetch, setFileLoading]
   );
 
   const handleFileDelete = useCallback(
     async (fileType) => {
       if (!program) return { success: false };
 
+      setFileLoading(fileType, "deleting", true);
       try {
         const result = await deleteFile(fileType);
         if (result.success) {
@@ -186,21 +219,32 @@ const ProgramDetailsModal = ({
       } catch (error) {
         console.error(`Error deleting ${fileType}:`, error);
         toast.error(`Failed to delete ${fileType}`);
+      } finally {
+        setFileLoading(fileType, "deleting", false);
       }
     },
-    [program, deleteFile, refetch]
+    [program, deleteFile, refetch, setFileLoading]
   );
 
-  const handleFileDownload = useCallback((fileUrl, fileName) => {
-    if (fileUrl) {
-      const link = document.createElement("a");
-      link.href = fileUrl;
-      link.download = fileName || "download";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }, []);
+  const handleFileDownload = useCallback(
+    (fileUrl, fileName, fileType) => {
+      if (fileUrl) {
+        setFileLoading(fileType, "downloading", true);
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = fileName || "download";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Simulate download completion after a short delay
+        setTimeout(() => {
+          setFileLoading(fileType, "downloading", false);
+        }, 1000);
+      }
+    },
+    [setFileLoading]
+  );
 
   // Move component definitions outside render but inside component
   const FileUploadInput = useCallback(
@@ -225,13 +269,30 @@ const ProgramDetailsModal = ({
   const FileCard = useCallback(
     ({ fileType, fileData, displayName }) => {
       const hasFile = fileData && (fileData.file_url || fileData.file_path);
+      const loading = fileOperationLoading[fileType];
+      const isAnyLoading = Object.values(loading).some(Boolean);
 
       return (
         <Card
           key={`file-card-${fileType}`}
           className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
         >
-          <CardContent className="p-6 space-y-4">
+          <CardContent className="p-6 space-y-4 relative">
+            {/* Loading Overlay */}
+            {isAnyLoading && (
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
+                <div className="flex items-center space-x-3 px-4 py-2 bg-white rounded-lg shadow-lg border">
+                  <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+                  <span className="text-sm font-medium text-gray-700">
+                    {loading.uploading && "Uploading..."}
+                    {loading.updating && "Updating..."}
+                    {loading.deleting && "Deleting..."}
+                    {loading.downloading && "Downloading..."}
+                  </span>
+                </div>
+              </div>
+            )}
+
             <div className="flex items-center gap-3 mb-4">
               <div
                 className={`p-2.5 bg-gradient-to-br ${
@@ -295,14 +356,25 @@ const ProgramDetailsModal = ({
                     onClick={() =>
                       handleFileDownload(
                         fileData.file_url || fileData.file_path,
-                        fileData.file_name || fileData.original_name
+                        fileData.file_name || fileData.original_name,
+                        fileType
                       )
                     }
                     size="sm"
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    disabled={isAnyLoading}
                   >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download
+                    {loading.downloading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Downloading
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4 mr-2" />
+                        Download
+                      </>
+                    )}
                   </Button>
 
                   <Button
@@ -312,9 +384,19 @@ const ProgramDetailsModal = ({
                     size="sm"
                     variant="outline"
                     className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                    disabled={isAnyLoading}
                   >
-                    <Edit3 className="w-4 h-4 mr-2" />
-                    Update
+                    {loading.updating ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Updating
+                      </>
+                    ) : (
+                      <>
+                        <Edit3 className="w-4 h-4 mr-2" />
+                        Update
+                      </>
+                    )}
                   </Button>
 
                   <Button
@@ -322,8 +404,13 @@ const ProgramDetailsModal = ({
                     size="sm"
                     variant="outline"
                     className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    disabled={isAnyLoading}
                   >
-                    <Trash2 className="w-4 h-4" />
+                    {loading.deleting ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
 
@@ -355,9 +442,19 @@ const ProgramDetailsModal = ({
                       ? "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
                       : "from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700"
                   } text-white`}
+                  disabled={loading.uploading}
                 >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Upload {displayName}
+                  {loading.uploading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Uploading {displayName}
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Upload {displayName}
+                    </>
+                  )}
                 </Button>
 
                 <FileUploadInput
@@ -377,6 +474,7 @@ const ProgramDetailsModal = ({
       handleFileDelete,
       handleFileUpdate,
       handleFileUpload,
+      fileOperationLoading,
     ]
   );
 
@@ -553,6 +651,16 @@ const ProgramDetailsModal = ({
             </Card>
           </div>
 
+          {/* Show loading/error states for files */}
+          {filesLoading && (
+            <div className="text-center py-4">
+              <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                <span className="text-blue-700 text-sm">Loading files...</span>
+              </div>
+            </div>
+          )}
+
           {/* Program Files Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <FileCard
@@ -566,16 +674,6 @@ const ProgramDetailsModal = ({
               displayName="Syllabus"
             />
           </div>
-
-          {/* Show loading/error states for files */}
-          {filesLoading && (
-            <div className="text-center py-4">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                <span className="text-blue-700 text-sm">Loading files...</span>
-              </div>
-            </div>
-          )}
 
           {filesError && (
             <div className="text-center py-4">
