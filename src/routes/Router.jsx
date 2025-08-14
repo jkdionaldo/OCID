@@ -18,7 +18,7 @@ import Home from "@/pages/HomePage";
 
 // downloadables page
 import Downloadables from "@/pages/Downloadables";
-
+import Procedurals from "@/pages/Procedurals";
 // CSU main page
 import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
 import Colleges_Undergraduate_Main from "@/pages/CSU-MAIN/UndergradPage";
@@ -32,6 +32,9 @@ const Router = () => {
     <Routes>
       {/* Main routes */}
       <Route path="/" element={<Home />} />
+
+      {/* Procedurals */}
+      <Route path="/procedurals" element={<Procedurals />} />
 
       {/* Protected Dashboard Route */}
       <Route path="/dashboard" element={<Dashboard />} />
