@@ -1,19 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
-import {
-  BookOpen,
-  GraduationCap,
-  Building,
-  Hash,
-  Calendar,
-  Clock,
-  Edit3,
-  AlertCircle,
-  FileText,
-  Download,
-  Trash2,
-  Plus,
-  Loader2,
-} from "lucide-react";
+import React from "react";
+import { Building, AlertCircle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -22,12 +8,91 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useProgramFiles } from "@/hooks/useProgramFiles";
-import { showLoadingToast, updateToast } from "@/utils/toast";
+import { useProgramData } from "@/hooks/useProgramData";
+import { useProgramFileOperations } from "@/hooks/useProgramFileOperations";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import ProgramInfoCard from "@/components/dashboard/programs/ProgramInfoCard";
+import CollegeInfoCard from "@/components/dashboard/programs/CollegeInfoCard";
+import MetadataCard from "@/components/dashboard/programs/MetadataCard";
+import FileCard from "@/components/dashboard/programs/FileCard";
+
+// Modern loading skeleton component for file cards
+const FileCardSkeleton = ({ type }) => {
+  const isGraduate = type === "graduate";
+
+  return (
+    <div
+      className={`group border-0 shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl overflow-hidden animate-pulse border-2 ${
+        isGraduate ? "border-yellow-100" : "border-blue-100"
+      }`}
+    >
+      <div className="p-6 space-y-5">
+        {/* Header with icon and title skeleton */}
+        <div className="flex items-center gap-3 mb-5">
+          <div
+            className={`p-2.5 rounded-xl shadow-lg ${
+              isGraduate ? "bg-yellow-200" : "bg-blue-200"
+            } animate-pulse`}
+          >
+            <div className="w-4 h-4 bg-white/60 rounded"></div>
+          </div>
+          <div className="h-5 bg-gray-200 rounded-lg w-24 animate-pulse"></div>
+        </div>
+
+        {/* File status skeleton */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-100 bg-gray-50/50">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gray-200 rounded-lg animate-pulse"></div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gray-200 rounded w-16 animate-pulse"></div>
+                <div className="h-3 bg-gray-200 rounded w-24 animate-pulse"></div>
+              </div>
+            </div>
+            <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+
+          {/* Action buttons skeleton */}
+          <div className="flex gap-2 pt-2">
+            <div className="flex-1 h-9 bg-gray-200 rounded-lg animate-pulse"></div>
+            <div className="flex-1 h-9 bg-gray-200 rounded-lg animate-pulse"></div>
+          </div>
+        </div>
+
+        {/* Shimmer effect overlay */}
+        <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced loading state component
+const FilesLoadingState = ({ isGraduate }) => {
+  return (
+    <div className="space-y-6">
+      {/* Pulsing dots indicator */}
+      <div className="text-center py-6">
+        <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-md">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+          </div>
+          <span className="text-blue-700 text-sm font-medium ml-2">
+            Loading program files...
+          </span>
+        </div>
+      </div>
+
+      {/* Modern skeleton cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <FileCardSkeleton type={isGraduate ? "graduate" : "undergraduate"} />
+        <FileCardSkeleton type={isGraduate ? "graduate" : "undergraduate"} />
+      </div>
+    </div>
+  );
+};
 
 const ProgramDetailsModal = ({
   isOpen,
@@ -36,7 +101,6 @@ const ProgramDetailsModal = ({
   colleges,
   campuses,
 }) => {
-  // Always call hooks unconditionally - pass null when no program
   const {
     curriculum,
     syllabus,
@@ -48,494 +112,33 @@ const ProgramDetailsModal = ({
     refetch,
   } = useProgramFiles(program || null);
 
-  const [deleteConfirmation, setDeleteConfirmation] = useState({
-    isOpen: false,
-    fileType: null,
-  });
+  const {
+    formatDate,
+    formatFileSize,
+    collegeInfo,
+    isGraduate,
+    Icon,
+    currentTheme,
+    handleViewCollege,
+  } = useProgramData(program, colleges, campuses);
 
-  const formatDate = useCallback((dateString) => {
-    if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }, []);
-
-  const formatFileSize = useCallback((bytes) => {
-    if (!bytes) return "N/A";
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-  }, []);
-
-  const [fileOperationLoading, setFileOperationLoading] = useState({
-    curriculum: {
-      uploading: false,
-      updating: false,
-      deleting: false,
-      downloading: false,
-    },
-    syllabus: {
-      uploading: false,
-      updating: false,
-      deleting: false,
-      downloading: false,
-    },
-  });
-
-  const setFileLoading = useCallback((fileType, operation, loading) => {
-    setFileOperationLoading((prev) => ({
-      ...prev,
-      [fileType]: {
-        ...prev[fileType],
-        [operation]: loading,
-      },
-    }));
-  }, []);
-
-  // Memoize college info to prevent unnecessary recalculations
-  const collegeInfo = useMemo(() => {
-    if (!program) {
-      return {
-        name: "Unknown",
-        acronym: "N/A",
-        campus: "Unknown",
-        campusName: "Unknown Campus",
-      };
-    }
-
-    // First check if college info is embedded in the program
-    if (program.college) {
-      const campus = campuses?.find((c) => c.id === program.college.campus_id);
-      return {
-        name: program.college.name,
-        acronym: program.college.acronym,
-        campus: campus?.acronym || "Unknown",
-        campusName: campus?.name || "Unknown Campus",
-      };
-    }
-
-    // Fallback to looking up in colleges array
-    const college = colleges?.find((c) => c.id === program.college_id);
-    if (!college)
-      return {
-        name: "Unknown",
-        acronym: "N/A",
-        campus: "Unknown",
-        campusName: "Unknown Campus",
-      };
-
-    const campus = campuses?.find((c) => c.id === college.campus_id);
-    return {
-      name: college.name,
-      acronym: college.acronym,
-      campus: campus?.acronym || "Unknown",
-      campusName: campus?.name || "Unknown Campus",
-    };
-  }, [program, colleges, campuses]);
-
-  const isGraduate = useMemo(() => {
-    if (!program) return false;
-    return program.program_type === "graduate" || program.type === "graduate";
-  }, [program]);
-
-  const Icon = isGraduate ? GraduationCap : BookOpen;
-
-  // Memoize theme object
-  const currentTheme = useMemo(() => {
-    const theme = {
-      graduate: {
-        primary: "yellow",
-        gradient: "from-yellow-500 to-amber-600",
-        accent: "yellow",
-        headerGradient: "from-yellow-600 to-yellow-700",
-      },
-      undergraduate: {
-        primary: "blue",
-        gradient: "from-blue-500 to-indigo-600",
-        accent: "blue",
-        headerGradient: "from-blue-600 to-blue-700",
-      },
-    };
-    return theme[isGraduate ? "graduate" : "undergraduate"];
-  }, [isGraduate]);
-
-  const handleViewCollege = useCallback(() => {
-    console.log("View college details:", collegeInfo);
-  }, [collegeInfo]);
-
-  const handleFileUpload = useCallback(
-    async (fileType, file) => {
-      if (!program) return { success: false };
-
-      const toastId = showLoadingToast(`Uploading ${fileType}...`);
-      setFileLoading(fileType, "uploading", true);
-
-      try {
-        const result = await uploadFile(file, fileType);
-        if (result.success) {
-          updateToast(
-            toastId,
-            `${
-              fileType.charAt(0).toUpperCase() + fileType.slice(1)
-            } uploaded successfully!`,
-            "success"
-          );
-          await refetch();
-        } else {
-          updateToast(
-            toastId,
-            result.error || `Failed to upload ${fileType}`,
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(`Error uploading ${fileType}:`, error);
-        updateToast(toastId, `Failed to upload ${fileType}`, "error");
-      } finally {
-        setFileLoading(fileType, "uploading", false);
-      }
-    },
-    [program, uploadFile, refetch, setFileLoading]
+  const {
+    fileOperationLoading,
+    deleteConfirmation,
+    handleFileUpload,
+    handleFileUpdate,
+    handleFileDelete,
+    handleDeleteConfirmation,
+    handleCancelDelete,
+    handleFileDownload,
+  } = useProgramFileOperations(
+    program,
+    uploadFile,
+    updateFile,
+    deleteFile,
+    refetch
   );
 
-  const handleFileUpdate = useCallback(
-    async (fileType, file) => {
-      if (!program || !file) return;
-
-      const toastId = showLoadingToast(`Updating ${fileType}...`);
-
-      try {
-        const result = await updateFile(file, fileType);
-
-        if (result.success) {
-          updateToast(
-            toastId,
-            `${
-              fileType.charAt(0).toUpperCase() + fileType.slice(1)
-            } updated successfully!`,
-            "success"
-          );
-          await refetch();
-        } else {
-          updateToast(
-            toastId,
-            result.error || `Failed to update ${fileType}`,
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(`Error updating ${fileType}:`, error);
-        updateToast(toastId, `Failed to update ${fileType}`, "error");
-      }
-    },
-    [program, updateFile, refetch]
-  );
-
-  const handleFileDelete = useCallback(
-    async (fileType) => {
-      if (!program) return;
-
-      // Close delete confirmation modal
-      setDeleteConfirmation({ isOpen: false, fileType: null });
-
-      const toastId = showLoadingToast(`Deleting ${fileType}...`);
-
-      try {
-        const result = await deleteFile(fileType);
-
-        if (result.success) {
-          updateToast(
-            toastId,
-            `${
-              fileType.charAt(0).toUpperCase() + fileType.slice(1)
-            } deleted successfully!`,
-            "success"
-          );
-          await refetch();
-        } else {
-          updateToast(
-            toastId,
-            result.error || `Failed to delete ${fileType}`,
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(`Error deleting ${fileType}:`, error);
-        updateToast(toastId, `Failed to delete ${fileType}`, "error");
-      }
-    },
-    [program, deleteFile, refetch]
-  );
-
-  // New function to open delete confirmation modal
-  const handleDeleteConfirmation = useCallback((fileType) => {
-    setDeleteConfirmation({ isOpen: true, fileType });
-  }, []);
-
-  // New function to close delete confirmation modal
-  const handleCancelDelete = useCallback(() => {
-    setDeleteConfirmation({ isOpen: false, fileType: null });
-  }, []);
-
-  const handleFileDownload = useCallback(
-    (fileUrl, fileName, fileType) => {
-      if (fileUrl) {
-        setFileLoading(fileType, "downloading", true);
-        const link = document.createElement("a");
-        link.href = fileUrl;
-        link.download = fileName || "download";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Simulate download completion after a short delay
-        setTimeout(() => {
-          setFileLoading(fileType, "downloading", false);
-        }, 1000);
-      }
-    },
-    [setFileLoading]
-  );
-
-  // Move component definitions outside render but inside component
-  const FileUploadInput = useCallback(
-    ({ fileType, onFileSelect }) => (
-      <input
-        key={`${fileType}-upload-input`}
-        type="file"
-        id={`${fileType}-upload`}
-        className="hidden"
-        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file) {
-            onFileSelect(file);
-          }
-        }}
-      />
-    ),
-    []
-  );
-
-  const FileCard = useCallback(
-    ({ fileType, fileData, displayName }) => {
-      const hasFile = fileData && (fileData.file_url || fileData.file_path);
-      const loading = fileOperationLoading[fileType];
-      const isAnyLoading = Object.values(loading).some(Boolean);
-
-      return (
-        <Card
-          key={`file-card-${fileType}`}
-          className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
-        >
-          <CardContent className="p-6 space-y-4 relative">
-            {/* Loading Overlay */}
-            {isAnyLoading && (
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
-                <div className="flex items-center space-x-3 px-4 py-2 bg-white rounded-lg shadow-lg border">
-                  <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    {loading.uploading && "Uploading..."}
-                    {loading.updating && "Updating..."}
-                    {loading.deleting && "Deleting..."}
-                    {loading.downloading && "Downloading..."}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className={`p-2.5 bg-gradient-to-br ${
-                  fileType === "curriculum"
-                    ? "from-purple-500 to-purple-600"
-                    : "from-indigo-500 to-indigo-600"
-                } rounded-xl shadow-lg`}
-              >
-                <FileText className="w-4 h-4 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900">{displayName}</h3>
-            </div>
-
-            {hasFile ? (
-              <div className="space-y-4">
-                {/* File Info */}
-                <div className="space-y-3">
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      File Name
-                    </label>
-                    <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                      <p className="text-gray-900 text-sm font-medium">
-                        {fileData.file_name ||
-                          fileData.original_name ||
-                          "Unknown"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {fileData.file_size && (
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        File Size
-                      </label>
-                      <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                        <p className="text-gray-900 text-sm">
-                          {formatFileSize(fileData.file_size)}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {fileData.created_at && (
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Uploaded Date
-                      </label>
-                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
-                        <p className="text-green-900 text-sm">
-                          {formatDate(fileData.created_at)}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* File Actions */}
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    onClick={() =>
-                      handleFileDownload(
-                        fileData.file_url || fileData.file_path,
-                        fileData.file_name || fileData.original_name,
-                        fileType
-                      )
-                    }
-                    size="sm"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                    disabled={isAnyLoading}
-                  >
-                    {loading.downloading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Downloading
-                      </>
-                    ) : (
-                      <>
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
-                      </>
-                    )}
-                  </Button>
-
-                  <Button
-                    onClick={() =>
-                      document.getElementById(`${fileType}-upload`).click()
-                    }
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
-                    disabled={isAnyLoading}
-                  >
-                    {loading.updating ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Updating
-                      </>
-                    ) : (
-                      <>
-                        <Edit3 className="w-4 h-4 mr-2" />
-                        Update
-                      </>
-                    )}
-                  </Button>
-
-                  <Button
-                    onClick={() => handleDeleteConfirmation(fileType)}
-                    size="sm"
-                    variant="outline"
-                    className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
-                    disabled={isAnyLoading}
-                  >
-                    {loading.deleting ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Trash2 className="w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-
-                <FileUploadInput
-                  fileType={fileType}
-                  onFileSelect={(file) => handleFileUpdate(fileType, file)}
-                />
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {/* Empty State */}
-                <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
-                  <FileText className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 text-sm mb-2">
-                    No {fileType} file uploaded
-                  </p>
-                  <p className="text-gray-500 text-xs">
-                    Upload a {fileType} file for this program
-                  </p>
-                </div>
-
-                {/* Upload Button */}
-                <Button
-                  onClick={() =>
-                    document.getElementById(`${fileType}-upload`).click()
-                  }
-                  className={`w-full bg-gradient-to-r ${
-                    fileType === "curriculum"
-                      ? "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
-                      : "from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700"
-                  } text-white`}
-                  disabled={loading.uploading}
-                >
-                  {loading.uploading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Uploading {displayName}
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Upload {displayName}
-                    </>
-                  )}
-                </Button>
-
-                <FileUploadInput
-                  fileType={fileType}
-                  onFileSelect={(file) => handleFileUpload(fileType, file)}
-                />
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      );
-    },
-    [
-      formatFileSize,
-      formatDate,
-      handleFileDownload,
-      handleDeleteConfirmation,
-      handleFileUpdate,
-      handleFileUpload,
-      fileOperationLoading,
-    ]
-  );
-
-  // Early return after all hooks are called
   if (!program) {
     return null;
   }
@@ -571,7 +174,6 @@ const ProgramDetailsModal = ({
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 bg-gradient-to-br from-slate-50 to-gray-100">
             {/* Program Header Info */}
             <div className="space-y-4">
-              {/* Title */}
               <div className="bg-white rounded-2xl p-5 shadow-xl border border-white/20 backdrop-blur-sm">
                 <h3 className="text-xl font-bold text-gray-900 leading-tight bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                   {program.program_name}
@@ -592,200 +194,61 @@ const ProgramDetailsModal = ({
 
             {/* Program Details Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {/* Basic Information */}
-              <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-                <CardContent className="p-6 space-y-5">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div
-                      className={`p-2.5 bg-gradient-to-br ${currentTheme.gradient} rounded-xl shadow-lg`}
-                    >
-                      <Hash className="w-4 h-4 text-white" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900">
-                      Program Information
-                    </h3>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Program Type
-                      </label>
-                      <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                        <div className="flex items-center justify-center gap-2">
-                          <Icon
-                            className={`w-4 h-4 ${
-                              isGraduate ? "text-yellow-600" : "text-blue-600"
-                            }`}
-                          />
-                          <p className="text-gray-900 text-sm font-medium">
-                            {isGraduate
-                              ? "Graduate Program"
-                              : "Undergraduate Program"}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {program.acronym && (
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Program Acronym
-                        </label>
-                        <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                          <p className="text-gray-900 font-mono text-sm">
-                            {program.acronym}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* College Information */}
-              <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-                <CardContent className="p-6 space-y-5">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div
-                      className={`p-2.5 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg`}
-                    >
-                      <Building className="w-4 h-4 text-white" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900">
-                      College Information
-                    </h3>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        College Name
-                      </label>
-                      <div className="bg-gradient-to-r from-gray-50 to-white px-3 py-2.5 rounded-xl border border-gray-200 shadow-sm">
-                        <p className="text-gray-900 text-sm leading-relaxed">
-                          {collegeInfo.name}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Acronym
-                        </label>
-                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
-                          <p className="text-green-900 text-sm font-medium">
-                            {collegeInfo.acronym}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Campus
-                        </label>
-                        <div
-                          className={`px-3 py-2.5 rounded-xl border shadow-sm ${
-                            collegeInfo.campus === "CSU-MAIN"
-                              ? "bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200"
-                              : "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
-                          }`}
-                        >
-                          <p
-                            className={`text-sm font-medium ${
-                              collegeInfo.campus === "CSU-MAIN"
-                                ? "text-emerald-900"
-                                : "text-blue-900"
-                            }`}
-                          >
-                            {collegeInfo.campus}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <ProgramInfoCard
+                program={program}
+                isGraduate={isGraduate}
+                currentTheme={currentTheme}
+              />
+              <CollegeInfoCard collegeInfo={collegeInfo} />
             </div>
 
-            {/* Show loading/error states for files */}
-            {filesLoading && (
-              <div className="text-center py-4">
-                <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                  <span className="text-blue-700 text-sm">
-                    Loading files...
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Program Files Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <FileCard
-                fileType="curriculum"
-                fileData={curriculum}
-                displayName="Curriculum"
-              />
-              <FileCard
-                fileType="syllabus"
-                fileData={syllabus}
-                displayName="Syllabus"
-              />
-            </div>
-
-            {filesError && (
-              <div className="text-center py-4">
-                <div className="inline-flex items-center px-4 py-2 bg-red-50 rounded-lg border border-red-200">
-                  <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
-                  <span className="text-red-700 text-sm">{filesError}</span>
-                </div>
-              </div>
-            )}
-
-            {/* Metadata - Full Width */}
-            <Card className="group border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-              <CardContent className="p-6 space-y-5">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="p-2.5 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl shadow-lg">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    Timeline & Metadata
-                  </h3>
+            {/* Enhanced Files Loading State */}
+            {filesLoading ? (
+              <FilesLoadingState isGraduate={isGraduate} />
+            ) : (
+              <>
+                {/* Program Files Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                  <FileCard
+                    fileType="curriculum"
+                    fileData={curriculum}
+                    displayName="Curriculum"
+                    fileOperationLoading={fileOperationLoading}
+                    formatFileSize={formatFileSize}
+                    formatDate={formatDate}
+                    handleFileDownload={handleFileDownload}
+                    handleDeleteConfirmation={handleDeleteConfirmation}
+                    handleFileUpdate={handleFileUpdate}
+                    handleFileUpload={handleFileUpload}
+                  />
+                  <FileCard
+                    fileType="syllabus"
+                    fileData={syllabus}
+                    displayName="Syllabus"
+                    fileOperationLoading={fileOperationLoading}
+                    formatFileSize={formatFileSize}
+                    formatDate={formatDate}
+                    handleFileDownload={handleFileDownload}
+                    handleDeleteConfirmation={handleDeleteConfirmation}
+                    handleFileUpdate={handleFileUpdate}
+                    handleFileUpload={handleFileUpload}
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
-                      <Clock className="w-3 h-3" />
-                      Created Date
-                    </label>
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2.5 rounded-xl border border-green-200 shadow-sm">
-                      <p className="text-green-900 text-sm font-medium">
-                        {formatDate(program.created_at)}
-                      </p>
+                {/* Error State */}
+                {filesError && (
+                  <div className="text-center py-4">
+                    <div className="inline-flex items-center px-4 py-2 bg-red-50 rounded-lg border border-red-200">
+                      <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
+                      <span className="text-red-700 text-sm">{filesError}</span>
                     </div>
                   </div>
+                )}
+              </>
+            )}
 
-                  {program.updated_at &&
-                    program.updated_at !== program.created_at && (
-                      <div className="space-y-2">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-2">
-                          <Edit3 className="w-3 h-3" />
-                          Last Updated
-                        </label>
-                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2.5 rounded-xl border border-blue-200 shadow-sm">
-                          <p className="text-blue-900 text-sm font-medium">
-                            {formatDate(program.updated_at)}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </CardContent>
-            </Card>
+            {/* Metadata Card - Always show */}
+            <MetadataCard program={program} formatDate={formatDate} />
           </div>
 
           {/* Fixed Footer */}
@@ -813,6 +276,7 @@ const ProgramDetailsModal = ({
           </div>
         </DialogContent>
       </Dialog>
+
       {/* Delete Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={deleteConfirmation.isOpen}
