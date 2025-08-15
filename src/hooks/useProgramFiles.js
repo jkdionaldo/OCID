@@ -228,15 +228,26 @@ export const useProgramFiles = (program) => {
           type,
           fileId: file.id,
           programId: program.id,
+          hasFilePath: !!file.file_path,
+          hasFileUrl: !!file.file_url,
         });
 
-        // Use the file removal endpoints instead of direct delete
-        if (type === "curriculum") {
-          await curriculumApi.removeFile(file.id);
-        } else if (type === "syllabus") {
-          await syllabusApi.removeFile(file.id);
+        // Check if the file actually has a file attached
+        if (!file.file_path && !file.file_url && !file.file_name) {
+          console.log("No file to delete, removing record only");
+          // If there's no file, just delete the record
+          if (type === "curriculum") {
+            await curriculumApi.delete(file.id);
+          } else if (type === "syllabus") {
+            await syllabusApi.delete(file.id);
+          }
         } else {
-          throw new Error(`Unknown file type: ${type}`);
+          // If there's a file, use the removeFile endpoint
+          if (type === "curriculum") {
+            await curriculumApi.removeFile(file.id);
+          } else if (type === "syllabus") {
+            await syllabusApi.removeFile(file.id);
+          }
         }
 
         // Update local state immediately
