@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { curriculumApi, syllabusApi } from "../services/api/dashboardApi";
+import { curriculumApi, syllabusApi } from "@/services/api/dashboardApi";
 
 export const useProgramFiles = (program) => {
   const [curriculum, setCurriculum] = useState(null);
@@ -47,17 +47,10 @@ export const useProgramFiles = (program) => {
         console.log("Curriculum data:", curriculumData);
 
         const programCurriculum = curriculumData.find((curr) => {
-          const matchesProgram =
-            parseInt(curr.program_id) === parseInt(program.id);
-          const matchesType = curr.program_type === programTypeForDB;
-          console.log("Curriculum match check:", {
-            curr,
-            programId: program.id,
-            programType: programTypeForDB,
-            matchesProgram,
-            matchesType,
-          });
-          return matchesProgram && matchesType;
+          return (
+            curr.program_id === program.id &&
+            curr.program_type === programTypeForDB
+          );
         });
 
         console.log("Found curriculum for program:", programCurriculum);
@@ -80,17 +73,10 @@ export const useProgramFiles = (program) => {
         console.log("Syllabus data:", syllabusData);
 
         const programSyllabus = syllabusData.find((syll) => {
-          const matchesProgram =
-            parseInt(syll.program_id) === parseInt(program.id);
-          const matchesType = syll.program_type === programTypeForDB;
-          console.log("Syllabus match check:", {
-            syll,
-            programId: program.id,
-            programType: programTypeForDB,
-            matchesProgram,
-            matchesType,
-          });
-          return matchesProgram && matchesType;
+          return (
+            syll.program_id === program.id &&
+            syll.program_type === programTypeForDB
+          );
         });
 
         console.log("Found syllabus for program:", programSyllabus);
@@ -111,50 +97,7 @@ export const useProgramFiles = (program) => {
     }
   }, [program, normalizeProgramType]);
 
-  const uploadFile = useCallback(
-    async (file, type) => {
-      if (!program || !file) return { success: false };
-
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("program_id", program.id);
-        // Use normalized program type for database
-        formData.append(
-          "program_type",
-          normalizeProgramType(program.program_type || program.type)
-        );
-
-        console.log("Uploading file:", {
-          type,
-          programId: program.id,
-          programType: normalizeProgramType(
-            program.program_type || program.type
-          ),
-        });
-
-        let response;
-
-        if (type === "curriculum") {
-          response = await curriculumApi.create(formData);
-        } else if (type === "syllabus") {
-          response = await syllabusApi.create(formData);
-        } else {
-          throw new Error(`Unknown file type: ${type}`);
-        }
-
-        return { success: true, data: response.data.data || response.data };
-      } catch (error) {
-        console.error(`Error uploading ${type}:`, error);
-        const message =
-          error.response?.data?.message || `Failed to upload ${type}`;
-
-        return { success: false, error: message };
-      }
-    },
-    [program, normalizeProgramType]
-  );
-
+  // DECLARE updateFile FIRST (before uploadFile)
   const updateFile = useCallback(
     async (file, type) => {
       const currentFile = type === "curriculum" ? curriculum : syllabus;
@@ -175,7 +118,7 @@ export const useProgramFiles = (program) => {
 
         let response;
 
-        // **FIX: Use the file upload endpoints instead of direct update**
+        // Use the file upload endpoints instead of direct update
         if (type === "curriculum") {
           response = await curriculumApi.uploadFile(currentFile.id, file);
         } else if (type === "syllabus") {
@@ -184,7 +127,16 @@ export const useProgramFiles = (program) => {
           throw new Error(`Unknown file type: ${type}`);
         }
 
-        return { success: true, data: response.data.data || response.data };
+        const updatedFile = response.data.data || response.data;
+
+        // Update local state immediately
+        if (type === "curriculum") {
+          setCurriculum(updatedFile);
+        } else if (type === "syllabus") {
+          setSyllabus(updatedFile);
+        }
+
+        return { success: true, data: updatedFile };
       } catch (error) {
         console.error(`Error updating ${type}:`, error);
 
@@ -203,6 +155,69 @@ export const useProgramFiles = (program) => {
     [curriculum, syllabus, program, normalizeProgramType]
   );
 
+  // NOW declare uploadFile (after updateFile)
+  const uploadFile = useCallback(
+    async (file, type) => {
+      if (!program || !file) return { success: false };
+
+      try {
+        // Check if a file already exists for this program
+        const currentFile = type === "curriculum" ? curriculum : syllabus;
+
+        if (currentFile) {
+          // If file exists, use update endpoint
+          return await updateFile(file, type);
+        }
+
+        // If no file exists, create new record
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("program_id", program.id);
+        // Use normalized program type for database
+        formData.append(
+          "program_type",
+          normalizeProgramType(program.program_type || program.type)
+        );
+
+        console.log("Creating new file record:", {
+          type,
+          programId: program.id,
+          programType: normalizeProgramType(
+            program.program_type || program.type
+          ),
+        });
+
+        let response;
+
+        if (type === "curriculum") {
+          response = await curriculumApi.create(formData);
+        } else if (type === "syllabus") {
+          response = await syllabusApi.create(formData);
+        } else {
+          throw new Error(`Unknown file type: ${type}`);
+        }
+
+        const newFile = response.data.data || response.data;
+
+        // Update local state immediately
+        if (type === "curriculum") {
+          setCurriculum(newFile);
+        } else if (type === "syllabus") {
+          setSyllabus(newFile);
+        }
+
+        return { success: true, data: newFile };
+      } catch (error) {
+        console.error(`Error uploading ${type}:`, error);
+        const message =
+          error.response?.data?.message || `Failed to upload ${type}`;
+
+        return { success: false, error: message };
+      }
+    },
+    [program, normalizeProgramType, curriculum, syllabus, updateFile] // updateFile is now safely declared above
+  );
+
   const deleteFile = useCallback(
     async (type) => {
       const file = type === "curriculum" ? curriculum : syllabus;
@@ -215,13 +230,20 @@ export const useProgramFiles = (program) => {
           programId: program.id,
         });
 
-        // **FIX: Use the file removal endpoints instead of direct delete**
+        // Use the file removal endpoints instead of direct delete
         if (type === "curriculum") {
           await curriculumApi.removeFile(file.id);
         } else if (type === "syllabus") {
           await syllabusApi.removeFile(file.id);
         } else {
           throw new Error(`Unknown file type: ${type}`);
+        }
+
+        // Update local state immediately
+        if (type === "curriculum") {
+          setCurriculum(null);
+        } else if (type === "syllabus") {
+          setSyllabus(null);
         }
 
         return { success: true };
