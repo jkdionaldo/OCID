@@ -47,19 +47,17 @@ export const useProgramFiles = (program) => {
         console.log("Curriculum data:", curriculumData);
 
         const programCurriculum = curriculumData.find((curr) => {
-          const matches =
-            curr.program_id === program.id &&
-            curr.program_type === programTypeForDB;
-          console.log(
-            `Checking curriculum ${curr.id}: program_id=${
-              curr.program_id
-            } (${typeof curr.program_id}) vs ${
-              program.id
-            } (${typeof program.id}), program_type=${
-              curr.program_type
-            } vs ${programTypeForDB}, matches=${matches}`
-          );
-          return matches;
+          const matchesProgram =
+            parseInt(curr.program_id) === parseInt(program.id);
+          const matchesType = curr.program_type === programTypeForDB;
+          console.log("Curriculum match check:", {
+            curr,
+            programId: program.id,
+            programType: programTypeForDB,
+            matchesProgram,
+            matchesType,
+          });
+          return matchesProgram && matchesType;
         });
 
         console.log("Found curriculum for program:", programCurriculum);
@@ -82,19 +80,17 @@ export const useProgramFiles = (program) => {
         console.log("Syllabus data:", syllabusData);
 
         const programSyllabus = syllabusData.find((syll) => {
-          const matches =
-            syll.program_id === program.id &&
-            syll.program_type === programTypeForDB;
-          console.log(
-            `Checking syllabus ${syll.id}: program_id=${
-              syll.program_id
-            } (${typeof syll.program_id}) vs ${
-              program.id
-            } (${typeof program.id}), program_type=${
-              syll.program_type
-            } vs ${programTypeForDB}, matches=${matches}`
-          );
-          return matches;
+          const matchesProgram =
+            parseInt(syll.program_id) === parseInt(program.id);
+          const matchesType = syll.program_type === programTypeForDB;
+          console.log("Syllabus match check:", {
+            syll,
+            programId: program.id,
+            programType: programTypeForDB,
+            matchesProgram,
+            matchesType,
+          });
+          return matchesProgram && matchesType;
         });
 
         console.log("Found syllabus for program:", programSyllabus);
@@ -138,23 +134,21 @@ export const useProgramFiles = (program) => {
         });
 
         let response;
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
         if (type === "curriculum") {
           response = await curriculumApi.create(formData);
         } else if (type === "syllabus") {
           response = await syllabusApi.create(formData);
+        } else {
+          throw new Error(`Unknown file type: ${type}`);
         }
 
-        // Remove toast calls from here - let the component handle them
         return { success: true, data: response.data.data || response.data };
       } catch (error) {
         console.error(`Error uploading ${type}:`, error);
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
         const message =
           error.response?.data?.message || `Failed to upload ${type}`;
 
-        // Remove toast calls from here - let the component handle them
         return { success: false, error: message };
       }
     },
@@ -180,18 +174,19 @@ export const useProgramFiles = (program) => {
         });
 
         let response;
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
+        // **FIX: Use the file upload endpoints instead of direct update**
         if (type === "curriculum") {
-          response = await curriculumApi.update(currentFile.id, formData);
+          response = await curriculumApi.uploadFile(currentFile.id, file);
         } else if (type === "syllabus") {
-          response = await syllabusApi.update(currentFile.id, formData);
+          response = await syllabusApi.uploadFile(currentFile.id, file);
+        } else {
+          throw new Error(`Unknown file type: ${type}`);
         }
 
         return { success: true, data: response.data.data || response.data };
       } catch (error) {
         console.error(`Error updating ${type}:`, error);
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
         // Better error message extraction
         let message = `Failed to update ${type}`;
@@ -200,8 +195,6 @@ export const useProgramFiles = (program) => {
         } else if (error.response?.data?.errors) {
           const errors = Object.values(error.response.data.errors).flat();
           message = errors.join(", ");
-        } else if (error.message) {
-          message = error.message;
         }
 
         return { success: false, error: message };
@@ -222,18 +215,18 @@ export const useProgramFiles = (program) => {
           programId: program.id,
         });
 
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
-
+        // **FIX: Use the file removal endpoints instead of direct delete**
         if (type === "curriculum") {
-          await curriculumApi.delete(file.id);
+          await curriculumApi.removeFile(file.id);
         } else if (type === "syllabus") {
-          await syllabusApi.delete(file.id);
+          await syllabusApi.removeFile(file.id);
+        } else {
+          throw new Error(`Unknown file type: ${type}`);
         }
 
         return { success: true };
       } catch (error) {
         console.error(`Error deleting ${type}:`, error);
-        const fileTypeName = type.charAt(0).toUpperCase() + type.slice(1);
 
         // Better error message extraction
         let message = `Failed to delete ${type}`;
@@ -242,8 +235,6 @@ export const useProgramFiles = (program) => {
         } else if (error.response?.data?.errors) {
           const errors = Object.values(error.response.data.errors).flat();
           message = errors.join(", ");
-        } else if (error.message) {
-          message = error.message;
         }
 
         return { success: false, error: message };
