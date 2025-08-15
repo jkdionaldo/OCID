@@ -173,16 +173,30 @@ const ProgramDetailsModal = ({
     async (fileType, file) => {
       if (!program) return { success: false };
 
+      const toastId = showLoadingToast(`Uploading ${fileType}...`);
       setFileLoading(fileType, "uploading", true);
+
       try {
         const result = await uploadFile(file, fileType);
         if (result.success) {
-          toast.success(`${fileType} uploaded successfully`);
+          updateToast(
+            toastId,
+            `${
+              fileType.charAt(0).toUpperCase() + fileType.slice(1)
+            } uploaded successfully!`,
+            "success"
+          );
           await refetch();
+        } else {
+          updateToast(
+            toastId,
+            result.error || `Failed to upload ${fileType}`,
+            "error"
+          );
         }
       } catch (error) {
         console.error(`Error uploading ${fileType}:`, error);
-        toast.error(`Failed to upload ${fileType}`);
+        updateToast(toastId, `Failed to upload ${fileType}`, "error");
       } finally {
         setFileLoading(fileType, "uploading", false);
       }
