@@ -2,7 +2,7 @@ import { compress, decompress } from "lz-string";
 
 const CACHE_KEY = "dashboard_data_cache";
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
-const CACHE_VERSION = "v5_optimized";
+const CACHE_VERSION = "v6_force_refresh"; // Updated version
 
 export class DashboardCache {
   static compress(data) {
@@ -25,7 +25,9 @@ export class DashboardCache {
     }
   }
 
-  static get() {
+  static get(bypassCache = false) {
+    if (bypassCache) return null; // Force bypass cache
+
     try {
       const cached =
         sessionStorage.getItem(CACHE_KEY) || localStorage.getItem(CACHE_KEY);
@@ -82,9 +84,27 @@ export class DashboardCache {
     try {
       sessionStorage.removeItem(CACHE_KEY);
       localStorage.removeItem(CACHE_KEY);
+      // Also clear any related cache keys
+      const keysToRemove = [];
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.startsWith("dashboard_")) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach((key) => {
+        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
+      });
     } catch (error) {
       console.error("Cache clear error:", error);
     }
+  }
+
+  static forceRefresh() {
+    this.clear();
+    // Add a timestamp to force backend cache bypass
+    return Date.now();
   }
 
   static isValid() {

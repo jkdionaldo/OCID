@@ -475,11 +475,11 @@ const Dashboard = () => {
       label: "Programs",
       icon: BookOpen,
     },
-    {
-      id: "files",
-      label: "Files & Documents",
-      icon: Files,
-    },
+    // {
+    //   id: "files",
+    //   label: "Files & Documents",
+    //   icon: Files,
+    // },
   ];
 
   // ================================
