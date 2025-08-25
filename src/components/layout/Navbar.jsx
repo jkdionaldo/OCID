@@ -248,14 +248,22 @@ const Navbar = () => {
             )}
           </div>
 
-          <a
-            href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold uppercase xl:text-sm text-green-950 hover:text-green-700 transition-colors duration-200 border-b-2 border-transparent pb-1"
+          {/* Updated About Link - Changed from external link to internal route */}
+          <Link
+            to="/about"
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
+              isActive("/about")
+                ? "text-green-700 font-bold"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
           >
-            ABOUT OCID
-          </a>
+            ABOUT
+            <span
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/about") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
+          </Link>
 
           <Link
             to="/downloadables"
@@ -460,15 +468,18 @@ const Navbar = () => {
             </div>
           )}
 
-          <a
-            href="https://www.carsu.edu.ph/?q=news/csu-introduces-programs-solicits-stakeholders%E2%80%99-input-innovative-curricula"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Updated About Link for Mobile - Changed to internal route */}
+          <Link
+            to="/about"
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsMobileCollegesOpen(false);
+            }}
             className="flex justify-between items-center py-2 font-semibold text-green-800 border-b-2"
           >
-            About OCID
+            About
             <ChevronRight className="w-4 h-4 text-green-600" />
-          </a>
+          </Link>
 
           <Link
             to="/downloadables"
