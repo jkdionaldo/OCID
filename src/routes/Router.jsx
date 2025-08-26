@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
-import About from "@/pages/About"; // Add this import
+import About from "@/pages/About";
+import ProfileSettings from "@/pages/ProfileSettings";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
 
@@ -42,6 +43,8 @@ const Router = () => {
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
+
+      <Route path="/profile" element={<ProfileSettings />} />
 
       {/*csu-main */}
       <Route
