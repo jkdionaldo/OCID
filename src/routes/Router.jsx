@@ -4,6 +4,7 @@ import Dashboard from "@/pages/Dashboard";
 import About from "@/pages/About"; // Add this import
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
+import ProfileSettings from "@/pages/ProfileSettings";
 
 // Import route collections
 // ccGraduateRoutes,
@@ -44,6 +45,9 @@ const Router = () => {
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
+
+      {/* Profile Settings */}
+      <Route path="/profile-settings" element={<ProfileSettings />} />
 
       {/*csu-main */}
       <Route
