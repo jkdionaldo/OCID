@@ -26,7 +26,18 @@ const Chatbot = () => {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    axios.get("/api/faqs").then((res) => setFaqList(res.data));
+    // Handle FAQ loading with error handling
+    const loadFAQs = async () => {
+      try {
+        const response = await axios.get("/api/faqs");
+        setFaqList(response.data || []);
+      } catch (error) {
+        console.log("FAQs not available yet:", error);
+        setFaqList([]);
+      }
+    };
+
+    loadFAQs();
   }, []);
 
   useEffect(() => {
@@ -66,7 +77,9 @@ const Chatbot = () => {
         ...prev,
         {
           from: "bot",
-          text: data.answer,
+          text:
+            data.answer ||
+            "I'm sorry, I couldn't process your request right now.",
           time: new Date(),
         },
       ]);
@@ -75,7 +88,7 @@ const Chatbot = () => {
         ...prev,
         {
           from: "bot",
-          text: "Sorry, I couldn’t connect to the server.",
+          text: "Sorry, I couldn't connect to the server. Please try again later.",
           time: new Date(),
         },
       ]);
@@ -86,13 +99,15 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Chatbot Floating Button */}
+      {/* Chatbot Floating Button - Adjusted for BackToTop coexistence */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
           className={`fixed z-50 right-6 transition-all duration-300 
-            ${showBackToTop ? "bottom-24" : "bottom-6"} 
-            bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-xl`}
+            ${showBackToTop ? "bottom-20" : "bottom-6"} 
+            bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-xl hover:shadow-2xl
+            transform hover:scale-105 active:scale-95`}
+          aria-label="Open chat"
         >
           <MessageCircle className="w-6 h-6" />
         </button>
@@ -102,9 +117,20 @@ const Chatbot = () => {
       {open && (
         <div className="fixed bottom-6 right-6 w-80 max-w-[90vw] h-[70vh] bg-white shadow-2xl rounded-xl flex flex-col z-50 border text-sm">
           {/* Header */}
-          <div className="flex items-center justify-between bg-green-600 text-white px-4 py-2 rounded-t-xl">
-            <span className="font-semibold">OCID FAQ Assistant</span>
-            <button onClick={() => setOpen(false)}>
+          <div className="flex items-center justify-between bg-green-600 text-white px-4 py-3 rounded-t-xl">
+            <div className="flex items-center gap-2">
+              <img
+                src={BotAvatar}
+                alt="OCID Bot"
+                className="w-6 h-6 rounded-full"
+              />
+              <span className="font-semibold">OCID FAQ Assistant</span>
+            </div>
+            <button
+              onClick={() => setOpen(false)}
+              className="hover:bg-green-700 p-1 rounded transition-colors"
+              aria-label="Close chat"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -156,7 +182,13 @@ const Chatbot = () => {
             {/* Typing Indicator */}
             {isTyping && (
               <div className="flex gap-2 items-center">
-                <div className="w-6 h-6 rounded-full bg-gray-200" />
+                <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
+                  <img
+                    src={BotAvatar}
+                    alt="Bot typing"
+                    className="w-4 h-4 rounded-full object-cover"
+                  />
+                </div>
                 <div className="flex items-center gap-1 px-3 py-2 bg-white rounded-xl border">
                   <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:.1s]" />
                   <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:.2s]" />
@@ -178,7 +210,7 @@ const Chatbot = () => {
                   <button
                     key={faq.id}
                     onClick={() => send(faq.question)}
-                    className="bg-green-50 hover:bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs"
+                    className="bg-green-50 hover:bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs transition-colors"
                   >
                     {faq.question}
                   </button>
@@ -193,17 +225,18 @@ const Chatbot = () => {
               e.preventDefault();
               send(input);
             }}
-            className="border-t px-3 py-2 flex items-center gap-2 bg-white"
+            className="border-t px-3 py-2 flex items-center gap-2 bg-white rounded-b-xl"
           >
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your question..."
-              className="flex-1 text-sm px-3 py-2 rounded-md border bg-white text-gray-800 placeholder-gray-400 focus:outline-none"
+              className="flex-1 text-sm px-3 py-2 rounded-md border bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             />
             <button
               type="submit"
-              className="text-green-600 hover:text-green-700"
+              className="text-green-600 hover:text-green-700 p-1 rounded transition-colors"
+              disabled={!input.trim()}
             >
               <Send className="w-4 h-4" />
             </button>
