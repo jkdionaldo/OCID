@@ -23,17 +23,51 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [faqError, setFaqError] = useState(null);
   const bottomRef = useRef(null);
 
+  // Create a separate axios instance for chatbot to avoid auth interceptors
+  const chatbotApi = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api",
+    timeout: 10000,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
   useEffect(() => {
-    // Handle FAQ loading with error handling
+    // Handle FAQ loading with better error handling
     const loadFAQs = async () => {
       try {
-        const response = await axios.get("/api/faqs");
-        setFaqList(response.data || []);
+        console.log(
+          "Loading FAQs from:",
+          `${chatbotApi.defaults.baseURL}/faqs`
+        );
+        const response = await chatbotApi.get("/faqs");
+        console.log("FAQ Response:", response.data);
+
+        // Handle different response structures
+        const faqData = response.data?.data || response.data || [];
+        setFaqList(Array.isArray(faqData) ? faqData : []);
+        setFaqError(null);
+
+        console.log("FAQs loaded successfully:", faqData);
       } catch (error) {
-        console.log("FAQs not available yet:", error);
+        console.error("Error loading FAQs:", error);
+        setFaqError(error.message);
         setFaqList([]);
+
+        // Add a system message about FAQ unavailability
+        if (error.response?.status === 404) {
+          console.log(
+            "FAQ endpoint not found - continuing without suggestions"
+          );
+        } else {
+          console.log(
+            "FAQ service unavailable - continuing without suggestions"
+          );
+        }
       }
     };
 
@@ -72,7 +106,10 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const { data } = await axios.post("/api/faqs/chat", { message: text });
+      console.log("Sending message to chat API:", text);
+      const { data } = await chatbotApi.post("/faqs/chat", { message: text });
+      console.log("Chat API response:", data);
+
       setMessages((prev) => [
         ...prev,
         {
@@ -84,11 +121,22 @@ const Chatbot = () => {
         },
       ]);
     } catch (err) {
+      console.error("Chat API error:", err);
+      let errorMessage =
+        "Sorry, I couldn't connect to the server. Please try again later.";
+
+      if (err.response?.status === 404) {
+        errorMessage =
+          "I'm sorry, the chat service is not available right now.";
+      } else if (err.code === "ECONNABORTED") {
+        errorMessage = "The request timed out. Please try again.";
+      }
+
       setMessages((prev) => [
         ...prev,
         {
           from: "bot",
-          text: "Sorry, I couldn't connect to the server. Please try again later.",
+          text: errorMessage,
           time: new Date(),
         },
       ]);
@@ -217,6 +265,15 @@ const Chatbot = () => {
                 ))}
               </div>
             </details>
+          )}
+
+          {/* Show FAQ error or loading state */}
+          {faqError && (
+            <div className="px-4 py-2 border-t bg-white">
+              <div className="text-xs text-gray-500">
+                Quick questions unavailable
+              </div>
+            </div>
           )}
 
           {/* Input */}
