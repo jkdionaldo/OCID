@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
+import About from "@/pages/About"; // Add this import
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
 
@@ -35,6 +36,8 @@ const Router = () => {
 
       {/* Procedurals */}
       <Route path="/procedurals" element={<Procedurals />} />
+      {/* Add About route */}
+      <Route path="/about" element={<About />} />
 
       {/* Protected Dashboard Route */}
       <Route path="/dashboard" element={<Dashboard />} />
