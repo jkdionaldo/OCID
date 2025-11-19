@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
+import About from "@/pages/About";
+import ProfileSettings from "@/pages/ProfileSettings";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
 
@@ -33,11 +35,16 @@ const Router = () => {
       {/* Main routes */}
       <Route path="/" element={<Home />} />
 
+      {/* Add About route */}
+      <Route path="/about" element={<About />} />
+
       {/* Protected Dashboard Route */}
       <Route path="/dashboard" element={<Dashboard />} />
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
+
+      <Route path="/profile" element={<ProfileSettings />} />
 
       {/*csu-main */}
       <Route

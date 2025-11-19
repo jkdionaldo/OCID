@@ -10,64 +10,83 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    dedupe: ["react", "react-dom"],
   },
   build: {
-    // Optimize bundle size
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Vendor chunks for better caching
-          "react-vendor": ["react", "react-dom"],
-          "ui-vendor": ["@radix-ui/react-dialog", "lucide-react"],
-          "form-vendor": ["react-hook-form", "@hookform/resolvers", "zod"],
-          "utils-vendor": ["axios", "react-toastify", "lz-string"],
+        manualChunks(id) {
+          if (
+            id.includes("node_modules/react/") ||
+            id.includes("node_modules/react-dom/")
+          ) {
+            return "react-vendor";
+          }
+          if (id.includes("@radix-ui/")) {
+            return "react-vendor";
+          }
+          if (
+            id.includes("react-hook-form") ||
+            id.includes("@hookform/resolvers") ||
+            id.includes("zod")
+          ) {
+            return "form-vendor";
+          }
+
+          if (id.includes("axios") || id.includes("lz-string")) {
+            return "utils-vendor";
+          }
+          if (id.includes("lucide-react") || id.includes("framer-motion")) {
+            return "react-vendor";
+          }
         },
       },
     },
-    // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
-    // Enable minification
     minify: "terser",
     terserOptions: {
       compress: {
-        // Remove console logs in production
         drop_console: true,
         drop_debugger: true,
-        // Remove unused code
         dead_code: true,
-        // Optimize loops
         loops: true,
-        // Remove unused function arguments
         unused: true,
       },
       mangle: {
-        // Mangle property names for smaller bundle
         properties: {
           regex: /^_/,
         },
       },
     },
-    // Enable source maps for debugging (disable in production)
     sourcemap: process.env.NODE_ENV === "development",
-    // Target modern browsers
     target: "es2020",
-    // Enable CSS code splitting
     cssCodeSplit: true,
   },
-  // Optimize dev server
+
   server: {
     hmr: {
       overlay: false,
     },
-    // Enable compression in dev
     compress: true,
   },
-  // Optimize dependencies
+
   optimizeDeps: {
-    include: ["react", "react-dom", "axios", "react-hook-form"],
+    include: [
+      "react",
+      "react-dom",
+      "axios",
+      "react-hook-form",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-select",
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-label",
+      "@radix-ui/react-popover",
+    ],
     exclude: ["@vite/client", "@vite/env"],
   },
-  // Define environment variables
   define: {
     __DEV__: process.env.NODE_ENV === "development",
   },
