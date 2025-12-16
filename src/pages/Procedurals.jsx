@@ -107,7 +107,7 @@ export default function Procedurals() {
             <>
               <button
                 onClick={() => setSelectedFile(null)}
-                className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 focus:outline-none z-10"
+                className="absolute right-0 top-4 text-gray-400 hover:text-gray-500 focus:outline-none z-10"
               >
                 <X size={24} />
               </button>
