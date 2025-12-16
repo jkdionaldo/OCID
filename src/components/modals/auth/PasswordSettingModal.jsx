@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+import React from "react";
+import { X } from "lucide-react";
+import PasswordSettingForm from "../../auth/PasswordSettingForm";
+=======
 import React from 'react';
 import { X } from 'lucide-react';
 import PasswordSettingForm from '../../auth/PasswordSettingForm';
+>>>>>>> origin/testing
 
 const PasswordSettingModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -8,7 +14,11 @@ const PasswordSettingModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
+<<<<<<< HEAD
+      <div
+=======
       <div 
+>>>>>>> origin/testing
         className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
         onClick={onClose}
       />
@@ -35,4 +45,8 @@ const PasswordSettingModal = ({ isOpen, onClose }) => {
   );
 };
 
+<<<<<<< HEAD
 export default PasswordSettingModal;
+=======
+export default PasswordSettingModal;
+>>>>>>> origin/testing
