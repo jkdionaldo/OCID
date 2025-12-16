@@ -280,7 +280,19 @@ const Navbar = () => {
               }`}
             ></span>
           </Link>
+          
+          <Link
+            to="/procedurals"
+            className={`font-semibold uppercase xl:text-sm ${
+              isActive("/procedurals")
+                ? "text-green-700 font-bold border-b-2 border-green-700 pb-1"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+          >
+            PROCEDURALS
+          </Link>
         </div>
+
 
         {/* Desktop User */}
         <div className="hidden xl:block">
@@ -322,7 +334,7 @@ const Navbar = () => {
                   </Link>
 
                   <Link
-                    to="/profile"
+                    to="/profile-settings"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
                     onClick={() => setShowUserDropdown(false)}
                   >

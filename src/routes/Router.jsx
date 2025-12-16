@@ -5,6 +5,7 @@ import About from "@/pages/About";
 import ProfileSettings from "@/pages/ProfileSettings";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
+import ProfileSettings from "@/pages/ProfileSettings";
 
 // Import route collections
 // ccGraduateRoutes,
@@ -20,7 +21,7 @@ import Home from "@/pages/HomePage";
 
 // downloadables page
 import Downloadables from "@/pages/Downloadables";
-
+import Procedurals from "@/pages/Procedurals";
 // CSU main page
 import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
 import Colleges_Undergraduate_Main from "@/pages/CSU-MAIN/UndergradPage";
@@ -35,6 +36,8 @@ const Router = () => {
       {/* Main routes */}
       <Route path="/" element={<Home />} />
 
+      {/* Procedurals */}
+      <Route path="/procedurals" element={<Procedurals />} />
       {/* Add About route */}
       <Route path="/about" element={<About />} />
 
@@ -44,7 +47,12 @@ const Router = () => {
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
 
+<<<<<<< HEAD
       <Route path="/profile" element={<ProfileSettings />} />
+=======
+      {/* Profile Settings */}
+      <Route path="/profile-settings" element={<ProfileSettings />} />
+>>>>>>> origin/testing
 
       {/*csu-main */}
       <Route

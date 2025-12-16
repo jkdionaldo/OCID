@@ -23,7 +23,7 @@ const FileCardSkeleton = ({ type }) => {
 
   return (
     <div
-      className={`group border-0 shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl overflow-hidden animate-pulse border-2 ${
+      className={`group shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl overflow-hidden animate-pulse border-2 ${
         isGraduate ? "border-yellow-100" : "border-blue-100"
       }`}
     >
