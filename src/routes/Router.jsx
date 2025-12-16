@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
 import About from "@/pages/About";
-import ProfileSettings from "@/pages/ProfileSettings";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NotFound from "@/pages/NotFound";
 import ProfileSettings from "@/pages/ProfileSettings";
@@ -47,12 +46,8 @@ const Router = () => {
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
 
-<<<<<<< HEAD
-      <Route path="/profile" element={<ProfileSettings />} />
-=======
       {/* Profile Settings */}
       <Route path="/profile-settings" element={<ProfileSettings />} />
->>>>>>> origin/testing
 
       {/*csu-main */}
       <Route
