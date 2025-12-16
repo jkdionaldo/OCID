@@ -1,14 +1,67 @@
 import React, { useState } from "react";
-import { FileText, Columns2, X } from "lucide-react"; // Add Columns2 and X to imports
+import { FileText, Columns2, X } from "lucide-react";
 
 export default function Procedurals() {
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Sample data - replace with your actual PDF files
+  // Procedural PDF files
   const proceduralFiles = [
-    { id: 1, name: "Procedure Manual 2024", url: "/path/to/pdf1.pdf" },
-    { id: 2, name: "Guidelines Document", url: "/path/to/pdf2.pdf" },
-    { id: 3, name: "Standard Operations", url: "/path/to/pdf3.pdf" },
+    {
+      id: 1,
+      name: "F-CID-001",
+      title: "Request for Evaluation",
+      purpose: "All request use this form",
+      revision: "Rev 4",
+      url: "/images/ocid-procedurals/F-CID-001.pdf",
+    },
+    {
+      id: 2,
+      name: "F-CID-002",
+      title: "REVIEW REPORT",
+      purpose: "All",
+      revision: "Rev 5",
+      url: "/images/ocid-procedurals/F-CID-002.pdf",
+    },
+    {
+      id: 3,
+      name: "F-CID-003",
+      title: "REVIEW AND REPLY SHEET",
+      purpose: "All",
+      revision: "Rev 5",
+      url: "/images/ocid-procedurals/F-CID-003.pdf",
+    },
+    {
+      id: 4,
+      name: "F-CID-004 FS",
+      title: "Financial Feasibility Assessment Tool",
+      purpose: "For New Program Curriculum",
+      revision: "Rev 1",
+      url: "/images/ocid-procedurals/F-CID-004 FS.pdf",
+    },
+    {
+      id: 5,
+      name: "F-CID-005 FS",
+      title: "Management Feasibility Assessment Tool",
+      purpose: "For New Program Curriculum",
+      revision: "Rev 1",
+      url: "/images/ocid-procedurals/F-CID-005 FS.pdf",
+    },
+    {
+      id: 6,
+      name: "F-CID-006 FS",
+      title: "Marketing Feasibility Assessment Tool",
+      purpose: "For New Program Curriculum",
+      revision: "Rev 1",
+      url: "/images/ocid-procedurals/F-CID-006 FS.pdf",
+    },
+    {
+      id: 7,
+      name: "F-CID-007 FS",
+      title: "Technical Feasibility Assessment Tool",
+      purpose: "For New Program Curriculum",
+      revision: "Rev 1",
+      url: "/images/ocid-procedurals/F-CID-007 FS.pdf",
+    },
   ];
 
   return (
@@ -19,18 +72,31 @@ export default function Procedurals() {
           <h2 className="text-lg font-semibold mb-4">Procedural Files</h2>
           <div className="space-y-2">
             {proceduralFiles.map((file) => (
-              <button
+              <div
                 key={file.id}
-                onClick={() => setSelectedFile(file)}
-                className={`w-full flex items-center p-3 rounded-lg transition-colors ${
+                className={`w-full flex flex-col p-3 rounded-lg transition-colors ${
                   selectedFile?.id === file.id
-                    ? "bg-green-50 text-green-700"
-                    : "hover:bg-gray-50"
+                    ? "bg-green-50 text-green-700 border-2 border-green-200"
+                    : "hover:bg-gray-50 border-2 border-transparent"
                 }`}
               >
-                <FileText className="w-5 h-5 mr-2" />
-                <span className="text-left">{file.name}</span>
-              </button>
+                <button
+                  onClick={() => setSelectedFile(file)}
+                  className="flex items-center w-full text-left"
+                >
+                  <FileText className="w-5 h-5 mr-2 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="font-semibold">{file.name}</div>
+                    <div className="text-xs text-gray-600 mt-1">
+                      {file.title}
+                    </div>
+                  </div>
+                </button>
+                <div className="mt-2 pl-7 text-xs text-gray-500">
+                  <div>Purpose: {file.purpose}</div>
+                  <div className="mt-1">Revision: {file.revision}</div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
