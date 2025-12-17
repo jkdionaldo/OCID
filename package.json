@@ -55,6 +55,7 @@
     "postcss": "^8.4.29",
     "shadcn": "^3.6.1",
     "tailwindcss": "^3.3.3",
+    "terser": "^5.44.1",
     "vite": "^7.0.0"
   },
   "overrides": {
