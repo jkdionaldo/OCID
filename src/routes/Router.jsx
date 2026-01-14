@@ -1,9 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import Dashboard from "@/pages/Dashboard";
+import About from "@/pages/About";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import NotFound from "@/pages/NotFound";
 import ProfileSettings from "@/pages/ProfileSettings";
-import Procedurals from "@/pages/Procedurals";
+
 // Import route collections
 // ccGraduateRoutes,
 
@@ -18,10 +20,10 @@ import Home from "@/pages/HomePage";
 
 // downloadables page
 import Downloadables from "@/pages/Downloadables";
-
+import Procedurals from "@/pages/Procedurals";
 // CSU main page
-import Colleges_Graduate_Main from "@/pages/CSU-Main/GraduateSchoolPage";
-import Colleges_Undergraduate_Main from "@/pages/CSU-Main/UndergradPage";
+import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
+import Colleges_Undergraduate_Main from "@/pages/CSU-MAIN/UndergradPage";
 
 //  CSU-CC main pages
 // import Colleges_Graduate_cc from "@/pages/CSU-CC/GraduateSchoolPage";
@@ -33,31 +35,20 @@ const Router = () => {
       {/* Main routes */}
       <Route path="/" element={<Home />} />
 
-      {/* Protected Dashboard Route */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/* Profile Settings Route */}
-      <Route
-        path="/profile-settings"
-        element={
-          // <ProtectedRoute>
-            <ProfileSettings />
-          /* </ProtectedRoute> */
-        }
-      />
+      {/* Procedurals */}
+      <Route path="/procedurals" element={<Procedurals />} />
+      {/* Add About route */}
+      <Route path="/about" element={<About />} />
 
+      {/* Protected Dashboard Route */}
+      <Route path="/dashboard" element={<Dashboard />} />
 
       {/* downloadables */}
       <Route path="/downloadables" element={<Downloadables />} />
 
-      {/* Procedurals Page */}
-      <Route path="/procedurals" element={<Procedurals />} />
+      {/* Profile Settings */}
+      <Route path="/profile-settings" element={<ProfileSettings />} />
+
       {/*csu-main */}
       <Route
         path="/colleges_graduate_main"
@@ -93,7 +84,7 @@ const Router = () => {
       ))}
 
       {/* Fallback route */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

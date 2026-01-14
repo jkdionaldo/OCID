@@ -1,11 +1,10 @@
 import React from "react";
 import Card from "../components/ui/HomeCard";
 // import Chatbot from "../components/chatbot/Chatbox";
-import BackToTop from "../components/ui/BackToTop";
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col w-full">
+    <div className="min-h-screen flex flex-col w-full ">
       {/* Hero Section with Responsive OCID Banner */}
       <div className="container mx-auto relative max-w-fit">
         {/* Desktop Banner (hidden on small screens) */}
@@ -227,15 +226,15 @@ const Home = () => {
           {/* Right: Paragraph */}
           <div className=" flex justify-center md:justify-start md:px-30">
             <p className="text-justify md:text-justify text-xs md:text-base md:mr-16 max-w-3xl mx-auto md:mx-0 mt-0 text-white font-poppins">
-              Caraga State University upholds education as a transformative force
-              that creates futures and empowers communities. It is through
-              meaningful, values-driven learning that individuals are shaped into
-              competent professionals, ethical leaders, and innovative
+              Caraga State University upholds education as a transformative
+              force that creates futures and empowers communities. It is through
+              meaningful, values-driven learning that individuals are shaped
+              into competent professionals, ethical leaders, and innovative
               problem-solvers. CSU believes that education should go beyond
-              knowledge transmission—it must inspire lifelong learning, cultivate
-              social responsibility, and enable graduates to lead change, foster
-              inclusivity, and contribute to the sustainable development of the
-              Caraga Region and beyond.
+              knowledge transmission—it must inspire lifelong learning,
+              cultivate social responsibility, and enable graduates to lead
+              change, foster inclusivity, and contribute to the sustainable
+              development of the Caraga Region and beyond.
             </p>
           </div>
         </div>
