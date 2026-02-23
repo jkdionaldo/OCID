@@ -1,5 +1,5 @@
 import LoginModal from "@/components/modals/auth/LoginModal";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Added useNavigate for programmatic navigation after logout
 import React, { useState, useEffect, useRef } from "react";
 import {
   ChevronDown,
@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // For programmatic navigation after logout
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const [isDesktopDropdownClosing, setIsDesktopDropdownClosing] =
@@ -346,6 +347,7 @@ const Navbar = () => {
                     onClick={() => {
                       logout();
                       setShowUserDropdown(false);
+                      navigate("/"); // Redirect to home after logout
                     }}
                     className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                   >
@@ -536,6 +538,7 @@ const Navbar = () => {
                   logout();
                   setIsMenuOpen(false);
                   setIsMobileCollegesOpen(false);
+                  navigate("/"); // Redirect to home after logout
                 }}
                 className="flex justify-between items-center text-red-600 w-full"
               >

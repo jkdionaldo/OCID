@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
+
   // Show loading state or spinner while authentication status is being checked
   if (isLoading) {
     return (
@@ -15,11 +16,11 @@ const ProtectedRoute = ({ children }) => {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace/>;
   }
 
   // Render children if authenticated
-  return children;
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;
