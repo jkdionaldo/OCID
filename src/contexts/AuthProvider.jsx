@@ -302,15 +302,14 @@ export const AuthProvider = ({ children }) => {
         password: credentials.password,
         remember_me: credentials.rememberMe || false,
         device_name: navigator.userAgent || "Unknown Device",
-        recaptcha_token: credentials.recaptcha_token,
+       
       });
 
       const response = await axios.post("/auth/login", {
         email: credentials.email,
         password: credentials.password,
         remember_me: credentials.rememberMe || false,
-        device_name: navigator.userAgent || "Unknown Device",
-        recaptcha_token: credentials.recaptcha_token,
+        device_name: navigator.userAgent || "Unknown Device"
       });
 
       const { user: userData, token, expires_at } = response.data;
@@ -336,7 +335,7 @@ export const AuthProvider = ({ children }) => {
         const message =
           errors?.email?.[0] ||
           errors?.password?.[0] ||
-          errors?.recaptcha_token?.[0] ||
+          //errors?.recaptcha_token?.[0] ||
           "Invalid credentials";
         return { success: false, error: message, errors };
       }

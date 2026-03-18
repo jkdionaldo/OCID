@@ -82,7 +82,6 @@ The OCID Frontend is a React-based single-page application (SPA) that provides a
 - **@react-oauth/google** - Google OAuth integration
 - **JWT** - Token-based authentication
 - **SecureStorage** - Encrypted local storage
-- **Google reCAPTCHA** - Bot protection
 
 ### Developer Tools
 
