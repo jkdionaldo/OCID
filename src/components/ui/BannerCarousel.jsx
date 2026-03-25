@@ -119,7 +119,7 @@ const BannerCarousel = ({ images, interval = 10000 }) => {
             }}
             className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
               index === currentIndex
-                ? "bg-[#f9dc07] scale-125"
+                ? "bg-[#f9dc07] scale-75"
                 : "bg-[#f9dc07]/50 hover:bg-[#f9dc07]/80"
             }`}
           />

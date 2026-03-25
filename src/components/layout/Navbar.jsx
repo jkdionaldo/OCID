@@ -189,7 +189,29 @@ const Navbar = () => {
             ></span>
           </Link>
 
-          <div
+
+
+          {/* Updated About Link - Changed from external link to internal route */}
+          <Link
+            to="/about"
+            className={`font-semibold uppercase xl:text-sm pb-1 relative ${
+              isActive("/about")
+                ? "text-green-700 font-bold"
+                : "text-green-950 hover:text-green-700"
+            } transition-colors duration-200`}
+          >
+            ABOUT
+            <span
+              className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
+                isActive("/about") ? "w-8 opacity-100" : "w-0 opacity-0"
+              }`}
+            ></span>
+          </Link>
+
+
+
+
+            <div
             className="relative"
             onMouseEnter={() => {
               setIsDesktopDropdownClosing(false);
@@ -249,7 +271,10 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Updated About Link - Changed from external link to internal route */}
+
+          
+
+            {/* Updated About Link - Changed from external link to internal route */}
           <Link
             to="/about"
             className={`font-semibold uppercase xl:text-sm pb-1 relative ${
@@ -258,7 +283,7 @@ const Navbar = () => {
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
           >
-            ABOUT
+            DOCUMENT SERVICES
             <span
               className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
                 isActive("/about") ? "w-8 opacity-100" : "w-0 opacity-0"
@@ -266,6 +291,9 @@ const Navbar = () => {
             ></span>
           </Link>
 
+
+
+            { /*
           <Link
             to="/downloadables"
             className={`font-semibold uppercase xl:text-sm pb-1 relative ${
@@ -292,6 +320,7 @@ const Navbar = () => {
           >
             PROCEDURALS
           </Link>
+                    */}
         </div>
 
 

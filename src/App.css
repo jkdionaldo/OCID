@@ -16,6 +16,10 @@ body {
   transition: ease-in-out;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .navbar {
   background-color: #fff;
   position: fixed;

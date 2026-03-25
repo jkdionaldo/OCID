@@ -172,7 +172,7 @@ const Home = () => {
       </div>
 
       {/* News & Updates */}
-      <div className="container mx-auto mb-8 py-8 px-4 sm:px-8 md:px-8 flex flex-col items-start md:px-16">
+      <div id="news" className="container mx-auto mb-8 py-8 px-4 sm:px-8 md:px-8 flex flex-col items-start md:px-16">
         <h2 className="text-4xl font-bold font-poppins text-left mb-8">
           News &amp; Updates
         </h2>
@@ -233,7 +233,7 @@ const Home = () => {
       </div>
 
       {/* ── Got Questions ── */}
-      <div className="container mx-auto mb-8 px-4 sm:px-6 md:px-8 lg:px-16 w-full">
+      <div id="faq" className="container mx-auto mb-8 px-4 sm:px-6 md:px-8 lg:px-16 w-full">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-poppins text-left text-[#008000]">
           Got Questions?
         </h2>
@@ -270,12 +270,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Educational Philosophy */}
-      <div className="w-full bg-csuGreen py-12 px-4 md:px-16">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8">
-          <Card></Card>
-        </div>
-      </div>
 
     </div>
   );
