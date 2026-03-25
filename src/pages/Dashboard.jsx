@@ -16,6 +16,7 @@ import { useFileActions } from "@/hooks/useFileActions";
 import { useDashboardState } from "@/hooks/useDashboardState";
 import { useDashboardFilters } from "@/hooks/useDashboardFilters";
 import { useCollegeOperations } from "@/hooks/useCollegeOperations";
+import { useAuth } from "@/hooks/useAuth";
 
 // Import components
 import FilesTab from "@/components/dashboard/FilesTab";
@@ -38,6 +39,13 @@ const Dashboard = () => {
   // STATE MANAGEMENT
   // ================================
   const [activeTab, setActiveTab] = useState("forms");
+  const { user, isSuperAdmin,
+  isDirector,
+  isCurriculumHead,
+  isMaterialsHead,
+  isEvaluationHead,
+  isOcidStaff,
+  isAdmin } = useAuth();
 
   // ================================
   // DATA HOOKS
@@ -459,29 +467,33 @@ const Dashboard = () => {
   // ================================
   // CONSTANTS
   // ================================
-  const tabs = [
-    {
-      id: "forms",
-      label: "Forms",
-      icon: FileText,
-    },
-    {
-      id: "colleges",
-      label: "Colleges",
-      icon: Building,
-    },
-    {
-      id: "programs",
-      label: "Programs",
-      icon: BookOpen,
-    },
-    // {
-    //   id: "files",
-    //   label: "Files & Documents",
-    //   icon: Files,
-    // },
-  ];
+ const tabs = [
+  // Everyone can access Forms
+  { id: "forms", label: "Forms", icon: FileText },
 
+  // Everyone except limited staff can see Colleges
+  { id: "colleges", label: "Colleges", icon: Building },
+
+  // Programs tab visible to director, curriculum head, admin, or super_admin
+  ...(isDirector() || isCurriculumHead() || isAdmin() || isSuperAdmin()
+    ? [{ id: "programs", label: "Programs", icon: BookOpen }]
+    : []),
+
+  // Files & Documents tab visible only to super_admin and materials head
+  ...(isSuperAdmin() || isMaterialsHead()
+    ? [{ id: "files", label: "Files & Documents", icon: Files }]
+    : []),
+
+  // Optional: Evaluation tab visible to evaluation head, director, or super_admin
+  ...(isEvaluationHead() || isDirector() || isSuperAdmin()
+    ? [{ id: "evaluation", label: "Evaluation", icon: Info }]
+    : []),
+
+  // Optional: Staff-only info tab (for OCID staff)
+  ...(isOcidStaff() || isSuperAdmin()
+    ? [{ id: "staff-info", label: "Staff Info", icon: Info }]
+    : []),
+];
   // ================================
   // ERROR HANDLING
   // ================================
@@ -503,6 +515,38 @@ const Dashboard = () => {
           lastFetch={lastFetch}
           loading={dashboardLoading}
         />
+
+      {/* Super Admin Test Font */}
+      {isSuperAdmin() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS YOUR SUPER-ADMIN BOARD!
+        </h2>
+      )}
+        {isDirector() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS THE DIRECTOR DASHBOARD
+        </h2>
+      )}
+       {isCurriculumHead() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS THE CURRICULUM HEAD DASHBOARD
+        </h2>
+      )}
+       {isMaterialsHead() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS THE MATERIALS HEAD DASHBOARD
+        </h2>
+      )}
+       {isEvaluationHead() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS THE EVALUATION HEAD DASHBOARD
+        </h2>
+      )}
+       {isOcidStaff() && (
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          WOW THIS IS THE OCID STAFF DASHBOARD
+        </h2>
+      )}
 
         {/* Tab Container */}
         <div className="mb-8 mt-6">

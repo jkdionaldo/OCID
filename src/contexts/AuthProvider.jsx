@@ -108,6 +108,7 @@ const storeAuthData = async (token, userData, expiresAt) => {
       name: userData.name,
       email: userData.email,
       avatar: userData.avatar,
+      role: userData.role,
       email_verified_at: userData.email_verified_at,
     };
 
@@ -321,6 +322,7 @@ export const AuthProvider = ({ children }) => {
         name: userData.name,
         email: userData.email,
         avatar: userData.avatar,
+        role: userData.role, 
         email_verified_at: userData.email_verified_at,
       });
       setIsAuthenticated(true);
@@ -368,6 +370,7 @@ export const AuthProvider = ({ children }) => {
         name: newUser.name,
         email: newUser.email,
         avatar: newUser.avatar,
+         role: newUser.role, 
         email_verified_at: newUser.email_verified_at,
       });
       setIsAuthenticated(true);
@@ -409,6 +412,7 @@ export const AuthProvider = ({ children }) => {
         name: updatedUser.name,
         email: updatedUser.email,
         avatar: updatedUser.avatar,
+        role: updatedUser.role,
         email_verified_at: updatedUser.email_verified_at,
       };
 
@@ -466,16 +470,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const value = {
-    user,
-    isAuthenticated,
-    isLoading,
-    login,
-    register,
-    logout,
-    updateProfile,
-    changePassword,
-  };
+
+  
+const isSuperAdmin = () => user?.role === "super_admin";
+const isDirector = () => user?.role === "director";
+const isCurriculumHead = () => user?.role === "curriculum_head";
+const isMaterialsHead = () => user?.role === "materials_head";
+const isEvaluationHead = () => user?.role === "evaluation_head";
+const isOcidStaff = () => user?.role === "ocid_staff";
+const isAdmin = () => user?.role === "admin";
+
+
+const value = {
+  user,
+  isAuthenticated,
+  isLoading,
+  login,
+  register,
+  logout,
+  updateProfile,
+  changePassword,
+  isSuperAdmin,
+  isDirector,
+  isCurriculumHead,
+  isMaterialsHead,
+  isEvaluationHead,
+  isOcidStaff,
+  isAdmin,
+};
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
