@@ -53,21 +53,6 @@ const DashboardNavbar = () => {
         {/* Right: Home icon + User dropdown */}
         <div className="flex items-center gap-3">
 
-          {/* Home button — goes back to public site */}
-            <Link
-            to="/"
-            title="Back to Home"
-            className="
-              flex items-center gap-1.5 px-3 py-2
-              text-sm font-medium text-gray-600 font-poppins
-              hover:text-green-700 hover:bg-green-50
-              rounded-lg transition-all duration-200
-            "
-          >
-            <Home className="w-6 h-6" />
-          </Link>
-          
-
           {/* User dropdown */}
           <div className="relative" ref={userDropdownRef}>
             <button
@@ -102,6 +87,15 @@ const DashboardNavbar = () => {
                   </p>
                 </div>
 
+                <Link
+                  to="/"
+                  title="Back to Home"
+                  className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors font-poppins"
+                >
+              <Home className="w-4 h-4" />
+              Homepage
+              </Link>
+
                 {/* Profile Settings */}
                 <Link
                   to="/profile-settings"
@@ -111,6 +105,8 @@ const DashboardNavbar = () => {
                   <Settings className="w-4 h-4" />
                   Profile Settings
                 </Link>
+
+            
 
                 {/* Logout */}
                 <button
