@@ -1,44 +1,44 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-// Change this to match your navbar height in pixels
-const NAVBAR_OFFSET = 80;
+const NAVBAR_OFFSET = 80; // adjust to match your navbar height
 
 const ScrollToHash = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (!hash) {
-      // No hash — scroll to top instantly on page change
-      window.scrollTo(0, 0);
-      return;
-    }
+    // Small delay to let react-remove-scroll release its lock
+    // and let the new page fully render
+    const timer = setTimeout(() => {
+      if (hash) {
+        const id = hash.replace("#", "");
+        const el = document.getElementById(id);
 
-    // Strip the '#' and find the element
-    const id = hash.replace("#", "");
+        if (el) {
+          // Get element position relative to the document
+          const elementTop = el.getBoundingClientRect().top;
+          const offsetPosition =
+            elementTop + window.pageYOffset - NAVBAR_OFFSET;
 
-    const scrollToElement = () => {
-      const el = document.getElementById(id);
-      if (el) {
-        const top =
-          el.getBoundingClientRect().top + window.pageYOffset - NAVBAR_OFFSET;
-        window.scrollTo({ top, behavior: "smooth" });
-        return true;
-      }
-      return false;
-    };
+          // Use the document's scrolling element directly
+          // This bypasses react-remove-scroll which locks <body>
+          const scrollTarget =
+            document.scrollingElement || document.documentElement;
 
-    // Try immediately first
-    if (!scrollToElement()) {
-      // If element not found yet (page still rendering), retry a few times
-      let attempts = 0;
-      const interval = setInterval(() => {
-        attempts++;
-        if (scrollToElement() || attempts >= 10) {
-          clearInterval(interval);
+          scrollTarget.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
         }
-      }, 100);
-    }
+      } else {
+        // No hash — scroll to top on route change
+        const scrollTarget =
+          document.scrollingElement || document.documentElement;
+        scrollTarget.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 150); // 150ms lets react-remove-scroll fully release
+
+    return () => clearTimeout(timer);
   }, [pathname, hash]);
 
   return null;

@@ -3,7 +3,7 @@ import { AuthProvider } from "@/contexts/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { AnimatePresence } from "framer-motion";
 
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/Layout"; //Removed the layout to avoid concern/footer duplication
 import Router from "@/routes";
 
 import "./App.css";
@@ -13,11 +13,11 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
-          <Layout>
+         
             <AnimatePresence mode="wait">
               <Router />
             </AnimatePresence>
-          </Layout>
+
         </BrowserRouter>
       </AuthProvider>
       <Toaster richColors />

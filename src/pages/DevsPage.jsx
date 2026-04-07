@@ -10,8 +10,8 @@ const batches = [
     layout: "3",           // 3 cards in one row
     bgVariant: "plain",
     developers: [
-      { name: "Christian A. Balasabas", role: "Backend Developer",        image: "/images/intern3.jpg" },
-      { name: "Arabela Mae O. Matias",  role: "System Analyst/UI Designer", image: "/images/team-matias.png" },
+      { name: "Christian A. Balasabas", role: "Backend Developer",        image: "/images/intern3.png" },
+      { name: "Arabela Mae O. Matias",  role: "System Analyst/UI Designer", image: "/images/intern1.png" },
       { name: "Edgar Lino L. Hinlo",   role: "Frontend Developer",          image: "/images/intern2.png" },
     ],
   },
@@ -21,11 +21,11 @@ const batches = [
     layout: "5",           // top row 3, bottom row 2 centered
     bgVariant: "plain",
     developers: [
-      { name: "Christian A. Balasabas", role: "Frontend Developer",        image: null },
-      { name: "Arabela Mae O. Matias",  role: "System Analyst/UI Designer", image: "/images/team-matias.png" },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",          image: null },
-      { name: "Arabela Mae O. Matias",  role: "System Analyst/UI Designer", image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",          image: null },
+      { name: "Christian James M. Bantillo", role: "Frontend Developer",        image: "/images/17.png" },
+      { name: "Khervee P. Lagang",  role: "System Analyst/UI Designer", image: "/images/19.png" },
+      { name: "Jan Kevin B. Dionaldo",   role: "Backend Developer",          image: "/images/16.png" },
+      { name: "Noralf Russel",  role: "System Analyst/UI Designer", image: "/images/18.png" },
+      { name: "Joren P. Verdad",   role: "Backend Developer",          image: "/images/15.png" },
     ],
   },
   {
@@ -34,18 +34,17 @@ const batches = [
     layout: "12",          // 3 rows of 4
     bgVariant: "building", // watermark background
     developers: [
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
-      { name: "Edgar Lino L. Hinlo",   role: "Backend Developer",  image: null },
+      { name: "Leizel Jane Campasas", image: null },
+      { name: "Joshua Dexter Mah",    image: null },
+      { name: "Ian Van Nituda",  image: null },
+      { name: "Merrey Joy Ocon", image: null },
+      { name: "Rodulfo Orquiz", image: null },
+      { name: "Julius Parado", image: null },
+      { name: "Gadiel Piedad", image: null },
+      { name: "Angelo Plantado", image: null },
+      { name: "Richdhan P. Roca", image: null },
+      { name: "Frietzzylyn Salarda", image: null },
+      { name: "Ryan Jay Varron", image: null },
     ],
   },
 ];
@@ -94,10 +93,6 @@ const DeveloperCard = ({ name, role, image }) => (
   </div>
 );
 
-// ─────────────────────────────────────────────
-// GRID LAYOUTS
-// ─────────────────────────────────────────────
-
 // 3 cards — single centered row
 const Grid3 = ({ developers }) => (
   <div className="flex flex-wrap justify-center gap-10 sm:gap-16">
@@ -123,14 +118,33 @@ const Grid5 = ({ developers }) => (
   </div>
 );
 
-// 12 cards — 4-column grid (3 rows of 4)
-const Grid12 = ({ developers }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 sm:gap-10 justify-items-center">
-    {developers.map((dev, i) => (
-      <DeveloperCard key={i} {...dev} />
-    ))}
-  </div>
-);
+// 11/12 cards — rows 1 & 2 stay in the original 4-col grid,
+// last row (remaining cards) is a centered flex row
+const Grid12 = ({ developers }) => {
+  const perRow = 4;
+  const fullRows = developers.slice(0, perRow * 2);   // first 8 — rows 1 & 2
+  const lastRow  = developers.slice(perRow * 2);       // remaining — row 3
+
+  return (
+    <div className="flex flex-col gap-8 sm:gap-10">
+      {/* Rows 1 & 2 — original 4-column grid layout */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 sm:gap-10 justify-items-center">
+        {fullRows.map((dev, i) => (
+          <DeveloperCard key={i} {...dev} />
+        ))}
+      </div>
+
+      {/* Row 3 — always centered regardless of card count */}
+      {lastRow.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-28 sm:gap-36">
+          {lastRow.map((dev, i) => (
+            <DeveloperCard key={`last-${i}`} {...dev} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Pick grid based on layout prop
 const DevGrid = ({ layout, developers }) => {
@@ -201,12 +215,14 @@ const DeveloperCollective = () => {
         {/* Dark green background */}
  
         {/* Building image at the bottom, greyscale */}
+        
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: "url('/images/DevTeam.png')",
           }}
         />
+        
       </section>
 
       {/* ── Intro Section ── */}

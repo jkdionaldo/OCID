@@ -272,13 +272,11 @@ const Navbar = () => {
           </div>
 
 
-          
-
             {/* Updated About Link - Changed from external link to internal route */}
           <Link
-            to="/about"
+            to="/document-services"
             className={`font-semibold uppercase xl:text-sm pb-1 relative ${
-              isActive("/about")
+              isActive("/document-services")
                 ? "text-green-700 font-bold"
                 : "text-green-950 hover:text-green-700"
             } transition-colors duration-200`}
@@ -286,7 +284,7 @@ const Navbar = () => {
             DOCUMENT SERVICES
             <span
               className={`absolute bottom-0 left-0 h-0.5 bg-green-700 transition-all duration-300 ease-out ${
-                isActive("/about") ? "w-8 opacity-100" : "w-0 opacity-0"
+                isActive("/document-services") ? "w-8 opacity-100" : "w-0 opacity-0"
               }`}
             ></span>
           </Link>

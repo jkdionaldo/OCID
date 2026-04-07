@@ -36,7 +36,7 @@ const Footer = () => {
             <img
               src="/images/ocid_logo.png"
               alt="OCID Logo"
-              className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 object-contain"
+              className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
             />
             {/* CSU Seal — medium */}
             <img
@@ -53,7 +53,7 @@ const Footer = () => {
           </div>
 
           {/* Right: Nav columns — pushed to the right on desktop */}
-          <div className="flex flex-row gap-10 sm:gap-16 md:gap-20 md:ml-auto text-xs sm:text-sm">
+          <div className="py-6 flex flex-row gap-10 sm:gap-16 md:gap-20 md:ml-auto text-xs sm:text-sm">
 
             {/* Column 1 */}
             <div className="flex flex-col gap-2 text-center md:text-left">
@@ -71,8 +71,8 @@ const Footer = () => {
 
             {/* Column 3 */}
             <div className="flex flex-col gap-2 text-center md:text-left">
-              <a href="/contact" className="text-white hover:text-[#f9dc07] transition-colors duration-200">Contact</a>
-              <a href="/faqs" className="text-white hover:text-[#f9dc07] transition-colors duration-200">FAQs</a>
+              <a href="/about#contact" className="text-white hover:text-[#f9dc07] transition-colors duration-200">Contact</a>
+              <a href="/#faqs" className="text-white hover:text-[#f9dc07] transition-colors duration-200">FAQs</a>
             </div>
 
           </div>

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: auto; /* leave as auto — let JS control it */
+}
+
 body {
   font-family: "Inter", sans-serif;
   background-color: #f0f0f0;
@@ -9,9 +13,6 @@ body {
 }
 
 @media (max-width: 640px) {
-  body {
-    margin-top: 60px;
-  }
 
   /* Improved mobile typography */
   h1,

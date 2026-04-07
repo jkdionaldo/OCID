@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../components/ui/HomeCard";
 import Card2 from "../components/ui/HomeCard2";
 import Faq from "../components/ui/FAQcards";
+import newsData from "../utils/newsData";
 import BannerCarousel from "../components/ui/BannerCarousel";
 // import Chatbot from "../components/chatbot/Chatbox";
 
@@ -171,27 +172,22 @@ const Home = () => {
         </div>
       </div>
 
-      {/* News & Updates */}
+       {/* News & Updates */}
       <div id="news" className="container mx-auto mb-8 py-8 px-4 sm:px-8 md:px-8 flex flex-col items-start md:px-16">
         <h2 className="text-4xl font-bold font-poppins text-left mb-8">
           News &amp; Updates
         </h2>
         <div className="flex flex-col md:flex-row gap-6 w-full">
-          <Card2
-            image="/images/director.png"
-            title="OCID Welcomes New Director for CY 2026"
-            date="January 5, 2026"
-          />
-          <Card2
-            image="/images/OBE.JPG"
-            title="OBE-Training For Newly Hired and Reinstated Faculty"
-            date="February 18, 2026"
-          />
-          <Card2
-            image="/images/postcur.jpg"
-            title="Post-Enrollment Curriculum Assessment"
-            date="March 4, 2026"
-          />
+          {newsData.map((item) => (
+            <Card2
+              key={item.id}
+              newsId={item.id}
+              image={item.image}
+              tag={item.tag}
+              title={item.title}
+              date={item.date}
+            />
+          ))}
         </div>
       </div>
 
@@ -233,7 +229,7 @@ const Home = () => {
       </div>
 
       {/* ── Got Questions ── */}
-      <div id="faq" className="container mx-auto mb-8 px-4 sm:px-6 md:px-8 lg:px-16 w-full">
+      <div id="faqs" className="container mx-auto mb-8 px-4 sm:px-6 md:px-8 lg:px-16 w-full">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-poppins text-left text-[#008000]">
           Got Questions?
         </h2>

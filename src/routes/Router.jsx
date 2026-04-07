@@ -13,6 +13,8 @@ import DeveloperCollective from "@/pages/DevsPage";
 import Downloadables from "@/pages/Downloadables";
 import Procedurals from "@/pages/Procedurals";
 import NotFound from "@/pages/NotFound";
+import NewsDetail from "@/pages/NewsDetails";
+import DocService from "@/pages/DocService";
 
 // CSU-MAIN pages
 import Colleges_Graduate_Main from "@/pages/CSU-MAIN/GraduateSchoolPage";
@@ -38,6 +40,7 @@ const Router = () => {
       <Route path="/devs" element={<Layout><DeveloperCollective /></Layout>} />
       <Route path="/downloadables" element={<Layout><Downloadables /></Layout>} />
       <Route path="/procedurals" element={<Layout><Procedurals /></Layout>} />
+      <Route path="/document-services" element={<Layout><DocService /></Layout>} />
 
       {/* CSU-MAIN */}
       <Route path="/colleges_graduate_main" element={<Layout><Colleges_Graduate_Main /></Layout>} />
@@ -72,6 +75,8 @@ const Router = () => {
       {/* ── Dashboard routes — DashboardNavbar only, no footer ── */}
       <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
       <Route path="/profile-settings" element={<DashboardLayout><ProfileSettings /></DashboardLayout>} />
+
+      <Route path="/news/:id" element={<Layout><NewsDetail /></Layout>} />
 
       {/* ── 404 ── */}
       <Route path="*" element={<Layout><NotFound /></Layout>} />

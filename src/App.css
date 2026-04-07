@@ -2,6 +2,8 @@
   --bs-body-bg: #d9d9d9;
 }
 
+
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -16,9 +18,7 @@ body {
   transition: ease-in-out;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+
 
 .navbar {
   background-color: #fff;

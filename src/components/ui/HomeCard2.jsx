@@ -1,10 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const Card2 = ({ image, title, date, tag }) => {
+const Card2 = ({ image, title, date, tag, newsId }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (newsId) navigate(`/news/${newsId}`);
+  };
+
   return (
     <StyledWrapper>
-      <div className="news-card">
+      <div
+        className={`news-card ${newsId ? "clickable" : ""}`}
+        onClick={handleClick}
+        role={newsId ? "button" : undefined}
+        tabIndex={newsId ? 0 : undefined}
+        onKeyDown={(e) => e.key === "Enter" && handleClick()}
+      >
         {/* Left: Thumbnail */}
         <div className="thumbnail">
           {tag && <span className="tag">{tag}</span>}
@@ -35,26 +48,28 @@ const StyledWrapper = styled.div`
     flex-direction: row;
     align-items: stretch;
     background: #ffffff;
-    border: 2px solid #008000;
+    border: 1px solid #008000;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
     max-width: 500px;
-    min-height: 250px;
+    min-height: 180px;
   }
 
-  .news-card:hover {
+  .news-card.clickable {
+    cursor: pointer;
+  }
+
+  .news-card.clickable:hover {
     transform: scale(1.03);
     box-shadow: 6px 10px 28px rgba(0, 0, 0, 0.15);
   }
 
-  /* Left thumbnail */
   .thumbnail {
     position: relative;
-    width: 220px;
+    width: 140px;
     min-width: 140px;
     background: #c8e6c9;
     overflow: hidden;
@@ -74,7 +89,20 @@ const StyledWrapper = styled.div`
     background: linear-gradient(135deg, #a5d6a7, #388e3c);
   }
 
-  /* Right content */
+  .tag {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    background: #008000;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    z-index: 2;
+    font-family: 'Poppins', sans-serif;
+  }
+
   .content {
     flex: 1;
     padding: 16px 16px 14px 16px;
@@ -86,8 +114,7 @@ const StyledWrapper = styled.div`
 
   .title {
     font-size: 1rem;
-    text-align: left;
-    font-weight: 800;
+    font-weight: 700;
     color: #1a1a1a;
     font-family: 'Poppins', sans-serif;
     line-height: 1.4;

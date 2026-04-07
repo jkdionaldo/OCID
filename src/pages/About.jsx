@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../components/ui/HomeCard";
 import ACard from "../components/ui/aboutcard";
-import ScrollToHash from "@/components/ui/ScrollToHash";
+import ScrollToHash from "../components/ui/ScrollToHash";
 
 import {
   BookOpen,
@@ -10,6 +10,9 @@ import {
   BarChart3,
   Laptop,
   Users,
+  Mail,      
+  Phone,       
+  MapPin, 
 } from "lucide-react";
 
 // ── Team data ──────────────────────────────────────────────
@@ -39,6 +42,12 @@ const unitHeads = [
 
 const officeStaff = [
   {
+    name: "SIR LOU",
+    role: "Planning Officer",
+    image: "",  
+  },
+
+  {
     name: "MAE CAMELLE M. CANOY, LPT",
     role: "Office Staff",
     image: "/images/STAFF.png",
@@ -51,11 +60,11 @@ const officeStaff = [
 ];
 
 const interns = [
-  { name: "Arabela Mae O. Matias", role: "Intern", image: "/images/team-matias.png" },
-  { name: "Christian A. Bolosobas", role: "Intern", image: "/images/intern3.jpg" },
+  { name: "Arabela Mae O. Matias", role: "Intern", image: "/images/intern1.png" },
+  { name: "Christian A. Bolosobas", role: "Intern", image: "/images/intern3.png" },
   { name: "Edgar Lino L. Hinio", role: "Intern", image: "/images/intern2.png" },
-  { name: "Carlea Mae A. Quimpan", role: "Student Assistant", image: null },
-  { name: "Al Dave B. Pepito", role: "Student Assistant", image: null },
+  { name: "Carlea Mae A. Quimpan", role: "Student Assistant", image: "/images/SA1.png" },
+  { name: "Al Dave B. Pepito", role: "Student Assistant", image: "/images/SA2.png" },
 ];
 // ──────────────────────────────────────────────────────────
 
@@ -228,7 +237,7 @@ const About = () => {
         {/* ── Our Team Org Chart ── */}
         <div id="orgTeam">
           <h2 className="text-3xl font-bold text-center mb-4 relative font-poppins">
-            Our Team
+            OUR TEAM
             <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-20 h-1 bg-green-700"></span>
           </h2>
           <p className="text-center text-sm sm:text-base text-gray-600 font-poppins max-w-2xl mx-auto mt-6">
@@ -299,9 +308,50 @@ const About = () => {
               </div>
 
             
+          
+
+      {/* Contact Information */}
+        <div id="contact">
+          <div className="py-24 relative z-10">
+              <h2 className="text-3xl font-bold text-gray-800 text-center mb-6 relative font-poppins">
+              GET IN TOUCH
+              <span className="absolute bottom-[-5px] left-1/2 transform -translate-x-1/2 w-16 h-1 bg-green-700"></span>
+            </h2>
+            <p className="text-center text-sm sm:text-base text-gray-600 font-poppins max-w-2xl mx-auto mt-6 mb-16">
+              Reach out to us through any of the channels 
+              below or visit our office at the CSU Main Campus.
+            </p>
+          
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 min-w-[250px]">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Mail className="w-5 h-5 text-green-700" />
+                </div>
+                <span className="text-gray-700 font-medium">
+                  ocid@carsu.edu.ph
+                </span>
+              </div>
+              <div className="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 min-w-[250px]">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Phone className="w-5 h-5 text-green-700" />
+                </div>
+                <span className="text-gray-700 font-medium">
+                  (085) 123-4567
+                </span>
+              </div>
+              <div className="flex items-center gap-3 bg-white px-6 py-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 min-w-[250px]">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <MapPin className="w-5 h-5 text-green-700" />
+                </div>
+                <span className="text-gray-700 font-medium">
+                  Caraga State University
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-
+      </div>
+    </div>
       
     </div>
   );
